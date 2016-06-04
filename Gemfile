@@ -23,6 +23,23 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+# GEMS PFC
+
+# Generador de usuarios con todas las opciones y vistas más utilizadas
+gem 'devise', '4.0.0'
+# Bootstrap gem
+gem 'bootstrap-sass', '3.3.6'
+# breadcrumbs para navegación rápida
+gem 'breadcrumbs_on_rails', '2.3.1'
+# Formularios más sencillos
+gem 'simple_form', '3.2.1'
+# Paginacion
+gem 'kaminari', '0.16.3'
+# internalizacion
+# gem 'i18n', '0.7.0'
+# Tratar subida de imagenes
+gem 'carrierwave', '0.11.0'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -44,4 +61,3 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 end
-
