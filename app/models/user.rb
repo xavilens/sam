@@ -9,5 +9,6 @@ class User < ActiveRecord::Base
   # imposibilitando crear un Usuario con valores repetidos en dicha tupla
   validates :userable_type, presence: true, uniqueness: {scope: :userable_id}
 
+  has_one :role
   belongs_to :userable, polymorphic: true
 end
