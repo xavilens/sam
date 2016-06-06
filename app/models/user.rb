@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
   validates :ciudad, presence: true
   validates :comunidad, presence: true
   validates :pais, presence: true
-  validates :rol_id, presence: true, foreign_key: :roltatus
+  # validates :rol_id, presence: true, foreign_key: :roltatus
   validates :userable_id, presence: true
   # Con validates campoX uniqueness: {scope: campoY} creamos unicidad en la tupla de campos {campoX, campoY},
   # imposibilitando crear un Usuario con valores repetidos en dicha tupla
