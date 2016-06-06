@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
   validates :ciudad, presence: true
   validates :comunidad, presence: true
   validates :pais, presence: true
-  validates :rol_id, presence: true, foreign_key: :rol
+  # validates :rol_id, presence: true, foreign_key: :rol
   validates :userable_id, presence: true
   validates :userable_type, presence: true, uniqueness: {scope: :userable_id}
 
