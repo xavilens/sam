@@ -14,12 +14,17 @@ class User < ActiveRecord::Base
   validates :ciudad, presence: true
   validates :comunidad, presence: true
   validates :pais, presence: true
-  validates :rol_id, presence: true, foreign_key: :roltatus
+  validates :rol_id, presence: true, foreign_key: :rol
   validates :userable_id, presence: true
-  # Con validates campoX uniqueness: {scope: campoY} creamos unicidad en la tupla de campos {campoX, campoY},
-  # imposibilitando crear un Usuario con valores repetidos en dicha tupla
   validates :userable_type, presence: true, uniqueness: {scope: :userable_id}
 
   has_one :rol
   belongs_to :userable, polymorphic: true
+
+  before_create :rolPorDefecto
+
+  private
+    def rolPorDefecto
+      self.rol ||= Rol.find_by_descripcion('registrado')
+    end
 end
