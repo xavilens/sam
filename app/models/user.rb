@@ -15,8 +15,8 @@ class User < ActiveRecord::Base
   validates :comunidad, presence: true
   validates :pais, presence: true
   # validates :rol_id, presence: true, foreign_key: :rol
-  validates :userable_id, presence: true
-  validates :userable_type, presence: true, uniqueness: {scope: :userable_id}
+  validates :profileable_id, presence: true
+  validates :profileable_type, presence: true, uniqueness: {scope: :profileable_id}
 
   has_one :rol
   belongs_to :userable, polymorphic: true
