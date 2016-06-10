@@ -11,7 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160610170338) do
+ActiveRecord::Schema.define(version: 20160610182636) do
+
+  create_table "bands", force: :cascade do |t|
+    t.integer  "genre1_id",  limit: 4, null: false
+    t.integer  "genre2_id",  limit: 4
+    t.integer  "genre3_id",  limit: 4
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "bands", ["genre1_id"], name: "index_bands_on_genre1_id", using: :btree
+  add_index "bands", ["genre2_id"], name: "index_bands_on_genre2_id", using: :btree
+  add_index "bands", ["genre3_id"], name: "index_bands_on_genre3_id", using: :btree
 
   create_table "genres", force: :cascade do |t|
     t.string "nombre",    limit: 255, null: false
@@ -25,6 +37,18 @@ ActiveRecord::Schema.define(version: 20160610170338) do
   create_table "levels", force: :cascade do |t|
     t.string "nombre", limit: 255, null: false
   end
+
+  create_table "members", force: :cascade do |t|
+    t.integer  "band_id",       limit: 4, null: false
+    t.integer  "musician_id",   limit: 4, null: false
+    t.integer  "instrument_id", limit: 4, null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "members", ["band_id"], name: "index_members_on_band_id", using: :btree
+  add_index "members", ["instrument_id"], name: "index_members_on_instrument_id", using: :btree
+  add_index "members", ["musician_id"], name: "index_members_on_musician_id", using: :btree
 
   create_table "musician_knowledges", force: :cascade do |t|
     t.integer  "musician_id",  limit: 4, null: false
@@ -73,6 +97,12 @@ ActiveRecord::Schema.define(version: 20160610170338) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["role_id"], name: "index_users_on_role_id", using: :btree
 
+  add_foreign_key "bands", "genres", column: "genre1_id"
+  add_foreign_key "bands", "genres", column: "genre2_id"
+  add_foreign_key "bands", "genres", column: "genre3_id"
+  add_foreign_key "members", "bands"
+  add_foreign_key "members", "knowledges", column: "instrument_id"
+  add_foreign_key "members", "musicians"
   add_foreign_key "musician_knowledges", "knowledges"
   add_foreign_key "musician_knowledges", "levels"
   add_foreign_key "musician_knowledges", "musicians"

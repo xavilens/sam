@@ -42,7 +42,7 @@ end
 end
 
 #Conocimientos digitales
-['Sintetizador', 'Sampling', 'Secuenciador', 'DJ', 'Produccion', 'Arreglos'].each do |knowledgement|
+['Sintetizador', 'DJ'].each do |knowledgement|
  Knowledge.find_or_create_by({nombre: knowledgement})
 end
 
