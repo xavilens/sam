@@ -17,31 +17,31 @@ end
 
 ############################################ CONOCIMIENTO ############################################
 #Conocimientos instrumentos cuerda
-['Guitarra', 'Bajo', 'Cantante', 'Cello', 'Violín', 'Contrabajo', 'Viola'].each do |conocimiento|
-  Knowledge.find_or_create_by({nombre: conocimiento})
+['Guitarra', 'Bajo', 'Cantante', 'Cello', 'Violín', 'Contrabajo', 'Viola'].each do |knowledgement|
+  Knowledge.find_or_create_by({nombre: knowledgement})
 end
 
 #Conocimientos instrumentos de viento metal/madera
-['Trombón', 'Saxofón', 'Trompeta', 'Flauta', 'Oboe'].each do |conocimiento|
- Knowledge.find_or_create_by({nombre: conocimiento})
+['Trombón', 'Saxofón', 'Trompeta', 'Flauta', 'Oboe'].each do |knowledgement|
+ Knowledge.find_or_create_by({nombre: knowledgement})
 end
 
 #Conocimientos instrumentos de percusión
-['Batería', 'Percusión', 'Celesta', 'Marimba'].each do |conocimiento|
- Knowledge.find_or_create_by({nombre: conocimiento})
+['Batería', 'Percusión', 'Celesta', 'Marimba'].each do |knowledgement|
+ Knowledge.find_or_create_by({nombre: knowledgement})
 end
 
 #Conocimientos instrumentos de tecla
-['Teclados', 'Piano', 'Acordeón'].each do |conocimiento|
- Knowledge.find_or_create_by({nombre: conocimiento})
+['Teclados', 'Piano', 'Acordeón'].each do |knowledgement|
+ Knowledge.find_or_create_by({nombre: knowledgement})
 end
 
 #Conocimientos vocales
-['Cantante', 'Coro'].each do |conocimiento|
- Knowledge.find_or_create_by({nombre: conocimiento})
+['Cantante', 'Coro'].each do |knowledgement|
+ Knowledge.find_or_create_by({nombre: knowledgement})
 end
 
 #Conocimientos digitales
-['Sintetizador', 'Sampling', 'Secuenciador', 'DJ', 'Produccion', 'Arreglos'].each do |conocimiento|
- Knowledge.find_or_create_by({nombre: conocimiento})
+['Sintetizador', 'Sampling', 'Secuenciador', 'DJ', 'Produccion', 'Arreglos'].each do |knowledgement|
+ Knowledge.find_or_create_by({nombre: knowledgement})
 end
