@@ -1,0 +1,13 @@
+<%= simple_form_for(@band) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.association :genre1 %>
+    <%= f.association :genre2 %>
+    <%= f.association :genre3 %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
