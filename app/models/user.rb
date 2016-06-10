@@ -7,10 +7,13 @@ class User < ActiveRecord::Base
   # CAMPOS: id, email, encrypted_password, nombre, ciudad, comunidad, pais,
   # profileable_id, profileable_type, role_id, created_at, updated_at
 
+  # TODO: Campos Youtube?, Soundcloud?, Facebook?, Twitter?
+
   #CAMPOS DEVISE: reset_password_token, reset_password_sent_at,
   # remember_created_at, sign_in_count, current_sign_in_at, last_sign_in_at,
   # current_sign_in_ip, last_sign_in_ip
 
+  validates :nombre, presence: true
   validates :ciudad, presence: true
   validates :comunidad, presence: true
   validates :pais, presence: true
