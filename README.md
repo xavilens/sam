@@ -5,7 +5,7 @@
 ## Versiones necesarias:
 - Ruby 2.3
 - Rails 4.2.6
-- MySQL 
+- MySQL
 
 ## Pasos
 1. Instalar las gemas utilizadas con `bundle install`
