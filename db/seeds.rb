@@ -45,3 +45,16 @@ end
 ['Sintetizador', 'Sampling', 'Secuenciador', 'DJ', 'Produccion', 'Arreglos'].each do |knowledgement|
  Knowledge.find_or_create_by({nombre: knowledgement})
 end
+
+############################################ CONOCIMIENTO ############################################
+# Género Electrónica
+['Electrónica', 'Minimal', 'Techno', 'House', "Drum'n'Bass", 'Dubstep'].each do |genre|
+ Genre.find_or_create_by({nombre: genre, categoria: 'Electrónica'})
+end
+
+# TODO: Género Rock
+['Rock', "Rock'n'roll", 'Rockabilly', 'Punk', 'Alternativo', 'Progresivo'].each do |genre|
+ Genre.find_or_create_by({nombre: genre, categoria: 'Rock'})
+end
+
+# TODO: Más géneros
