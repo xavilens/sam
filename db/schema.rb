@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160610112420) do
+ActiveRecord::Schema.define(version: 20160610122940) do
+
+  create_table "instruments", force: :cascade do |t|
+    t.string "nombre", limit: 255
+  end
+
+  create_table "nivels", force: :cascade do |t|
+    t.string   "nombre",     limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "roles", force: :cascade do |t|
     t.string "descripcion", limit: 255

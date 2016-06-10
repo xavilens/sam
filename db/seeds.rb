@@ -5,7 +5,43 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-
+############################################ ROLES ############################################
 ['registrado', 'baneado', 'inactivo', 'mod', 'admin'].each do |rol|
-  Rol.find_or_create_by({descripcion: rol})
+  Role.find_or_create_by({descripcion: rol})
+end
+
+############################################ NIVEL ############################################
+['Básico', 'Intermedio', 'Alto', 'Profesional'].each do |nivel|
+  Nivel.find_or_create_by({nombre: nivel})
+end
+
+############################################ CONOCIMIENTO ############################################
+#Conocimientos instrumentos cuerda
+['Guitarra', 'Bajo', 'Cantante', 'Cello', 'Violín', 'Contrabajo', 'Viola'].each do |conocimiento|
+  Conocimiento.find_or_create_by({nombre: conocimiento})
+end
+
+#Conocimientos instrumentos de viento metal/madera
+['Trombón', 'Saxofón', 'Trompeta', 'Flauta', 'Oboe'].each do |conocimiento|
+ Conocimiento.find_or_create_by({nombre: conocimiento})
+end
+
+#Conocimientos instrumentos de percusión
+['Batería', 'Percusión', 'Celesta', 'Marimba'].each do |conocimiento|
+ Conocimiento.find_or_create_by({nombre: conocimiento})
+end
+
+#Conocimientos instrumentos de tecla
+['Teclados', 'Piano', 'Acordeón'].each do |conocimiento|
+ Conocimiento.find_or_create_by({nombre: conocimiento})
+end
+
+#Conocimientos vocales
+['Cantante', 'Coro'].each do |conocimiento|
+ Conocimiento.find_or_create_by({nombre: conocimiento})
+end
+
+#Conocimientos digitales
+['Sintetizador', 'Sampling', 'Secuenciador', 'DJ', 'Produccion', 'Arreglos'].each do |conocimiento|
+ Conocimiento.find_or_create_by({nombre: conocimiento})
 end
