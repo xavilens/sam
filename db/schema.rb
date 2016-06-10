@@ -11,14 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160610155933) do
+ActiveRecord::Schema.define(version: 20160610160243) do
 
   create_table "knowledges", force: :cascade do |t|
-    t.string "nombre", limit: 255
+    t.string "nombre", limit: 255, null: false
   end
 
   create_table "levels", force: :cascade do |t|
-    t.string "nombre", limit: 255
+    t.string "nombre", limit: 255, null: false
   end
 
   create_table "musician_knowledges", force: :cascade do |t|
@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 20160610155933) do
   end
 
   create_table "roles", force: :cascade do |t|
-    t.string "nombre", limit: 255
+    t.string "nombre", limit: 255, null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -51,15 +51,15 @@ ActiveRecord::Schema.define(version: 20160610155933) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip",     limit: 255
     t.string   "last_sign_in_ip",        limit: 255
-    t.string   "nombre",                 limit: 255
-    t.string   "ciudad",                 limit: 255
-    t.string   "comunidad",              limit: 255
-    t.string   "pais",                   limit: 255
-    t.integer  "profileable_id",         limit: 4
-    t.string   "profileable_type",       limit: 255
+    t.string   "nombre",                 limit: 255,              null: false
+    t.string   "ciudad",                 limit: 255,              null: false
+    t.string   "comunidad",              limit: 255,              null: false
+    t.string   "pais",                   limit: 255,              null: false
+    t.integer  "profileable_id",         limit: 4,                null: false
+    t.string   "profileable_type",       limit: 255,              null: false
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
-    t.integer  "role_id",                limit: 4
+    t.integer  "role_id",                limit: 4,                null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
