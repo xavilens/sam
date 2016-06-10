@@ -1,5 +1,5 @@
 class ChangeRolToRole < ActiveRecord::Migration
   def change
-    rename_table :rol, :role
+    rename_table :rols, :roles
   end
 end
