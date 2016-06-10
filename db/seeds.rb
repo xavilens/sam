@@ -7,7 +7,7 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 ############################################ ROLES ############################################
 ['registrado', 'baneado', 'inactivo', 'mod', 'admin'].each do |rol|
-  Role.find_or_create_by({descripcion: rol})
+  Role.find_or_create_by({nombre: rol})
 end
 
 ############################################ NIVEL ############################################

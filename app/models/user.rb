@@ -18,13 +18,13 @@ class User < ActiveRecord::Base
   validates :profileable_id, presence: true
   validates :profileable_type, presence: true, uniqueness: {scope: :profileable_id}
 
-  has_one :role
+  belongs_to :role
   belongs_to :userable, polymorphic: true
 
-  before_create :rolPorDefecto
+  before_create :set_default
 
   private
-    def rolPorDefecto
-      self.role_id ||= Role.find_by_descripcion('registrado').id
+    def set_default
+      self.role_id = Role.find_by_name('registrado').id
     end
 end

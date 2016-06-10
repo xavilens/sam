@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160610123805) do
+ActiveRecord::Schema.define(version: 20160610155933) do
 
   create_table "knowledges", force: :cascade do |t|
     t.string "nombre", limit: 255
@@ -21,8 +21,23 @@ ActiveRecord::Schema.define(version: 20160610123805) do
     t.string "nombre", limit: 255
   end
 
+  create_table "musician_knowledges", force: :cascade do |t|
+    t.integer  "musician_id",  limit: 4, null: false
+    t.integer  "knowledge_id", limit: 4, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "musician_knowledges", ["knowledge_id"], name: "index_musician_knowledges_on_knowledge_id", using: :btree
+  add_index "musician_knowledges", ["musician_id"], name: "index_musician_knowledges_on_musician_id", using: :btree
+
+  create_table "musicians", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "roles", force: :cascade do |t|
-    t.string "descripcion", limit: 255
+    t.string "nombre", limit: 255
   end
 
   create_table "users", force: :cascade do |t|
@@ -51,5 +66,7 @@ ActiveRecord::Schema.define(version: 20160610123805) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["role_id"], name: "index_users_on_role_id", using: :btree
 
+  add_foreign_key "musician_knowledges", "knowledges"
+  add_foreign_key "musician_knowledges", "musicians"
   add_foreign_key "users", "roles"
 end
