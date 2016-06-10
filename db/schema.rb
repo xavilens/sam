@@ -11,7 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160610164156) do
+ActiveRecord::Schema.define(version: 20160610170338) do
+
+  create_table "genres", force: :cascade do |t|
+    t.string "nombre",    limit: 255, null: false
+    t.string "categoria", limit: 255, null: false
+  end
 
   create_table "knowledges", force: :cascade do |t|
     t.string "nombre", limit: 255, null: false
