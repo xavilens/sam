@@ -1,13 +1,13 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+#Configuración mínima para probar la aplicación en otro sistema:
 
-Things you may want to cover:
+## Versiones necesarias:
+- Ruby 2.3
+- Rails 4.2.6
+- MySQL 
 
-* Ruby 2.3, Rails 4.2
-
-* Crear BDD: rake db:create
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+## Pasos
+1. Instalar las gemas utilizadas con `bundle install`
+2. Crear la base de datos con `rake db:create`
+3. Popular la base de datos con `rakedb:seed`
