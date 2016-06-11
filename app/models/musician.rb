@@ -1,4 +1,5 @@
 class Musician < ActiveRecord::Base
+  ################### VALIDACIONES ###################
 
   ################### RELACIONES ###################
   has_one :user, as: :profileable

@@ -1,9 +1,11 @@
 class Band < ActiveRecord::Base
+  ################### VALIDACIONES ###################
+  validates :genre1, presence: true
 
   ################### RELACIONES ###################
   has_one :user, as: :profileable
 
-  # TODO: Soft-delete?? Historial de musicos??
+  # TODO: Soft-delete?? // Historial de musicos??
   has_many :members, dependent: :delete_all
   has_many :musicians, through: :members
 
