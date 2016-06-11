@@ -30,6 +30,8 @@ class User < ActiveRecord::Base
   has_many :conversations, dependent: :delete_all
   has_many :messages, through: :conversations
 
+  has_many :delegated_users, dependent: :delete_all
+
   before_create :set_default
 
   ################### METODOS ###################

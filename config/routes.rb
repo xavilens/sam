@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   
+  devise_for :delegated_users
   resources :bands
   resources :musicians
   devise_for :users
