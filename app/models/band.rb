@@ -1,7 +1,10 @@
 class Band < ActiveRecord::Base
+
+  ################### RELACIONES ###################
   has_one :user, as: :profileable
-  
-  has_many :members
+
+  # TODO: Soft-delete?? Historial de musicos??
+  has_many :members, dependent: :delete_all
   has_many :musicians, through: :members
 
   belongs_to :genre1, class_name: 'Genre', foreign_key: "genre_id"

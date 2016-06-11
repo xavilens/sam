@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160611202845) do
+ActiveRecord::Schema.define(version: 20160611203038) do
 
   create_table "bands", force: :cascade do |t|
     t.integer  "genre1_id",  limit: 4, null: false
@@ -62,9 +62,9 @@ ActiveRecord::Schema.define(version: 20160611202845) do
   add_index "members", ["musician_id"], name: "index_members_on_musician_id", using: :btree
 
   create_table "messages", force: :cascade do |t|
-    t.integer  "autor",           limit: 4
-    t.text     "cuerpo",          limit: 65535
-    t.integer  "conversation_id", limit: 4
+    t.integer  "autor",           limit: 4,     null: false
+    t.text     "cuerpo",          limit: 65535, null: false
+    t.integer  "conversation_id", limit: 4,     null: false
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
   end
