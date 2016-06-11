@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160610182636) do
+ActiveRecord::Schema.define(version: 20160611193837) do
 
   create_table "bands", force: :cascade do |t|
     t.integer  "genre1_id",  limit: 4, null: false
@@ -24,6 +24,16 @@ ActiveRecord::Schema.define(version: 20160610182636) do
   add_index "bands", ["genre1_id"], name: "index_bands_on_genre1_id", using: :btree
   add_index "bands", ["genre2_id"], name: "index_bands_on_genre2_id", using: :btree
   add_index "bands", ["genre3_id"], name: "index_bands_on_genre3_id", using: :btree
+
+  create_table "conversations", force: :cascade do |t|
+    t.integer  "usuario_1",  limit: 4, null: false
+    t.integer  "usuario_2",  limit: 4, null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "conversations", ["usuario_1"], name: "index_conversations_on_usuario_1", using: :btree
+  add_index "conversations", ["usuario_2"], name: "index_conversations_on_usuario_2", using: :btree
 
   create_table "genres", force: :cascade do |t|
     t.string "nombre",    limit: 255, null: false
@@ -100,6 +110,8 @@ ActiveRecord::Schema.define(version: 20160610182636) do
   add_foreign_key "bands", "genres", column: "genre1_id"
   add_foreign_key "bands", "genres", column: "genre2_id"
   add_foreign_key "bands", "genres", column: "genre3_id"
+  add_foreign_key "conversations", "users", column: "usuario_1"
+  add_foreign_key "conversations", "users", column: "usuario_2"
   add_foreign_key "members", "bands"
   add_foreign_key "members", "knowledges", column: "instrument_id"
   add_foreign_key "members", "musicians"

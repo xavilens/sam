@@ -27,7 +27,16 @@ class User < ActiveRecord::Base
   before_create :set_default
 
   private
-    def set_default
+    def setDefault
       self.role_id = Role.find_by_name('registrado').id
     end
+
+    def esMusico?
+      return self.profileable_type == 'Musician'
+    end
+
+    def esGrupo?
+      return self.profileable_type == 'Band'
+    end
+
 end

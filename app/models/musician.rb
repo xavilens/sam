@@ -1,5 +1,7 @@
 class Musician < ActiveRecord::Base
   has_one :user, as: :profileable
+  has_many :members
+  has_many :bands, through: :members
   has_many :musician_knowledges
   has_many :knowledges, through: :musician_knowledges
 
