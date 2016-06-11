@@ -24,6 +24,9 @@ class User < ActiveRecord::Base
   belongs_to :role
   belongs_to :userable, polymorphic: true
 
+  has_many :conversations
+  has_many :messages, through: :conversations
+
   before_create :set_default
 
   private
