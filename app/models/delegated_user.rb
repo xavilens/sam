@@ -4,9 +4,10 @@ class DelegatedUser < ActiveRecord::Base
   devise :trackable
 
   ################### VALIDACIONES ###################
-  # TODO: NotNull todos los campos! // Activo default = false
+  # TODO: NotNull todos los campos!
   validates :delegated_user, presence: true
   validates :current_user, presence: true, uniqueness: {scope: :delegated_user}
+  # TODO: Activo default = false
   validates :activo, presence: true
 
   ################### RELACIONES ###################

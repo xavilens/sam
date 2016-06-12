@@ -43,6 +43,18 @@ class User < ActiveRecord::Base
     return self.profileable_type == 'Band'
   end
 
+  def tipo
+    return self.profileable_type
+  end
+
+  def perfil
+    if esMusico?
+      return Musician.find(profileable_id)
+    else
+      return Band.find(profileable_id)
+    end
+  end
+
   private
     def setDefault
       self.role_id = Role.find_by_name('registrado').id

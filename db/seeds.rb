@@ -10,12 +10,12 @@
   Role.find_or_create_by({nombre: rol})
 end
 
-############################################ NIVEL ############################################
+############################################ LEVELS ############################################
 ['Básico', 'Intermedio', 'Alto', 'Profesional'].each do |level|
   Level.find_or_create_by({nombre: level})
 end
 
-############################################ CONOCIMIENTO ############################################
+############################################ KNOWLEDGES ############################################
 #Conocimientos instrumentos cuerda
 ['Guitarra', 'Bajo', 'Cantante', 'Cello', 'Violín', 'Contrabajo', 'Viola'].each do |knowledgement|
   Knowledge.find_or_create_by({nombre: knowledgement})
@@ -46,7 +46,7 @@ end
  Knowledge.find_or_create_by({nombre: knowledgement})
 end
 
-############################################ CONOCIMIENTO ############################################
+############################################ GENRES ############################################
 # Género Electrónica
 ['Electrónica', 'Minimal', 'Techno', 'House', "Drum'n'Bass", 'Dubstep'].each do |genre|
  Genre.find_or_create_by({nombre: genre, categoria: 'Electrónica'})
