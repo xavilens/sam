@@ -2,7 +2,7 @@ class Conversation < ActiveRecord::Base
   ################### VALIDACIONES ###################
   validates :usuario_1, presence: true
   validates :usuario_2, presence: true
-  # TODO: Cambiar a 'nombre'? // Migration NotNull
+  # TODO: Cambiar a 'nombre'?
   validates :asunto, presence: true
 
   ################### RELACIONES ###################

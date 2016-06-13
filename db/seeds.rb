@@ -53,7 +53,7 @@ end
 end
 
 # TODO: Género Rock
-['Rock', "Rock'n'roll", 'Rockabilly', 'Punk', 'Alternativo', 'Progresivo'].each do |genre|
+['Rock', "Rock'n'roll", 'Rockabilly', 'Punk', 'Rock Alternativo', 'Rock Progresivo', 'Post Rock', 'Grunge', 'Garage', 'Hardcore'].each do |genre|
  Genre.find_or_create_by({nombre: genre, categoria: 'Rock'})
 end
 

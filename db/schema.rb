@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160611210319) do
+ActiveRecord::Schema.define(version: 20160613182043) do
 
   create_table "bands", force: :cascade do |t|
     t.integer  "genre1_id",  limit: 4, null: false
@@ -30,23 +30,23 @@ ActiveRecord::Schema.define(version: 20160611210319) do
     t.integer  "usuario_2",  limit: 4,   null: false
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
-    t.string   "asunto",     limit: 255
+    t.string   "asunto",     limit: 255, null: false
   end
 
   add_index "conversations", ["usuario_1"], name: "index_conversations_on_usuario_1", using: :btree
   add_index "conversations", ["usuario_2"], name: "index_conversations_on_usuario_2", using: :btree
 
   create_table "delegated_users", force: :cascade do |t|
-    t.integer  "sign_in_count",      limit: 4,   default: 0, null: false
+    t.integer  "sign_in_count",      limit: 4,   default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip", limit: 255
     t.string   "last_sign_in_ip",    limit: 255
-    t.integer  "delegated_user",     limit: 4
-    t.integer  "current_user",       limit: 4
-    t.boolean  "activo"
-    t.datetime "created_at",                                 null: false
-    t.datetime "updated_at",                                 null: false
+    t.integer  "delegated_user",     limit: 4,                   null: false
+    t.integer  "current_user",       limit: 4,                   null: false
+    t.boolean  "activo",                         default: false, null: false
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
   end
 
   add_index "delegated_users", ["current_user"], name: "index_delegated_users_on_current_user", unique: true, using: :btree
