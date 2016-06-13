@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160613182043) do
+ActiveRecord::Schema.define(version: 20160613183904) do
 
   create_table "bands", force: :cascade do |t|
     t.integer  "genre1_id",  limit: 4, null: false
