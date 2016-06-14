@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160614163109) do
+ActiveRecord::Schema.define(version: 20160614170806) do
 
   create_table "bands", force: :cascade do |t|
     t.integer  "genre1_id",  limit: 4, null: false
@@ -59,6 +59,26 @@ ActiveRecord::Schema.define(version: 20160614163109) do
   create_table "event_types", force: :cascade do |t|
     t.string "nombre", limit: 255
   end
+
+  create_table "events", force: :cascade do |t|
+    t.string   "nombre",            limit: 255,                null: false
+    t.string   "descripcion",       limit: 255
+    t.date     "fecha",                                        null: false
+    t.time     "hora",                                         null: false
+    t.integer  "event_status_id",   limit: 4,                  null: false
+    t.string   "calle",             limit: 255,                null: false
+    t.string   "ciudad",            limit: 255,                null: false
+    t.string   "comunidad",         limit: 255,                null: false
+    t.string   "pais",              limit: 255,                null: false
+    t.integer  "max_participantes", limit: 4
+    t.decimal  "pvp",                           precision: 10
+    t.integer  "creador",           limit: 4,                  null: false
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
+  end
+
+  add_index "events", ["creador"], name: "index_events_on_creador", using: :btree
+  add_index "events", ["event_status_id"], name: "index_events_on_event_status_id", using: :btree
 
   create_table "genres", force: :cascade do |t|
     t.string "nombre",    limit: 255, null: false
@@ -150,6 +170,8 @@ ActiveRecord::Schema.define(version: 20160614163109) do
   add_foreign_key "conversations", "users", column: "usuario_2"
   add_foreign_key "delegated_users", "users", column: "current_user"
   add_foreign_key "delegated_users", "users", column: "delegated_user"
+  add_foreign_key "events", "event_statuses"
+  add_foreign_key "events", "users", column: "creador"
   add_foreign_key "members", "bands"
   add_foreign_key "members", "knowledges", column: "instrument_id"
   add_foreign_key "members", "musicians"
