@@ -15,6 +15,20 @@ end
   Level.find_or_create_by({nombre: level})
 end
 
+############################################ EVENT_ESTATUSES ############################################
+
+# TODO: Más estados de eventos??
+['Abierto', 'Cerrado'].each do |evStatus|
+  EventStatus.find_or_create_by({nombre: evStatus})
+end
+
+############################################ EVENT_TYPES ############################################
+
+# TODO: Más tipos de eventos
+['Concierto', 'Festival', 'Concierto acústico'].each do |evType|
+  EventType.find_or_create_by({nombre: evType})
+end
+
 ############################################ KNOWLEDGES ############################################
 #Conocimientos instrumentos cuerda
 ['Guitarra', 'Bajo', 'Cantante', 'Cello', 'Violín', 'Contrabajo', 'Viola'].each do |knowledgement|

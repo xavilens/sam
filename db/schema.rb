@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160613183904) do
+ActiveRecord::Schema.define(version: 20160614163109) do
 
   create_table "bands", force: :cascade do |t|
     t.integer  "genre1_id",  limit: 4, null: false
@@ -51,6 +51,14 @@ ActiveRecord::Schema.define(version: 20160613183904) do
 
   add_index "delegated_users", ["current_user"], name: "index_delegated_users_on_current_user", unique: true, using: :btree
   add_index "delegated_users", ["delegated_user"], name: "index_delegated_users_on_delegated_user", using: :btree
+
+  create_table "event_statuses", force: :cascade do |t|
+    t.string "nombre", limit: 255, null: false
+  end
+
+  create_table "event_types", force: :cascade do |t|
+    t.string "nombre", limit: 255
+  end
 
   create_table "genres", force: :cascade do |t|
     t.string "nombre",    limit: 255, null: false
