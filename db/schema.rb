@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160615182216) do
+ActiveRecord::Schema.define(version: 20160615183909) do
 
   create_table "bands", force: :cascade do |t|
     t.integer  "genre1_id",  limit: 4, null: false
@@ -82,20 +82,20 @@ ActiveRecord::Schema.define(version: 20160615182216) do
   end
 
   create_table "events", force: :cascade do |t|
-    t.string   "nombre",            limit: 255,                null: false
+    t.string   "nombre",            limit: 255,               null: false
     t.string   "descripcion",       limit: 255
-    t.date     "fecha",                                        null: false
-    t.time     "hora",                                         null: false
-    t.integer  "event_status_id",   limit: 4,                  null: false
-    t.string   "calle",             limit: 255,                null: false
-    t.string   "ciudad",            limit: 255,                null: false
-    t.string   "comunidad",         limit: 255,                null: false
-    t.string   "pais",              limit: 255,                null: false
+    t.date     "fecha",                                       null: false
+    t.time     "hora",                                        null: false
+    t.integer  "event_status_id",   limit: 4,                 null: false
+    t.string   "calle",             limit: 255,               null: false
+    t.string   "ciudad",            limit: 255,               null: false
+    t.string   "comunidad",         limit: 255,               null: false
+    t.string   "pais",              limit: 255,               null: false
     t.integer  "max_participantes", limit: 4
-    t.decimal  "pvp",                           precision: 10
-    t.integer  "creador",           limit: 4,                  null: false
-    t.datetime "created_at",                                   null: false
-    t.datetime "updated_at",                                   null: false
+    t.decimal  "pvp",                           precision: 2
+    t.integer  "creador",           limit: 4,                 null: false
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
     t.integer  "event_type_id",     limit: 4
   end
 
