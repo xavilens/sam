@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160615194535) do
+ActiveRecord::Schema.define(version: 20160615195023) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "user_id",          limit: 4,   null: false
@@ -117,6 +117,13 @@ ActiveRecord::Schema.define(version: 20160615194535) do
   add_index "events", ["creador"], name: "index_events_on_creador", using: :btree
   add_index "events", ["event_status_id"], name: "index_events_on_event_status_id", using: :btree
   add_index "events", ["event_type_id"], name: "index_events_on_event_type_id", using: :btree
+
+  create_table "followships", force: :cascade do |t|
+    t.integer  "followed_id", limit: 4, null: false
+    t.integer  "follower_id", limit: 4, null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
 
   create_table "genres", force: :cascade do |t|
     t.string "nombre",    limit: 255, null: false

@@ -40,6 +40,8 @@ class User < ActiveRecord::Base
 
   has_many :activities
 
+  has_many :followships
+
   ################### ACCIONES ###################
   before_create :set_default
 
@@ -62,6 +64,16 @@ class User < ActiveRecord::Base
     else
       return Band.find(profileable_id)
     end
+  end
+
+  def follows
+    follows = Followship.where(follower_id: :id)
+    return follows
+  end
+
+  def followers
+    followers = Followship.where(followed_id: :id) 
+    return followers
   end
 
   private
