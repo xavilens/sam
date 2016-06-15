@@ -37,7 +37,9 @@ class User < ActiveRecord::Base
 
   has_many :events
   has_many :event_participants
-  
+
+  has_many :activities
+
   ################### ACCIONES ###################
   before_create :set_default
 

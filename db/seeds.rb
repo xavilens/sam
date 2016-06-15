@@ -29,6 +29,19 @@ end
   EventType.find_or_create_by({nombre: evType})
 end
 
+############################################ ACTIVITY_TYPES ############################################
+
+# TODO: Más tipos de actividades
+['Post', 'Comment', 'Event', 'Event participant', 'New member', 'Not member', 'New user'].each do |actType|
+  ActivityType.find_or_create_by({nombre: actType})
+end
+['New knowledge', 'New role', 'Event done', 'Event canceled', 'New sala review', 'New local review'].each do |actType|
+  ActivityType.find_or_create_by({nombre: actType})
+end
+['New followed', 'New follower'].each do |actType|
+  ActivityType.find_or_create_by({nombre: actType})
+end
+
 ############################################ KNOWLEDGES ############################################
 #Conocimientos instrumentos cuerda
 ['Guitarra', 'Bajo', 'Cantante', 'Cello', 'Violín', 'Contrabajo', 'Viola'].each do |knowledgement|
