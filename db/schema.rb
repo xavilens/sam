@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160614174900) do
+ActiveRecord::Schema.define(version: 20160615182216) do
 
   create_table "bands", force: :cascade do |t|
     t.integer  "genre1_id",  limit: 4, null: false
@@ -24,6 +24,18 @@ ActiveRecord::Schema.define(version: 20160614174900) do
   add_index "bands", ["genre1_id"], name: "index_bands_on_genre1_id", using: :btree
   add_index "bands", ["genre2_id"], name: "index_bands_on_genre2_id", using: :btree
   add_index "bands", ["genre3_id"], name: "index_bands_on_genre3_id", using: :btree
+
+  create_table "comments", force: :cascade do |t|
+    t.integer  "post_id",    limit: 4,                     null: false
+    t.integer  "user_id",    limit: 4,                     null: false
+    t.text     "cuerpo",     limit: 65535,                 null: false
+    t.boolean  "editado",                  default: false, null: false
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+  end
+
+  add_index "comments", ["post_id"], name: "index_comments_on_post_id", using: :btree
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
   create_table "conversations", force: :cascade do |t|
     t.integer  "usuario_1",  limit: 4,   null: false
@@ -104,6 +116,14 @@ ActiveRecord::Schema.define(version: 20160614174900) do
     t.string "nombre", limit: 255, null: false
   end
 
+  create_table "main_posts", force: :cascade do |t|
+    t.integer  "post_id",    limit: 4, null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "main_posts", ["post_id"], name: "index_main_posts_on_post_id", using: :btree
+
   create_table "members", force: :cascade do |t|
     t.integer  "band_id",       limit: 4, null: false
     t.integer  "musician_id",   limit: 4, null: false
@@ -144,6 +164,18 @@ ActiveRecord::Schema.define(version: 20160614174900) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "posts", force: :cascade do |t|
+    t.string   "titulo",     limit: 255,                   null: false
+    t.integer  "user_id",    limit: 4,                     null: false
+    t.text     "cuerpo",     limit: 65535,                 null: false
+    t.boolean  "publicado",                default: false, null: false
+    t.boolean  "editado",                  default: false, null: false
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+  end
+
+  add_index "posts", ["user_id"], name: "index_posts_on_user_id", using: :btree
+
   create_table "roles", force: :cascade do |t|
     t.string "nombre", limit: 255, null: false
   end
@@ -177,6 +209,8 @@ ActiveRecord::Schema.define(version: 20160614174900) do
   add_foreign_key "bands", "genres", column: "genre1_id"
   add_foreign_key "bands", "genres", column: "genre2_id"
   add_foreign_key "bands", "genres", column: "genre3_id"
+  add_foreign_key "comments", "posts"
+  add_foreign_key "comments", "users"
   add_foreign_key "conversations", "users", column: "usuario_1"
   add_foreign_key "conversations", "users", column: "usuario_2"
   add_foreign_key "delegated_users", "users", column: "current_user"
@@ -185,6 +219,7 @@ ActiveRecord::Schema.define(version: 20160614174900) do
   add_foreign_key "events", "event_statuses"
   add_foreign_key "events", "event_types"
   add_foreign_key "events", "users", column: "creador"
+  add_foreign_key "main_posts", "posts"
   add_foreign_key "members", "bands"
   add_foreign_key "members", "knowledges", column: "instrument_id"
   add_foreign_key "members", "musicians"
@@ -193,5 +228,6 @@ ActiveRecord::Schema.define(version: 20160614174900) do
   add_foreign_key "musician_knowledges", "knowledges"
   add_foreign_key "musician_knowledges", "levels"
   add_foreign_key "musician_knowledges", "musicians"
+  add_foreign_key "posts", "users"
   add_foreign_key "users", "roles"
 end

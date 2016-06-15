@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   
+  resources :comments
+  resources :posts
   devise_for :delegated_users
   resources :bands
   resources :musicians
