@@ -72,7 +72,7 @@ class User < ActiveRecord::Base
   end
 
   def followers
-    followers = Followship.where(followed_id: :id) 
+    followers = Followship.where(followed_id: :id)
     return followers
   end
 

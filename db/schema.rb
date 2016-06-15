@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160615195023) do
+ActiveRecord::Schema.define(version: 20160615203126) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "user_id",          limit: 4,   null: false
@@ -28,12 +28,17 @@ ActiveRecord::Schema.define(version: 20160615195023) do
     t.string "nombre", limit: 255
   end
 
+  create_table "band_statuses", force: :cascade do |t|
+    t.string "name", limit: 255
+  end
+
   create_table "bands", force: :cascade do |t|
-    t.integer  "genre1_id",  limit: 4, null: false
-    t.integer  "genre2_id",  limit: 4
-    t.integer  "genre3_id",  limit: 4
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.integer  "genre1_id",      limit: 4, null: false
+    t.integer  "genre2_id",      limit: 4
+    t.integer  "genre3_id",      limit: 4
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.integer  "band_status_id", limit: 4
   end
 
   add_index "bands", ["genre1_id"], name: "index_bands_on_genre1_id", using: :btree
@@ -181,9 +186,14 @@ ActiveRecord::Schema.define(version: 20160615195023) do
   add_index "musician_knowledges", ["level_id"], name: "index_musician_knowledges_on_level_id", using: :btree
   add_index "musician_knowledges", ["musician_id"], name: "index_musician_knowledges_on_musician_id", using: :btree
 
+  create_table "musician_statuses", force: :cascade do |t|
+    t.string "name", limit: 255
+  end
+
   create_table "musicians", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.integer  "musician_status_id", limit: 4
   end
 
   create_table "posts", force: :cascade do |t|

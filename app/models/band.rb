@@ -13,5 +13,9 @@ class Band < ActiveRecord::Base
   belongs_to :genre2, class_name: 'Genre', foreign_key: "genre_id"
   belongs_to :genre3, class_name: 'Genre', foreign_key: "genre_id"
 
+  belongs_to :band_statuses
   # TODO: Campo Estado = {buscando miembros, buscando conciertos, ninguno}
+  def estado
+    return BandStatus.find_by_id(musician_status_id).name
+  end
 end
