@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160615203126) do
+ActiveRecord::Schema.define(version: 20160623164029) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "user_id",          limit: 4,   null: false
@@ -212,6 +212,21 @@ ActiveRecord::Schema.define(version: 20160615203126) do
     t.string "nombre", limit: 255, null: false
   end
 
+  create_table "salas", force: :cascade do |t|
+    t.string   "name",         limit: 255,                            null: false
+    t.string   "direction",    limit: 255,                            null: false
+    t.string   "city",         limit: 255,                            null: false
+    t.string   "state",        limit: 255,                            null: false
+    t.string   "country",      limit: 255,                            null: false
+    t.integer  "creator_id",   limit: 4,                              null: false
+    t.integer  "n_reviews",    limit: 4,                  default: 0, null: false
+    t.decimal  "total_rating",             precision: 10
+    t.datetime "created_at",                                          null: false
+    t.datetime "updated_at",                                          null: false
+  end
+
+  add_index "salas", ["creator_id"], name: "index_salas_on_creator_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
     t.string   "encrypted_password",     limit: 255, default: "", null: false
@@ -263,5 +278,6 @@ ActiveRecord::Schema.define(version: 20160615203126) do
   add_foreign_key "musician_knowledges", "levels"
   add_foreign_key "musician_knowledges", "musicians"
   add_foreign_key "posts", "users"
+  add_foreign_key "salas", "users", column: "creator_id"
   add_foreign_key "users", "roles"
 end
