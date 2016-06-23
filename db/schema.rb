@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160623164029) do
+ActiveRecord::Schema.define(version: 20160623165203) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "user_id",          limit: 4,   null: false
@@ -214,7 +214,7 @@ ActiveRecord::Schema.define(version: 20160623164029) do
 
   create_table "salas", force: :cascade do |t|
     t.string   "name",         limit: 255,                            null: false
-    t.string   "direction",    limit: 255,                            null: false
+    t.string   "street",       limit: 255,                            null: false
     t.string   "city",         limit: 255,                            null: false
     t.string   "state",        limit: 255,                            null: false
     t.string   "country",      limit: 255,                            null: false
