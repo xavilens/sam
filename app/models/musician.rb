@@ -9,10 +9,10 @@ class Musician < ActiveRecord::Base
   has_many :members, dependent: :delete_all
   has_many :bands, through: :members
   has_many :musician_knowledges, dependent: :delete_all
-  has_many :knowledges, through: :musician_knowledges
+  has_many :instruments, through: :musician_knowledges
 
   belongs_to :musician_status
-  
+
   ################### METODOS ###################
   def conocimientos
     knowledges = Array.new

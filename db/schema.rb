@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160625204912) do
+ActiveRecord::Schema.define(version: 20160625214906) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "user_id",          limit: 4,   null: false
@@ -140,7 +140,7 @@ ActiveRecord::Schema.define(version: 20160625204912) do
     t.string "category", limit: 255, null: false
   end
 
-  create_table "knowledges", force: :cascade do |t|
+  create_table "instruments", force: :cascade do |t|
     t.string "name", limit: 255, null: false
   end
 
@@ -358,11 +358,11 @@ ActiveRecord::Schema.define(version: 20160625204912) do
   add_foreign_key "followships", "users", column: "leader_id"
   add_foreign_key "main_posts", "posts"
   add_foreign_key "members", "bands"
-  add_foreign_key "members", "knowledges", column: "instrument_id"
+  add_foreign_key "members", "instruments"
   add_foreign_key "members", "musicians"
   add_foreign_key "messages", "conversations"
   add_foreign_key "messages", "users", column: "author_id"
-  add_foreign_key "musician_knowledges", "knowledges"
+  add_foreign_key "musician_knowledges", "instruments", column: "knowledge_id"
   add_foreign_key "musician_knowledges", "levels"
   add_foreign_key "musician_knowledges", "musicians"
   add_foreign_key "posts", "users"
