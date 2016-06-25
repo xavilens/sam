@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160625180109) do
+ActiveRecord::Schema.define(version: 20160625204912) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "user_id",          limit: 4,   null: false
@@ -33,17 +33,17 @@ ActiveRecord::Schema.define(version: 20160625180109) do
   end
 
   create_table "bands", force: :cascade do |t|
-    t.integer  "genre1_id",      limit: 4, null: false
-    t.integer  "genre2_id",      limit: 4
-    t.integer  "genre3_id",      limit: 4
+    t.integer  "genre_1_id",     limit: 4, null: false
+    t.integer  "genre_2_id",     limit: 4
+    t.integer  "genre_3_id",     limit: 4
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
     t.integer  "band_status_id", limit: 4
   end
 
-  add_index "bands", ["genre1_id"], name: "index_bands_on_genre1_id", using: :btree
-  add_index "bands", ["genre2_id"], name: "index_bands_on_genre2_id", using: :btree
-  add_index "bands", ["genre3_id"], name: "index_bands_on_genre3_id", using: :btree
+  add_index "bands", ["genre_1_id"], name: "index_bands_on_genre_1_id", using: :btree
+  add_index "bands", ["genre_2_id"], name: "index_bands_on_genre_2_id", using: :btree
+  add_index "bands", ["genre_3_id"], name: "index_bands_on_genre_3_id", using: :btree
 
   create_table "comments", force: :cascade do |t|
     t.integer  "post_id",    limit: 4,                     null: false
@@ -340,9 +340,9 @@ ActiveRecord::Schema.define(version: 20160625180109) do
 
   add_foreign_key "activities", "activity_types"
   add_foreign_key "activities", "users"
-  add_foreign_key "bands", "genres", column: "genre1_id"
-  add_foreign_key "bands", "genres", column: "genre2_id"
-  add_foreign_key "bands", "genres", column: "genre3_id"
+  add_foreign_key "bands", "genres", column: "genre_1_id"
+  add_foreign_key "bands", "genres", column: "genre_2_id"
+  add_foreign_key "bands", "genres", column: "genre_3_id"
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
   add_foreign_key "conversations", "users", column: "user_1_id"

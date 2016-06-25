@@ -29,8 +29,9 @@ class User < ActiveRecord::Base
   has_many :messages, through: :reverse_conversations
 
   # POSTS RELATED
-  has_many :posts
-  has_many :comments
+  has_many :posts, dependent: :destroy
+  # TODO: Soft-delete?
+  has_many :comments, dependent: :destroy
 
   # DELEGATED USER RELATED
   has_many :delegated_users, dependent: :destroy
@@ -40,7 +41,7 @@ class User < ActiveRecord::Base
   has_many :event_participants
 
   # ACTIVITY FEED RELATED
-  has_many :activities
+  has_many :activities, dependent: :destroy
 
   # FOLLOWSHIPS RELATED
   has_many :followships, foreign_key: :follower_id, dependent: :destroy
@@ -55,6 +56,7 @@ class User < ActiveRecord::Base
   has_many :salas, through: :sala_users
 
   # REHEARSAL STUDIOS RELATED
+  has_many :created_rehearsal_studio, class_name: 'RehearsalStudio'
   has_many :rehearsal_studio_reviews
   has_many :rehearsal_studio_users
   has_many :rehearsal_studios, through: :rehearsal_studio_users
@@ -63,22 +65,22 @@ class User < ActiveRecord::Base
   before_create :set_default
 
   ################### METODOS ###################
-  def esMusico?
-    return self.profileable_type == 'Musician'
+  def es_musico?
+    profileable_type == 'Musician'
   end
 
-  def esGrupo?
-    return self.profileable_type == 'Band'
+  def es_grupo?
+    profileable_type == 'Band'
   end
 
-  def tipo
-    return self.profileable_type
+  def tipo_perfil
+    profileable_type
   end
 
   def perfil
-    if esMusico?
+    if es_musico?
       return Musician.find(profileable_id)
-    else
+    elsif es_grupo?
       return Band.find(profileable_id)
     end
   end
@@ -106,12 +108,5 @@ class User < ActiveRecord::Base
   private
     def setDefault
       self.role_id = Role.find_by_name('registrado').id
-    end
-
-    def self.musicos
-      return User.where(profileable_type: 'Musician')
-    end
-    def self.grupos
-      return User.where(profileable_type: 'Band')
     end
 end

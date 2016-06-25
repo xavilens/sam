@@ -1,5 +1,6 @@
 class Musician < ActiveRecord::Base
   ################### VALIDACIONES ###################
+  validates :musician_status_id, presence: true
 
   ################### RELACIONES ###################
   has_one :user, as: :profileable
@@ -11,14 +12,13 @@ class Musician < ActiveRecord::Base
   has_many :knowledges, through: :musician_knowledges
 
   belongs_to :musician_status
-  # TODO: Campo Estado = {buscando grupo, ninguno}
-
+  
   ################### METODOS ###################
   def conocimientos
     knowledges = Array.new
 
-    musician_knowledges.each do |mk|
-      knowledges.push(Knowledge.find_by_id(mk.knowledge_id).name)
+    knowledges.each do |k|
+      knowledges.push(Knowledge.find_by_id(k.id).name)
     end
 
     return knowledges
