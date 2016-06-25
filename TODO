@@ -1,3 +1,26 @@
 # TODO ----------------------------
 
-SALAS -> SalaReview, UserSala, SalaGenre, etc
+Ad
+  Adeable
+    Trade
+      TradeType ( vendo, compro, cambio, alquilo )
+    BandToMember
+      BandAdInstrument -> BandToMember + Instrument
+    MemberToBand
+      MemberAdGenre -> MemberToBand + Genre
+    BandToBand
+      BandToBandType ( evento, compañeros de local )
+
+Image
+  Imageable
+    User
+    Ad
+    Event
+    Message
+    Post
+    Comment
+    Sala
+    SalaReview
+    RehearsalStudio
+    RehearsalStudioReview
+    
