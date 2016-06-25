@@ -47,6 +47,10 @@ class User < ActiveRecord::Base
   has_many :sala_users
   has_many :salas, through: :sala_users
 
+  has_many :rehearsal_studio_reviews
+  has_many :rehearsal_studio_users
+  has_many :rehearsal_studios, through: :rehearsal_studio_users
+
   ################### ACCIONES ###################
   before_create :set_default
 

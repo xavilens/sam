@@ -1,4 +1,4 @@
-class Event < ActiveRecord::Base
+class RehearsalStudio < ActiveRecord::Base
   ################### VALIDACIONES ###################
   validates :event_status_id, presence: true
   validates :event_type_id, presence: true
@@ -6,13 +6,9 @@ class Event < ActiveRecord::Base
   ################### RELACIONES ###################
   belongs_to :creator_id, class_name: 'User', foreign_key: 'user_id'
 
-  belongs_to :event_status
-  belongs_to :event_type
-
-  has_many :event_participants
-  has_many :participants, through: :event_participants, class_name: "User", foreign_key: "user_id"
-
-  belongs_to :sala
+  has_many :rehearsal_studio_reviews
+  has_many :rehearsal_studio_users
+  has_many :users, through: :rehearsal_studio_users
 
   ################### METODOS ###################
 end

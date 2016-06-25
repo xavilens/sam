@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160625141130) do
+ActiveRecord::Schema.define(version: 20160625160838) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "user_id",          limit: 4,   null: false
@@ -113,14 +113,14 @@ ActiveRecord::Schema.define(version: 20160625141130) do
     t.string   "pais",              limit: 255,               null: false
     t.integer  "max_participantes", limit: 4
     t.decimal  "pvp",                           precision: 2
-    t.integer  "creador",           limit: 4,                 null: false
+    t.integer  "creator_id",        limit: 4,                 null: false
     t.datetime "created_at",                                  null: false
     t.datetime "updated_at",                                  null: false
     t.integer  "event_type_id",     limit: 4
     t.integer  "sala_id",           limit: 4
   end
 
-  add_index "events", ["creador"], name: "index_events_on_creador", using: :btree
+  add_index "events", ["creator_id"], name: "index_events_on_creator_id", using: :btree
   add_index "events", ["event_status_id"], name: "index_events_on_event_status_id", using: :btree
   add_index "events", ["event_type_id"], name: "index_events_on_event_type_id", using: :btree
   add_index "events", ["sala_id"], name: "index_events_on_sala_id", using: :btree
@@ -209,6 +209,47 @@ ActiveRecord::Schema.define(version: 20160625141130) do
   end
 
   add_index "posts", ["user_id"], name: "index_posts_on_user_id", using: :btree
+
+  create_table "rehearsal_studio_reviews", force: :cascade do |t|
+    t.string   "title",               limit: 255,               null: false
+    t.string   "description",         limit: 255
+    t.decimal  "rate",                            precision: 1, null: false
+    t.decimal  "room_dimension",                  precision: 2
+    t.decimal  "room_price",                      precision: 2
+    t.string   "avaliability",        limit: 255
+    t.boolean  "equipped_room"
+    t.boolean  "shared_room"
+    t.integer  "bands_in_room",       limit: 4
+    t.integer  "user_id",             limit: 4
+    t.integer  "rehearsal_studio_id", limit: 4
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
+  end
+
+  create_table "rehearsal_studio_users", force: :cascade do |t|
+    t.integer  "rehearsal_studio_id", limit: 4, null: false
+    t.integer  "user_id",             limit: 4, null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+  end
+
+  add_index "rehearsal_studio_users", ["rehearsal_studio_id"], name: "index_rehearsal_studio_users_on_rehearsal_studio_id", using: :btree
+  add_index "rehearsal_studio_users", ["user_id"], name: "index_rehearsal_studio_users_on_user_id", using: :btree
+
+  create_table "rehearsal_studios", force: :cascade do |t|
+    t.string   "name",            limit: 255,               null: false
+    t.string   "street",          limit: 255,               null: false
+    t.string   "city",            limit: 255,               null: false
+    t.string   "state",           limit: 255,               null: false
+    t.string   "country",         limit: 255,               null: false
+    t.integer  "rooms_avaliable", limit: 4
+    t.integer  "creator_id",      limit: 4,                 null: false
+    t.decimal  "total_rate",                  precision: 2
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
+  end
+
+  add_index "rehearsal_studios", ["creator_id"], name: "index_rehearsal_studios_on_creator_id", using: :btree
 
   create_table "roles", force: :cascade do |t|
     t.string "nombre", limit: 255, null: false
@@ -308,7 +349,7 @@ ActiveRecord::Schema.define(version: 20160625141130) do
   add_foreign_key "events", "event_statuses"
   add_foreign_key "events", "event_types"
   add_foreign_key "events", "salas"
-  add_foreign_key "events", "users", column: "creador"
+  add_foreign_key "events", "users", column: "creator_id"
   add_foreign_key "main_posts", "posts"
   add_foreign_key "members", "bands"
   add_foreign_key "members", "knowledges", column: "instrument_id"
@@ -319,6 +360,9 @@ ActiveRecord::Schema.define(version: 20160625141130) do
   add_foreign_key "musician_knowledges", "levels"
   add_foreign_key "musician_knowledges", "musicians"
   add_foreign_key "posts", "users"
+  add_foreign_key "rehearsal_studio_users", "rehearsal_studios"
+  add_foreign_key "rehearsal_studio_users", "users"
+  add_foreign_key "rehearsal_studios", "users", column: "creator_id"
   add_foreign_key "sala_genres", "genres"
   add_foreign_key "sala_genres", "salas"
   add_foreign_key "sala_reviews", "salas"

@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  rehearsal_studio_id: 
+  user_id: 
+
+two:
+  rehearsal_studio_id: 
+  user_id: 
