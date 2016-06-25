@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160625173428) do
+ActiveRecord::Schema.define(version: 20160625180109) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "user_id",          limit: 4,   null: false
@@ -126,11 +126,14 @@ ActiveRecord::Schema.define(version: 20160625173428) do
   add_index "events", ["sala_id"], name: "index_events_on_sala_id", using: :btree
 
   create_table "followships", force: :cascade do |t|
-    t.integer  "followed_id", limit: 4, null: false
+    t.integer  "leader_id",   limit: 4, null: false
     t.integer  "follower_id", limit: 4, null: false
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
   end
+
+  add_index "followships", ["follower_id"], name: "index_followships_on_follower_id", using: :btree
+  add_index "followships", ["leader_id"], name: "index_followships_on_leader_id", using: :btree
 
   create_table "genres", force: :cascade do |t|
     t.string "name",     limit: 255, null: false
@@ -351,6 +354,8 @@ ActiveRecord::Schema.define(version: 20160625173428) do
   add_foreign_key "events", "event_types"
   add_foreign_key "events", "salas"
   add_foreign_key "events", "users", column: "creator_id"
+  add_foreign_key "followships", "users", column: "follower_id"
+  add_foreign_key "followships", "users", column: "leader_id"
   add_foreign_key "main_posts", "posts"
   add_foreign_key "members", "bands"
   add_foreign_key "members", "knowledges", column: "instrument_id"
