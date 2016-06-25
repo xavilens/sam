@@ -3,13 +3,15 @@
 Ad
   Adeable
     Trade
-      TradeType ( vendo, compro, cambio, alquilo )
+      TAdType = ( vendo, compro, cambio, alquilo )
+      TAdItem = ( Equipo técnico, Instrumentos, Otros )
     BandToMember
-      BandAdInstrument -> BandToMember + Instrument
+      BTMAdInstrument -> BandToMember + Instrument
     MemberToBand
-      MemberAdGenre -> MemberToBand + Genre
+      MTBAdGenre -> MemberToBand + Genre
     BandToBand
-      BandToBandType ( evento, compañeros de local )
+      BTBAdType = ( evento, compañeros de local )
+      BTBAdGenre -> BandToBand + Genre
 
 Image
   Imageable
@@ -23,4 +25,3 @@ Image
     SalaReview
     RehearsalStudio
     RehearsalStudioReview
-    
