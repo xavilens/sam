@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160625214906) do
+ActiveRecord::Schema.define(version: 20160625230857) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "user_id",          limit: 4,   null: false
@@ -27,6 +27,19 @@ ActiveRecord::Schema.define(version: 20160625214906) do
   create_table "activity_types", force: :cascade do |t|
     t.string "name", limit: 255
   end
+
+  create_table "ads", force: :cascade do |t|
+    t.integer  "user_id",      limit: 4,     null: false
+    t.integer  "adeable_id",   limit: 4,     null: false
+    t.string   "adeable_type", limit: 255,   null: false
+    t.string   "title",        limit: 255,   null: false
+    t.text     "body",         limit: 65535
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "ads", ["adeable_type", "adeable_id"], name: "index_ads_on_adeable_type_and_adeable_id", using: :btree
+  add_index "ads", ["user_id"], name: "index_ads_on_user_id", using: :btree
 
   create_table "band_statuses", force: :cascade do |t|
     t.string "name", limit: 255
@@ -340,6 +353,7 @@ ActiveRecord::Schema.define(version: 20160625214906) do
 
   add_foreign_key "activities", "activity_types"
   add_foreign_key "activities", "users"
+  add_foreign_key "ads", "users"
   add_foreign_key "bands", "genres", column: "genre_1_id"
   add_foreign_key "bands", "genres", column: "genre_2_id"
   add_foreign_key "bands", "genres", column: "genre_3_id"
