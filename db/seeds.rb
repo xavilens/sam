@@ -31,12 +31,12 @@ end
 
 ############################################ BAND_ESTATUSES ############################################
 ['Buscando miembro', 'Buscando concierto', 'Buscando manager', 'Buscando local', 'Activo', 'Inactivo', 'Buscando equipo'].each do |bStatus|
-  BandStatus.find_or_create_by({nombre: bStatus})
+  BandStatus.find_or_create_by({name: bStatus})
 end
 
 ############################################ MUSICIAN_ESTATUSES ############################################
 ['Buscando grupo', 'Buscando concierto', 'Buscando manager', 'Activo', 'Inactivo', 'Buscando equipo'].each do |mStatus|
-  MusicianStatus.find_or_create_by({nombre: mStatus})
+  MusicianStatus.find_or_create_by({name: mStatus})
 end
 
 ############################################ ACTIVITY_TYPES ############################################

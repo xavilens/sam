@@ -40,7 +40,12 @@ class User < ActiveRecord::Base
 
   has_many :activities
 
+  # TODO: Arreglar Relacion (follows, followers)
   has_many :followships
+
+  has_many :sala_reviews
+  has_many :sala_users
+  has_many :salas, through: :sala_users
 
   ################### ACCIONES ###################
   before_create :set_default

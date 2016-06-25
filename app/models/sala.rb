@@ -11,6 +11,13 @@ class Sala < ActiveRecord::Base
   ################### RELACIONES ###################
   belongs_to :creator_id, class_name: 'User', foreign_key: 'user_id'
 
+  has_many :sala_reviews
+  has_many :sala_users
+  has_many :users, through: :sala_users
+
+  has_many :sala_genres
+  has_many :genres, through: :sala_genres
+
   ################### METODOS ###################
   def calculate_rating(new_rate)
     return ( total_rating * n_reviews + new_rate ) / ( n_reviews + 1 )
