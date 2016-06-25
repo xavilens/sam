@@ -18,6 +18,8 @@ class Sala < ActiveRecord::Base
   has_many :sala_genres
   has_many :genres, through: :sala_genres
 
+  has_many :events
+  
   ################### METODOS ###################
   def calculate_rating(new_rate)
     return ( total_rating * n_reviews + new_rate ) / ( n_reviews + 1 )
