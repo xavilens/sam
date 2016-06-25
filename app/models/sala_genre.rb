@@ -7,7 +7,5 @@ class SalaGenre < ActiveRecord::Base
   belongs_to :sala
   belongs_to :genre
 
-  has_many :events
-
   ################### METODOS ###################
 end

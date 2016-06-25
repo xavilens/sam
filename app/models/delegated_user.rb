@@ -6,7 +6,7 @@ class DelegatedUser < ActiveRecord::Base
   ################### VALIDACIONES ###################
   validates :delegated_user, presence: true
   validates :current_user, presence: true, uniqueness: {scope: :delegated_user}
-  validates :activo, presence: true
+  validates :active, presence: true
 
   ################### RELACIONES ###################
   belongs_to :delegated_user, class_name: 'User', foreign_key: 'user_id'

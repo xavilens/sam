@@ -11,12 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160625160838) do
+ActiveRecord::Schema.define(version: 20160625173428) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "user_id",          limit: 4,   null: false
     t.integer  "activity_type_id", limit: 4,   null: false
-    t.string   "descripcion",      limit: 255, null: false
+    t.string   "description",      limit: 255, null: false
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
   end
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 20160625160838) do
   add_index "activities", ["user_id"], name: "index_activities_on_user_id", using: :btree
 
   create_table "activity_types", force: :cascade do |t|
-    t.string "nombre", limit: 255
+    t.string "name", limit: 255
   end
 
   create_table "band_statuses", force: :cascade do |t|
@@ -48,8 +48,8 @@ ActiveRecord::Schema.define(version: 20160625160838) do
   create_table "comments", force: :cascade do |t|
     t.integer  "post_id",    limit: 4,                     null: false
     t.integer  "user_id",    limit: 4,                     null: false
-    t.text     "cuerpo",     limit: 65535,                 null: false
-    t.boolean  "editado",                  default: false, null: false
+    t.text     "body",       limit: 65535,                 null: false
+    t.boolean  "edited",                   default: false, null: false
     t.datetime "created_at",                               null: false
     t.datetime "updated_at",                               null: false
   end
@@ -58,15 +58,15 @@ ActiveRecord::Schema.define(version: 20160625160838) do
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
   create_table "conversations", force: :cascade do |t|
-    t.integer  "usuario_1",  limit: 4,   null: false
-    t.integer  "usuario_2",  limit: 4,   null: false
+    t.integer  "user_1_id",  limit: 4,   null: false
+    t.integer  "user_2_id",  limit: 4,   null: false
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
-    t.string   "asunto",     limit: 255, null: false
+    t.string   "subject",    limit: 255, null: false
   end
 
-  add_index "conversations", ["usuario_1"], name: "index_conversations_on_usuario_1", using: :btree
-  add_index "conversations", ["usuario_2"], name: "index_conversations_on_usuario_2", using: :btree
+  add_index "conversations", ["user_1_id"], name: "index_conversations_on_user_1_id", using: :btree
+  add_index "conversations", ["user_2_id"], name: "index_conversations_on_user_2_id", using: :btree
 
   create_table "delegated_users", force: :cascade do |t|
     t.integer  "sign_in_count",      limit: 4,   default: 0,     null: false
@@ -76,7 +76,7 @@ ActiveRecord::Schema.define(version: 20160625160838) do
     t.string   "last_sign_in_ip",    limit: 255
     t.integer  "delegated_user",     limit: 4,                   null: false
     t.integer  "current_user",       limit: 4,                   null: false
-    t.boolean  "activo",                         default: false, null: false
+    t.boolean  "active",                         default: false, null: false
     t.datetime "created_at",                                     null: false
     t.datetime "updated_at",                                     null: false
   end
@@ -94,30 +94,30 @@ ActiveRecord::Schema.define(version: 20160625160838) do
   add_index "event_participants", ["participant"], name: "index_event_participants_on_participant", using: :btree
 
   create_table "event_statuses", force: :cascade do |t|
-    t.string "nombre", limit: 255, null: false
+    t.string "name", limit: 255, null: false
   end
 
   create_table "event_types", force: :cascade do |t|
-    t.string "nombre", limit: 255
+    t.string "name", limit: 255
   end
 
   create_table "events", force: :cascade do |t|
-    t.string   "nombre",            limit: 255,               null: false
-    t.string   "descripcion",       limit: 255
-    t.date     "fecha",                                       null: false
-    t.time     "hora",                                        null: false
-    t.integer  "event_status_id",   limit: 4,                 null: false
-    t.string   "calle",             limit: 255,               null: false
-    t.string   "ciudad",            limit: 255,               null: false
-    t.string   "comunidad",         limit: 255,               null: false
-    t.string   "pais",              limit: 255,               null: false
-    t.integer  "max_participantes", limit: 4
-    t.decimal  "pvp",                           precision: 2
-    t.integer  "creator_id",        limit: 4,                 null: false
-    t.datetime "created_at",                                  null: false
-    t.datetime "updated_at",                                  null: false
-    t.integer  "event_type_id",     limit: 4
-    t.integer  "sala_id",           limit: 4
+    t.string   "name",             limit: 255,               null: false
+    t.string   "descripcion",      limit: 255
+    t.date     "date",                                       null: false
+    t.time     "time",                                       null: false
+    t.integer  "event_status_id",  limit: 4,                 null: false
+    t.string   "street",           limit: 255,               null: false
+    t.string   "city",             limit: 255,               null: false
+    t.string   "state",            limit: 255,               null: false
+    t.string   "country",          limit: 255,               null: false
+    t.integer  "max_participants", limit: 4
+    t.decimal  "pvp",                          precision: 2
+    t.integer  "creator_id",       limit: 4,                 null: false
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
+    t.integer  "event_type_id",    limit: 4
+    t.integer  "sala_id",          limit: 4
   end
 
   add_index "events", ["creator_id"], name: "index_events_on_creator_id", using: :btree
@@ -133,16 +133,16 @@ ActiveRecord::Schema.define(version: 20160625160838) do
   end
 
   create_table "genres", force: :cascade do |t|
-    t.string "nombre",    limit: 255, null: false
-    t.string "categoria", limit: 255, null: false
+    t.string "name",     limit: 255, null: false
+    t.string "category", limit: 255, null: false
   end
 
   create_table "knowledges", force: :cascade do |t|
-    t.string "nombre", limit: 255, null: false
+    t.string "name", limit: 255, null: false
   end
 
   create_table "levels", force: :cascade do |t|
-    t.string "nombre", limit: 255, null: false
+    t.string "name", limit: 255, null: false
   end
 
   create_table "main_posts", force: :cascade do |t|
@@ -166,14 +166,15 @@ ActiveRecord::Schema.define(version: 20160625160838) do
   add_index "members", ["musician_id"], name: "index_members_on_musician_id", using: :btree
 
   create_table "messages", force: :cascade do |t|
-    t.integer  "autor",           limit: 4,     null: false
-    t.text     "cuerpo",          limit: 65535, null: false
+    t.integer  "author_id",       limit: 4,     null: false
+    t.text     "body",            limit: 65535, null: false
     t.integer  "conversation_id", limit: 4,     null: false
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
   end
 
-  add_index "messages", ["autor"], name: "fk_rails_fc36125d0f", using: :btree
+  add_index "messages", ["author_id"], name: "fk_rails_fc36125d0f", using: :btree
+  add_index "messages", ["author_id"], name: "index_messages_on_author_id", using: :btree
   add_index "messages", ["conversation_id"], name: "index_messages_on_conversation_id", using: :btree
 
   create_table "musician_knowledges", force: :cascade do |t|
@@ -199,11 +200,11 @@ ActiveRecord::Schema.define(version: 20160625160838) do
   end
 
   create_table "posts", force: :cascade do |t|
-    t.string   "titulo",     limit: 255,                   null: false
+    t.string   "title",      limit: 255,                   null: false
     t.integer  "user_id",    limit: 4,                     null: false
-    t.text     "cuerpo",     limit: 65535,                 null: false
-    t.boolean  "publicado",                default: false, null: false
-    t.boolean  "editado",                  default: false, null: false
+    t.text     "body",       limit: 65535,                 null: false
+    t.boolean  "published",                default: false, null: false
+    t.boolean  "edited",                   default: false, null: false
     t.datetime "created_at",                               null: false
     t.datetime "updated_at",                               null: false
   end
@@ -252,7 +253,7 @@ ActiveRecord::Schema.define(version: 20160625160838) do
   add_index "rehearsal_studios", ["creator_id"], name: "index_rehearsal_studios_on_creator_id", using: :btree
 
   create_table "roles", force: :cascade do |t|
-    t.string "nombre", limit: 255, null: false
+    t.string "name", limit: 255, null: false
   end
 
   create_table "sala_genres", force: :cascade do |t|
@@ -319,10 +320,10 @@ ActiveRecord::Schema.define(version: 20160625160838) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip",     limit: 255
     t.string   "last_sign_in_ip",        limit: 255
-    t.string   "nombre",                 limit: 255,              null: false
-    t.string   "ciudad",                 limit: 255,              null: false
-    t.string   "comunidad",              limit: 255,              null: false
-    t.string   "pais",                   limit: 255,              null: false
+    t.string   "name",                   limit: 255,              null: false
+    t.string   "city",                   limit: 255,              null: false
+    t.string   "state",                  limit: 255,              null: false
+    t.string   "country",                limit: 255,              null: false
     t.integer  "profileable_id",         limit: 4,                null: false
     t.string   "profileable_type",       limit: 255,              null: false
     t.datetime "created_at",                                      null: false
@@ -341,8 +342,8 @@ ActiveRecord::Schema.define(version: 20160625160838) do
   add_foreign_key "bands", "genres", column: "genre3_id"
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
-  add_foreign_key "conversations", "users", column: "usuario_1"
-  add_foreign_key "conversations", "users", column: "usuario_2"
+  add_foreign_key "conversations", "users", column: "user_1_id"
+  add_foreign_key "conversations", "users", column: "user_2_id"
   add_foreign_key "delegated_users", "users", column: "current_user"
   add_foreign_key "delegated_users", "users", column: "delegated_user"
   add_foreign_key "event_participants", "users", column: "participant"
@@ -355,7 +356,7 @@ ActiveRecord::Schema.define(version: 20160625160838) do
   add_foreign_key "members", "knowledges", column: "instrument_id"
   add_foreign_key "members", "musicians"
   add_foreign_key "messages", "conversations"
-  add_foreign_key "messages", "users", column: "autor"
+  add_foreign_key "messages", "users", column: "author_id"
   add_foreign_key "musician_knowledges", "knowledges"
   add_foreign_key "musician_knowledges", "levels"
   add_foreign_key "musician_knowledges", "musicians"

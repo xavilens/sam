@@ -1,7 +1,7 @@
 class Post < ActiveRecord::Base
   ################### VALIDACIONES ###################
-  validates :titulo, presence: true
-  validates :cuerpo, presence: true
+  validates :title, presence: true
+  validates :body, presence: true
   validates :user_id, presence: true
 
   ################### RELACIONES ###################

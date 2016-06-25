@@ -14,10 +14,10 @@ class User < ActiveRecord::Base
   # current_sign_in_ip, last_sign_in_ip
 
   ################### VALIDACIONES ###################
-  validates :nombre, presence: true
-  validates :ciudad, presence: true
-  validates :comunidad, presence: true
-  validates :pais, presence: true
+  validates :name, presence: true
+  validates :city, presence: true
+  validates :state, presence: true
+  validates :country, presence: true
   validates :role_id, presence: true
   validates :profileable_id, presence: true
   validates :profileable_type, presence: true, uniqueness: {scope: :profileable_id}
