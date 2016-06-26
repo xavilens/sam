@@ -1,4 +1,4 @@
-class Trade < ActiveRecord::Base
+class TradeAd < ActiveRecord::Base
   ################### VALIDACIONES ###################
   validates :t_ad_type_id, presence: true
   validates :t_ad_item_id, presence: true
