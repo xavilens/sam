@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  t_ad_type_id: 
+  t_ad_item_id: 
+  price: 9.99
+
+two:
+  t_ad_type_id: 
+  t_ad_item_id: 
+  price: 9.99

@@ -102,3 +102,20 @@ end
 end
 
 # TODO: Más géneros
+
+############################################ ADS RELATED ############################################
+
+# TAdTypes
+['Vendo', 'Compro', 'Alquilo', 'Cambio'].each do |tadtype|
+ TAdType.find_or_create_by({name: tadtype})
+end
+
+# TAdItem
+['Instrumentos', 'Amplificadores', 'Equipo técnico', 'Otros'].each do |taditem|
+ TAdItem.find_or_create_by({name: taditem})
+end
+
+# BTBAdType
+['Grupos para concierto', 'Grupos para local', 'Local compartido'].each do |btbadtype|
+ BTBAdType.find_or_create_by({name: btbadtype})
+end

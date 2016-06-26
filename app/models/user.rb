@@ -61,6 +61,9 @@ class User < ActiveRecord::Base
   has_many :rehearsal_studio_users
   has_many :rehearsal_studios, through: :rehearsal_studio_users
 
+  # AD RELATED
+  has_many :ads
+
   ################### ACCIONES ###################
   before_create :set_default
 

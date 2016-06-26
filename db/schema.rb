@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160625230857) do
+ActiveRecord::Schema.define(version: 20160626000758) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "user_id",          limit: 4,   null: false
@@ -36,6 +36,9 @@ ActiveRecord::Schema.define(version: 20160625230857) do
     t.text     "body",         limit: 65535
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+    t.string   "city",         limit: 255,   null: false
+    t.string   "state",        limit: 255,   null: false
+    t.string   "country",      limit: 255,   null: false
   end
 
   add_index "ads", ["adeable_type", "adeable_id"], name: "index_ads_on_adeable_type_and_adeable_id", using: :btree
@@ -57,6 +60,12 @@ ActiveRecord::Schema.define(version: 20160625230857) do
   add_index "bands", ["genre_1_id"], name: "index_bands_on_genre_1_id", using: :btree
   add_index "bands", ["genre_2_id"], name: "index_bands_on_genre_2_id", using: :btree
   add_index "bands", ["genre_3_id"], name: "index_bands_on_genre_3_id", using: :btree
+
+  create_table "btb_ad_types", force: :cascade do |t|
+    t.string   "name",       limit: 255, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "comments", force: :cascade do |t|
     t.integer  "post_id",    limit: 4,                     null: false
@@ -325,6 +334,29 @@ ActiveRecord::Schema.define(version: 20160625230857) do
 
   add_index "salas", ["creator_id"], name: "index_salas_on_creator_id", using: :btree
 
+  create_table "t_ad_items", force: :cascade do |t|
+    t.string   "name",       limit: 255, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "t_ad_types", force: :cascade do |t|
+    t.string   "name",       limit: 255, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "trades", force: :cascade do |t|
+    t.integer  "t_ad_type_id", limit: 4,                null: false
+    t.integer  "t_ad_item_id", limit: 4,                null: false
+    t.decimal  "price",                  precision: 10
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+  end
+
+  add_index "trades", ["t_ad_item_id"], name: "index_trades_on_t_ad_item_id", using: :btree
+  add_index "trades", ["t_ad_type_id"], name: "index_trades_on_t_ad_type_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
     t.string   "encrypted_password",     limit: 255, default: "", null: false
@@ -390,5 +422,7 @@ ActiveRecord::Schema.define(version: 20160625230857) do
   add_foreign_key "sala_users", "salas"
   add_foreign_key "sala_users", "users"
   add_foreign_key "salas", "users", column: "creator_id"
+  add_foreign_key "trades", "t_ad_items"
+  add_foreign_key "trades", "t_ad_types"
   add_foreign_key "users", "roles"
 end
