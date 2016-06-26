@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160626000758) do
+ActiveRecord::Schema.define(version: 20160626003137) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "user_id",          limit: 4,   null: false
@@ -48,6 +48,14 @@ ActiveRecord::Schema.define(version: 20160626000758) do
     t.string "name", limit: 255
   end
 
+  create_table "band_to_members", force: :cascade do |t|
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.string   "city",       limit: 255, null: false
+    t.string   "state",      limit: 255, null: false
+    t.string   "country",    limit: 255, null: false
+  end
+
   create_table "bands", force: :cascade do |t|
     t.integer  "genre_1_id",     limit: 4, null: false
     t.integer  "genre_2_id",     limit: 4
@@ -65,6 +73,13 @@ ActiveRecord::Schema.define(version: 20160626000758) do
     t.string   "name",       limit: 255, null: false
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+  end
+
+  create_table "btm_ad_instruments", force: :cascade do |t|
+    t.integer  "band_to_members_id", limit: 4, null: false
+    t.integer  "instruments_id",     limit: 4, null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
   create_table "comments", force: :cascade do |t|
@@ -347,11 +362,11 @@ ActiveRecord::Schema.define(version: 20160626000758) do
   end
 
   create_table "trades", force: :cascade do |t|
-    t.integer  "t_ad_type_id", limit: 4,                null: false
-    t.integer  "t_ad_item_id", limit: 4,                null: false
-    t.decimal  "price",                  precision: 10
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.integer  "t_ad_type_id", limit: 4,               null: false
+    t.integer  "t_ad_item_id", limit: 4,               null: false
+    t.decimal  "price",                  precision: 2
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
   end
 
   add_index "trades", ["t_ad_item_id"], name: "index_trades_on_t_ad_item_id", using: :btree

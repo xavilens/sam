@@ -1,16 +1,10 @@
-# TODO ----------------------------
+# TODO
 
 Ad
   Adeable
-    Trade
-      TAdType = ( vendo, compro, cambio, alquilo )
-      TAdItem = ( Equipo técnico, Instrumentos, Otros )
-    BandToMember
-      BTMAdInstrument -> BandToMember + Instrument
     MemberToBand
       MTBAdGenre -> MemberToBand + Genre
     BandToBand
-      BTBAdType = ( evento, compañeros de local )
       BTBAdGenre -> BandToBand + Genre
 
 Image
