@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160626215720) do
+ActiveRecord::Schema.define(version: 20160627173428) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "user_id",          limit: 4,   null: false
@@ -57,6 +57,17 @@ ActiveRecord::Schema.define(version: 20160626215720) do
     t.string "name", limit: 255
   end
 
+  create_table "band_to_band_ads", force: :cascade do |t|
+    t.string   "city",           limit: 255, null: false
+    t.string   "state",          limit: 255, null: false
+    t.string   "country",        limit: 255, null: false
+    t.integer  "btb_ad_type_id", limit: 4,   null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "band_to_band_ads", ["btb_ad_type_id"], name: "index_band_to_band_ads_on_btb_ad_type_id", using: :btree
+
   create_table "bands", force: :cascade do |t|
     t.integer  "genre_1_id",     limit: 4, null: false
     t.integer  "genre_2_id",     limit: 4
@@ -89,6 +100,16 @@ ActiveRecord::Schema.define(version: 20160626215720) do
 
   add_index "bm_ad_instruments", ["band_musician_ad_id"], name: "index_bm_ad_instruments_on_band_musician_ad_id", using: :btree
   add_index "bm_ad_instruments", ["instrument_id"], name: "index_bm_ad_instruments_on_instrument_id", using: :btree
+
+  create_table "btb_ad_genres", force: :cascade do |t|
+    t.integer  "band_to_band_ad_id", limit: 4
+    t.integer  "genre_id",           limit: 4
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
+
+  add_index "btb_ad_genres", ["band_to_band_ad_id"], name: "index_btb_ad_genres_on_band_to_band_ad_id", using: :btree
+  add_index "btb_ad_genres", ["genre_id"], name: "index_btb_ad_genres_on_genre_id", using: :btree
 
   create_table "btb_ad_types", force: :cascade do |t|
     t.string   "name",       limit: 255, null: false
@@ -423,6 +444,7 @@ ActiveRecord::Schema.define(version: 20160626215720) do
   add_foreign_key "activities", "activity_types"
   add_foreign_key "activities", "users"
   add_foreign_key "ads", "users"
+  add_foreign_key "band_to_band_ads", "btb_ad_types"
   add_foreign_key "bands", "genres", column: "genre_1_id"
   add_foreign_key "bands", "genres", column: "genre_2_id"
   add_foreign_key "bands", "genres", column: "genre_3_id"
@@ -430,6 +452,8 @@ ActiveRecord::Schema.define(version: 20160626215720) do
   add_foreign_key "bm_ad_genres", "genres"
   add_foreign_key "bm_ad_instruments", "band_musician_ads"
   add_foreign_key "bm_ad_instruments", "instruments"
+  add_foreign_key "btb_ad_genres", "band_to_band_ads"
+  add_foreign_key "btb_ad_genres", "genres"
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
   add_foreign_key "conversations", "users", column: "user_1_id"

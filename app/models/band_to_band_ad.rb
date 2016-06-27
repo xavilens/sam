@@ -1,15 +1,12 @@
-class BandMusicianAd < ActiveRecord::Base
+class BandToBandAd < ActiveRecord::Base
   ################### VALIDACIONES ###################
   validates :city, presence: true
   validates :state, presence: true
   validates :country, presence: true
   validates :type, presence: true
-
+  validates :btb_ad_type_id, presence: true
+  
   ################### RELACIONES ###################
   has_one :ad, as: :adeable
-  has_many :bm_ad_genres
-  has_many :genres, through: :bm_ad_genres
-  has_many :bm_ad_instruments
-  has_many :instruments, through: :bm_ad_instruments
-
+  belongs_to :btb_ad_type
 end
