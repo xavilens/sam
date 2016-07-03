@@ -120,14 +120,14 @@ class User < ActiveRecord::Base
     role_id == User.admin_id
   end
 
-  def self.initialize_admin_id
+  def self.initialize_attributes
     if User.admin_id.nil?
       User.admin_id = User.set_admin_id
     end
   end
 
   # PRIVATE METHODS
-  
+
   private
 
   def setDefault

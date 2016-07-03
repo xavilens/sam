@@ -3,6 +3,6 @@ class SiteController < ApplicationController
   def index
     @hola = "Hola, mundo!"
 
-    User.initialize_admin_id
+    User.initialize_attributes
   end
 end
