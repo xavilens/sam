@@ -135,6 +135,6 @@ class User < ActiveRecord::Base
   end
 
   def self.set_admin_id
-    return Role.find_by_name('admin').id
+    Role.find_by_name('admin').id
   end
 end

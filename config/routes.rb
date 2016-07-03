@@ -1,16 +1,24 @@
 Rails.application.routes.draw do
-  
-  resources :comments
-  resources :posts
-  devise_for :delegated_users
-  resources :bands
-  resources :musicians
-  devise_for :users
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
   root 'site#index'
+
+  devise_for :users, controllers: {
+    confirmations: 'users/confirmations',
+    omniauth: 'users/omniauth_callbacks',
+    passwords: 'users/passwords',
+    registrations: 'users/registrations',
+    sessions: 'users/sessions',
+    unlocks: 'users/unlocks'
+  }
+  devise_for :delegated_users
+  resources :bands
+  resources :musicians
+  resources :posts
+  resources :comments
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
