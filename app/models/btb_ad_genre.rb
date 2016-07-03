@@ -1,4 +1,4 @@
-class BtbAdGenre < ActiveRecord::Base
+class BTBAdGenre < ActiveRecord::Base
   ################### VALIDACIONES ###################
   validates :band_to_band_ad_id, presence: true
   validates :genre_id, presence: true

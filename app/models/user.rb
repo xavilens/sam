@@ -4,9 +4,12 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  cattr_accessor :admin_id
+
   # TODO: Campos Youtube?, Soundcloud?, Facebook?, Twitter?, Bandcamp?, Página web?
 
   ################### VALIDACIONES ###################
+
   validates :name, presence: true
   validates :city, presence: true
   validates :state, presence: true
@@ -14,6 +17,7 @@ class User < ActiveRecord::Base
   validates :role_id, presence: true
   validates :profileable_id, presence: true
   validates :profileable_type, presence: true, uniqueness: {scope: :profileable_id}
+
 
   ################### RELACIONES ###################
 
@@ -64,10 +68,14 @@ class User < ActiveRecord::Base
   # AD RELATED
   has_many :ads
 
+
   ################### ACCIONES ###################
+
   before_create :set_default
 
+
   ################### METODOS ###################
+
   def es_musico?
     profileable_type == 'Musician'
   end
@@ -108,8 +116,25 @@ class User < ActiveRecord::Base
     end
   end
 
-  private
-    def setDefault
-      self.role_id = Role.find_by_name('registrado').id
+  def is_admin?
+    role_id == User.admin_id
+  end
+
+  def self.initialize_admin_id
+    if User.admin_id.nil?
+      User.admin_id = User.set_admin_id
     end
+  end
+
+  # PRIVATE METHODS
+  
+  private
+
+  def setDefault
+    self.role_id = Role.find_by_name('registrado').id
+  end
+
+  def self.set_admin_id
+    return Role.find_by_name('admin').id
+  end
 end

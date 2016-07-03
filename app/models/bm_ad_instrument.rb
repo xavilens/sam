@@ -1,4 +1,4 @@
-class BmAdInstrument < ActiveRecord::Base
+class BMAdInstrument < ActiveRecord::Base
   ################### VALIDACIONES ###################
   validates :band_musician_ad_id, presence: true
   validates :instrument_id, presence: true, uniqueness: { scope: :band_musician_ad_id }

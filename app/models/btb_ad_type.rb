@@ -1,2 +1,2 @@
-class BtbAdType < ActiveRecord::Base
+class BTBAdType < ActiveRecord::Base
 end
