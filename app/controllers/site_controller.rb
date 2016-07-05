@@ -1,7 +1,7 @@
 class SiteController < ApplicationController
 
   def index
-    @hola = "Hola, mundo!"
+    @hola = t 'hello'
 
     User.initialize_attributes
   end

@@ -14,7 +14,9 @@ Rails.application.routes.draw do
     sessions: 'users/sessions',
     unlocks: 'users/unlocks'
   }
+
   devise_for :delegated_users
+
   resources :bands
   resources :musicians
   resources :posts
