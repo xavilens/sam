@@ -90,9 +90,9 @@ class User < ActiveRecord::Base
 
   def perfil
     if es_musico?
-      return Musician.find(profileable_id)
+      Musician.find(profileable_id)
     elsif es_grupo?
-      return Band.find(profileable_id)
+      Band.find(profileable_id)
     end
   end
 
@@ -120,8 +120,8 @@ class User < ActiveRecord::Base
     role_id == User.admin_id
   end
 
-  def self.initialize_attributes
-    if User.admin_id.nil?
+  def self.initialize_attributes!
+    if User.admin_id.blank?
       User.admin_id = User.set_admin_id
     end
   end

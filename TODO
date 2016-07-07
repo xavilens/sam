@@ -1,12 +1,5 @@
 # TODO
 
-Ad
-  Adeable
-    MemberToBand
-      MTBAdGenre -> MemberToBand + Genre
-    BandToBand
-      BTBAdGenre -> BandToBand + Genre
-
 Image
   Imageable
     User
