@@ -5,18 +5,22 @@
 
   <div class="form-inputs">
     <%= f.input :email, required: true, autofocus: true %>
-    <%= f.input :password, label: 'Contraseña', required: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length) %>
+    <%= f.input :password, label: 'Contraseña', required: true,
+    hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length) %>
     <%= f.input :password_confirmation, label: 'Confirma tu contraseña', required: true %>
-    <%= f.input :name, label: 'Nombre de usuario', required: true, hint: 'Nombre con el que te verán el resto de usuarios' %>
+    <%= f.input :name, label: 'Nombre de usuario', required: true,
+    hint: 'Nombre con el que te verán el resto de usuarios' %>
 
-    <%= f.input :autocomplete, label: 'Dirección', name: 'autocomplete', placeholder: 'Introduce la dirección', as: :fake %>
+    <%= f.input :autocomplete, label: 'Dirección', name: 'autocomplete',
+    placeholder: 'Introduce la dirección', as: :fake %>
 
     <%= f.input :city, label: 'Ciudad', readonly: true %>
     <%= f.input :state, label: 'Comunidad autónoma', readonly: true %>
     <%= f.input :country, label: 'País', readonly: true %>
 
     <%= f.label 'Tipo de perfil', required: true%>
-    <%= f.collection_radio_buttons :profileable_type, [['Musician', 'Músico'] ,['Band', 'Grupo']], :first, :last, required: true %>
+    <%= f.collection_radio_buttons :profileable_type,
+    [['Musician', 'Músico'] ,['Band', 'Grupo']], :first, :last, required: true %>
   </div>
 
   <div class="form-actions">
