@@ -5,8 +5,11 @@
 
 var autocomplete;
 var componentForm;
+var resource;
 
-function initAutocomplete(tipoDir){
+function initAutocomplete(tipoDir, resourceParam){
+  resource = resourceParam;
+
   // Obtenemos los parámetros para la función Autocomplete
   var input = document.getElementById('autocomplete');
   var options   = {
@@ -30,7 +33,8 @@ function fillInAddress() {
     var place = autocomplete.getPlace();
 
     for (var component in componentForm) {
-      document.getElementById(""+component).value = '';
+      alert(resource+"_"+component);
+      document.getElementById(resource+"_"+component).value = '';
       // document.getElementById(component).disabled = false;
     }
     // Toma cada componente de la dirección de los detalles del lugar obtenido
@@ -38,12 +42,10 @@ function fillInAddress() {
     for (var i = 0; i < place.address_components.length; i++) {
         var addressType = place.address_components[i].types[0];
 
-        addressType = translateAddressType(addressType);
-
         if (addressType in componentForm) {
           var val = place.address_components[i][componentForm[addressType]];
 
-          document.getElementById(addressType).value = val;
+          document.getElementById(resource+"_"+addressType).value = val;
         }
     }
 }

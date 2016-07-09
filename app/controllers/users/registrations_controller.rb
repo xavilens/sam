@@ -2,27 +2,39 @@ class Users::RegistrationsController < Devise::RegistrationsController
 before_action :configure_sign_up_params, only: [:create]
 before_action :configure_account_update_params, only: [:update]
 
-  # GET /resource/sign_up
+  # GET /user/sign_up
   def new
     super
   end
 
-  # POST /resource
+  # POST /user
   def create
-    super
+    # super
+    #
+    # profile_type = params[:user][:profileable_type]
+    # if profile_type == 'Musician'
+    #   profile = Musician.create()
+    # elsif profile_type == 'Band'
+    #   profile = Band.create()
+    # end
+    #
+    # params[:user][:profileable_id] = profile.id
+
+
+
   end
 
-  # GET /resource/edit
+  # GET /user/edit
   def edit
     super
   end
 
-  # PUT /resource
+  # PUT /user
   def update
     super
   end
 
-  # DELETE /resource
+  # DELETE /user
   def destroy
     super
   end
@@ -40,7 +52,7 @@ before_action :configure_account_update_params, only: [:update]
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:attribute]) { |u| u.permit(:country)}
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:attribute])
   end
 
   # If you have extra params to permit, append them to the sanitizer.

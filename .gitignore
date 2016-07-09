@@ -17,3 +17,6 @@
 
 # Ignore Keys file
 keys
+
+# Ignore precompile assets
+/public/assets
