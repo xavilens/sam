@@ -9,19 +9,21 @@ before_action :configure_account_update_params, only: [:update]
 
   # POST /user
   def create
-    # super
-    #
-    # profile_type = params[:user][:profileable_type]
-    # if profile_type == 'Musician'
-    #   profile = Musician.create()
-    # elsif profile_type == 'Band'
-    #   profile = Band.create()
-    # end
-    #
-    # params[:user][:profileable_id] = profile.id
 
+    # Comprobamos qué tipo de perfil tiene el usuario y creamos el perfil al que
+    # lo asociaremos
+    profile_type = params[:user][:profileable_type]
+    if profile_type == 'Musician'
+      profile = Musician.create()
+    elsif profile_type == 'Band'
+      profile = Band.create()
+    end
 
+    respond_with resource if profile.blank?
 
+    params[:user][:profileable_id] = profile.id
+
+    super
   end
 
   # GET /user/edit
@@ -52,12 +54,15 @@ before_action :configure_account_update_params, only: [:update]
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:attribute])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:email, :password,
+      :password_confirmation, :name, :city, :state, :country,
+      :profileable_type, :profileable_id])
   end
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_account_update_params
-    devise_parameter_sanitizer.permit(:account_update, keys: [:attribute])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:email, :password,
+      :password_confirmation, :name, :city, :state, :country])
   end
 
   # The path used after sign up.

@@ -8,8 +8,14 @@ class User < ActiveRecord::Base
 
   # TODO: Campos Youtube?, Soundcloud?, Facebook?, Twitter?, Bandcamp?, Página web?
 
+  ################### ACCIONES ###################
+
+  before_validation :set_default, on: :create
+
+
   ################### VALIDACIONES ###################
 
+  validates :email, presence: true, uniqueness: true
   validates :name, presence: true
   validates :city, presence: true
   validates :state, presence: true
@@ -69,11 +75,6 @@ class User < ActiveRecord::Base
   has_many :ads
 
 
-  ################### ACCIONES ###################
-
-  before_create :set_default
-
-
   ################### METODOS ###################
 
   def es_musico?
@@ -130,11 +131,11 @@ class User < ActiveRecord::Base
 
   private
 
-  def setDefault
-    self.role_id = Role.find_by_name('registrado').id
-  end
+    def set_default
+      self.role_id |= Role.find_by_name('registrado').id
+    end
 
-  def self.set_admin_id
-    Role.find_by_name('admin').id
-  end
+    def self.set_admin_id
+      Role.find_by_name('admin').id
+    end
 end

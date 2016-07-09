@@ -1,0 +1,17 @@
+<h1>Usuarios</h1>
+
+<% unless @users.blank?  %>
+<% @users.each do |user| %>
+<div class="">
+  <h4><%= user.profileable_type %></h4>
+  <h3><%= link_to user.name, user_path(user.id) %></h3>
+  <p>
+    Ubicación: <%= user.city+", "+user.state %>
+  </p>
+</div>
+<% end %>
+<% else %>
+<p>
+  Aun no hay usuarios registrados
+</p>
+<% end %>

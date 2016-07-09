@@ -1,12 +1,18 @@
 class Band < ActiveRecord::Base
+  ################### ACCIONES ###################
+
+  before_validation :set_default, on: :create
+
   ################### VALIDACIONES ###################
-  validates :genre1, presence: true
+
+  validates :band_statuses, presence: true
 
   ################### RELACIONES ###################
-  has_one :user, as: :profileable
+
+  has_one :user, as: :profileable, dependent: :destroy
 
   # TODO: Soft-delete?? // Historial de musicos??
-  has_many :members, dependent: :delete_all
+  has_many :members, dependent: :destroy_all
   has_many :musicians, through: :members
 
   belongs_to :genre_1, class_name: 'Genre', foreign_key: "genre_id"
@@ -23,4 +29,11 @@ class Band < ActiveRecord::Base
   def estado
     BandStatus.find_by_id(musician_status_id).name
   end
+
+  private
+
+    def set_default
+      self.band_status_id = BandStatus.find_by_name('Activo').id
+    end
+
 end

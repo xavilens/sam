@@ -4,7 +4,8 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'site#index'
+  # root 'site#index'
+  root 'users#index'
 
   devise_for :users, controllers: {
     confirmations: 'users/confirmations',
@@ -15,7 +16,12 @@ Rails.application.routes.draw do
     unlocks: 'users/unlocks'
   }
 
+
+  get 'users/' => 'users#index'
+  get 'user/:id' => 'users#show', as: 'user'
+
   devise_for :delegated_users
+
 
   resources :bands
   resources :musicians

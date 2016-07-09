@@ -1,0 +1,20 @@
+<script type="text/javascript">
+  var band_genres = function(){
+    var i = 1;
+    if($('input[name="user[profileable_type]"]:checked').val() == 'Band'){
+      while(i <= 3){
+        $('#genre'+i).attr('hidden', false);
+        $('label[for="user_genre'+i+'"]').attr('hidden', false);
+        i++;
+      }
+    }else{
+      while(i <= 3){
+        $('#genre'+i).attr('hidden', true);
+        $('label[for="user_genre'+i+'"]').attr('hidden', true);
+        i++;
+      }
+    }
+  };
+
+  $('input[name="user[profileable_type]"]').click(band_genres);
+</script>

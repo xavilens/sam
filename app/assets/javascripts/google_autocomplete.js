@@ -32,20 +32,25 @@ function fillInAddress() {
     // Recibe los detalles del lugar elegido en el dropdown del autocompletado
     var place = autocomplete.getPlace();
 
+    var campo;
     for (var component in componentForm) {
-      alert(resource+"_"+component);
-      document.getElementById(resource+"_"+component).value = '';
-      // document.getElementById(component).disabled = false;
+      campo = resource+"_"+component;
+      document.getElementById(campo).value = '';
+      document.getElementById(campo).disabled = false;
+      document.getElementById(campo).readonly = true;
     }
     // Toma cada componente de la dirección de los detalles del lugar obtenido
     // y rellena los correspondientes campos en el formulario
     for (var i = 0; i < place.address_components.length; i++) {
         var addressType = place.address_components[i].types[0];
 
+        addressType = translateAddressType(addressType);
+        campo = resource+"_"+addressType;
+
         if (addressType in componentForm) {
           var val = place.address_components[i][componentForm[addressType]];
 
-          document.getElementById(resource+"_"+addressType).value = val;
+          document.getElementById(campo).value = val;
         }
     }
 }
