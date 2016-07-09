@@ -5,16 +5,17 @@
 
   <div class="form-inputs">
     <%= f.input :email, required: true, autofocus: true %>
-    <%= f.input :password, required: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length) %>
-    <%= f.input :password_confirmation, required: true %>
-    <%= f.input :name, required: true %>
+    <%= f.input :password, label: 'Contraseña', required: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length) %>
+    <%= f.input :password_confirmation, label: 'Confirma tu contraseña', required: true %>
+    <%= f.input :name, label: 'Nombre de usuario', required: true, hint: 'Nombre con el que te verán el resto de usuarios' %>
 
     <!-- <%= f.label 'Dirección', for: 'autocomplete', required: true %>
     <input type="text" id="autocomplete" placeholder="Introduce la dirección" value="" /> -->
     <%= f.input :autocomplete, label: 'Dirección', placeholder: 'Introduce la dirección', required: true, as: :fake %>
 
-    <%= f.input :city, default: '', disabled: true, as: :fake %>
-    <%= f.input :state, default: '',  disabled: true, as: :fake %>
+    <%= f.input :city, label: 'Ciudad', default: '', required: false, as: :fake, disabled: true %>
+    <%= f.input :state, label: 'Comunidad autónoma', default: '', required: false, as: :fake, disabled: true %>
+    <%= f.input :country, label: 'País', required: false, as: :fake, disabled: true  %>
 
     <%= f.collection_radio_buttons :profileable_type, [['Musician', 'Músico'] ,['Band', 'Grupo']], :first, :last, required: true %>
   </div>
@@ -25,33 +26,5 @@
 
 <% end %>
 
-<%= render "devise/shared/links" %>
-
-<script type="text/javascript">
-  var init =
-    function( tipoDirParam ){
-
-      tipoDir = tipoDirParam;
-      autocomplete = null;
-
-      if(tipoDir == 'address'){
-        componentForm = {
-          street_number: 'short_name',
-          street: 'long_name',
-          city: 'long_name',
-          state: 'long_name'
-        };
-      }
-      input = document.getElementById('autocomplete');
-      options   = {
-          types: ["("+tipoDir+")"],
-          componentRestrictions: {
-              country: 'es'
-          }
-      }
-      initAutocomplete();
-    };
-
-  $(document).ready(init( 'cities' ));
-  $(document).on('page:before-render', init( 'cities' ));
-</script>
+<%= render "users/shared/links" %>
+<%= render "scripts/city_autocomplete" %>

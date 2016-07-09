@@ -1,0 +1,21 @@
+
+<script type="text/javascript">
+  var init =
+    function( tipoDirParam ){
+
+      autocomplete = null;
+
+      componentForm = {
+        street_number: 'short_name',
+        street: 'long_name',
+        city: 'long_name',
+        state: 'long_name',
+        country: 'long_name'
+      };
+
+      initAutocomplete(tipoDirParam);
+    };
+
+  $(document).ready(init( 'address' ));
+  $(document).on('page:before-render', init( 'address' ));
+</script>

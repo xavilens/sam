@@ -1,0 +1,19 @@
+
+<script type="text/javascript">
+  var init =
+    function( tipoDirParam ){
+
+      autocomplete = null;
+
+      componentForm = {
+          city: 'long_name',
+          state: 'long_name',
+          country: 'long_name'
+      };
+
+      initAutocomplete(tipoDirParam);
+    };
+
+  $(document).ready(init( 'cities' ));
+  $(document).on('page:before-render', init( 'cities' ));
+</script>
