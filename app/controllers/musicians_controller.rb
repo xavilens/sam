@@ -17,6 +17,7 @@ class MusiciansController < ApplicationController
     @musician = Musician.new
   end
 
+  # TODO: Configurar edit!
   # GET /musicians/1/edit
   def edit
   end

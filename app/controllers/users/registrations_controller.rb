@@ -65,6 +65,8 @@ before_action :configure_account_update_params, only: [:update]
       :password_confirmation, :name, :city, :state, :country])
   end
 
+
+  # TODO: Redirigir a 'Edit' del tipo profile
   # The path used after sign up.
   def after_sign_up_path_for(resource)
     super(resource)
