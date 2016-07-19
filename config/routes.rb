@@ -16,13 +16,13 @@ Rails.application.routes.draw do
     unlocks: 'users/unlocks'
   }
 
-
-  get 'users/' => 'users#index'
-  get 'user/:id' => 'users#show', as: 'user'
+  # get 'users/' => 'users#index'
+  # get 'users/:id' => 'users#show', as: 'user'
 
   devise_for :delegated_users
 
-
+  resources :users
+  get 'users/edit/account' => 'users#edit', as: 'edit_user_account'
   resources :bands
   resources :musicians
   resources :posts

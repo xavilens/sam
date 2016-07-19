@@ -35,6 +35,7 @@ function fillInAddress() {
     var campo;
     for (var component in componentForm) {
       campo = resource+"_"+component;
+
       document.getElementById(campo).value = '';
       document.getElementById(campo).disabled = false;
       document.getElementById(campo).readonly = true;

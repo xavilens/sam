@@ -5,14 +5,15 @@ class Band < ActiveRecord::Base
 
   ################### VALIDACIONES ###################
 
-  validates :band_statuses, presence: true
+  validates :band_status_id, presence: true
 
   ################### RELACIONES ###################
 
   has_one :user, as: :profileable, dependent: :destroy
-
+  accepts_nested_attributes_for :user
+  
   # TODO: Soft-delete?? // Historial de musicos??
-  has_many :members, dependent: :destroy_all
+  has_many :members, dependent: :delete_all
   has_many :musicians, through: :members
 
   belongs_to :genre_1, class_name: 'Genre', foreign_key: "genre_id"
@@ -33,7 +34,7 @@ class Band < ActiveRecord::Base
   private
 
     def set_default
-      self.band_status_id = BandStatus.find_by_name('Activo').id
+      self.band_status_id = BandStatus.find_by_name('Activo').id if self.band_status_id.blank?
     end
 
 end

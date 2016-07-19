@@ -3,8 +3,8 @@
 <% unless @users.blank?  %>
 <% @users.each do |user| %>
 <div class="">
-  <h4><%= user.profileable_type %></h4>
   <h3><%= link_to user.name, user_path(user.id) %></h3>
+  <h5><%= user.profileable_type %></h5>
   <p>
     Ubicación: <%= user.city+", "+user.state %>
   </p>

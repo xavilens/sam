@@ -1,0 +1,21 @@
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+
+    <div class="container">
+
+      <div class="navbar-header">
+        <!-- <a class="navbar-brand" href="/">S.A.M.</a> -->
+        <%= link_to 'S.A.M.', root_path, class:"navbar-brand" %>
+      </div>
+
+      <div id="nav" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li><%= link_to 'Home', root_path, class:"navbar-link" %></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <%= render "layouts/devise_links" %>
+        </ul>
+      </div>
+
+    </div>
+
+</nav>

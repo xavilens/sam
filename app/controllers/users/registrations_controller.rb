@@ -1,73 +1,76 @@
 class Users::RegistrationsController < Devise::RegistrationsController
-before_action :configure_sign_up_params, only: [:create]
-before_action :configure_account_update_params, only: [:update]
+  prepend_before_action :require_no_authentication, only: [:new, :create, :cancel]
+  prepend_before_action :authenticate_scope!, only: [:edit, :update, :destroy]
+  before_action :configure_sign_up_params, only: [:create]
+  before_action :configure_account_update_params, only: [:update]
 
-  # GET /user/sign_up
   def new
-    super
+    build_resource({})
+    yield resource if block_given?
+    respond_with resource
   end
 
-  # POST /user
   def create
-
     # Comprobamos qué tipo de perfil tiene el usuario y creamos el perfil al que
     # lo asociaremos
     profile_type = params[:user][:profileable_type]
+
     if profile_type == 'Musician'
       profile = Musician.create()
     elsif profile_type == 'Band'
       profile = Band.create()
     end
 
-    respond_with resource if profile.blank?
-
     params[:user][:profileable_id] = profile.id
 
-    super
+    build_resource(sign_up_params)
+
+    resource.save
+    yield resource if block_given?
+    if resource.persisted?
+      if resource.active_for_authentication?
+        set_flash_message! :notice, :signed_up
+        sign_up(resource_name, resource)
+        respond_with resource, location: after_sign_up_path_for(resource)
+      else
+        set_flash_message! :notice, :"signed_up_but_#{resource.inactive_message}"
+        expire_data_after_sign_in!
+        respond_with resource, location: after_inactive_sign_up_path_for(resource)
+      end
+    else
+      clean_up_passwords resource
+      set_minimum_password_length
+      respond_with resource
+    end
   end
 
-  # GET /user/edit
   def edit
     super
   end
 
-  # PUT /user
   def update
     super
   end
 
-  # DELETE /user
   def destroy
     super
   end
 
-  # GET /resource/cancel
-  # Forces the session data which is usually expired after sign
-  # in to be expired now. This is useful if the user wants to
-  # cancel oauth signing in/up in the middle of the process,
-  # removing all OAuth session data.
   def cancel
     super
   end
 
   protected
 
-  # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
     devise_parameter_sanitizer.permit(:sign_up, keys: [:email, :password,
-      :password_confirmation, :name, :city, :state, :country,
-      :profileable_type, :profileable_id])
+      :name, :city, :state, :country, :profileable_type, :profileable_id])
   end
 
-  # If you have extra params to permit, append them to the sanitizer.
   def configure_account_update_params
-    devise_parameter_sanitizer.permit(:account_update, keys: [:email, :password,
-      :password_confirmation, :name, :city, :state, :country])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:attribute])
   end
 
-
-  # TODO: Redirigir a 'Edit' del tipo profile
-  # The path used after sign up.
   def after_sign_up_path_for(resource)
     super(resource)
   end

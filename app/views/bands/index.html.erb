@@ -15,9 +15,9 @@
   <tbody>
     <% @bands.each do |band| %>
       <tr>
-        <td><%= band.genre1 %></td>
-        <td><%= band.genre2 %></td>
-        <td><%= band.genre3 %></td>
+        <td><%= band.genre_1_id %></td>
+        <td><%= band.genre_2_id %></td>
+        <td><%= band.genre_3_id %></td>
         <td><%= link_to 'Show', band %></td>
         <td><%= link_to 'Edit', edit_band_path(band) %></td>
         <td><%= link_to 'Destroy', band, method: :delete, data: { confirm: 'Are you sure?' } %></td>

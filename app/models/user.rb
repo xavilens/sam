@@ -29,14 +29,15 @@ class User < ActiveRecord::Base
 
   # USER RELATED
   belongs_to :role
-  belongs_to :userable, polymorphic: true
+  belongs_to :profileable, polymorphic: true
+  accepts_nested_attributes_for :profileable
 
   # CONVERSATIONS RELATED
   # TODO: Soft-delete?? Borrar/ocultar solo si no quedan usuarios!!
   has_many :conversations, foreign_key: :user_1_id
   has_many :messages, through: :conversations
   has_many :reverse_conversations, foreign_key: :user_2_id, class_name: 'Conversation'
-  has_many :messages, through: :reverse_conversations
+  has_many :messages_inverse, through: :reverse_conversations
 
   # POSTS RELATED
   has_many :posts, dependent: :destroy
@@ -77,24 +78,28 @@ class User < ActiveRecord::Base
 
   ################### METODOS ###################
 
-  def es_musico?
+  def musician?
     profileable_type == 'Musician'
   end
 
-  def es_grupo?
+  def band?
     profileable_type == 'Band'
   end
 
-  def tipo_perfil
+  def type
     profileable_type
   end
 
-  def perfil
-    if es_musico?
-      Musician.find(profileable_id)
-    elsif es_grupo?
-      Band.find(profileable_id)
+  def tipo
+    if musician?
+      'Músico'
+    elsif band?
+      'Grupo'
     end
+  end
+
+  def profile
+    self.profileable
   end
 
   def following?(leader)
@@ -132,7 +137,7 @@ class User < ActiveRecord::Base
   private
 
     def set_default
-      self.role_id |= Role.find_by_name('registrado').id
+      self.role_id |= Role.find_by_name('registrado').id if self.role_id.blank?
     end
 
     def self.set_admin_id

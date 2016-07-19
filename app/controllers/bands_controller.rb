@@ -21,6 +21,8 @@ class BandsController < ApplicationController
 
   # GET /bands/1/edit
   def edit
+    @genres = Genre.all
+    @band_statuses = BandStatus.all
   end
 
   # POST /bands
@@ -67,10 +69,12 @@ class BandsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_band
       @band = Band.find(params[:id])
+      @bio = User.where(profileable_id: params[:id], profileable_type: 'Band').first
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def band_params
-      params.require(:band).permit(:genre1_id, :genre2_id, :genre3_id)
+      params.require(:band).permit(:genre1_id, :genre2_id, :genre3_id,
+        :band_status_id, user_attributes: [:bio])
     end
 end
