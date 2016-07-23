@@ -1,6 +1,11 @@
-<h2>Editar cuenta</h2>
 
-<%= simple_form_for( @user, url: user_path(@user), wrapper: :horizontal_form ) do |f| %>
+<% content_for :title, 'Editar cuenta | S.A.M. - Sociedad Anónima Músical' %>
+
+<div class="page-header">
+  <h1>Editar cuenta</h1>
+</div>
+
+<%= simple_form_for( @user, url: user_path(@user) ) do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">
@@ -8,17 +13,19 @@
     <h3>Información básica</h3>
     <div class="form-group">
       <div class="form-group">
-        <%= f.input :name %>
+        <%= f.input :name, label: 'Nombre del artista' %>
       </div>
     </div>
 
     <h3>Localidad</h3>
-    <%= f.input :autocomplete, label: 'Localidad', name: 'autocomplete',
+    <%= f.input :autocomplete, label: false, name: 'autocomplete',
       placeholder: 'Busca aquí tu localidad...', as: :fake %>
 
-    <%= f.input :city, label: 'Ciudad', readonly: true %>
-    <%= f.input :state, label: 'Comunidad autónoma', readonly: true %>
-    <%= f.input :country, label: 'País', readonly: true %>
+    <div class="well">
+      <%= f.input :city, label: 'Ciudad', readonly: true %>
+      <%= f.input :state, label: 'Comunidad autónoma', readonly: true %>
+      <%= f.input :country, label: 'País', readonly: true %>
+    </div>
 
     <h3>Información del <%= @user.tipo %></h3>
 
@@ -31,7 +38,7 @@
       <%= f.simple_fields_for :profileable do |p| %>
         <%= p.input :genre_1_id, collection: @genres.group_by(&:category),
           group_method: :last, label_method: :name, group_value: :id,
-          as: :grouped_select, label: 'Género 1' %>
+          as: :grouped_select, label: 'Género 1', class: 'dropdown' %>
         <%= p.input :genre_2_id, collection: @genres.group_by(&:category),
           group_method: :last, label_method: :name, group_value: :id,
           as: :grouped_select, label: 'Género 2' %>
@@ -46,19 +53,20 @@
 
     <%= f.input :bio, label: 'Biografía' %>
 
+
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit, "Actualizar" %>
+    <%= f.button :submit, "Actualizar", class: 'btn btn-md btn-primary' %>
+    <br>
+    <%= link_to "Edit user registration", edit_user_registration_path, role: 'button', class: 'btn btn-link'  %>
+  </div>
   </div>
 <% end %>
-
+<!--
 <h3>Cancel my account</h3>
 
 <p>Unhappy? <%= link_to "Cancel my account", registration_path(:user),
-  data: { confirm: "Are you sure?" }, method: :delete %></p>
-
-  <%= link_to "Back", :back %>
-  <%= link_to "Edit user registration", edit_user_registration_path %>
+  data: { confirm: "Are you sure?" }, method: :delete %></p> -->
 
 <%= render "scripts/city_autocomplete", autocomplete_for: :user %>

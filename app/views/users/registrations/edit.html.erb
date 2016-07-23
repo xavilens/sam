@@ -1,3 +1,6 @@
+
+<% content_for :title, 'Editar datos de registro | S.A.M. - Sociedad Anónima Músical' %>
+
 <h2>Edit <%= resource_name.to_s.humanize %></h2>
 
 <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
@@ -16,7 +19,7 @@
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit, "Update" %>
+    <%= f.button :submit, "Actualizar", class: 'btn btn-md btn-primary' %>
   </div>
 <% end %>
 

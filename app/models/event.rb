@@ -2,7 +2,7 @@ class Event < ActiveRecord::Base
   ################### VALIDACIONES ###################
   validates :name, presence: true
   validates :date, presence: true
-  validates :time, presence: true
+  # validates :time, presence: true
   validates :street, presence: true
   validates :city, presence: true
   validates :state, presence: true

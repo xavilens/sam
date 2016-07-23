@@ -24,5 +24,6 @@ module Sam
     config.active_record.raise_in_transactional_callbacks = true
 
     config.paths['app/views'] << 'app/views/users'
+
   end
 end

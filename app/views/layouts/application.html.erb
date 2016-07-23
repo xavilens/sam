@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Sam</title>
+  <title><%= yield :title %></title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=AIzaSyCC-aMR5J1L4VSgwbCRxYjM-55oZlNTMPw&signed_in=true&language=es&libraries=places", async: true, defer: true, 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-
   <%= render "layouts/top_menu" %>
 
   <div class="container main">
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <%= render "layouts/alerts" %>
 
     <%= yield %>
   </div>
+
+  <%= render "layouts/footer" %>
 
 </body>
 </html>

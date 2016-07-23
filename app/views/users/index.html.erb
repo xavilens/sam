@@ -1,17 +1,33 @@
-<h1>Usuarios</h1>
 
-<% unless @users.blank?  %>
-<% @users.each do |user| %>
-<div class="">
-  <h3><%= link_to user.name, user_path(user.id) %></h3>
-  <h5><%= user.profileable_type %></h5>
-  <p>
-    Ubicación: <%= user.city+", "+user.state %>
-  </p>
+<% content_for :title, 'Usuarios | S.A.M. - Sociedad Anónima Músical' %>
+
+<div class="page-header">
+  <h1>Usuarios</h1>
 </div>
-<% end %>
-<% else %>
-<p>
-  Aun no hay usuarios registrados
-</p>
-<% end %>
+
+<div class="row">
+  <div class="col-md-3 text-center">
+    Buscador de Artistas!
+  </div>
+
+  <div class="col-md-8">
+    <% unless @users.blank?  %>
+      <% @users.each do |user| %>
+        <div class="">
+          <h3><%= link_to user.name, user_path(user.id) %></h3>
+          <h5><%= user.profileable_type %></h5>
+          <p>
+            Ubicación: <%= user.city+", "+user.state %>
+          </p>
+        </div>
+        <% if user != @users.last %>
+          <hr>
+        <% end %>
+      <% end %>
+    <% else %>
+      <p>
+        Aun no hay usuarios registrados
+      </p>
+    <% end %>
+  </div>
+</div>
