@@ -55,7 +55,7 @@ class User < ActiveRecord::Base
   has_many :activities, dependent: :destroy
 
   # FOLLOWSHIPS RELATED
-  has_many :followships, foreign_key: :follower_id, dependent: :destroy
+  has_many :followships, foreign_key: 'follower_id', dependent: :destroy
   has_many :leaders, through: :followships
   has_many :reverse_followships, foreign_key: :leader_id, class_name: 'Followship', dependent: :destroy
   has_many :followers, through: :reverse_followships

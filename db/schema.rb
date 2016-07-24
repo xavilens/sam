@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160712164706) do
+ActiveRecord::Schema.define(version: 20160723212713) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "user_id",          limit: 4,   null: false
@@ -174,20 +174,20 @@ ActiveRecord::Schema.define(version: 20160712164706) do
   end
 
   create_table "events", force: :cascade do |t|
-    t.string   "name",             limit: 255,               null: false
-    t.string   "descripcion",      limit: 255
-    t.date     "date",                                       null: false
-    t.time     "time",                                       null: false
-    t.integer  "event_status_id",  limit: 4,                 null: false
-    t.string   "street",           limit: 255,               null: false
-    t.string   "city",             limit: 255,               null: false
-    t.string   "state",            limit: 255,               null: false
-    t.string   "country",          limit: 255,               null: false
+    t.string   "name",             limit: 255,                 null: false
+    t.text     "description",      limit: 65535
+    t.date     "date",                                         null: false
+    t.time     "time",                                         null: false
+    t.integer  "event_status_id",  limit: 4,                   null: false
+    t.string   "street",           limit: 255,                 null: false
+    t.string   "city",             limit: 255,                 null: false
+    t.string   "state",            limit: 255,                 null: false
+    t.string   "country",          limit: 255,                 null: false
     t.integer  "max_participants", limit: 4
-    t.decimal  "pvp",                          precision: 2
-    t.integer  "creator_id",       limit: 4,                 null: false
-    t.datetime "created_at",                                 null: false
-    t.datetime "updated_at",                                 null: false
+    t.decimal  "pvp",                            precision: 2
+    t.integer  "creator_id",       limit: 4,                   null: false
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
     t.integer  "event_type_id",    limit: 4
     t.integer  "sala_id",          limit: 4
   end
@@ -436,6 +436,14 @@ ActiveRecord::Schema.define(version: 20160712164706) do
     t.datetime "updated_at",                                        null: false
     t.integer  "role_id",                limit: 4,                  null: false
     t.text     "bio",                    limit: 65535
+    t.string   "facebook_url",           limit: 255
+    t.string   "twitter_url",            limit: 255
+    t.string   "soundcloud_url",         limit: 255
+    t.string   "website_url",            limit: 255
+    t.string   "gplus_url",              limit: 255
+    t.string   "instagram_url",          limit: 255
+    t.string   "avatar_url",             limit: 255
+    t.string   "youtube_url",            limit: 255
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

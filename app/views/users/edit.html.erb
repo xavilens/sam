@@ -52,8 +52,6 @@
     <% end %>
 
     <%= f.input :bio, label: 'Biografía' %>
-
-
   </div>
 
   <div class="form-actions">
@@ -61,12 +59,6 @@
     <br>
     <%= link_to "Edit user registration", edit_user_registration_path, role: 'button', class: 'btn btn-link'  %>
   </div>
-  </div>
 <% end %>
-<!--
-<h3>Cancel my account</h3>
-
-<p>Unhappy? <%= link_to "Cancel my account", registration_path(:user),
-  data: { confirm: "Are you sure?" }, method: :delete %></p> -->
 
 <%= render "scripts/city_autocomplete", autocomplete_for: :user %>
