@@ -8,7 +8,7 @@ class Conversation < ActiveRecord::Base
   # TODO: Soft-delete??
   has_many :messages, dependent: :delete_all
 
-  belongs_to :user_1_id, class_name: 'User', foreign_key: 'user_id'
-  belongs_to :user_2_id, class_name: 'User', foreign_key: 'user_id'
+  belongs_to :user_1_id, class_name: 'User', primary_key: 'id', foreign_key: 'user_1_id'
+  belongs_to :user_2_id, class_name: 'User', primary_key: 'id', foreign_key: 'user_2_id'
 
 end

@@ -9,6 +9,6 @@ class DelegatedUser < ActiveRecord::Base
   validates :active, presence: true
 
   ################### RELACIONES ###################
-  belongs_to :delegated_user, class_name: 'User', foreign_key: 'user_id'
-  belongs_to :current_user, class_name: 'User', foreign_key: 'user_id'
+  belongs_to :current_user, class_name: 'User', primary_key: 'id', foreign_key: 'current_user_id'
+  belongs_to :delegated_user, class_name: 'User', primary_key: 'id', foreign_key: 'delegated_user_id'
 end

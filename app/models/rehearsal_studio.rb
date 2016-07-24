@@ -4,7 +4,7 @@ class RehearsalStudio < ActiveRecord::Base
   validates :event_type_id, presence: true
 
   ################### RELACIONES ###################
-  belongs_to :creator_id, class_name: 'User', foreign_key: 'user_id'
+  belongs_to :creator_id, class_name: 'User', primary_key: 'id', foreign_key: 'creator_id'
 
   has_many :rehearsal_studio_reviews
   has_many :rehearsal_studio_users

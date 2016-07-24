@@ -115,12 +115,12 @@ class User < ActiveRecord::Base
   def followed?(follower)
     followers.include? follower
   end
-
-  def followed!(follower)
-    if follower != self && !followed?(follower)
-      followers << follower
-    end
-  end
+  
+  # def followed!(follower)
+  #   if follower != self && !followed?(follower)
+  #     followers << follower
+  #   end
+  # end
 
   def is_admin?
     role_id == User.admin_id

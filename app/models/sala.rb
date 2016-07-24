@@ -9,7 +9,7 @@ class Sala < ActiveRecord::Base
   validates :creator_id, presence: true
 
   ################### RELACIONES ###################
-  belongs_to :creator_id, class_name: 'User', foreign_key: 'user_id'
+  belongs_to :creator_id, class_name: 'User', primary_key: 'id', foreign_key: 'creator_id'
 
   has_many :sala_reviews
   has_many :sala_users
@@ -19,7 +19,7 @@ class Sala < ActiveRecord::Base
   has_many :genres, through: :sala_genres
 
   has_many :events
-  
+
   ################### METODOS ###################
   def calculate_rating(new_rate)
     return ( total_rating * n_reviews + new_rate ) / ( n_reviews + 1 )
