@@ -1,9 +1,17 @@
 class UsersController < ApplicationController
+
   before_action :set_user, only: [:show]
   before_action :set_current_user, only: [:edit, :update]
 
   def index
-    @users = User.all
+    @type = params[:type]
+    unless @type.blank?
+      @users = User.where(profileable_type: @type)
+      @type = @type.pluralize
+    else
+      @type = 'Usuarios'
+      @users = User.all
+    end
   end
 
   def show

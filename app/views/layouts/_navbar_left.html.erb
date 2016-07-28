@@ -1,0 +1,58 @@
+<li class="dropdown">
+  <!-- CONTENIDOS -->
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+    aria-haspopup="true" aria-expanded="false">
+    Contenidos <i class="caret"></i>
+  </a>
+  <ul class="dropdown-menu">
+    <li class="header-dropdown-separator">Secciones</li>
+    <li><%= link_to 'Entrevistas', '#' %></li>
+    <li><%= link_to 'Concursos', '#' %></li>
+    <li><%= link_to 'Reportajes', '#' %></li>
+    <li><%= link_to 'Artículos', '#' %></li>
+    <li><%= link_to 'Tutoriales', '#' %></li>
+    <li class="header-dropdown-separator">Opiniones</li>
+    <li><%= link_to 'Salas', '#' %></li>
+    <li><%= link_to 'Locales de Ensayo', '#' %></li>
+  </ul>
+</li>
+
+<li class="dropdown">
+  <!-- ANUNCIOS -->
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+    aria-haspopup="true" aria-expanded="false">
+    Anuncios <i class="caret"></i>
+  </a>
+  <ul class="dropdown-menu">
+    <li><%= link_to 'Músico busca músico', '#' %></li>
+    <li><%= link_to 'Músico busca grupo', '#' %></li>
+    <li><%= link_to 'Grupo busca músico', '#' %></li>
+    <li><%= link_to 'Grupo busca grupo', '#' %></li>
+  </ul>
+</li>
+
+<li class="dropdown">
+  <!-- USUARIOS -->
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+    aria-haspopup="true" aria-expanded="false">
+    Usuarios <i class="caret"></i>
+  </a>
+  <ul class="dropdown-menu">
+    <li><%= link_to 'Músicos', users_path(type: 'Musician') %></li>
+    <li><%= link_to 'Grupos', users_path(type: 'Band') %></li>
+  </ul>
+</li>
+
+<li class="dropdown">
+  <!-- EVENTOS -->
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+    aria-haspopup="true" aria-expanded="false">
+    Eventos <i class="caret"></i>
+  </a>
+  <ul class="dropdown-menu">
+    <li><%= link_to 'Calendario', '#' %></li>
+    <li><%= link_to 'Nuevo evento', '#' %></li>
+  </ul>
+</li>
+
+<li><%= link_to 'Usuarios', users_path, class:"navbar-link" %></li>

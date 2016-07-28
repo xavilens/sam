@@ -1,16 +1,18 @@
 
-<% content_for :title, 'Usuarios | S.A.M. - Sociedad Anónima Músical' %>
-
-<div class="page-header">
-  <h1>Usuarios</h1>
-</div>
+<%
+page_title @type
+%>
 
 <div class="row">
   <div class="col-md-3 text-center">
-    Buscador de Artistas!
+    <h3><strong>Buscador de Artistas!</strong></h3>
   </div>
 
   <div class="col-md-8">
+    <div class="page-header">
+      <h1><%= traducir_type @type %></h1>
+    </div>
+
     <% unless @users.blank?  %>
       <% @users.each do |user| %>
         <div class="">

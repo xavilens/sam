@@ -1,8 +1,0 @@
-
-<% if user_signed_in? %>
-  <li><%= link_to 'Editar cuenta', edit_user_account_path %></li>
-  <li><%= link_to 'Salir', destroy_user_session_path, method: 'delete' %></li>
-<% else %>
-  <li><%= link_to 'Accede', new_user_session_path %></li>
-  <li><%= link_to 'Regístrate', new_user_registration_path %></li>
-<% end %>

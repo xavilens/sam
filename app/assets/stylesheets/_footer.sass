@@ -1,4 +1,42 @@
+
 .footer
-  height: 200px
+  min-height: $footer-height
   background-color: $gray-base
-  color: $gray-lighter
+  color: $footer-color
+  vertical-align: middle
+  // display: flex
+  // align-items: center
+  .row
+    margin-top: 10px
+    margin-bottom: 10px
+  ul
+    list-style-type: none
+    border-left: 1px solid lighten($gray-base, 5%)
+    margin-top: 20px
+    margin-bottom: 40px
+    li
+      margin-top: 10px
+      padding-left: 15px
+  a
+    color: $footer-color
+
+.footer-logo
+  height: 150px
+  margin-top: 20px
+  margin-bottom: 20px
+  vertical-align: middle
+  background-image: url(asset_path('logo.png'))
+  background-repeat: no-repeat
+  background-size: 100%
+  background-position: center
+  text-indent: -9999px
+
+.list-header
+  color: $brand-primary
+  margin-left: -25px
+  margin-top: 5px
+  font-size: $font-size-h3
+
+.contenido
+  border-right: 1px solid lighten($gray-base, 5%)
+  margin-right: -20px

@@ -1,9 +1,9 @@
 # Additional translations at https://github.com/plataformatec/devise/wiki/I18n
 
-es:
+en:
   devise:
-    confirmed: "Tu dirección de email ha sido confirmada satisfactoriamente."
     confirmations:
+      confirmed: "Tu dirección de email ha sido confirmada satisfactoriamente."
       send_instructions: "Recibiras un email con instrucciones para confirmar tu cuenta en unos minutos."
       send_paranoid_instructions: "Si tu dirección de email existe en nuestra base de datos, recibiras un email para confirmar tu cuenta en unos minutos."
     failure:

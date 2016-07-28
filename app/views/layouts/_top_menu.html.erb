@@ -1,5 +1,4 @@
   <nav class="navbar navbar-default navbar-fixed-top">
-
     <div class="container">
 
       <div class="navbar-header">
@@ -9,13 +8,12 @@
 
       <div id="nav" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
-          <li><%= link_to 'Usuarios', users_path, class:"navbar-link" %></li>
+          <%= render "layouts/navbar_left" %>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <%= render "layouts/devise_links" %>
+          <%= render "layouts/navbar_right" %>
         </ul>
       </div>
 
     </div>
-
 </nav>

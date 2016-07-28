@@ -1,7 +1,54 @@
-<div class="footer">
+<footer class="footer">
   <div class="container">
-    <p>
-      footer!!!!!
-    </p>
+
+    <div class="row">
+      <div class="col-md-offset-1 col-md-2">
+        <a href="/"  title="Sociedad Anónima Musical">
+          <div class="footer-logo">
+          </div>
+        </a>
+      </div>
+
+      <div class="col-md-2">
+        <ul class="contacto" >
+          <li class="list-header">Contacto</li>
+          <li><%= fa_icon 'envelope', class: 'fa-footer' %><%= link_to " Email ", '#' %></li>
+          <li><%= fa_icon 'twitter', class: 'fa-footer' %><%= link_to " Twitter ", '#' %></li>
+          <li><%= fa_icon 'facebook', class: 'fa-footer' %><%= link_to " Facebook ", '#' %></li>
+        </ul>
+      </div>
+
+      <div class="col-md-2">
+        <ul class="enlaces" >
+          <li class="list-header">Enlaces</li>
+          <li><%= link_to "Contactar", '#' %></li>
+          <li><%= link_to "F.A.Q.", '#' %></li>
+          <li><%= link_to "Acceder", '#' %></li>
+          <li><%= link_to "Registrarse", '#' %></li>
+          <li><%= link_to "Mapa web", '#' %></li>
+        </ul>
+      </div>
+
+      <div class="col-md-2">
+        <ul class="secciones" >
+          <li class="list-header">Secciones</li>
+          <li><%= link_to 'Entrevistas', '#' %></li>
+          <li><%= link_to 'Concursos', '#' %></li>
+          <li><%= link_to 'Reportajes', '#' %></li>
+          <li><%= link_to 'Artículos', '#' %></li>
+          <li><%= link_to 'Tutoriales', '#' %></li>
+        </ul>
+      </div>
+
+      <div class="col-md-2">
+        <ul class="contenido" >
+          <li class="list-header">Contenido</li>
+          <li><%= link_to 'Usuarios', users_path %></li>
+          <li><%= link_to 'Calendario', '#' %></li>
+          <li><%= link_to 'Anuncios', '#' %></li>
+        </ul>
+      </div>
+    </div>
+
   </div>
-</div>
+</footer>

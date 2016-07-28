@@ -1,0 +1,30 @@
+
+<% if user_signed_in? %>
+
+  <li><%= link_to 'Mensajes', '#' %></li>
+  <li class="dropdown">
+    <!-- ANUNCIOS -->
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+      aria-haspopup="true" aria-expanded="false">
+      <%= current_user.name %> <i class="caret"></i>
+    </a>
+    <ul class="dropdown-menu">
+      <li><%= link_to 'Tu perfil', user_path(current_user.id) %></li>
+      <li><%= link_to 'Editar perfil', edit_user_account_path %></li>
+      <li><%= link_to 'Nuevo mensaje', '#' %></li>
+      <li><%= link_to 'Nuevo evento', '#' %></li>
+      <li><%= link_to 'Nueva entrada', '#' %></li>
+      <li><%= link_to 'Nuevo anuncio', '#' %></li>
+      <% if current_user.is_admin? %>
+        <li class="header-dropdown-separator">Administración</li>
+        <li><%= link_to 'Perfil administración', '#' %></li>
+        <li><%= link_to 'Publicar entrada', '#' %></li>
+      <% end %>
+      <li><%= link_to 'Salir', destroy_user_session_path, method: 'delete' %></li>
+    </ul>
+  </li>
+
+<% else %>
+  <li><%= link_to 'Accede', new_user_session_path %></li>
+  <li><%= link_to 'Regístrate', new_user_registration_path %></li>
+<% end %>
