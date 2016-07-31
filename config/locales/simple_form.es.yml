@@ -16,7 +16,7 @@ en:
         password: 'Contraseña'
       user:
         new:
-          email: 'E-mail'
+          email: 'E-mail.'
         edit:
           email: 'E-mail.'
     hints:

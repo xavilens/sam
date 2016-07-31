@@ -1,0 +1,11 @@
+
+<% page_title @page %>
+
+<h1><%= @page %></h1>
+
+<% @events.each do |event|%>
+  <h3><%= link_to event.name, event_path(event.id) %></h3>
+  <p><%= event.date.to_s + " a las " + event.time.to_s %></p>
+  <p>Ubicación: <%= event.street.to_s+', '+event.city.to_s+', '+event.state.to_s %></p>
+  <p><%= event.description %></p>
+<% end %>

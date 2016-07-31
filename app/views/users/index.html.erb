@@ -1,26 +1,27 @@
 
 <%
-page_title @type
+page_title @page
 %>
 
 <div class="row">
   <div class="col-md-3 text-center">
-    <h3><strong>Buscador de Artistas!</strong></h3>
+    <!-- <h3><strong>Buscador de Artistas!</strong></h3> -->
+    <%= render 'forms/user_search' %>
   </div>
 
   <div class="col-md-8">
     <div class="page-header">
-      <h1><%= traducir_type @type %></h1>
+      <h1><%= traducir_type @page %></h1>
     </div>
 
     <% unless @users.blank?  %>
       <% @users.each do |user| %>
         <div class="">
-          <h3><%= link_to user.name, user_path(user.id) %></h3>
-          <h5><%= user.profileable_type %></h5>
-          <p>
-            Ubicación: <%= user.city+", "+user.state %>
-          </p>
+          <h3><%= link_to user.name, user_path(user.id) %> <small><%= user.type %></small></h3>
+          <p class="location"><%= user.location %></p>
+          <% unless user.bio.blank? %>
+          <p class="bio">"<%= user.bio %>"</p>
+          <% end %>
         </div>
         <% if user != @users.last %>
           <hr>

@@ -9,6 +9,10 @@ module SiteHelper
       'Grupo'
     elsif type == 'Bands'
       'Grupos'
+    elsif type == 'User'
+      'Usuario'
+    elsif type == 'Users'
+      'Usuarios'
     else
       type
     end
@@ -20,5 +24,10 @@ module SiteHelper
     title = "#{traducir_type(type)} | "+title unless type.blank?
 
     content_for :title, title
+  end
+
+  def active_page controller
+    active = 'active' if params[:controller] == controller
+    return active
   end
 end

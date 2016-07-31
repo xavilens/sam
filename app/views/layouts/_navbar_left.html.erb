@@ -1,4 +1,4 @@
-<li class="dropdown">
+<li class="dropdown <%= active_page 'posts' %> <%= active_page 'salas' %> <%= active_page 'rehearsal_studios' %>">
   <!-- CONTENIDOS -->
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
     aria-haspopup="true" aria-expanded="false">
@@ -17,7 +17,7 @@
   </ul>
 </li>
 
-<li class="dropdown">
+<li class="dropdown <%= active_page 'ads' %>">
   <!-- ANUNCIOS -->
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
     aria-haspopup="true" aria-expanded="false">
@@ -31,28 +31,26 @@
   </ul>
 </li>
 
-<li class="dropdown">
+<li class="dropdown <%= active_page 'users' %>">
   <!-- USUARIOS -->
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+  <a href="/users" class="dropdown-toggle" data-toggle="dropdown" role="button"
     aria-haspopup="true" aria-expanded="false">
     Usuarios <i class="caret"></i>
   </a>
   <ul class="dropdown-menu">
-    <li><%= link_to 'Músicos', users_path(type: 'Musician') %></li>
-    <li><%= link_to 'Grupos', users_path(type: 'Band') %></li>
+    <li><%= link_to 'Músicos', users_path(search: {profileable_type: 'Musician'}) %></li>
+    <li><%= link_to 'Grupos', users_path(search: {profileable_type: 'Band'}) %></li>
   </ul>
 </li>
 
-<li class="dropdown">
+<li class="dropdown <%= active_page 'events' %>">
   <!-- EVENTOS -->
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
     aria-haspopup="true" aria-expanded="false">
     Eventos <i class="caret"></i>
   </a>
   <ul class="dropdown-menu">
-    <li><%= link_to 'Calendario', '#' %></li>
+    <li><%= link_to 'Calendario', events_path %></li>
     <li><%= link_to 'Nuevo evento', '#' %></li>
   </ul>
 </li>
-
-<li><%= link_to 'Usuarios', users_path, class:"navbar-link" %></li>

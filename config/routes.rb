@@ -28,11 +28,13 @@ Rails.application.routes.draw do
   resources :musicians
   resources :posts
   resources :comments
+  resources :events
 
-  get 'events/new'
-  get 'events/show'
-  get 'events/edit'
-  get 'events/update'
+
+  # get 'events/new'
+  # get 'events/show'
+  # get 'events/edit'
+  # get 'events/update'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

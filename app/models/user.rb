@@ -87,10 +87,6 @@ class User < ActiveRecord::Base
   end
 
   def type
-    profileable_type
-  end
-
-  def tipo
     if musician?
       'Músico'
     elsif band?
@@ -115,7 +111,7 @@ class User < ActiveRecord::Base
   def followed?(follower)
     followers.include? follower
   end
-  
+
   # def followed!(follower)
   #   if follower != self && !followed?(follower)
   #     followers << follower

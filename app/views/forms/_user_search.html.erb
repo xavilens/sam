@@ -1,0 +1,39 @@
+
+<%= simple_form_for :search, url: users_path, method: 'get', enforce_utf8: false, html: {class: "form-vertical text-left", role: "form"} do |f| %>
+  <div class="form-inputs">
+
+    <h3>BUSCADOR</h3>
+
+    <div class="well">
+
+      <%= f.input :name, label: 'Nombre de usuario', placeholder: 'Filtrar por nombre...', required: false,
+        input_html: { value: (params[:search][:name] unless params[:search].blank? || params[:search][:name].blank?) } %>
+
+      <%= f.input :city, label: 'Ciudad', placeholder: 'Filtrar por ciudad...', required: false,
+        input_html: { value: (params[:search][:city] unless params[:search].blank? || params[:search][:city].blank?) } %>
+
+      <%= f.input :state, label: 'Comunidad', placeholder: 'Filtrar por comunidad...', required: false,
+        input_html: { value: (params[:search][:state] unless params[:search].blank? || params[:search][:state].blank?) } %>
+
+      <%= f.input :profileable_type, collection: [['Musician', 'Músico'] ,['Band', 'Grupo']],
+        value_method: :first, label_method: :last, label: 'Tipo de usuario', required: false, include_blank: 'Todos',
+        selected: (params[:search][:profileable_type] unless params[:search].blank? || params[:search][:profileable_type].blank?) %>
+
+      <% if !params[:search].blank? && params[:search][:profileable_type] == 'Band' %>
+        <%= f.input :genre_id, collection: Genre.all.group_by(&:category),
+          group_method: :last, label_method: :name, group_value: :id,
+          as: :grouped_select, label: 'Género', required: false %>
+      <% elsif !params[:search].blank? && params[:search][:profileable_type] ==  'Musician' %>
+        <%= f.input :instrument_id, collection: Instrument.all,
+          label_method: :name, value_method: :id,
+          as: :select, label: 'Instrument', required: false %>
+      <% end %>
+
+      <div class="form-actions">
+        <%= f.button :submit, "Buscar", class: 'btn btn-small btn-primary' %>
+      </div>
+    </div>
+
+  </div>
+
+<% end %>

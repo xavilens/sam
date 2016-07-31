@@ -2,16 +2,31 @@ class UsersController < ApplicationController
 
   before_action :set_user, only: [:show]
   before_action :set_current_user, only: [:edit, :update]
+  before_action :search_params, only: [:index]
+  before_action :update_params, only: [:update]
 
   def index
-    @type = params[:type]
-    unless @type.blank?
-      @users = User.where(profileable_type: @type)
-      @type = @type.pluralize
+    index_param = search_params
+    profileable_type = index_param[:profileable_type] unless search_params[:profileable_type].blank?
+    name = index_param.delete(:name)
+    city = index_param.delete(:city)
+    state = index_param.delete(:state)
+
+    unless profileable_type.blank?
+      @page = profileable_type.pluralize
     else
-      @type = 'Usuarios'
-      @users = User.all
+      @page = User.to_s.pluralize
     end
+
+    # if name.blank?
+    #   users = User.where(index_param)
+    # else
+    #   users = User.where(index_param).where('name like ?', "%#{name}%")
+    # end
+
+    users = User.where(index_param).where("name like ?", "%#{name}%").where("city like ?", "%#{city}%").where("state like ?", "%#{state}%")
+
+    @users = UserPresenter.wrap(users)
   end
 
   def show
@@ -19,7 +34,7 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = current_user if @user.blank? || @user != current_user
+    @user = current_user if @user != current_user
     if @user.musician?
       @musician_statuses = MusicianStatus.all if @musician_statuses.blank?
     elsif @user.band?
@@ -67,5 +82,18 @@ class UsersController < ApplicationController
       allow = [:name, :city, :state, :country, :bio,
         profileable_attributes: [:genre_1_id, :genre_2_id, :genre_3_id, :band_status_id, :id]]
       params.require(:user).permit(allow)
+    end
+
+    def search_params
+      if params[:search]
+        allow = [:name, :city, :state, :country, :profileable_type, :role_id]
+
+        search_params = params[:search]
+        search_params.delete_if { |k, v| v.blank? }
+
+        search_params.permit(allow)
+      else
+        params.permit(:profileable_type)
+      end
     end
 end
