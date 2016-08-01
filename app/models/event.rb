@@ -22,5 +22,7 @@ class Event < ActiveRecord::Base
 
   belongs_to :sala
 
+  has_many :images, as: :imageable
+
   ################### METODOS ###################
 end

@@ -10,5 +10,7 @@ class SalaReview < ActiveRecord::Base
   belongs_to :user
   belongs_to :sala
 
+  has_many :images, as: :imageable
+
   ################### METODOS ###################
 end

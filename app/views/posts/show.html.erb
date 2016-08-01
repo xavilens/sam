@@ -1,11 +1,11 @@
 
-<% content_for :title, "#{@post.title} | S.A.M. - Sociedad Anónima Músical" %>
+<% page_title @page %>
 
 <p id="notice"><%= notice %></p>
 
 <p>
   <strong>Titulo:</strong>
-  <%= @post.titulo %>
+  <%= @post.title %>
 </p>
 
 <p>
@@ -15,12 +15,12 @@
 
 <p>
   <strong>Cuerpo:</strong>
-  <%= @post.cuerpo %>
+  <%= @post.body %>
 </p>
 
 <p>
   <strong>Publicado:</strong>
-  <%= @post.publicado %>
+  <%= @post.published %>
 </p>
 
 <%= link_to 'Edit', edit_post_path(@post) %> |

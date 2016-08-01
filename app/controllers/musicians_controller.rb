@@ -4,23 +4,24 @@ class MusiciansController < ApplicationController
   # GET /musicians
   # GET /musicians.json
   def index
+    @page = 'Músicos'
     @musicians = Musician.all
   end
-
-  # GET /musicians/1
-  # GET /musicians/1.json
-  def show
-  end
-
-  # GET /musicians/new
-  def new
-    @musician = Musician.new
-  end
-
-  # TODO: Configurar edit!
-  # GET /musicians/1/edit
-  def edit
-  end
+  #
+  # # GET /musicians/1
+  # # GET /musicians/1.json
+  # def show
+  # end
+  #
+  # # GET /musicians/new
+  # def new
+  #   @musician = Musician.new
+  # end
+  #
+  #
+  # # GET /musicians/1/edit
+  # def edit
+  # end
 
   # POST /musicians
   # POST /musicians.json

@@ -1,7 +1,7 @@
 
-<% content_for :title, 'Confirmación de usuario | S.A.M. - Sociedad Anónima Músical' %>
+<% page_title @page %>
 
-<h2>Resend confirmation instructions</h2>
+<%= render 'layouts/page_header' %>
 
 <%= simple_form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
   <%= f.error_notification %>

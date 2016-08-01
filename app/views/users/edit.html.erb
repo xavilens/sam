@@ -1,21 +1,28 @@
 
-<% content_for :title, 'Editar cuenta | S.A.M. - Sociedad Anónima Músical' %>
+<% page_title @page %>
 
-<div class="page-header">
-  <h1>Editar cuenta</h1>
-</div>
+<%= render 'layouts/page_header' %>
 
-<%= simple_form_for( @user, url: user_path(@user) ) do |f| %>
+<%= simple_form_for( @user, url: user_path(@user), html: { multipart: true} ) do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">
 
     <h3>Información básica</h3>
-    <div class="form-group">
-      <div class="form-group">
-        <%= f.input :name, label: 'Nombre del artista' %>
-      </div>
-    </div>
+    <%= f.input :name, label: 'Nombre del artista' %>
+
+    <%= f.label 'Imagen de perfil' %> <br>
+    <%= image_tag @user.avatar_url(:avatar) unless @user.avatar.blank? %>
+    <%= f.input :avatar, label: false, as: :file %>
+
+    <h3>Redes sociales</h3>
+    <%= f.input :website %>
+    <%= f.input :facebook %>
+    <%= f.input :youtube %>
+    <%= f.input :soundcloud %>
+    <%= f.input :twitter %>
+    <%= f.input :instagram %>
+    <%= f.input :gplus %>
 
     <h3>Localidad</h3>
     <%= f.input :autocomplete, label: false, name: 'autocomplete',
@@ -27,7 +34,7 @@
       <%= f.input :country, label: 'País', readonly: true %>
     </div>
 
-    <h3>Información del <%= @user.tipo %></h3>
+    <h3>Información del <%= @user.type %></h3>
 
     <% if @user.musician? %>
       <%= f.simple_fields_for :profileable do |p| %>
@@ -52,6 +59,7 @@
     <% end %>
 
     <%= f.input :bio, label: 'Biografía' %>
+
   </div>
 
   <div class="form-actions">

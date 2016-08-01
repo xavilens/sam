@@ -4,21 +4,25 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
+    @page = 'Posts'
     @posts = Post.all
   end
 
   # GET /posts/1
   # GET /posts/1.json
   def show
+    @page = @post.title
   end
 
   # GET /posts/new
   def new
+    @page = 'Nuevo post'
     @post = Post.new
   end
 
   # GET /posts/1/edit
   def edit
+    @page = 'Editar post'
   end
 
   # POST /posts

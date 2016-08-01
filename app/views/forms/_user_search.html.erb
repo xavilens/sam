@@ -7,17 +7,17 @@
     <div class="well">
 
       <%= f.input :name, label: 'Nombre de usuario', placeholder: 'Filtrar por nombre...', required: false,
-        input_html: { value: (params[:search][:name] unless params[:search].blank? || params[:search][:name].blank?) } %>
+        input_html: { value: ( fill_input :search, :name ) } %>
 
       <%= f.input :city, label: 'Ciudad', placeholder: 'Filtrar por ciudad...', required: false,
-        input_html: { value: (params[:search][:city] unless params[:search].blank? || params[:search][:city].blank?) } %>
+        input_html: { value: ( fill_input :search, :city ) } %>
 
       <%= f.input :state, label: 'Comunidad', placeholder: 'Filtrar por comunidad...', required: false,
-        input_html: { value: (params[:search][:state] unless params[:search].blank? || params[:search][:state].blank?) } %>
+        input_html: { value: ( fill_input :search, :state ) } %>
 
       <%= f.input :profileable_type, collection: [['Musician', 'Músico'] ,['Band', 'Grupo']],
-        value_method: :first, label_method: :last, label: 'Tipo de usuario', required: false, include_blank: 'Todos',
-        selected: (params[:search][:profileable_type] unless params[:search].blank? || params[:search][:profileable_type].blank?) %>
+        value_method: :first, label_method: :last, label: 'Tipo de usuario', required: false, include_blank: 'Cualquiera',
+        selected: ( fill_input :search, :profileable_type ) %>
 
       <% if !params[:search].blank? && params[:search][:profileable_type] == 'Band' %>
         <%= f.input :genre_id, collection: Genre.all.group_by(&:category),

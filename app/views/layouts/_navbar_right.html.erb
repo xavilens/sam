@@ -10,7 +10,7 @@
     </a>
     <ul class="dropdown-menu">
       <li><%= link_to 'Tu perfil', user_path(current_user.id) %></li>
-      <li><%= link_to 'Editar perfil', edit_user_account_path %></li>
+      <li><%= link_to 'Editar perfil', edit_user_path(current_user.id) %></li>
       <li><%= link_to 'Nuevo mensaje', '#' %></li>
       <li><%= link_to 'Nuevo evento', '#' %></li>
       <li><%= link_to 'Nueva entrada', '#' %></li>

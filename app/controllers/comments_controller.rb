@@ -3,22 +3,26 @@ class CommentsController < ApplicationController
 
   # GET /comments
   # GET /comments.json
-  def index
-    @comments = Comment.all
-  end
+  # def index
+  #   @page = 'Comentarios'
+  #   @comments = Comment.all
+  # end
 
   # GET /comments/1
   # GET /comments/1.json
-  def show
-  end
+  # def show
+  #   @page = 'Nuevo comentario'
+  # end
 
   # GET /comments/new
   def new
+    @page = 'Nuevo comentario'
     @comment = Comment.new
   end
 
   # GET /comments/1/edit
   def edit
+    @page = 'Editar comentario'
   end
 
   # POST /comments

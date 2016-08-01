@@ -20,19 +20,31 @@ class Musician < ActiveRecord::Base
   belongs_to :musician_status
 
   ################### METODOS ###################
-  def conocimientos
-    knowledges = Array.new
 
-    knowledges.each do |k|
-      knowledges.push(Knowledge.find_by_id(k.id).name)
+  def member?(band)
+    bands.include? band
+  end
+
+  def member!(band)
+    unless member?(band)
+      bands << band
     end
-
-    return knowledges
   end
 
-  def estado
-    return MusicianStatus.find_by_id(musician_status_id).name
+  def instrument?(instrument)
+    instruments.include? instrument
   end
+
+  def instrument!(instrument)
+    unless instrument?(instrument)
+      instruments << instrument
+    end
+  end
+
+  def status
+    musician_status.name
+  end
+
 
   private
 

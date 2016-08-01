@@ -20,3 +20,6 @@ keys
 
 # Ignore precompile assets
 /public/assets
+
+# Ignore uploaded images
+/public/images

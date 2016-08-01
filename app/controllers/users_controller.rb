@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
 
+  before_filter :authenticate_user!, only: [:edit, :update]
   before_action :set_user, only: [:show]
   before_action :set_current_user, only: [:edit, :update]
   before_action :search_params, only: [:index]
@@ -18,23 +19,22 @@ class UsersController < ApplicationController
       @page = User.to_s.pluralize
     end
 
-    # if name.blank?
-    #   users = User.where(index_param)
-    # else
-    #   users = User.where(index_param).where('name like ?', "%#{name}%")
-    # end
-
-    users = User.where(index_param).where("name like ?", "%#{name}%").where("city like ?", "%#{city}%").where("state like ?", "%#{state}%")
+    users = User.where(index_param).where("name like :name and city like :city and state like :state",
+      name: "%#{name}%", city: "%#{city}%", state: "%#{state}%")
 
     @users = UserPresenter.wrap(users)
   end
 
   def show
+    @page = @user.name
+
     redirect_to root_path, alert: "No existe el usuario" if @user.blank?
   end
 
   def edit
-    @user = current_user if @user != current_user
+    @page = "Editar cuenta"
+
+    # @user = current_user if @user != current_user
     if @user.musician?
       @musician_statuses = MusicianStatus.all if @musician_statuses.blank?
     elsif @user.band?
@@ -79,8 +79,10 @@ class UsersController < ApplicationController
     end
 
     def update_params
-      allow = [:name, :city, :state, :country, :bio,
-        profileable_attributes: [:genre_1_id, :genre_2_id, :genre_3_id, :band_status_id, :id]]
+      allow = [ :name, :city, :state, :country, :bio, :avatar, :facebook, :youtube,
+        :twitter, :gplus, :soundcloud, :instagram, :website,
+        profileable_attributes: [:genre_1_id, :genre_2_id, :genre_3_id, :band_status_id, :id] ]
+
       params.require(:user).permit(allow)
     end
 

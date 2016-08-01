@@ -1,6 +1,7 @@
 class Users::ConfirmationsController < Devise::ConfirmationsController
   # GET /resource/confirmation/new
   def new
+    @page = 'Confirmación de usuario'
     super
   end
 

@@ -1,22 +1,18 @@
 
-<%
-page_title @page
-%>
+<% page_title @page %>
 
 <div class="row">
   <div class="col-md-3 text-center">
-    <!-- <h3><strong>Buscador de Artistas!</strong></h3> -->
     <%= render 'forms/user_search' %>
   </div>
 
   <div class="col-md-8">
-    <div class="page-header">
-      <h1><%= traducir_type @page %></h1>
-    </div>
+    <%= render 'layouts/page_header' %>
 
     <% unless @users.blank?  %>
       <% @users.each do |user| %>
-        <div class="">
+        <div>
+          <%= image_tag user.avatar_url(:thumb_s) %>
           <h3><%= link_to user.name, user_path(user.id) %> <small><%= user.type %></small></h3>
           <p class="location"><%= user.location %></p>
           <% unless user.bio.blank? %>
@@ -28,9 +24,7 @@ page_title @page
         <% end %>
       <% end %>
     <% else %>
-      <p>
-        Aun no hay usuarios registrados
-      </p>
+      <p>Ningún usuario cumple los criterios</p>
     <% end %>
   </div>
 </div>

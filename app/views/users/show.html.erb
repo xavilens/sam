@@ -1,16 +1,16 @@
 
-<% content_for :title, "#{@user.name} | S.A.M. - Sociedad Anónima Músical" %>
+<% page_title @page %>
 
 <div class="row">
   <div class="col-md-2">
-
+    <%= image_tag @user.avatar_url(:avatar) %>
   </div>
 
   <div class="col-md-8">
-
+    <%= render 'layouts/page_header' %>
   </div>
 
   <div class="col-md-2">
-
+    Barra derecha
   </div>
 </div>

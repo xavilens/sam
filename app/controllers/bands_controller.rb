@@ -6,24 +6,25 @@ class BandsController < ApplicationController
   # GET /bands
   # GET /bands.json
   def index
+    @page = 'Grupos'
     @bands = Band.all
   end
-
-  # GET /bands/1
-  # GET /bands/1.json
-  def show
-  end
-
-  # GET /bands/new
-  def new
-    @band = Band.new
-  end
-
-  # GET /bands/1/edit
-  def edit
-    @genres = Genre.all
-    @band_statuses = BandStatus.all
-  end
+  #
+  # # GET /bands/1
+  # # GET /bands/1.json
+  # def show
+  # end
+  #
+  # # GET /bands/new
+  # def new
+  #   @band = Band.new
+  # end
+  #
+  # # GET /bands/1/edit
+  # def edit
+  #   @genres = Genre.all
+  #   @band_statuses = BandStatus.all
+  # end
 
   # POST /bands
   # POST /bands.json

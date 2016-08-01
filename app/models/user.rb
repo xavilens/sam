@@ -27,6 +27,8 @@ class User < ActiveRecord::Base
 
   ################### RELACIONES ###################
 
+  mount_uploader :avatar, ImageUploader
+
   # USER RELATED
   belongs_to :role
   belongs_to :profileable, polymorphic: true
@@ -75,6 +77,9 @@ class User < ActiveRecord::Base
   # AD RELATED
   has_many :ads
 
+  # IMAGE RELATED
+  has_many :images, as: :imageable
+
 
   ################### METODOS ###################
 
@@ -112,12 +117,6 @@ class User < ActiveRecord::Base
     followers.include? follower
   end
 
-  # def followed!(follower)
-  #   if follower != self && !followed?(follower)
-  #     followers << follower
-  #   end
-  # end
-
   def is_admin?
     role_id == User.admin_id
   end
@@ -127,8 +126,6 @@ class User < ActiveRecord::Base
       User.admin_id = User.set_admin_id
     end
   end
-
-  # PRIVATE METHODS
 
   private
 

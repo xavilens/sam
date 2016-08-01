@@ -9,5 +9,7 @@ class RehearsalStudioReview < ActiveRecord::Base
   belongs_to :user
   belongs_to :rehearsal_studio
 
+  has_many :images, as: :imageable
+
   ################### METODOS ###################
 end

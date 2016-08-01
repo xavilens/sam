@@ -11,4 +11,6 @@ class Ad < ActiveRecord::Base
   ################### RELACIONES ###################
   belongs_to :user
   belongs_to :adeable, polymorphic: true
+
+  has_many :images, as: :imageable
 end

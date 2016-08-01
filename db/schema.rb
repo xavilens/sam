@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160723212713) do
+ActiveRecord::Schema.define(version: 20160801154929) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "user_id",          limit: 4,   null: false
@@ -211,6 +211,18 @@ ActiveRecord::Schema.define(version: 20160723212713) do
     t.string "name",     limit: 255, null: false
     t.string "category", limit: 255, null: false
   end
+
+  create_table "images", force: :cascade do |t|
+    t.string   "title",          limit: 255
+    t.text     "description",    limit: 65535
+    t.integer  "imageable_id",   limit: 4
+    t.string   "imageable_type", limit: 255
+    t.string   "image",          limit: 255,   null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
+
+  add_index "images", ["imageable_type", "imageable_id"], name: "index_images_on_imageable_type_and_imageable_id", using: :btree
 
   create_table "instruments", force: :cascade do |t|
     t.string "name", limit: 255, null: false
@@ -436,14 +448,14 @@ ActiveRecord::Schema.define(version: 20160723212713) do
     t.datetime "updated_at",                                        null: false
     t.integer  "role_id",                limit: 4,                  null: false
     t.text     "bio",                    limit: 65535
-    t.string   "facebook_url",           limit: 255
-    t.string   "twitter_url",            limit: 255
-    t.string   "soundcloud_url",         limit: 255
-    t.string   "website_url",            limit: 255
-    t.string   "gplus_url",              limit: 255
-    t.string   "instagram_url",          limit: 255
-    t.string   "avatar_url",             limit: 255
-    t.string   "youtube_url",            limit: 255
+    t.string   "facebook",               limit: 255
+    t.string   "twitter",                limit: 255
+    t.string   "soundcloud",             limit: 255
+    t.string   "website",                limit: 255
+    t.string   "gplus",                  limit: 255
+    t.string   "instagram",              limit: 255
+    t.string   "avatar",                 limit: 255
+    t.string   "youtube",                limit: 255
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

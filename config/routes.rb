@@ -22,14 +22,27 @@ Rails.application.routes.draw do
 
   devise_for :delegated_users
 
-  resources :users
-  get 'users/edit/account' => 'users#edit', as: 'edit_user_account'
+  resources :users do
+    resources :images
+    resources :posts do
+      resources :comments
+    end
+    resources :events
+    resources :ads
+    resources :salas_review
+    resources :rehearsal_studio_review
+  end
+
+  # get 'users/edit/account' => 'users#edit', as: 'edit_user_account'
+
   resources :bands
   resources :musicians
-  resources :posts
-  resources :comments
   resources :events
-
+  resources :salas
+  resources :rehearsal_studio
+  resources :posts do
+    resources :comments
+  end
 
   # get 'events/new'
   # get 'events/show'
