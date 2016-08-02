@@ -2,7 +2,7 @@ class Image < ActiveRecord::Base
 
   ################### VALIDACIONES ###################
 
-  validates_processing_of :image
+  # validates_processing_of :image
   validates :image, presence: true, uniqueness: true
 
 

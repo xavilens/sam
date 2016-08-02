@@ -17,25 +17,30 @@ class ImageUploader < CarrierWave::Uploader::Base
   end
 
   # VERSIONES
-  version :thumb do
-    process resize_to_fill: [200, 200]
-  end
-
-  version :thumb_s do
-    process resize_to_fill: [100, 100]
-  end
-
-  version :thumb_xs do
-    process resize_to_fill: [50, 50]
-  end
-
   version :avatar do
+    process resize_to_fill: [300, 300]
+  end
+
+  version :avatar_md do
+    process resize_to_fill: [195, 195]
+  end
+
+  version :avatar_s do
     process resize_to_fill: [150, 150]
   end
 
-  version :avatar_xs do
+  version :thumb do
+    process resize_to_fill: [100, 100]
+  end
+
+  version :thumb_md do
+    process resize_to_fill: [75, 75]
+  end
+
+  version :thumb_s do
     process resize_to_fill: [50, 50]
   end
+
 
   def extension_white_list
     %w(jpg jpeg gif png)

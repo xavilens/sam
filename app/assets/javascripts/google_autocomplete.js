@@ -1,6 +1,6 @@
 /*======================================
 ===    GOOGLE PLACES AUTOCOMPLETE    ===
-===        update: 09/07/2016        ===
+===        update: 02/08/2016        ===
 ======================================*/
 
 var autocomplete;
@@ -13,10 +13,18 @@ function initAutocomplete(tipoDir, resourceParam){
   // Obtenemos los parámetros para la función Autocomplete
   var input = document.getElementById('autocomplete');
   var options   = {
-      types: ["("+tipoDir+")"],
       componentRestrictions: {
           country: 'es'
       }
+  }
+
+  if(tipoDir == 'cities'){
+    options   = {
+        types: ["("+tipoDir+")"],
+        componentRestrictions: {
+            country: 'es'
+        }
+    }
   }
 
   // Creamos el objeto de autocomplete y restringimos la búsqueda a ciudades.

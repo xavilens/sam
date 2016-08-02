@@ -21,7 +21,8 @@ module AppHelper
   def page_title page = nil
     title = 'S.A.M. - Sociedad Anónima Músical'
 
-    title = "#{traducir_type(page)} | "+title unless page.blank?
+    @page = traducir_type(page)
+    title = "#{@page} | "+title unless page.blank?
 
     content_for :title, title
   end

@@ -29,11 +29,11 @@ class Band < ActiveRecord::Base
     musicians.include? musician
   end
 
-  def member!(musician)
-    unless member?(musician)
-      musicians << musician
-    end
-  end
+  # def member!(musician)
+  #   unless member?(musician)
+  #     musicians << musician
+  #   end
+  # end
 
   def genres
     # {genre_1: genre_1.name, genre_2: genre_2.name, genre_3: genre_3.name}

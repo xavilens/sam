@@ -2,15 +2,15 @@
 <% page_title @page %>
 
 <div class="row">
-  <div class="col-md-2">
-    <%= image_tag @user.avatar_url(:avatar) %>
+  <div class="col-md-3">
+    <%= image_tag @user.avatar_url(:avatar), alt: @user.name, class: ['img-responsive', 'img-thumbnail'] %>
   </div>
 
-  <div class="col-md-8">
+  <div class="col-md-6">
     <%= render 'layouts/page_header' %>
   </div>
 
-  <div class="col-md-2">
+  <div class="col-md-3">
     Barra derecha
   </div>
 </div>

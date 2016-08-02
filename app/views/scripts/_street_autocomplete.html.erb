@@ -1,0 +1,19 @@
+
+<script type="text/javascript">
+  var init =
+    function( tipoDirParam ){
+      autocomplete = null;
+
+      componentForm = {
+          street: 'long_name',
+          city: 'long_name',
+          state: 'long_name',
+          country: 'long_name'
+      };
+
+      initAutocomplete(tipoDirParam, "<%= autocomplete_for %>");
+    };
+
+  $(document).ready(init( 'address' ));
+  $(document).on('page:before-render', init( 'address' ));
+</script>
