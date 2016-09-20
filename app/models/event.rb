@@ -1,5 +1,5 @@
 class Event < ActiveRecord::Base
-  ################### VALIDACIONES ###################
+  # VALIDACIONES
   validates :name, presence: true
   validates :date, presence: true
   # validates :time, presence: true
@@ -11,9 +11,8 @@ class Event < ActiveRecord::Base
   validates :event_type_id, presence: true
   validates :event_status_id, presence: true
 
-  ################### RELACIONES ###################
+  # RELACIONES
   belongs_to :creator_id, class_name: 'User', primary_key: "id", foreign_key: "creator_id"
-
   belongs_to :event_status
   belongs_to :event_type
 
@@ -22,7 +21,9 @@ class Event < ActiveRecord::Base
 
   belongs_to :sala
 
-  has_many :images, as: :imageable
+  has_many :images, as: :imageable, dependent: :delete_all
+  accepts_nested_attributes_for :images, :allow_destroy => true
+  # has_one :image, as: :imageable, dependent: :delete
+  # accepts_nested_attributes_for :image, :allow_destroy => true
 
-  ################### METODOS ###################
 end

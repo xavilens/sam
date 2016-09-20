@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 class ImageUploader < CarrierWave::Uploader::Base
 
   include CarrierWave::MiniMagick
@@ -10,22 +8,26 @@ class ImageUploader < CarrierWave::Uploader::Base
     "images/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
 
-  process scale: [900, 99999]
+  def default_url
+    "/images/default_avatar/" + [version_name, "default_avatar.jpg"].compact.join('_')
+  end
+
+  process scale: [1500, 99999]
 
   def scale(width, height)
     resize_to_limit(width, height)
   end
 
   # VERSIONES
-  version :avatar do
-    process resize_to_fill: [300, 300]
+  version :gallery_lg do
+    process resize_to_fill: [1000, 1000]
   end
 
-  version :avatar_md do
-    process resize_to_fill: [195, 195]
+  version :gallery do
+    process resize_to_limit: [750, 750]
   end
 
-  version :avatar_s do
+  version :thumb_lg do
     process resize_to_fill: [150, 150]
   end
 
@@ -45,10 +47,4 @@ class ImageUploader < CarrierWave::Uploader::Base
   def extension_white_list
     %w(jpg jpeg gif png)
   end
-
-  def default_url
-    # ActionController::Base.helpers.asset_path("images/default_avatar.jpg")
-    "/images/default_avatar/" + [version_name, "default_avatar.jpg"].compact.join('_')
-  end
-
 end

@@ -1,0 +1,22 @@
+<script type="text/javascript">
+  var band_genres = function(){
+    // var i = 1;
+    if($('#search_profileable_type').val() == 'Band'){
+      // while(i <= 3){
+        $('#search_genre_id').attr('hidden', false);
+        $('label[for="search_genre_id"]').attr('hidden', false);
+      //   i++;
+      // }
+    }else{
+      // while(i <= 3){
+        $('#search_genre_id').attr('hidden', false);
+        $('label[for="search_genre_id"]').attr('hidden', false);
+        // $('#genre'+i).attr('hidden', true);
+        // $('label[for="user_genre'+i+'"]').attr('hidden', true);
+        // i++;
+      // }
+    }
+  };
+
+  $('#search_genre_id').on( 'change',band_genres);
+</script>

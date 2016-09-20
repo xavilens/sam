@@ -13,7 +13,7 @@
       <% @users.each do |user| %>
         <div class="clearfix">
           <%= link_to user_path(user.id) do %>
-          <%= image_tag user.avatar_url(:thumb_md), alt: user.name,
+          <%= image_tag user.index_avatar, alt: user.name,
             class: ['pull-left', 'gap-right', 'gap-bottom', 'image-responsive', 'img-circle', 'box-shadow'] %>
           <% end %>
 

@@ -9,11 +9,8 @@
       <%= f.input :name, label: 'Nombre de usuario', placeholder: 'Filtrar por nombre...', required: false,
         input_html: { value: ( fill_input :search, :name ) } %>
 
-      <%= f.input :city, label: 'Ciudad', placeholder: 'Filtrar por ciudad...', required: false,
-        input_html: { value: ( fill_input :search, :city ) } %>
-
-      <%= f.input :state, label: 'Comunidad', placeholder: 'Filtrar por comunidad...', required: false,
-        input_html: { value: ( fill_input :search, :state ) } %>
+      <%= f.input :location, label: 'Ubicación', placeholder: 'Filtrar por ciudad, comunidad...', required: false,
+        input_html: { value: ( fill_input :search, :location ) } %>
 
       <%= f.input :profileable_type, collection: [['Musician', 'Músico'] ,['Band', 'Grupo']],
         value_method: :first, label_method: :last, label: 'Tipo de usuario', required: false, include_blank: 'Cualquiera',

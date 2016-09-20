@@ -7,22 +7,15 @@ class UsersController < ApplicationController
   before_action :update_params, only: [:update]
 
   def index
-    index_param = search_params
-    profileable_type = index_param[:profileable_type] unless search_params[:profileable_type].blank?
-    name = index_param.delete(:name)
-    city = index_param.delete(:city)
-    state = index_param.delete(:state)
+    profileable_type = search_params[:profileable_type] unless search_params.blank?
 
-    unless profileable_type.blank?
-      @page = profileable_type.pluralize
+    @page = unless profileable_type.blank?
+      profileable_type.pluralize
     else
-      @page = User.to_s.pluralize
+      User.to_s.pluralize
     end
 
-    users = User.where(index_param).where("name like :name and city like :city and state like :state",
-      name: "%#{name}%", city: "%#{city}%", state: "%#{state}%")
-
-    @users = UserPresenter.wrap(users)
+    @users = SearchUsers.new(search_params).users
   end
 
   def show
@@ -33,14 +26,6 @@ class UsersController < ApplicationController
 
   def edit
     @page = "Editar cuenta"
-
-    # @user = current_user if @user != current_user
-    if @user.musician?
-      @musician_statuses = MusicianStatus.all if @musician_statuses.blank?
-    elsif @user.band?
-      @genres = Genre.all if @genres.blank?
-      @band_statuses = BandStatus.all if @band_statuses.blank?
-    end
 
     render :edit
   end
@@ -58,17 +43,15 @@ class UsersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+
     def set_user
-      @user = User.where(id: params[:id]).first
+      @user = UserPresenter.new(User.where(id: params[:id]).first)
     end
 
-    # Use callbacks to share common setup or constraints between actions.
     def set_current_user
       @user = current_user
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
       params.require(:user).permit(:id, :email, :password, :name, :city, :state,
         :country, :profileable_type, :profileable_id, :role_id)
@@ -87,15 +70,15 @@ class UsersController < ApplicationController
     end
 
     def search_params
-      if params[:search]
-        allow = [:name, :city, :state, :country, :profileable_type, :role_id]
+      begin
+        allow = [:name, :location, :country, :profileable_type, :role_id]
 
         search_params = params[:search]
         search_params.delete_if { |k, v| v.blank? }
 
         search_params.permit(allow)
-      else
-        params.permit(:profileable_type)
+      rescue # StandardError
+        nil
       end
     end
 end

@@ -6,15 +6,10 @@ class User < ActiveRecord::Base
 
   cattr_accessor :admin_id
 
-  # TODO: Campos Youtube?, Soundcloud?, Facebook?, Twitter?, Bandcamp?, Página web?
-
-  ################### ACCIONES ###################
-
+  # FILTROS
   before_validation :set_default, on: :create
 
-
-  ################### VALIDACIONES ###################
-
+  # VALIDACIONES
   validates :email, presence: true, uniqueness: true
   validates :name, presence: true
   validates :city, presence: true
@@ -24,10 +19,15 @@ class User < ActiveRecord::Base
   validates :profileable_id, presence: true
   validates :profileable_type, presence: true, uniqueness: {scope: :profileable_id}
 
+  # SCOPES
+  scope :in_location, -> (location){ where("city like :city or state like :state",
+    city: "%#{location}%", state: "%#{location}%") }
+  scope :name_like, -> (name){ where("name like :name", name: "%#{name}%") }
 
-  ################### RELACIONES ###################
+  # UPLOADERS
+  mount_uploader :avatar, AvatarUploader
 
-  mount_uploader :avatar, ImageUploader
+  # RELACIONES
 
   # USER RELATED
   belongs_to :role
@@ -50,7 +50,7 @@ class User < ActiveRecord::Base
   has_many :delegated_users, dependent: :destroy
 
   # EVENTS RELATED
-  has_many :events
+  has_many :events, foreign_key: :creator_id, primary_key: :id
   has_many :event_participants
 
   # ACTIVITY FEED RELATED
@@ -78,10 +78,11 @@ class User < ActiveRecord::Base
   has_many :ads
 
   # IMAGE RELATED
-  has_many :images, as: :imageable
+  has_many :images, as: :imageable, dependent: :delete_all
+  accepts_nested_attributes_for :images
+  # has_one :image, as: :imageable, dependent: :delete
+  # accepts_nested_attributes_for :image
 
-
-  ################### METODOS ###################
 
   def musician?
     profileable_type == 'Musician'

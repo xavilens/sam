@@ -1,5 +1,5 @@
 class Ad < ActiveRecord::Base
-  ################### VALIDACIONES ###################
+  # VALIDACIONES
   validates :title, presence: true
   validates :city, presence: true
   validates :state, presence: true
@@ -8,9 +8,13 @@ class Ad < ActiveRecord::Base
   validates :adable_id, presence: true
   validates :adable_type, presence: true, uniqueness: {scope: :adable_id}
 
-  ################### RELACIONES ###################
+  # RELACIONES
   belongs_to :user
   belongs_to :adeable, polymorphic: true
 
   has_many :images, as: :imageable
+  accepts_nested_attributes_for :images
+  # has_one :image, as: :imageable, dependent: :delete
+  # accepts_nested_attributes_for :image
+
 end

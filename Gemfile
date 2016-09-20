@@ -39,7 +39,8 @@ gem 'kaminari', '0.16.3'
 # gem 'i18n', '0.7.0'
 gem 'rails-i18n', '~> 4.0.0'
 # Tratar subida de imagenes
-gem 'carrierwave', '0.11.0'
+# gem 'carrierwave', '0.11.0'
+gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'
 gem 'mini_magick', '4.5.1'
 # Font awesome
 gem 'font-awesome-rails', '4.6.3.1'

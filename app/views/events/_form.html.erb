@@ -1,0 +1,51 @@
+<%= simple_form_for @event do |f| %>
+  <%= f.error_notification %>
+
+  <h3>Información básica del Evento</h3>
+  <%= f.input :name, label: 'Nombre' %>
+  <%= f.input :description, label: 'Descripción' %>
+  <%= f.input :event_type_id, as: :select, label: 'Tipo de evento', collection: EventType.all, label_method: :name, value_method: :id %>
+  <%= f.input :event_status_id, as: :select, label: 'Estado del evento', collection: EventStatus.all, label_method: :name, value_method: :id %>
+
+  <h3>Fecha y hora</h3>
+  <%= f.input :date, label: 'Fecha', order: [:day, :month, :year] %>
+  <%= f.input :time, label: 'Hora' %>
+
+  <h3>Ubicación</h3>
+  <!-- <%= f.input :sala %> -->
+
+  <div class="well">
+    <%= f.input :autocomplete, label: 'Localidad', placeholder: 'Busca aquí tu localidad...', as: :fake %>
+
+    <div class="address-inputs">
+      <%= f.input :street, label: 'Calle', readonly: true,
+        placeholder: 'Se rellenará automáticamente al introducir una dirección'  %>
+      <%= f.input :city, label: 'Ciudad', readonly: true,
+        placeholder: 'Se rellenará automáticamente al introducir una dirección' %>
+      <%= f.input :state, label: 'Comunidad autónoma', readonly: true,
+        placeholder: 'Se rellenará automáticamente al introducir una dirección'  %>
+      <%= f.input :country, label: 'País', readonly: true,
+        placeholder: 'Se rellenará automáticamente al introducir una dirección'  %>
+    </div>
+  </div>
+
+  <h3>Otros datos</h3>
+  <%= f.input :max_participants, input_html: { min: '0', step: 'any' } %>
+  <%= f.input :pvp, label: 'PVP',input_html: {value: number_with_precision(f.object.pvp, precision: 2) } %>
+
+  <h3>Imágenes</h3>
+  <%= f.simple_fields_for (:image) do |i| %>
+    <!-- <%= i.input :image, input_html: {multiple: true}, label: 'Imágenes', hint: 'El primer archivo será usado como portada del evento.' %> -->
+    <%= i.input :image, label: 'Imágenes', as: :file, hint: 'El primer archivo será usado como portada del evento.',
+      input_html: {value: (@event_image.image unless @event_image.blank?)} %>
+  <% end %>
+
+  <p><%= f.submit "Añadir imagen", name: :add_image, class: 'btn btn-md btn-default' %></p>
+
+  <div class="form-actions">
+    <%= f.button :submit, "Aceptar", class: 'btn btn-md btn-primary' %>
+  </div>
+<% end %>
+
+
+<%= render "scripts/street_autocomplete", autocomplete_for: :event %>

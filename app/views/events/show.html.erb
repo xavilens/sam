@@ -1,5 +1,19 @@
 
-<% content_for :title, "#{@event.name} | S.A.M. - Sociedad Anónima Músical" %>
+<% page_title @page %>
 
-<h1>Events#show</h1>
-<p>Find me in app/views/events/show.html.erb</p>
+<%= render 'layouts/page_header' %>
+<p>
+  <%= @event.event_type.name %> | <%= @event.event_status.name %> | <%= @event.date %> <%= @event.time.to_formatted_s(:time) %>
+</p>
+<p>
+  <%= link_to 'Editar evento', edit_event_path(@event) if @event.creator_id = current_user %>
+</p>
+<p>
+  <%= @event.description %>
+</p>
+
+<div class="">
+  <% unless @event_image.blank? %>
+    <%= image_tag @event_image.image_url(:thumb), class: ['img-responsive'] %>
+  <% end %>
+</div>

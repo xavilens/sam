@@ -12,17 +12,17 @@
     <%= f.input :name, label: 'Nombre del artista' %>
 
     <%= f.label 'Imagen de perfil' %> <br>
-    <%= image_tag @user.avatar_url(:thumb_md) unless @user.avatar.blank? %>
+    <%= image_tag @user.avatar_url(:avatar_s) unless @user.avatar.blank? %>
     <%= f.input :avatar, label: false, as: :file %>
 
     <h3>Redes sociales</h3>
-    <%= f.input :website %>
-    <%= f.input :facebook %>
-    <%= f.input :youtube %>
-    <%= f.input :soundcloud %>
-    <%= f.input :twitter %>
-    <%= f.input :instagram %>
-    <%= f.input :gplus %>
+    <%= f.input :website, label: (fa_icon 'globe')+" Website" %>
+    <%= f.input :facebook, label: (fa_icon 'facebook')+" Facebook"  %>
+    <%= f.input :youtube, label: (fa_icon 'youtube')+" Youtube"  %>
+    <%= f.input :soundcloud, label: (fa_icon 'soundcloud')+" Soundcloud"  %>
+    <%= f.input :twitter, label: (fa_icon 'twitter')+" Twitter"  %>
+    <%= f.input :instagram, label: (fa_icon 'instagram')+" Instagram"  %>
+    <%= f.input :gplus, label: (fa_icon 'google-plus')+" Google Plus"  %>
 
     <h3>Localidad</h3>
     <%= f.input :autocomplete, label: false, name: 'autocomplete',
@@ -38,22 +38,22 @@
 
     <% if @user.musician? %>
       <%= f.simple_fields_for :profileable do |p| %>
-        <%= p.input :musician_status_id, collection: @musician_statuses, as: :select,
+        <%= p.input :musician_status_id, collection: MusicianStatus.all, as: :select,
           label: 'Estado del músico', include_blank: false %>
       <% end %>
     <% elsif @user.band? %>
       <%= f.simple_fields_for :profileable do |p| %>
-        <%= p.input :genre_1_id, collection: @genres.group_by(&:category),
+        <%= p.input :genre_1_id, collection: Genre.all.group_by(&:category),
           group_method: :last, label_method: :name, group_value: :id,
           as: :grouped_select, label: 'Género 1' %>
-        <%= p.input :genre_2_id, collection: @genres.group_by(&:category),
+        <%= p.input :genre_2_id, collection: Genre.all.group_by(&:category),
           group_method: :last, label_method: :name, group_value: :id,
           as: :grouped_select, label: 'Género 2' %>
-        <%= p.input :genre_3_id, collection: @genres.group_by(&:category),
+        <%= p.input :genre_3_id, collection: Genre.all.group_by(&:category),
           group_method: :last, label_method: :name, group_value: :id,
           as: :grouped_select, label: 'Género 3' %>
 
-        <%= p.input :band_status_id, collection: @band_statuses, as: :select,
+        <%= p.input :band_status_id, collection: BandStatus.all, as: :select,
           label: 'Estado del grupo', include_blank: false %>
       <% end %>
     <% end %>

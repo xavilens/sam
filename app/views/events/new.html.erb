@@ -3,31 +3,4 @@
 
 <%= render 'layouts/page_header'%>
 
-<%= simple_form_for (@event) do |f| %>
-  <%= f.error_notification %>
-
-  <h3>Información básica del Evento</h3>
-  <%= f.input :name %>
-  <%= f.input :description %>
-  <%= f.association :event_status, collection: @event_statuses %>
-  <%= f.association :event_type, collection: @event_types %>
-
-  <h3>Fecha y hora</h3>
-  <%= f.input :date, order: [:day, :month, :year] %>
-  <%= f.input :time %>
-
-  <h3>Ubicación</h3>
-  <!-- <%= f.input :sala %> -->
-  <%= f.input :autocomplete, as: :fake %>
-  <%= f.input :street %>
-  <%= f.input :city %>
-  <%= f.input :state %>
-  <%= f.input :country %>
-
-  <h3>Otros datos</h3>
-  <%= f.input :max_participants, input_html: { min: '0', step: 'any' } %>
-  <%= f.input :pvp, :input_html => {value: number_with_precision(f.object.pvp, precision: 2) } %>
-<% end %>
-
-
-<%= render "scripts/street_autocomplete", autocomplete_for: :event %>
+<%= render "form" %>

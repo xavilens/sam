@@ -42,25 +42,37 @@ function fillInAddress() {
 
     var campo;
     for (var component in componentForm) {
-      campo = resource+"_"+component;
 
-      document.getElementById(campo).value = '';
-      document.getElementById(campo).disabled = false;
-      document.getElementById(campo).readonly = true;
+      if (component != 'street_number'){
+        campo = resource+"_"+component;
+
+        document.getElementById(campo).value = '';
+      }
     }
     // Toma cada componente de la dirección de los detalles del lugar obtenido
     // y rellena los correspondientes campos en el formulario
-    for (var i = 0; i < place.address_components.length; i++) {
-        var addressType = place.address_components[i].types[0];
+    for (var i = 1; i < place.address_components.length; i++) {
+      var addressType = place.address_components[i].types[0];
 
-        addressType = translateAddressType(addressType);
-        campo = resource+"_"+addressType;
+      addressType = translateAddressType(addressType);
+      campo = resource+"_"+addressType;
 
-        if (addressType in componentForm) {
-          var val = place.address_components[i][componentForm[addressType]];
+      if (addressType in componentForm) {
+        var val = place.address_components[i][componentForm[addressType]];
 
-          document.getElementById(campo).value = val;
+        if(addressType == 'street'){
+
+          var number_street = ''
+          if(place.address_components[0][componentForm[addressType]] != null && place.address_components[0][componentForm[addressType]]!= ''){
+            number_street = place.address_components[0][componentForm[addressType]];
+          }
+
+          if(number_street != '' && number_street != null)
+            val += ", "+number_street;
         }
+
+        document.getElementById(campo).value = val;
+      }
     }
 }
 
