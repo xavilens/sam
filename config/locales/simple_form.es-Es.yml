@@ -16,9 +16,9 @@ en:
         password: 'Contraseña'
       user:
         new:
-          email: 'E-mail.'
+          email: 'E-mail'
         edit:
-          email: 'E-mail.'
+          email: 'E-mail'
     hints:
       defaults:
         username: 'Nombre de usuario para conectarse.'

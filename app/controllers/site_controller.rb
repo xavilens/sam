@@ -1,7 +1,8 @@
 class SiteController < ApplicationController
 
   def index
-    @hola = t 'hello'
-
+    if user_signed_in?
+      current_user
+    end
   end
 end

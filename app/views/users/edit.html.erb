@@ -43,14 +43,11 @@
       <% end %>
     <% elsif @user.band? %>
       <%= f.simple_fields_for :profileable do |p| %>
-        <%= p.input :genre_1_id, collection: Genre.all.group_by(&:category),
-          group_method: :last, label_method: :name, group_value: :id,
+        <%= p.input :genre_1_id, collection: Genre.all, label_method: :name, group_value: :id,
           as: :grouped_select, label: 'Género 1' %>
-        <%= p.input :genre_2_id, collection: Genre.all.group_by(&:category),
-          group_method: :last, label_method: :name, group_value: :id,
+        <%= p.input :genre_2_id, collection: Genre.all, label_method: :name, group_value: :id,
           as: :grouped_select, label: 'Género 2' %>
-        <%= p.input :genre_3_id, collection: Genre.all.group_by(&:category),
-          group_method: :last, label_method: :name, group_value: :id,
+        <%= p.input :genre_3_id, collection: Genre.all, label_method: :name, group_value: :id,
           as: :grouped_select, label: 'Género 3' %>
 
         <%= p.input :band_status_id, collection: BandStatus.all, as: :select,

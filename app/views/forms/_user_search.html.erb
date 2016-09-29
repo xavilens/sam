@@ -17,8 +17,7 @@
         selected: ( fill_input :search, :profileable_type ) %>
 
       <% if !params[:search].blank? && params[:search][:profileable_type] == 'Band' %>
-        <%= f.input :genre_id, collection: Genre.all.group_by(&:category),
-          group_method: :last, label_method: :name, group_value: :id,
+        <%= f.input :genre_id, collection: Genre.all, label_method: :name, group_value: :id,
           as: :grouped_select, label: 'Género', required: false %>
       <% elsif !params[:search].blank? && params[:search][:profileable_type] ==  'Musician' %>
         <%= f.input :instrument_id, collection: Instrument.all,

@@ -8,15 +8,20 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <%= render "layouts/top_menu" %>
+  <% if active_page 'site' %>
+    <div class="landing">
+      Prueba?
+    </div>
+  <% else %>
+    <%= render "layouts/top_menu" %>
 
-  <div class="container main">
-    <%= render "layouts/alerts" %>
+    <div class="container main">
+      <%= render "layouts/alerts" %>
 
-    <%= yield %>
-  </div>
+      <%= yield %>
+    </div>
 
-  <%= render "layouts/footer" %>
-
+    <%= render "layouts/footer" %>
+  <% end %>
 </body>
 </html>

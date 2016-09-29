@@ -92,18 +92,25 @@ end
 ############################################ GENRES ############################################
 
 # Género Electrónica
-['Electrónica', 'Minimal', 'Techno', 'House', "Drum'n'Bass", 'Dubstep'].each do |genre|
- Genre.find_or_create_by({name: genre, category: 'Electrónica'})
+# ['Electrónica', 'Minimal', 'Techno', 'House', "Drum'n'Bass", 'Dubstep'].each do |genre|
+#  Genre.find_or_create_by({name: genre, category: 'Electrónica'})
+# end
+
+# Género Rock
+# ['Rock', "Rock'n'roll", 'Rockabilly', 'Punk', 'Rock Alternativo', 'Rock Progresivo', 'Post Rock', 'Grunge', 'Garage', 'Hardcore'].each do |genre|
+#  Genre.find_or_create_by({name: genre, category: 'Rock'})
+# end
+
+# Géneros
+['Rock', 'Rockabilly', 'Punk', 'Alternativo', 'Progresivo', 'Post', 'Grunge', 'Garage', 'Hardcore',
+  'Electrónica', 'Pop', 'House', 'Techno', 'Metal', 'Trip Hop', 'Chill', 'Rap', 'Ambient', 'Gótico',
+  'Blues', 'Jazz', 'Reggae', 'Ska', 'Mestizaje', 'Acid', 'Psicodélico', 'Indie', 'Noise', 'Sinfónico',
+  'Minimal', 'Dubstep', 'Trap', 'Folk', 'Funk', "Drum'n'Bass", 'Experimental', 'Doom', 'Speed', 'Math',
+  'Disco', 'Flamenco', 'Rumba', 'Bulería', 'Nu', 'New Age', 'Heavy', 'Hard', 'Death', 'Slow', 'Down Tempo'].each do |genre|
+ Genre.find_or_create_by({name: genre})
 end
 
-# TODO: Género Rock
-['Rock', "Rock'n'roll", 'Rockabilly', 'Punk', 'Rock Alternativo', 'Rock Progresivo', 'Post Rock', 'Grunge', 'Garage', 'Hardcore'].each do |genre|
- Genre.find_or_create_by({name: genre, category: 'Rock'})
-end
-
-# TODO: Más géneros
-
-############################################ ADS RELATED ############################################
+############################################ ADS ############################################
 
 # TAdTypes
 ['Vendo', 'Compro', 'Alquilo', 'Cambio'].each do |tadtype|
