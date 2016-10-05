@@ -1,6 +1,8 @@
 class CreateSocialNetworks < ActiveRecord::Migration
   def change
     create_table :social_networks do |t|
+      t.integer :socialeable_id
+      t.string :socialeable_type
       t.string :facebook
       t.string :website
       t.string :gplus
@@ -8,7 +10,6 @@ class CreateSocialNetworks < ActiveRecord::Migration
       t.string :bandcamp
       t.string :soundcloud
       t.string :twitter
-      t.references :socialeable, index: true, foreign_key: true
 
       t.timestamps null: false
     end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160929155154) do
+ActiveRecord::Schema.define(version: 20161005163701) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "user_id",          limit: 4,   null: false
@@ -27,6 +27,23 @@ ActiveRecord::Schema.define(version: 20160929155154) do
   create_table "activity_types", force: :cascade do |t|
     t.string "name", limit: 255
   end
+
+  create_table "addresses", force: :cascade do |t|
+    t.string   "addresseable_id",   limit: 255, null: false
+    t.string   "street",            limit: 255
+    t.string   "gaddress",          limit: 255
+    t.string   "city",              limit: 255
+    t.string   "region",            limit: 255
+    t.string   "country",           limit: 255
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.string   "addresseable_type", limit: 255, null: false
+    t.string   "municipality",      limit: 255
+    t.string   "postal_code",       limit: 255
+    t.string   "province",          limit: 255
+  end
+
+  add_index "addresses", ["addresseable_id"], name: "index_addresses_on_addresseable_id", using: :btree
 
   create_table "ads", force: :cascade do |t|
     t.integer  "user_id",      limit: 4,     null: false
@@ -403,6 +420,21 @@ ActiveRecord::Schema.define(version: 20160929155154) do
 
   add_index "salas", ["creator_id"], name: "index_salas_on_creator_id", using: :btree
 
+  create_table "social_networks", force: :cascade do |t|
+    t.string   "socialeable_id",   limit: 255, null: false
+    t.string   "socialeable_type", limit: 255, null: false
+    t.string   "facebook",         limit: 255
+    t.string   "website",          limit: 255
+    t.string   "gplus",            limit: 255
+    t.string   "instagram",        limit: 255
+    t.string   "bandcamp",         limit: 255
+    t.string   "soundcloud",       limit: 255
+    t.string   "twitter",          limit: 255
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.string   "youtube",          limit: 255
+  end
+
   create_table "t_ad_items", force: :cascade do |t|
     t.string   "name",       limit: 255, null: false
     t.datetime "created_at",             null: false
@@ -438,28 +470,22 @@ ActiveRecord::Schema.define(version: 20160929155154) do
     t.string   "current_sign_in_ip",     limit: 255
     t.string   "last_sign_in_ip",        limit: 255
     t.string   "name",                   limit: 255,                null: false
-    t.string   "city",                   limit: 255,                null: false
-    t.string   "state",                  limit: 255,                null: false
-    t.string   "country",                limit: 255,                null: false
     t.integer  "profileable_id",         limit: 4,                  null: false
     t.string   "profileable_type",       limit: 255,                null: false
     t.datetime "created_at",                                        null: false
     t.datetime "updated_at",                                        null: false
     t.integer  "role_id",                limit: 4,                  null: false
     t.text     "bio",                    limit: 65535
-    t.string   "facebook",               limit: 255
-    t.string   "twitter",                limit: 255
-    t.string   "soundcloud",             limit: 255
-    t.string   "website",                limit: 255
-    t.string   "gplus",                  limit: 255
-    t.string   "instagram",              limit: 255
     t.string   "avatar",                 limit: 255
-    t.string   "youtube",                limit: 255
+    t.integer  "address_id",             limit: 4,                  null: false
+    t.integer  "social_network_id",      limit: 4,                  null: false
   end
 
+  add_index "users", ["address_id"], name: "index_users_on_address_id", using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["role_id"], name: "index_users_on_role_id", using: :btree
+  add_index "users", ["social_network_id"], name: "index_users_on_social_network_id", using: :btree
 
   add_foreign_key "activities", "activity_types"
   add_foreign_key "activities", "users"
@@ -509,5 +535,7 @@ ActiveRecord::Schema.define(version: 20160929155154) do
   add_foreign_key "salas", "users", column: "creator_id"
   add_foreign_key "trade_ads", "t_ad_items"
   add_foreign_key "trade_ads", "t_ad_types"
+  add_foreign_key "users", "addresses"
   add_foreign_key "users", "roles"
+  add_foreign_key "users", "social_networks"
 end

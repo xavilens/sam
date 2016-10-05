@@ -83,6 +83,13 @@ class User < ActiveRecord::Base
   # has_one :image, as: :imageable, dependent: :delete
   # accepts_nested_attributes_for :image
 
+  # SOCIAL NETWORK RELATED
+  has_one :social_network, as: :socialeable
+  accepts_nested_attributes_for :social_network
+
+  # SOCIAL NETWORK RELATED
+  has_one :address, as: :addresseable
+  accepts_nested_attributes_for :address
 
   def musician?
     profileable_type == 'Musician'

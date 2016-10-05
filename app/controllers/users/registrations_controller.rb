@@ -7,9 +7,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def new
     @page = 'Regístrate'
     super
+    resource.build_address
+    resource.build_social_network
   end
 
   def create
+    raise params.inspect
     # Comprobamos qué tipo de perfil tiene el usuario y creamos el perfil al que
     # lo asociaremos
     profile_type = params[:user][:profileable_type]
@@ -20,13 +23,15 @@ class Users::RegistrationsController < Devise::RegistrationsController
       profile = Band.create()
     end
 
-    # Añadimos a los parametros su id
+    # Añadimos a los parametros el id del perfil
     params[:user][:profileable_id] = profile.id
-
+    # Añadimos el avatar por defecto si no se ha dado ninguno
     params[:user][:avatar] = ImageUploader.new.default_url  if params[:user][:avatar].blank?
 
     # Llamamos a la clase padre
     super
+
+
   end
 
   def edit

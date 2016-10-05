@@ -4,7 +4,8 @@
 ======================================*/
 
 var autocomplete;
-var componentForm;
+// Component define los campos a rellenar en BDD
+var components = null;
 var resource;
 
 function initAutocomplete(tipoDir, resourceParam){
@@ -12,19 +13,25 @@ function initAutocomplete(tipoDir, resourceParam){
 
   // Obtenemos los parámetros para la función Autocomplete
   var input = document.getElementById('autocomplete');
-  var options   = {
-      componentRestrictions: {
-          country: 'es'
-      }
-  }
+  // Options define las opciones de búsqueda de Google Places
+  var options = null;
 
+  // Definimos Components y Options diferentes para ciudades y para direcciones completas
   if(tipoDir == 'cities'){
-    options   = {
-        types: ["("+tipoDir+")"],
-        componentRestrictions: {
-            country: 'es'
-        }
+    options = {
+      types: ["("+tipoDir+")"],
+      componentRestrictions: {
+        country: 'es'
+      }
     }
+    components = {'city':'city', 'municipality':'municipality', 'province':'province', 'region':'region', 'country':'country'};
+  }else{
+    options = {
+      componentRestrictions: {
+        country: 'es'
+      }
+    }
+    components = {'street':'street', 'city':'city', 'postal_code':'postal_code', 'municipality':'municipality', 'province':'province', 'region':'region', 'country':'country'};
   }
 
   // Creamos el objeto de autocomplete y restringimos la búsqueda a ciudades.
@@ -33,47 +40,49 @@ function initAutocomplete(tipoDir, resourceParam){
 
   // Cuando el usuario elige una ciudad o dirección del dropdown se rellenará
   // automáticamente el formulario
-  autocomplete.addListener( 'place_changed', fillInAddress );
+  autocomplete.addListener( 'place_changed', fillInAddress);
 }
 
-function fillInAddress() {
-    // Recibe los detalles del lugar elegido en el dropdown del autocompletado
-    var place = autocomplete.getPlace();
+function fillInAddress () {
+  // Recibe los detalles del lugar elegido en el dropdown del autocompletado
+  var place = autocomplete.getPlace();
 
-    var campo;
-    for (var component in componentForm) {
+  // Vaciamos los campos
+  blankFields(resource, components);
 
-      if (component != 'street_number'){
-        campo = resource+"_"+component;
+  // Rellenamos el campo GAddress con la direccion formateada de Google Place
+  setFieldValueById(resource+"_addresseable_gaddress", place.formatted_address);
 
-        document.getElementById(campo).value = '';
-      }
+  // Rellenamos cada campo de los que tenemos en el formulario
+  for (var i = 0; i < place.address_components.length; i++) {
+    var addressType = getAddressType(place, i);
+    var addressTypeAux = translateAddressType(addressType);
+
+    if(addressTypeAux in components){
+      var fieldId = resource + "_addresseable_" + addressTypeAux;
+      var val = getAddressValue(place, i);
+      setFieldValueById(fieldId, val)
     }
-    // Toma cada componente de la dirección de los detalles del lugar obtenido
-    // y rellena los correspondientes campos en el formulario
-    for (var i = 1; i < place.address_components.length; i++) {
-      var addressType = place.address_components[i].types[0];
+  }
+}
 
-      addressType = translateAddressType(addressType);
-      campo = resource+"_"+addressType;
+function blankFields(resource, components){
+  for (var component in components){
+    var fieldId = resource + '_addresseable_' + component;
+    setFieldValueById(fieldId, '');
+  }
+}
 
-      if (addressType in componentForm) {
-        var val = place.address_components[i][componentForm[addressType]];
+function setFieldValueById(fieldId, value){
+  document.getElementById(fieldId).value = value;
+}
 
-        if(addressType == 'street'){
+function getAddressType(place, index){
+  return place.address_components[index].types[0];
+}
 
-          var number_street = ''
-          if(place.address_components[0][componentForm[addressType]] != null && place.address_components[0][componentForm[addressType]]!= ''){
-            number_street = place.address_components[0][componentForm[addressType]];
-          }
-
-          if(number_street != '' && number_street != null)
-            val += ", "+number_street;
-        }
-
-        document.getElementById(campo).value = val;
-      }
-    }
+function getAddressValue(place, index){
+  return place.address_components[index].long_name;
 }
 
 // Traduce de los tipos de dirección de Google Places a los utilizados en la aplicación
@@ -81,9 +90,15 @@ function translateAddressType(addressType){
   if(addressType == "route")
     return "street";
   else if(addressType == "locality")
-    return "city";
+    return "city"; // Ciudad
   else if(addressType == "administrative_area_level_1")
-    return "state";
+    return "region"; // Comunidad Autónoma
+  else if(addressType == "administrative_area_level_2")
+    return "province"; // Provincia
+  else if(addressType == "administrative_area_level_3")
+    return addressType; // Area metropolitana/Distrito
+  else if(addressType == "administrative_area_level_4")
+    return "municipality"; // Municipio
   else
     return addressType;
 }
