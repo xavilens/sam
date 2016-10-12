@@ -7,10 +7,7 @@ class UserPresenter < SimpleDelegator
     end
   end
 
-  def location
-    "#{user.city}, #{user.state}"
-  end
-
+  # USER DATA
   def type
     if user.musician?
       'Músico'
@@ -19,22 +16,49 @@ class UserPresenter < SimpleDelegator
     end
   end
 
+  def bio?
+    !user.bio.blank?
+  end
+
   def bio
-    unless user.bio.blank?
+    if bio?
       (user.bio.gsub(/\n/, '<br/>')).html_safe
     end
   end
 
-  def avatar(version = nil)
-    user.avatar_url(version)
+  def location
+    address = user.address
+
+    "#{address.city} (#{address.province}), #{address.region}"
+  end
+
+  def social_networks
+    SocialNetworkPresenter.wrap(user.social_networks_set.avaliables)
+  end
+
+  # AVATAR
+  def avatar?(version = nil)
+    !user.avatar_url(version).blank?
   end
 
   def index_avatar
-    avatar(:index_avatar_1)
+    user.avatar_url(:index_avatar_1)
+  end
+
+  def index_2_avatar
+    user.avatar_url(:index_avatar_2)
   end
 
   def thumb_avatar
     avatar(:thumb_avatar)
+  end
+
+  def thumb_s_avatar
+    avatar(:thumb_avatar_s)
+  end
+
+  def avatar_s
+    avatar(:avatar_s)
   end
 
   def user

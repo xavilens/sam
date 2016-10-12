@@ -9,15 +9,14 @@ class AvatarUploader < CarrierWave::Uploader::Base
   end
 
   def default_url
-    # "default_avatar/" + [version_name, "default.jpg"].compact.join('_')
+    "default_avatar/" + [version_name, "default.jpg"].compact.join('_')
     # ActionView::Helpers::AssetUrlHelper.image_path("default_avatar/" + [version_name, "default.jpg"].compact.join('_'))
     # ActionController::Base.helpers.asset_path("default_avatar/" + [version_name, "default.jpg"].compact.join('_'))
     # asset_path("default_avatar/" + [version_name, "default.jpg"].compact.join('_'))
     # "/images/default_avatar/" + [version_name, "default.png"].compact.join('_')
-    "/images/default_avatar/" + [version_name, "default.jpg"].compact.join('_')
+    # "/images/default_avatar/" + [version_name, "default.jpg"].compact.join('_')
   end
 
-  process :convert => 'png'
   process scale: [300, 300]
 
   def scale(width, height)
@@ -25,14 +24,6 @@ class AvatarUploader < CarrierWave::Uploader::Base
   end
 
   # VERSIONES
-
-  # version :avatar do
-  #   process resize_to_fill: [300, 300]
-  # end
-  #
-  # version :avatar_md do
-  #   process resize_to_fill: [175, 175]
-  # end
 
   version :avatar_s do
     process resize_to_fill: [100, 100]

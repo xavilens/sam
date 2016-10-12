@@ -51,7 +51,7 @@ function fillInAddress () {
   blankFields(resource, components);
 
   // Rellenamos el campo GAddress con la direccion formateada de Google Place
-  setFieldValueById(resource+"_addresseable_gaddress", place.formatted_address);
+  setFieldValueById(resource+"_address_attributes_"+"gaddress", place.formatted_address);
 
   // Rellenamos cada campo de los que tenemos en el formulario
   for (var i = 0; i < place.address_components.length; i++) {
@@ -59,7 +59,7 @@ function fillInAddress () {
     var addressTypeAux = translateAddressType(addressType);
 
     if(addressTypeAux in components){
-      var fieldId = resource + "_addresseable_" + addressTypeAux;
+      var fieldId = resource + "_address_attributes_" + addressTypeAux;
       var val = getAddressValue(place, i);
       setFieldValueById(fieldId, val)
     }
@@ -68,7 +68,7 @@ function fillInAddress () {
 
 function blankFields(resource, components){
   for (var component in components){
-    var fieldId = resource + '_addresseable_' + component;
+    var fieldId = resource + '_address_attributes_' + component;
     setFieldValueById(fieldId, '');
   }
 }
@@ -88,7 +88,7 @@ function getAddressValue(place, index){
 // Traduce de los tipos de dirección de Google Places a los utilizados en la aplicación
 function translateAddressType(addressType){
   if(addressType == "route")
-    return "street";
+    return "street"; // Calle
   else if(addressType == "locality")
     return "city"; // Ciudad
   else if(addressType == "administrative_area_level_1")
@@ -96,7 +96,7 @@ function translateAddressType(addressType){
   else if(addressType == "administrative_area_level_2")
     return "province"; // Provincia
   else if(addressType == "administrative_area_level_3")
-    return addressType; // Area metropolitana/Distrito
+    return addressType; // Area metropolitana
   else if(addressType == "administrative_area_level_4")
     return "municipality"; // Municipio
   else

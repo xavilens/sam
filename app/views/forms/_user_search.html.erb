@@ -7,22 +7,22 @@
     <div class="well">
 
       <%= f.input :name, label: 'Nombre de usuario', placeholder: 'Filtrar por nombre...', required: false,
-        input_html: { value: ( fill_input :search, :name ) } %>
+        input_html: { value: ( fill_search_input :name ) } %>
 
       <%= f.input :location, label: 'Ubicación', placeholder: 'Filtrar por ciudad, comunidad...', required: false,
-        input_html: { value: ( fill_input :search, :location ) } %>
+        input_html: { value: ( fill_search_input :location ) } %>
 
       <%= f.input :profileable_type, collection: [['Musician', 'Músico'] ,['Band', 'Grupo']],
-        value_method: :first, label_method: :last, label: 'Tipo de usuario', required: false, include_blank: 'Cualquiera',
-        selected: ( fill_input :search, :profileable_type ) %>
+        value_method: :first, label_method: :last, label: 'Tipo de usuario', required: false,
+        include_blank: 'Cualquiera', selected: ( fill_search_input :profileable_type ) %>
 
-      <% if !params[:search].blank? && params[:search][:profileable_type] == 'Band' %>
-        <%= f.input :genre_id, collection: Genre.all, label_method: :name, group_value: :id,
-          as: :grouped_select, label: 'Género', required: false %>
-      <% elsif !params[:search].blank? && params[:search][:profileable_type] ==  'Musician' %>
+      <% if !search_blank? && search_param(:profileable_type) == 'Band' %>
+        <%= f.input :genre_id, collection: Genre.all, label_method: :name, value_method: :id,
+          label: 'Género', required: false %>
+      <% elsif !search_blank? && search_param(:profileable_type) ==  'Musician' %>
         <%= f.input :instrument_id, collection: Instrument.all,
           label_method: :name, value_method: :id,
-          as: :select, label: 'Instrument', required: false %>
+          as: :select, label: 'Instrumento', required: false %>
       <% end %>
 
       <div class="form-actions">

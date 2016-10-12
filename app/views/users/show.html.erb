@@ -3,14 +3,14 @@
 
 <div class="row">
   <div class="col-md-3">
-    <%= image_tag @user.avatar_url, alt: @user.name, class: ['img-responsive'] %>
+    <%= render 'users/show/left' %>
   </div>
 
   <div class="col-md-6">
-    <%= render 'layouts/page_header' %>
+    <%= render 'users/show/center' %>
   </div>
 
   <div class="col-md-3">
-    Barra derecha
+    <%= render 'users/show/right' %>
   </div>
 </div>

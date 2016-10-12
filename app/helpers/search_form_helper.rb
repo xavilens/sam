@@ -1,7 +1,19 @@
 module SearchFormHelper
 
-  def fill_input resource, param
-    params[resource][param] unless params[resource].blank? || params[resource][param].blank?
+  def fill_search_input param
+    fill_input(:search, param) 
+  end
+
+  def search_blank?
+    params[:search].blank?
+  end
+
+  def search_param_blank? param
+    params[:search][param].blank?
+  end
+
+  def search_param param
+    params[:search][param]
   end
 
 end

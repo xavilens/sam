@@ -31,6 +31,7 @@ class UsersController < ApplicationController
   end
 
   def update
+    # raise params.inspect
     respond_to do |format|
       if update_resource(@user, update_params)
         format.html { redirect_to @user, notice: 'Tu cuenta ha sido actualizada correctamente.' }
@@ -52,6 +53,10 @@ class UsersController < ApplicationController
       @user = current_user
     end
 
+    def set_current_user_presenter
+      @user = UserPresenter.new(current_user)
+    end
+
     def user_params
       params.require(:user).permit(:id, :email, :password, :name, :city, :state,
         :country, :profileable_type, :profileable_id, :role_id)
@@ -62,9 +67,10 @@ class UsersController < ApplicationController
     end
 
     def update_params
-      allow = [ :name, :city, :state, :country, :bio, :avatar, :facebook, :youtube,
-        :twitter, :gplus, :soundcloud, :instagram, :website,
-        profileable_attributes: [:genre_1_id, :genre_2_id, :genre_3_id, :band_status_id, :id] ]
+      allow = [ :id, :name, :bio, :avatar,
+        profileable_attributes: [:id, :musician_status_id, :genre_1_id, :genre_2_id, :genre_3_id, :band_status_id],
+        address_attributes: [:id, :gaddress, :city, :municipality, :province, :region, :country],
+        social_networks_set_attributes: [:id, :facebook_url, :youtube_url, :twitter_url, :gplus_url, :soundcloud_url, :instagram_url, :website_url]]
 
       params.require(:user).permit(allow)
     end

@@ -12,16 +12,17 @@ class User < ActiveRecord::Base
   # VALIDACIONES
   validates :email, presence: true, uniqueness: true
   validates :name, presence: true
-  validates :city, presence: true
-  validates :state, presence: true
-  validates :country, presence: true
+  # validates :city, presence: true
+  # validates :state, presence: true
+  # validates :country, presence: true
   validates :role_id, presence: true
   validates :profileable_id, presence: true
   validates :profileable_type, presence: true, uniqueness: {scope: :profileable_id}
+  validates :social_networks_set_id, presence: true
 
   # SCOPES
-  scope :in_location, -> (location){ where("city like :city or state like :state",
-    city: "%#{location}%", state: "%#{location}%") }
+  # scope :in_location, -> (location){ where("city like :city or state like :state",
+  #   city: "%#{location}%", state: "%#{location}%") }
   scope :name_like, -> (name){ where("name like :name", name: "%#{name}%") }
 
   # UPLOADERS
@@ -42,24 +43,24 @@ class User < ActiveRecord::Base
   has_many :messages_inverse, through: :reverse_conversations
 
   # POSTS RELATED
-  has_many :posts, dependent: :destroy
+  has_many :posts
   # TODO: Soft-delete?
-  has_many :comments, dependent: :destroy
+  has_many :comments
 
   # DELEGATED USER RELATED
-  has_many :delegated_users, dependent: :destroy
+  has_many :delegated_users
 
   # EVENTS RELATED
   has_many :events, foreign_key: :creator_id, primary_key: :id
   has_many :event_participants
 
   # ACTIVITY FEED RELATED
-  has_many :activities, dependent: :destroy
+  has_many :activities
 
   # FOLLOWSHIPS RELATED
-  has_many :followships, foreign_key: 'follower_id', dependent: :destroy
+  has_many :followships, foreign_key: 'follower_id'
   has_many :leaders, through: :followships
-  has_many :reverse_followships, foreign_key: :leader_id, class_name: 'Followship', dependent: :destroy
+  has_many :reverse_followships, foreign_key: :leader_id, class_name: 'Followship'
   has_many :followers, through: :reverse_followships
 
   # SALAS RELATED
@@ -84,8 +85,8 @@ class User < ActiveRecord::Base
   # accepts_nested_attributes_for :image
 
   # SOCIAL NETWORK RELATED
-  has_one :social_network, as: :socialeable
-  accepts_nested_attributes_for :social_network
+  belongs_to :social_networks_set #, as: :socialeable
+  accepts_nested_attributes_for :social_networks_set
 
   # SOCIAL NETWORK RELATED
   has_one :address, as: :addresseable

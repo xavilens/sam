@@ -8,7 +8,7 @@ class SearchUsers
       name = params.delete(:name)
       location = params.delete(:location)
 
-      User.where(params).name_like(name).in_location(location)
+      User.where(params).name_like(name)#.in_location(location)
     else
       User.all
     end

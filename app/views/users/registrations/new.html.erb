@@ -16,18 +16,22 @@
         placeholder: 'Nombre con el que te verán el resto de usuarios' %>
 
       <div class="well">
-        <%= f.simple_fields_for :addresseable do |ad| %>
+        <%= f.simple_fields_for :address do |ad| %>
           <%= ad.input :autocomplete, label: 'Localidad', name: 'autocomplete',
            placeholder: 'Busca aquí tu localidad...', as: :fake %>
 
           <div class="address-inputs">
-            <%= ad.input :gaddress %>
-            <%= ad.input :city %>
-            <%= ad.input :municipality%>
-            <%= ad.input :province %>
-            <%= ad.input :region %>
-            <%= ad.input :country, label: 'País',
-              placeholder: 'Se rellenará automáticamente al introducir una dirección'  %>
+            <%= ad.input :gaddress, as: :hidden %>
+            <%= ad.input :city, label: 'Ciudad', readonly: true,
+              placeholder: 'Se rellenará automáticamente al introducir una dirección' %>
+            <%= ad.input :municipality, label: 'Municipio', readonly: true,
+              placeholder: 'Se rellenará automáticamente al introducir una dirección' %>
+            <%= ad.input :province, label: 'Provincia', readonly: true,
+              placeholder: 'Se rellenará automáticamente al introducir una dirección' %>
+            <%= ad.input :region, label: 'Comunidad autónoma', readonly: true,
+              placeholder: 'Se rellenará automáticamente al introducir una dirección' %>
+            <%= ad.input :country, label: 'País', readonly: true,
+              placeholder: 'Se rellenará automáticamente al introducir una dirección' %>
           </div>
         <% end %>
       </div>

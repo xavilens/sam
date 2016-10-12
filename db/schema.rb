@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161005163701) do
+ActiveRecord::Schema.define(version: 20161008151955) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "user_id",          limit: 4,   null: false
@@ -420,19 +420,17 @@ ActiveRecord::Schema.define(version: 20161005163701) do
 
   add_index "salas", ["creator_id"], name: "index_salas_on_creator_id", using: :btree
 
-  create_table "social_networks", force: :cascade do |t|
-    t.string   "socialeable_id",   limit: 255, null: false
-    t.string   "socialeable_type", limit: 255, null: false
-    t.string   "facebook",         limit: 255
-    t.string   "website",          limit: 255
-    t.string   "gplus",            limit: 255
-    t.string   "instagram",        limit: 255
-    t.string   "bandcamp",         limit: 255
-    t.string   "soundcloud",       limit: 255
-    t.string   "twitter",          limit: 255
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
-    t.string   "youtube",          limit: 255
+  create_table "social_networks_sets", force: :cascade do |t|
+    t.string   "facebook_url",   limit: 255
+    t.string   "website_url",    limit: 255
+    t.string   "gplus_url",      limit: 255
+    t.string   "instagram_url",  limit: 255
+    t.string   "bandcamp",       limit: 255
+    t.string   "soundcloud_url", limit: 255
+    t.string   "twitter_url",    limit: 255
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.string   "youtube_url",    limit: 255
   end
 
   create_table "t_ad_items", force: :cascade do |t|
@@ -477,15 +475,13 @@ ActiveRecord::Schema.define(version: 20161005163701) do
     t.integer  "role_id",                limit: 4,                  null: false
     t.text     "bio",                    limit: 65535
     t.string   "avatar",                 limit: 255
-    t.integer  "address_id",             limit: 4,                  null: false
-    t.integer  "social_network_id",      limit: 4,                  null: false
+    t.integer  "social_networks_set_id", limit: 4,                  null: false
   end
 
-  add_index "users", ["address_id"], name: "index_users_on_address_id", using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["role_id"], name: "index_users_on_role_id", using: :btree
-  add_index "users", ["social_network_id"], name: "index_users_on_social_network_id", using: :btree
+  add_index "users", ["social_networks_set_id"], name: "index_users_on_social_networks_set_id", using: :btree
 
   add_foreign_key "activities", "activity_types"
   add_foreign_key "activities", "users"
@@ -535,7 +531,6 @@ ActiveRecord::Schema.define(version: 20161005163701) do
   add_foreign_key "salas", "users", column: "creator_id"
   add_foreign_key "trade_ads", "t_ad_items"
   add_foreign_key "trade_ads", "t_ad_types"
-  add_foreign_key "users", "addresses"
   add_foreign_key "users", "roles"
-  add_foreign_key "users", "social_networks"
+  add_foreign_key "users", "social_networks_sets"
 end
