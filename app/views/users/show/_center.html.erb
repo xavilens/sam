@@ -1,0 +1,8 @@
+
+  <%= render 'layouts/page_header' %>
+  <% if @user.bio? %>
+    <div class="bio-container">
+      <div class="leftbar-name">Biografía</div>
+      <div class="user-bio ellipsis"><%= @user.bio %></div>
+    </div>
+  <% end %>

@@ -1,0 +1,62 @@
+
+<div class="profile-container">
+  <div class="avatar-container">
+    <%= image_tag @user.avatar, alt: @user.name, class: ['img-responsive'] %>
+  </div>
+  <div class="leftbar-name">
+    <%= @user.name %> <small><%= @user.type %></small>
+  </div>
+  <div class="location-container"><%= @user.location %></div>
+  <hr> <!-- END: Profile Main Data -->
+
+  <div class="options-container">
+    <div class="row">
+      <button type="button" class="option-button btn btn-default col-md-2" title="Enviar ensaje">
+        <%= fa_icon 'envelope' %>
+      </button>
+      <button type="button" class="option-button btn btn-default col-md-2" title="Seguir a <%= @user.name %>">
+        <%= fa_icon 'user-plus' %>
+      </button>
+      <button type="button" class="option-button btn btn-default col-md-2" title="Mensaje">
+        <%= fa_icon 'envelope' %>
+      </button>
+      <button type="button" class="option-button btn btn-default col-md-2" title="Mensaje">
+        <%= fa_icon 'envelope' %>
+      </button>
+      <button type="button" class="option-button btn btn-default col-md-2" title="Mensaje">
+        <%= fa_icon 'envelope' %>
+      </button>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+
+
+  <% if @user.social_networks? %>
+  <div class="contact-container">
+    <div class="leftbar-name">Contacto</div>
+    <div class="social-networks-container" role="group">
+      <div class="row">
+        <% @user.social_networks.each do |social_network| %>
+          <button type="button" title="<%= social_network.name %>"
+            class="social-network <%= social_network.name %> btn btn-default col-md-2" >
+            <%= link_to fa_icon(social_network.icon), social_network.formatted_url %>
+          </button>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <% end %> <!-- END: Social Networks Data -->
+
+  <% if @user.images? %>
+  <div class="images-container">
+    <div class="leftbar-name">Imágenes</div>
+  </div>
+  <% end %> <!-- END: Images Data -->
+
+  <% if @user.membership? %>
+  <div class="member-container">
+    <div class="member-header leftbar-name"><%= @user.member_header %></div>
+  </div>
+  <% end %> <!-- END: Membership Data -->
+
+</div>

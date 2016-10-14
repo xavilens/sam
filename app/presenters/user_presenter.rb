@@ -16,6 +16,22 @@ class UserPresenter < SimpleDelegator
     end
   end
 
+  def member_header
+    if user.musician?
+      'Grupos'
+    elsif user.band?
+      'Miembros'
+    end
+  end
+
+  def membership?
+    if user.musician?
+      !user.profile.bands.blank?
+    elsif user.band?
+      !user.profile.members.blank?
+    end
+  end
+
   def bio?
     !user.bio.blank?
   end
@@ -32,8 +48,16 @@ class UserPresenter < SimpleDelegator
     "#{address.city} (#{address.province}), #{address.region}"
   end
 
+  def social_networks?
+    !user.social_networks_set.blank?
+  end
+
   def social_networks
     SocialNetworkPresenter.wrap(user.social_networks_set.avaliables)
+  end
+
+  def images?
+    !images.blank?
   end
 
   # AVATAR

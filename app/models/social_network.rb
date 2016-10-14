@@ -1,4 +1,5 @@
 class SocialNetwork
+  attr_reader :name, :url, :fa_icon
 
   def initialize (name, url, fa_icon)
     @name = name
@@ -14,6 +15,4 @@ class SocialNetwork
     name
   end
 
-  private
-    attr_reader :name, :url, :fa_icon
 end
