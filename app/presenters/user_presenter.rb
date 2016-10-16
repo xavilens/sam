@@ -8,6 +8,14 @@ class UserPresenter < SimpleDelegator
   end
 
   # USER DATA
+  def sub_header
+    if user.musician?
+      user.profile.status #+ ' | ' + user.profile.instruments
+    elsif user.band?
+      user.profile.status #+ ' | ' + user.profile.genres
+    end
+  end
+
   def type
     if user.musician?
       'Músico'

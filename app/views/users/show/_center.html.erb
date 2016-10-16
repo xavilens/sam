@@ -1,8 +1,35 @@
 
-  <%= render 'layouts/page_header' %>
-  <% if @user.bio? %>
-    <div class="bio-container">
-      <div class="leftbar-name">Biografía</div>
-      <div class="user-bio ellipsis"><%= @user.bio %></div>
+<div class="user-show-header">
+  <div class="user-header">
+    <%= @page %> <small><%= @user.type %></small>
+  </div>
+  <div class="user-sub-header">
+    <%= @user.sub_header %>
+  </div>
+</div> <!-- END: HEADER -->
+
+<hr>
+
+<% if @user.bio? %>
+  <div class="bio-container">
+    <div class="center-name">Biografía</div>
+    <div class="bio-text">
+      <div class="user-bio ellipsis-text ellipsis"><%= @user.bio %></div>
+      <%= link_to fa_icon("caret-down")+" Leer más...", 'javascript:expand_ellipsis_text()',
+        id: 'ellipsis-control', class: 'pull-right' %>
     </div>
-  <% end %>
+  </div>
+<% end %> <!-- END: BIO -->
+
+<div class="clearfix"></div>
+
+<% if @user.bio? %>
+  <div class="videos-container">
+    <div class="center-name">Videos</div>
+    <div class="bio-text">
+      <div class="user-bio ellipsis-text ellipsis"><%= @user.bio %></div>
+      <%= link_to fa_icon("caret-down")+" Leer más...", 'javascript:expand_ellipsis_text()',
+        id: 'ellipsis-control', class: 'pull-right' %>
+    </div>
+  </div>
+<% end %> <!-- END: VIDEOS -->

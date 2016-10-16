@@ -19,9 +19,13 @@
 
           <h3><%= link_to user.name, user_path(user.id) %> <small><%= user.type %></small></h3>
           <p class="location text-muted"><%= user.location %></p>
-          
+
           <% unless user.bio.blank? %>
-          <p class="bio"><%= user.bio %></p>
+          <div class="index-bio">
+            <p class="pull-left ellipsis-text index-ellipsis">"<%= user.bio %></p>
+            <p class="pull-left clearfix">&#8230"</p>
+          </div>
+
           <% end %>
         </div>
         <% if user != @users.last %>

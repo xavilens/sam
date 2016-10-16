@@ -35,11 +35,11 @@ class Musician < ActiveRecord::Base
     instruments.include? instrument
   end
 
-  # def instrument!(instrument)
-  #   unless instrument?(instrument)
-  #     instruments << instrument
-  #   end
-  # end
+  def instrument!(instrument)
+    unless instrument?(instrument)
+      instruments << instrument
+    end
+  end
 
   def status
     musician_status.name

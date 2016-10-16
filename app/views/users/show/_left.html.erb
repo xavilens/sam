@@ -9,27 +9,54 @@
   <div class="location-container"><%= @user.location %></div>
   <hr> <!-- END: Profile Main Data -->
 
+  <% unless is_current_user? %>
   <div class="options-container">
     <div class="row">
-      <button type="button" class="option-button btn btn-default col-md-2" title="Enviar ensaje">
-        <%= fa_icon 'envelope' %>
+      <button type="button" class="option-button btn btn-default col-md-2 col-md-offset-1 gap-right"
+        title="Enviar mensaje">
+        <span class="option-button-icon"><%= fa_icon 'envelope' %></span>
       </button>
-      <button type="button" class="option-button btn btn-default col-md-2" title="Seguir a <%= @user.name %>">
-        <%= fa_icon 'user-plus' %>
-      </button>
-      <button type="button" class="option-button btn btn-default col-md-2" title="Mensaje">
-        <%= fa_icon 'envelope' %>
-      </button>
-      <button type="button" class="option-button btn btn-default col-md-2" title="Mensaje">
-        <%= fa_icon 'envelope' %>
-      </button>
-      <button type="button" class="option-button btn btn-default col-md-2" title="Mensaje">
-        <%= fa_icon 'envelope' %>
-      </button>
-    </div>
-    <div class="clearfix"></div>
-  </div>
 
+      <% if current_user.following? @user %>
+      <button type="button" class="option-button btn btn-default col-md-2 gap-right"
+        title="Deja de seguir a <%= @user.name %>">
+        <span class="option-button-icon"><%= fa_icon 'eye-slash' %></span>
+      </button>
+      <% else %>
+      <button type="button" class="option-button btn btn-default col-md-2 gap-right"
+        title="Sigue a <%= @user.name %>">
+        <span class="option-button-icon"><%= fa_icon 'eye' %></span>
+      </button>
+      <% end %>
+
+      <% if current_user.band? && !@user.musician? %>
+        <% if current_user.profile.member? @user.profile %>
+          <button type="button" class="option-button btn btn-default col-md-2 gap-right"
+            title="Eliminar del grupo">
+            <span class="option-button-icon"><%= fa_icon 'user-minus' %></span>
+          </button>
+        <% else %>
+          <button type="button" class="option-button btn btn-default col-md-2 gap-right"
+            title="Agregaral grupo">
+            <span class="option-button-icon"><%= fa_icon 'user-plus' %></span>
+          </button>
+        <% end %>
+      <% elsif current_user.musician? && !@user.band? %>
+        <% if current_user.profile.member? @user.profile %>
+          <button type="button" class="option-button btn btn-default col-md-2 gap-right"
+            title="Eliminarte del grupo">
+            <span class="option-button-icon"><%= fa_icon 'user-minus' %></span>
+          </button>
+        <% else %>
+          <button type="button" class="option-button btn btn-default col-md-2 gap-right"
+            title="Agregarte al grupo">
+            <span class="option-button-icon"><%= fa_icon 'user-plus' %></span>
+          </button>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <% end %>
 
   <% if @user.social_networks? %>
   <div class="contact-container">

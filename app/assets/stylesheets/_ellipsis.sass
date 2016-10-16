@@ -1,0 +1,27 @@
+#ellipsis-control
+  text-align: right
+
+.ellipsis-text
+  max-height: 999px
+  overflow: hidden
+  transition: all 2s ease
+  // transition: max-height 2s ease
+
+.ellipsis-text.ellipsis
+  $lines-to-show: 3
+
+  /* Fallback for non-webkit
+  max-height: $font-size-base * $line-height-base * $lines-to-show
+  overflow: hidden
+  transition: all 0.9s ease
+  // text-overflow: ellipsis
+  // text-overflow: -o-ellipsis-lastline
+
+.ellipsis-text.index-ellipsis
+  $lines-to-show: 2
+
+  /* Fallback for non-webkit
+  max-height: $font-size-base * $line-height-base * $lines-to-show
+  overflow: hidden
+  // text-overflow: ellipsis
+  // text-overflow: -o-ellipsis-lastline

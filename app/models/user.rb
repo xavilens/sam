@@ -92,6 +92,10 @@ class User < ActiveRecord::Base
   has_one :address, as: :addresseable
   accepts_nested_attributes_for :address
 
+  def current_user?
+    id == current_user.id
+  end
+
   def musician?
     profileable_type == 'Musician'
   end
