@@ -23,13 +23,11 @@
 
 <div class="clearfix"></div>
 
-<% if @user.bio? %>
+<% if @user.bio? %> <!-- TODO -->
   <div class="videos-container">
     <div class="center-name">Videos</div>
-    <div class="bio-text">
-      <div class="user-bio ellipsis-text ellipsis"><%= @user.bio %></div>
-      <%= link_to fa_icon("caret-down")+" Leer más...", 'javascript:expand_ellipsis_text()',
-        id: 'ellipsis-control', class: 'pull-right' %>
+    <div class="video-player">
+      <!-- TODO -->
     </div>
   </div>
 <% end %> <!-- END: VIDEOS -->
