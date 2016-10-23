@@ -31,7 +31,6 @@ class UsersController < ApplicationController
   end
 
   def update
-    # raise params.inspect
     respond_to do |format|
       if update_resource(@user, update_params)
         format.html { redirect_to @user, notice: 'Tu cuenta ha sido actualizada correctamente.' }

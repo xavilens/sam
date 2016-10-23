@@ -65,29 +65,35 @@ class MessagesController < ApplicationController
   end
 
   private
+    # Define la variable @user como el usuario actual
     def set_current_user
       @user = UserPresenter.new(current_user)
     end
 
+    # Realiza la redirección al presionar el botón de cancelar
     def redirect_cancel
       id = create_params[:user_2_id]
       redirect_to user_path(id) if params[:cancel]
     end
 
+    # Define los Strong Parameters de index
     def index_params
-      params.permit()
+
     end
 
+    # Define los Strong Parameters para la vista de enviar un nuevo mensaje/conversación
     def new_params
       params.permit(:user_id, :id, :to_user)
     end
 
+    # Define los Strong Parameters al crear una nuevo conversación
     def create_params
       allow = [ :user_1_id, :user_2_id, :subject, :commit]
 
       params.require(:conversation).permit(allow)
     end
 
+    # Define los Strongs Parametes al crear un nuevo mensaje
     def create_message_params
       allow = [:author_id, :body]
 
@@ -95,6 +101,7 @@ class MessagesController < ApplicationController
       # params.require(:conversation).require(:messages_attributes).permit(allow)
     end
 
+    # Define los Strongs Parametes de la vista Show
     def show_params
       allow = [:id]
 

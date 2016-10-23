@@ -3,7 +3,14 @@
 
   <!-- MENSAJES -->
   <li>
-    <%= link_to 'Mensajes', messages_path %>
+    <%
+    if Conversation.unread? (current_user.id)
+      span = content_tag(:span, Conversation.unread_count(current_user.id), class: 'badge conversations-unread')
+    end %>
+
+    <%= link_to messages_path do %>
+      <%= span %> Mensajes
+    <% end %>
   </li>
   <!-- FIN MENSAJES -->
 
@@ -31,6 +38,6 @@
   <!-- FIN MENÚ USUARIO -->
 
 <% else %>
-  <li><%= link_to fa_icon('user')+' Accede', new_user_session_path %></li>
   <li><%= link_to fa_icon('user-plus')+' Regístrate', new_user_registration_path %></li>
+  <li><%= link_to fa_icon('user')+' Accede', new_user_session_path %></li>
 <% end %>

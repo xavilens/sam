@@ -15,8 +15,8 @@
     <div class="center-name">Biografía</div>
     <div class="bio-text">
       <div class="user-bio ellipsis-text ellipsis"><%= @user.bio %></div>
-      <%= link_to fa_icon("caret-down")+" Leer más...", 'javascript:expand_ellipsis_text()',
-        id: 'ellipsis-control', class: 'pull-right' %>
+      <%= link_to fa_icon("caret-down")+" Leer más...", '',
+        class: 'ellipsis-control pull-right' %>
     </div>
   </div>
 <% end %> <!-- END: BIO -->

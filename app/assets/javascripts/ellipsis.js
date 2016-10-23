@@ -1,5 +1,9 @@
-$(document).ready(function() {
-  $('#ellipsis-control').click(function(event){
+$(document).on('page:load',function() {
+  if ($('.ellipsis-control').outerHeight() < 60) {
+    $('.ellipsis-control').hide();
+  }
+
+  $('.ellipsis-control').click(function(event){
     expand_ellipsis_text();
 
     event.preventDefault();
@@ -7,7 +11,7 @@ $(document).ready(function() {
 });
 
 function expand_ellipsis_text(){
-  var ellipsis_control = $('#ellipsis-control');
+  var ellipsis_control = $('.ellipsis-control');
   var ellipsis_text = $('.ellipsis-text');
 
   var truncate_text = ellipsis_text.hasClass("ellipsis");

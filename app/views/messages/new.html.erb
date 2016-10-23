@@ -1,6 +1,6 @@
 <%= render 'layouts/page_header' %>
 
-<%= simple_form_for @conversation, url: user_messages_path do |f| %>
+<%= simple_form_for @conversation, url: messages_path do |f| %>
   <div class="recipent-container">Mensaje para <span><%= @sender.name %></span></div>
   <%= f.input :user_1_id, as: :hidden %>
   <%= f.input :user_2_id, as: :hidden %>

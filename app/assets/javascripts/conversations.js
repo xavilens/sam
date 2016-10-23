@@ -1,6 +1,6 @@
 // CONVERSATIONS
 
-$(document).ready(function(){
+$(document).on('page:load', function(){
   $('.conversation').click(function(event){
     event.preventDefault();
 

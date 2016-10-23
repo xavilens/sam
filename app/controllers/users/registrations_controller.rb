@@ -95,7 +95,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def address_params
     allow = [:gaddress, :city, :municipality, :province, :region, :country]
 
-    params.require(:user).require(:addresseable).permit(allow)
+    params.require(:user).require(:address_attributes).permit(allow)
   end
 
   def sign_up_params

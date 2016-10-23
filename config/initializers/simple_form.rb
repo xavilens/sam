@@ -51,6 +51,48 @@ SimpleForm.setup do |config|
     # b.use :full_error, wrap_with: { tag: :span, class: :error }
   end
 
+  # Wrappers personalizados para tamaños de inputs
+  # ref: http://almassapargali.com/2015/01/15/build-bootstrap-forms-with-simple_form-in-ruby-on-rails.html
+  1.upto(12) do |col|
+    # Wrappers para tamaños de inputs.
+    config.wrappers "field_#{col}".to_sym, tag: 'div', class: 'form-group', error_class: 'has-error' do |mdf|
+      mdf.use :html5
+      mdf.use :placeholder
+      mdf.use :label, class: 'col-sm-2 control-label'
+
+      mdf.wrapper tag: 'div', class: "col-sm-#{col}" do |wr|
+        wr.use :input, class: 'form-control'
+        wr.use :error, wrap_with: { tag: 'span', class: 'help-block' }
+        wr.use :hint,  wrap_with: { tag: 'p', class: 'help-block' }
+      end
+    end
+
+    # Wrappers para inputs multilinea
+    config.wrappers "inline_field_#{col}".to_sym, tag: 'div', class: "col-sm-#{col}", error_class: 'has-error' do |ic|
+      ic.use :html5
+      ic.use :placeholder
+      ic.use :label, class: "control-label"
+
+      ic.use :input, class: 'form-control'
+      ic.use :error, wrap_with: { tag: 'span', class: 'help-block' }
+      ic.use :hint,  wrap_with: { tag: 'p', class: 'help-block' }
+    end
+
+    config.wrappers "inline_bool_#{col}".to_sym, tag: 'div', class: "col-sm-#{col}", error_class: 'has-error' do |ib|
+      ib.use :html5
+      ib.optional :readonly
+
+      ib.wrapper tag: 'div', class: 'checkbox' do |ba|
+        ba.use :input
+        ba.use :label, class: 'sr-only'
+      end
+      ib.use :error, wrap_with: { tag: 'span', class: 'help-block' }
+      ib.use :hint,  wrap_with: { tag: 'p', class: 'help-block' }
+    end
+  end
+
+
+
   # The default wrapper to be used by the FormBuilder.
   config.default_wrapper = :default
 

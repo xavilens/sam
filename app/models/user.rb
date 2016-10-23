@@ -118,6 +118,35 @@ class User < ActiveRecord::Base
     self.profileable.status
   end
 
+  # Indica si posee alguna relacion de Member
+  def membership?
+    if musician?
+      !profile.bands.blank?
+    elsif band?
+      !profile.members.blank?
+    end
+  end
+
+  # Indica si tiene una Bio
+  def bio?
+    !bio.blank?
+  end
+
+  # Devuelve la longitud de la Bio
+  def bio_size
+    bio? ? bio.size : 0
+  end
+
+  # Indica si tiene redes sociales definidas
+  def social_networks?
+    !social_networks_set.blank?
+  end
+
+  # Devuelve todas las redes sociales
+  def social_networks
+    social_networks_set.avaliables
+  end
+
   # Indica si el usuario sigue al leader
   def following?(leader)
     leaders.include? leader
@@ -145,9 +174,14 @@ class User < ActiveRecord::Base
     conversations + reverse_conversations
   end
 
-  # def to_s
-  #   name
-  # end
+  # Indica el tipo de perfil en Español
+  def type
+    if musician?
+      'Músico'
+    elsif band?
+      'Grupo'
+    end
+  end
 
   # Indica si el usuario es Admin
   def is_admin?

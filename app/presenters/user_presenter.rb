@@ -16,15 +16,6 @@ class UserPresenter < SimpleDelegator
     end
   end
 
-  # Indica el tipo de perfil en Español
-  def type
-    if user.musician?
-      'Músico'
-    elsif user.band?
-      'Grupo'
-    end
-  end
-
   # Indica cuando se registró
   def register_at
     time = created_at.time
@@ -47,20 +38,6 @@ class UserPresenter < SimpleDelegator
     end
   end
 
-  # Indica si posee alguna relacion de Member
-  def membership?
-    if user.musician?
-      !user.profile.bands.blank?
-    elsif user.band?
-      !user.profile.members.blank?
-    end
-  end
-
-  # Indica si tiene una Bio
-  def bio?
-    !user.bio.blank?
-  end
-
   # Devuelve la bio formateada
   def bio
     if bio?
@@ -75,14 +52,9 @@ class UserPresenter < SimpleDelegator
     "#{address.city} (#{address.province}), #{address.region}"
   end
 
-  # Indica si tiene redes sociales definidas
-  def social_networks?
-    !user.social_networks_set.blank?
-  end
-
   # Devuelve todas las redes sociales
   def social_networks
-    SocialNetworkPresenter.wrap(user.social_networks_set.avaliables)
+    SocialNetworkPresenter.wrap(user.social_networks)
   end
 
   # Indica si posee imagenes

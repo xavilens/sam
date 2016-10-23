@@ -1,0 +1,187 @@
+<% url = url_form_action %>
+
+<%= simple_form_for @user, url: url, html: { multipart: true, class: 'form-horizontal'}, as: :user,
+  wrapper: 'horizontal_form',
+  wrapper_mappings: {
+    check_boxes: :horizontal_radio_and_checkboxes,
+    radio_buttons: :horizontal_radio_and_checkboxes,
+    file: :horizontal_file_input,
+    boolean: :horizontal_boolean
+  } do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+
+    <!-- INFORMACIÓN BÁSICA -->
+    <div class="form-header row">
+      <h3 class="col-sm-offset-1">Información básica</h3>
+    </div>
+
+    <% unless active_page 'users' %>
+    <!-- Email y Password -->
+    <%= f.input :email, required: true, autofocus: true, placeholder: 'Introduce tu email',
+      wrapper: :field_4 %>
+    <%= f.input :password, label: 'Contraseña', required: true, wrapper: :field_3,
+      placeholder: ("#{@minimum_password_length} caracteres mínimos" if @minimum_password_length), hint: false %>
+    <%= f.input :password_confirmation, label: 'Confirma tu contraseña', required: true,
+      wrapper: :field_3 %>
+    <% end %>
+
+    <!-- Nombre de usuario -->
+    <%= f.input :name, label: 'Nombre del artista', wrapper: :field_4 %>
+
+    <% if active_page 'users' %>
+    <!-- Avatar -->
+    <div class="form-group optional string">
+      <%= f.label 'Imagen de perfil', class: 'col-sm-2 control-label' %>
+      <%= image_tag(@user.avatar_url(:index_2), class: 'col-sm-2 box-shadow') if @user.avatar? %>
+    </div>
+    <% end %>
+
+    <!-- Nuevo Avatar -->
+    <% avatar_label = active_page 'users' ? 'Cambiar imagen de perfil' : 'Imágen de perfil' %>
+    <%= f.input :avatar, label: avatar_label, as: :file %>
+
+    <% unless active_page 'users' %>
+      <!-- Tipo de perfil -->
+      <div class="form-group required profileable_type">
+        <%= f.label :profileable_type, 'Tipo de usuario', required: true, class: 'col-sm-2 radio required control-label' %>
+
+        <div class="btn-group col-sm-2" data-toggle="buttons">
+          <label for="user_profileable_type_musician" class="btn btn-default active">
+            <input id="user_profileable_type_musician" value="Musician" name="user[profileable_type]"
+              type="radio" checked='checked'>
+            Músico
+          </label>
+          <label for="user_profileable_type_band" class="btn btn-default">
+            <input id="user_profileable_type_band" value="Band" name="user[profileable_type]" type="radio">
+            Grupo
+          </label>
+        </div>
+      </div>
+    <% end %>
+    <!-- FIN INFORMACIÓN BÁSICA -->
+
+    <% if active_page 'users' %>
+    <!-- REDES SOCIALES -->
+    <div class="form-header row">
+      <h3 class="col-sm-offset-1">Redes sociales</h3>
+    </div>
+
+      <%= f.simple_fields_for :social_networks_set do |sn| %>
+        <%= sn.input :website_url, label: (fa_icon 'globe')+" Website", wrapper: :field_3 %>
+        <%= sn.input :facebook_url, label: (fa_icon 'facebook')+" Facebook", wrapper: :field_3 %>
+        <%= sn.input :youtube_url, label: (fa_icon 'youtube')+" Youtube", wrapper: :field_3 %>
+        <%= sn.input :soundcloud_url, label: (fa_icon 'soundcloud')+" Soundcloud", wrapper: :field_3 %>
+        <%= sn.input :twitter_url, label: (fa_icon 'twitter')+" Twitter", wrapper: :field_3 %>
+        <%= sn.input :instagram_url, label: (fa_icon 'instagram')+" Instagram", wrapper: :field_3 %>
+        <%= sn.input :gplus_url, label: (fa_icon 'google-plus')+" Google Plus", pattern: :url, wrapper: :field_3 %>
+      <% end %>
+    <!-- FIN REDES SOCIALES -->
+    <% end %>
+
+    <!-- LOCALIDAD -->
+    <div class="form-header row">
+      <h3 class="col-sm-offset-1">Localidad</h3>
+    </div>
+
+    <div class="row">
+      <%= f.input :autocomplete, label: 'Localidad', name: 'autocomplete',
+        placeholder: 'Busca aquí tu localidad y los campos se rellenarán automáticamente...',
+        as: :fake, wrapper: :field_7 %>
+      <div class="row">
+        <%= f.simple_fields_for :address do |ad| %>
+        <div class="address-inputs col-sm-offset-2">
+          <div class="row">
+            <div class="col-sm-12">
+              <%= ad.input :gaddress, as: :hidden %>
+              <%= ad.input :city, label: 'Ciudad', readonly: true, required: true,
+                wrapper: :inline_field_4 %>
+              <%= ad.input :municipality, label: 'Municipio', readonly: true, required: true,
+                wrapper: :inline_field_4 %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+          <%= ad.input :province, label: 'Provincia', readonly: true, required: true,
+            wrapper: :inline_field_3 %>
+            <%= ad.input :region, label: 'Comunidad autónoma', readonly: true, required: true,
+            wrapper: :inline_field_4 %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+            <%= ad.input :country, label: 'País', readonly: true, required: true,
+              wrapper: :inline_field_2 %>
+            </div>
+          </div>
+        </div>
+        <% end %>
+      </div>
+    </div>
+    <!-- FIN LOCALIDAD -->
+
+
+    <% if active_page 'users' %>
+    <!-- INFORMACIÓN DEL PERFIL -->
+    <div class="form-header row">
+      <h3 class="col-sm-offset-1">Información del <%= @user.type %></h3>
+    </div>
+
+      <!-- PERFIL MÚSICO -->
+      <% if @user.musician? %>
+        <%= f.simple_fields_for :profileable do |p| %>
+          <%= p.input :musician_status_id, collection: MusicianStatus.all, as: :select,
+            label: 'Estado del músico', include_blank: false, wrapper: :field_3 %>
+        <% end %>
+      <!-- PERFIL GRUPO -->
+      <% elsif @user.band? %>
+        <%= f.simple_fields_for :profileable do |p| %>
+          <%= p.input :genre_1_id, collection: Genre.all, label_method: :name, group_value: :id,
+            as: :select, label: 'Género 1', wrapper: :field_3 %>
+          <%= p.input :genre_2_id, collection: Genre.all, label_method: :name, group_value: :id,
+            as: :select, label: 'Género 2', wrapper: :field_3 %>
+          <%= p.input :genre_3_id, collection: Genre.all, label_method: :name, group_value: :id,
+            as: :select, label: 'Género 3', wrapper: :field_3 %>
+
+          <%= p.input :band_status_id, collection: BandStatus.all, as: :select,
+            label: 'Estado del grupo', include_blank: false, wrapper: :field_3 %>
+        <% end %>
+      <% end %>
+
+    <!-- Bio -->
+    <div class="row">
+      <div class="col-sm-offset-2">
+        <!-- Caracteres restantes -->
+        <small id="charNum" class="char-left"><%= 2500 - @user.bio_size %> caracteres restantes</small>
+      </div>
+    </div>
+    <%= f.input :bio, label: 'Biografía', maxlength: 2500, input_html:{rows: 10, onkeyup: 'countChar(this)'}, wrapper: :field_6%>
+    <!-- FIN INFORMACIÓN DEL PERFIL -->
+    <% end %>
+  </div>
+  <hr>
+  <!-- BOTONES -->
+  <div class="form-actions">
+    <div class="row">
+      <div class="col-sm-offset-1">
+        <% submit = (active_page 'users') ? 'Actualizar' : 'Registrarse'%>
+        <%= f.button :submit, submit, class: 'btn btn-md btn-primary' %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-offset-1">
+        <% if active_page 'users' %>
+          <br>
+          <%= link_to "Editar datos de registro", edit_user_registration_path, role: 'button', class: 'btn btn-link'  %>
+        <% else %>
+          <%= render 'shared/links' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <!-- FIN BOTONES -->
+
+<% end %>
+
+<%= render "scripts/city_autocomplete", autocomplete_for: :user %>

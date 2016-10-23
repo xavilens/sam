@@ -6,6 +6,7 @@ class Conversation < ActiveRecord::Base
 
   # SCOPES
   scope :my_conversations, -> (user_id){ where("user_1_id = :user_id OR user_2_id = :user_id", user_id: user_id) }
+  scope :unread_conversations, -> (user_id){ joins(:messages).where("messages.author_id != :user_id and messages.read = false", user_id: user_id).distinct(:id) }
 
   # RELACIONES
   has_many :messages, dependent: :destroy
@@ -20,7 +21,7 @@ class Conversation < ActiveRecord::Base
 
   # Indica si hay mensajes sin leer
   def unread? user_id
-    !unread(user_id).blank?
+    !unread_messages(user_id).blank?
   end
 
   # Devuelve los mensajes no leidos
@@ -28,21 +29,18 @@ class Conversation < ActiveRecord::Base
     messages.recipent_messages(user_id).unread
   end
 
-  # Devuelve los mensajes no leidos
-  def self.unread_conversations user_id
-
-    # sql = "select count(1) "
-    # sql += "from conversations c, messages m "
-    # sql += "from conversations c, messages m "
-    # sql += "where c.id = m.conversation_id "
-    # sql += "and (c.user_1_id = "+user_id+" or user_2_id = "+user_id+") "
-    # sql += "and m.author_id != "+user_id+" and m.read = false "
-    # sql += "group by c.id"
-
+  # Indica si hay conversaciones no leidas
+  def self.unread? user_id
     #SQL "select count(1) from conversations c, messages m where c.id = m.conversation_id and (c.user_1_id = :user_id or user_2_id = :user_id) and m.author_id = :recipent_id and m.read = false group by c.id"
-    convs = Conversation.my_conversations(6).joins(:messages).where("messages.author_id != :user_id", user_id: user_id).where("messages.read= false").group("conversations.id")
+    convs = Conversation.my_conversations(user_id).unread_conversations(user_id)
+    convs.exists?
+  end
 
-    convs.count
+  # Devuelve el número de conversaciones con mensajes no leidos
+  def self.unread_count user_id
+    #SQL "select count(1) from conversations c, messages m where c.id = m.conversation_id and (c.user_1_id = :user_id or user_2_id = :user_id) and m.author_id = :recipent_id and m.read = false group by c.id"
+    convs = Conversation.my_conversations(user_id).unread_conversations(user_id)
+    convs.size
   end
 
   # Marca los mensajes como leidos
