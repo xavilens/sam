@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  
   root 'site#index'
 
   devise_for :users, controllers: {
@@ -15,23 +14,24 @@ Rails.application.routes.draw do
 
   resources :users do
     resources :images
-    resources :posts do
-      resources :comments
-    end
     resources :events
-    resources :ads
-    resources :salas_review
-    resources :rehearsal_studio_review
+    # resources :posts do
+    #   resources :comments
+    # end
+    # resources :ads
+    # resources :salas_review
+    # resources :rehearsal_studio_review
   end
 
-  resources :bands
-  resources :musicians
+  resources :messages
   resources :events
-  resources :salas
-  resources :rehearsal_studio
-  resources :posts do
-    resources :comments
-  end
+  # resources :bands
+  # resources :musicians
+  # resources :salas
+  # resources :rehearsal_studio
+  # resources :posts do
+  #   resources :comments
+  # end
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products

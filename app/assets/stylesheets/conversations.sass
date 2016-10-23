@@ -1,0 +1,40 @@
+.conversations-container
+  li
+    display: block
+
+.conversation
+  display: block
+  padding-top: 10px
+  border-top: 1px solid darken($gray-lighter, 15%)
+  // border-right: 1px solid darken($gray-lighter, 15%)
+  // border-left: 1px solid darken($gray-lighter, 15%)
+  // &:last-child
+  //   border-bottom: 1px solid darken($gray-lighter, 15%)
+  &:nth-child(odd)
+    background-color: lighten($gray-light, 50%)
+  &:nth-child(even)
+    background-color: lighten($gray-light, 46%)
+  &:hover
+    background-color: lighten($gray-light, 43%)
+    cursor: pointer
+    cursor: hand
+
+.conversation-right
+  padding-right: 10px
+
+.conversation-left
+  padding-left: 10px
+
+.recipent
+  font-size: 20px
+
+.conversation-messages
+  margin-bottom: 10px
+
+.subject
+
+.conversation-data
+  text-align: right
+
+.conversation-unread
+  background-color: $brand-primary

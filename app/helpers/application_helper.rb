@@ -22,7 +22,7 @@ module ApplicationHelper
     title = 'S.A.M. - Sociedad Anónima Músical'
 
     @page = traducir_type(page)
-    title = "#{@page} | "+title unless page.blank?
+    title = "#{@page} | " + title unless page.blank?
 
     content_for :title, title
   end

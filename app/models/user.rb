@@ -6,29 +6,28 @@ class User < ActiveRecord::Base
 
   cattr_accessor :admin_id
 
-  # FILTROS
+  ######## FILTROS
   before_validation :set_default, on: :create
 
-  # VALIDACIONES
+  ######## VALIDACIONES
   validates :email, presence: true, uniqueness: true
   validates :name, presence: true
-  # validates :city, presence: true
-  # validates :state, presence: true
-  # validates :country, presence: true
   validates :role_id, presence: true
   validates :profileable_id, presence: true
   validates :profileable_type, presence: true, uniqueness: {scope: :profileable_id}
   validates :social_networks_set_id, presence: true
 
-  # SCOPES
-  # scope :in_location, -> (location){ where("city like :city or state like :state",
-  #   city: "%#{location}%", state: "%#{location}%") }
+  ######## SCOPES
+
+  # Muestra si el usuario está online
+  scope :online, lambda{ where("updated_at > ?", 10.minutes.ago) }
+  # Busca los usuarios con nombre parecido
   scope :name_like, -> (name){ where("name like :name", name: "%#{name}%") }
 
-  # UPLOADERS
+  ######## UPLOADERS
   mount_uploader :avatar, AvatarUploader
 
-  # RELACIONES
+  ########  RELACIONES
 
   # USER RELATED
   belongs_to :role
@@ -92,44 +91,65 @@ class User < ActiveRecord::Base
   has_one :address, as: :addresseable
   accepts_nested_attributes_for :address
 
+  ######## METHODS
+
+  # Indica si el usuario es uno mismo
   def current_user?
     id == current_user.id
   end
 
+  # Indica si el perfil es de Musician
   def musician?
     profileable_type == 'Musician'
   end
 
+  # Indica si el perfil es de Musician
   def band?
     profileable_type == 'Band'
   end
 
-  def type
-    if musician?
-      'Músico'
-    elsif band?
-      'Grupo'
-    end
-  end
-
+  # Devuelve el perfil
   def profile
     self.profileable
   end
 
+  # Devuelve el estado
+  def status
+    self.profileable.status
+  end
+
+  # Indica si el usuario sigue al leader
   def following?(leader)
     leaders.include? leader
   end
 
+  # Indica si el usuario sigue al leader
   def follow!(leader)
     if leader != self && !following?(leader)
       leaders << leader
     end
   end
 
+  # Indica si el usuario es seguido por el follower
   def followed?(follower)
     followers.include? follower
   end
 
+  # Indica si el usuario está online
+  def online?
+    updated_at > 10.minutes.ago
+  end
+
+  # Devuelve todas las conversaciones en las que participa el usuario
+  def conversations_all
+    conversations + reverse_conversations
+  end
+
+  # def to_s
+  #   name
+  # end
+
+  # Indica si el usuario es Admin
   def is_admin?
     role_id == User.admin_id
   end

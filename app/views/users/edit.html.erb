@@ -12,7 +12,7 @@
     <%= f.input :name, label: 'Nombre del artista' %>
 
     <%= f.label 'Imagen de perfil' %> <br>
-    <%= image_tag @user.avatar_url(:avatar_s) unless @user.avatar? %>
+    <%= image_tag(@user.avatar_url(:s), class: 'box-shadow') if @user.avatar? %>
     <%= f.input :avatar, label: false, as: :file %>
 
     <h3>Redes sociales</h3>

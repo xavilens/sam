@@ -7,15 +7,16 @@ class UserPresenter < SimpleDelegator
     end
   end
 
-  # USER DATA
+  # Devuelve la subcabecera para la pantalla Show User
   def sub_header
     if user.musician?
-      user.profile.status #+ ' | ' + user.profile.instruments
+      user.status #+ ' | ' + user.profile.instruments
     elsif user.band?
-      user.profile.status #+ ' | ' + user.profile.genres
+      user.status #+ ' | ' + user.profile.genres
     end
   end
 
+  # Indica el tipo de perfil en Español
   def type
     if user.musician?
       'Músico'
@@ -24,6 +25,20 @@ class UserPresenter < SimpleDelegator
     end
   end
 
+  # Indica cuando se registró
+  def register_at
+    time = created_at.time
+    "el #{time.strftime("%d/%m/%Y")}"
+  end
+
+  # Indica cuando se registró
+  def last_seen_at
+    updated_at.time
+    # time = updated_at.time
+    # "el #{time.strftime("%d/%m/%Y")}"
+  end
+
+  # Devuelve la cabecera de la sección Members de la pantalla Show User
   def member_header
     if user.musician?
       'Grupos'
@@ -32,6 +47,7 @@ class UserPresenter < SimpleDelegator
     end
   end
 
+  # Indica si posee alguna relacion de Member
   def membership?
     if user.musician?
       !user.profile.bands.blank?
@@ -40,57 +56,77 @@ class UserPresenter < SimpleDelegator
     end
   end
 
+  # Indica si tiene una Bio
   def bio?
     !user.bio.blank?
   end
 
+  # Devuelve la bio formateada
   def bio
     if bio?
       (user.bio.gsub(/\n/, '<br/>')).html_safe
     end
   end
 
+  # Devuelve la localización formateada
   def location
     address = user.address
 
     "#{address.city} (#{address.province}), #{address.region}"
   end
 
+  # Indica si tiene redes sociales definidas
   def social_networks?
     !user.social_networks_set.blank?
   end
 
+  # Devuelve todas las redes sociales
   def social_networks
     SocialNetworkPresenter.wrap(user.social_networks_set.avaliables)
   end
 
+  # Indica si posee imagenes
   def images?
     !images.blank?
   end
 
   # AVATAR
+  # Indica si posee un avatar de la version pasada
   def avatar?(version = nil)
     !user.avatar_url(version).blank?
   end
 
+  # Devuelve el avatar para el index de usuarios de tipo 1
   def index_avatar
-    user.avatar_url(:index_avatar_1)
+    user.avatar_url(:index_1)
   end
 
+  # Devuelve el avatar para el index de usuarios de tipo 2
   def index_2_avatar
-    user.avatar_url(:index_avatar_2)
+    user.avatar_url(:index_2)
   end
 
+  # Devuelve la miniatura de avatar
   def thumb_avatar
-    avatar(:thumb_avatar)
+    avatar_url(:thumb)
   end
 
+  # Devuelve la miniatura pequeña de avatar
   def thumb_s_avatar
-    avatar(:thumb_avatar_s)
+    avatar_url(:thumb_s)
   end
 
-  def avatar_s
-    avatar(:avatar_s)
+  # Devuelve la miniatura pequeña de avatar
+  def conversation_avatar
+    avatar_url(:thumb_s)
+  end
+
+  def s_avatar
+    avatar_url(:s)
+  end
+
+  def thumb_xs_avatar
+    avatar_url(:thumb_xs)
   end
 
   def user

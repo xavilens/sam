@@ -1,10 +1,24 @@
 class Message < ActiveRecord::Base
-  ################### VALIDACIONES ###################
+  # VALIDACIONES
   validates :conversation_id, presence: true
   validates :author_id, presence: true
   validates :body, presence: true
 
-  ################### RELACIONES ###################
+  # SCOPES
+  scope :recipent_messages, -> (user_id){ where("author_id != :user_id", user_id: user_id) }
+  scope :my_messages, -> (user_id){ where(author_id: user_id) }
+  scope :unread, -> { where(read: false) }
+  scope :desc, -> { order(id: :desc) }
+
+  # RELACIONES
   belongs_to :conversation
-  belongs_to :author_id, class_name: 'User', primary_key: 'id', foreign_key: 'author_id'
+  belongs_to :author, class_name: 'User', primary_key: 'id', foreign_key: 'author_id'
+
+  # METHODS
+
+  # Indica si se ha leaido el mensaje
+  def read?
+    read
+  end
+
 end

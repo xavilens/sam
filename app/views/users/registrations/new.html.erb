@@ -38,10 +38,25 @@
 
       <%= f.input :avatar, label: 'Imagen de perfil', as: :file %>
 
-      <%= f.input :profileable_type, as: :radio_buttons,
+      <div class="form-group required profileable_type">
+        <%= f.label :profileable_type, 'Tipo de usuario', required: true, class: 'radio required control-label' %>
+
+        <div class="btn-group" data-toggle="buttons">
+          <label for="user_profileable_type_musician" class="btn btn-default active">
+            <input id="user_profileable_type_musician" value="Musician" name="user[profileable_type]"
+              type="radio" checked='checked'>
+            Músico
+          </label>
+          <label for="user_profileable_type_band" class="btn btn-default">
+            <input id="user_profileable_type_band" value="Band" name="user[profileable_type]" type="radio">
+            Grupo
+          </label>
+        </div>
+      </div>
+      <!-- <%= f.input :profileable_type, as: :radio_buttons,
         collection: [['Musician', 'Músico'] ,['Band', 'Grupo']], value_method: :first,
         label_method: :last, required: true, label: 'Tipo de Perfil',
-        checked: 'Musician'%>
+        checked: 'Musician' %> -->
 
     </div>
 

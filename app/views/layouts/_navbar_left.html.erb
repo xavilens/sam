@@ -1,6 +1,7 @@
 <li class="dropdown <%= active_page 'posts' %> <%= active_page 'salas' %> <%= active_page 'rehearsal_studios' %>">
-  <!-- CONTENIDOS -->
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+
+<!-- CONTENIDOS -->
+  <!-- <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
     aria-haspopup="true" aria-expanded="false">
     Contenidos <i class="caret"></i>
   </a>
@@ -15,10 +16,11 @@
     <li><%= link_to 'Salas', '#' %></li>
     <li><%= link_to 'Locales de Ensayo', '#' %></li>
   </ul>
-</li>
+</li> -->
+<!-- FIN CONTENIDOS -->
 
-<li class="dropdown <%= active_page 'ads' %>">
-  <!-- ANUNCIOS -->
+<!-- ANUNCIOS -->
+<!-- <li class="dropdown <%= active_page 'ads' %>">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
     aria-haspopup="true" aria-expanded="false">
     Anuncios <i class="caret"></i>
@@ -29,10 +31,11 @@
     <li><%= link_to 'Grupo busca músico', '#' %></li>
     <li><%= link_to 'Grupo busca grupo', '#' %></li>
   </ul>
-</li>
+</li> -->
+<!-- FIN ANUNCIOS -->
 
+<!-- USUARIOS -->
 <li class="dropdown <%= active_page 'users' %>">
-  <!-- USUARIOS -->
   <a href="/users" class="dropdown-toggle" data-toggle="dropdown" role="button"
     aria-haspopup="true" aria-expanded="false">
     Usuarios <i class="caret"></i>
@@ -42,9 +45,11 @@
     <li><%= link_to 'Grupos', users_path(search: {profileable_type: 'Band'}) %></li>
   </ul>
 </li>
+<!-- FIN USUARIOS -->
 
+<!-- EVENTOS -->
 <li class="dropdown <%= active_page 'events' %>">
-  <!-- EVENTOS -->
+
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
     aria-haspopup="true" aria-expanded="false">
     Eventos <i class="caret"></i>
@@ -54,3 +59,4 @@
     <li><%= link_to 'Nuevo evento', new_event_path %></li>
   </ul>
 </li>
+<!-- FIN EVENTOS -->

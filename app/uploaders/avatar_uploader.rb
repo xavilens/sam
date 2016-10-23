@@ -14,7 +14,6 @@ class AvatarUploader < CarrierWave::Uploader::Base
     # ActionController::Base.helpers.asset_path("default_avatar/" + [version_name, "default.jpg"].compact.join('_'))
     # asset_path("default_avatar/" + [version_name, "default.jpg"].compact.join('_'))
     # "/images/default_avatar/" + [version_name, "default.png"].compact.join('_')
-    # "/images/default_avatar/" + [version_name, "default.jpg"].compact.join('_')
   end
 
   process scale: [300, 300]
@@ -25,24 +24,28 @@ class AvatarUploader < CarrierWave::Uploader::Base
 
   # VERSIONES
 
-  version :avatar_s do
+  version :s do
     process resize_to_fill: [100, 100]
   end
 
-  version :index_avatar_1 do
+  version :index_1 do
     process resize_to_fill: [75, 75]
   end
 
-  version :index_avatar_2 do
+  version :index_2 do
     process resize_to_fill: [175, 175]
   end
 
-  version :thumb_avatar do
+  version :thumb do
     process resize_to_fill: [100, 100]
   end
 
-  version :thumb_avatar_s do
+  version :thumb_s do
     process resize_to_fill: [50, 50]
+  end
+
+  version :thumb_xs do
+    process resize_to_fill: [35, 35]
   end
 
   def extension_whitelist

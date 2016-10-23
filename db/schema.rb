@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161008151955) do
+ActiveRecord::Schema.define(version: 20161017210037) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "user_id",          limit: 4,   null: false
@@ -277,11 +277,12 @@ ActiveRecord::Schema.define(version: 20161008151955) do
   add_index "members", ["musician_id"], name: "index_members_on_musician_id", using: :btree
 
   create_table "messages", force: :cascade do |t|
-    t.integer  "author_id",       limit: 4,     null: false
-    t.text     "body",            limit: 65535, null: false
-    t.integer  "conversation_id", limit: 4,     null: false
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.integer  "author_id",       limit: 4,                     null: false
+    t.text     "body",            limit: 65535,                 null: false
+    t.integer  "conversation_id", limit: 4,                     null: false
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
+    t.boolean  "read",                          default: false
   end
 
   add_index "messages", ["author_id"], name: "fk_rails_fc36125d0f", using: :btree

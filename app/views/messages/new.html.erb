@@ -1,0 +1,17 @@
+<%= render 'layouts/page_header' %>
+
+<%= simple_form_for @conversation, url: user_messages_path do |f| %>
+  <div class="recipent-container">Mensaje para <span><%= @sender.name %></span></div>
+  <%= f.input :user_1_id, as: :hidden %>
+  <%= f.input :user_2_id, as: :hidden %>
+  <%= f.input :subject, label: 'Título' %>
+  <%= f.simple_fields_for :messages do |m| %>
+    <%= m.input :author_id, input_html: {value: @sender.id},as: :hidden %>
+    <%= m.input :body, label: false, placeholder: 'Escribe aquí tu mensaje...' %>
+  <% end %>
+
+  <div class="form-actions">
+    <%= f.button :submit, "Enviar", class: 'btn btn-md btn-primary' %>
+    <%= f.button :submit, "Cancelar", name: :cancel, class: 'btn btn-md btn-default' %>
+  </div>
+<% end %>
