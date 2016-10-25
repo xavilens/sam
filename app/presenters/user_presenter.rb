@@ -1,6 +1,7 @@
 require 'delegate'
 
 class UserPresenter < SimpleDelegator
+  # Wrapper de colecciones
   def self.wrap(collection)
     collection.map do |obj|
         new obj

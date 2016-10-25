@@ -1,12 +1,12 @@
 class BandToBandAd < ActiveRecord::Base
-  ################### VALIDACIONES ###################
+  ######## VALIDATIONS
   validates :city, presence: true
   validates :state, presence: true
   validates :country, presence: true
   validates :type, presence: true
   validates :btb_ad_type_id, presence: true
 
-  ################### RELACIONES ###################
+  ######## RELATIONSHIPS 
   has_one :ad, as: :adeable
   belongs_to :btb_ad_type
 

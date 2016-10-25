@@ -1,4 +1,4 @@
 class ActivityType < ActiveRecord::Base
-  ################### VALIDACIONES ###################
+  ######## VALIDATIONS 
   validates :name, presence: true
 end

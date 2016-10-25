@@ -1,24 +1,53 @@
 class Conversation < ActiveRecord::Base
-  # VALIDACIONES
+  ######## VALIDACIONES
   validates :user_1, presence: true
   validates :user_2, presence: true
   validates :subject, presence: true
 
-  # SCOPES
-  scope :my_conversations, -> (user_id){ where("user_1_id = :user_id OR user_2_id = :user_id", user_id: user_id) }
-  scope :unread_conversations, -> (user_id){ joins(:messages).where("messages.author_id != :user_id and messages.read = false", user_id: user_id).distinct(:id) }
 
-  # RELACIONES
+  ######## SCOPES
+  # Devuelve todas las conversaciones en las que participa el usuario
+  scope :my_conversations, -> (user_id){ where("user_1_id = :user_id OR user_2_id = :user_id", user_id: user_id) }
+
+  # Devuelve las conversaciones que tiene mensajes sin leer por el usuario
+  # (aunque el otro usuario haya leído todos sus mensajes)
+  # SQL "select count(1) from conversations c, messages m where c.id = m.conversation_id and (c.user_1_id = :user_id or user_2_id = :user_id) and m.author_id = :recipent_id and m.false group by c.id"
+  scope :unread_conversations, -> (user_id){
+    joins(:messages).where("messages.author_id != :user_id and messages.read = false", user_id: user_id).distinct(:id)
+  }
+
+  # Devuelve aquellas conversaciones con mensajes recibidos por el usuario (no los únicamente enviados)
+  scope :incoming, -> (user_id) {
+    # my_conversations(user_id).joins(:messages).where("messages.author_id != :author_id",author_id: user_id)
+    my_conversations(user_id).not_author(user_id)
+  }
+
+  # Devuelve aquellas conversaionces con mensajes enviados por el usuario aun sin tener respuesta
+  scope :sending, -> (user_id) {
+    # my_conversations(user_id).joins(:messages).where("messages.author_id = :author_id",author_id: user_id)
+    my_conversations(user_id).author(user_id)
+  }
+
+  # Devuelve aquellos mensajes que han sido enviado por el usuario
+  scope :author, -> (user_id) {
+    joins(:messages).where("messages.author_id = :author_id",author_id: user_id)
+  }
+
+  # Devuelve aquellos mensajes que no han sido enviado por el usuario
+  scope :not_author, -> (user_id) {
+    joins(:messages).where("messages.author_id != :author_id",author_id: user_id)
+  }
+
+
+  ######## RELACIONES
   has_many :messages, dependent: :destroy
   accepts_nested_attributes_for :messages
 
   belongs_to :user_1, class_name: 'User', primary_key: 'id', foreign_key: 'user_1_id'
   belongs_to :user_2, class_name: 'User', primary_key: 'id', foreign_key: 'user_2_id'
 
-  #SQL "select count(1) from conversations c, messages m where c.id = m.conversation_id and (c.user_1_id = :user_id or user_2_id = :user_id) and m.author_id = :recipent_id and m.false group by c.id"
 
-  # METHODS
-
+  ######## METHODS
   # Indica si hay mensajes sin leer
   def unread? user_id
     !unread_messages(user_id).blank?
@@ -58,8 +87,6 @@ class Conversation < ActiveRecord::Base
     else
       recipent = user_1
     end
-
-    UserPresenter.new(recipent)
   end
 
   # Devuelve el último mensaje

@@ -1,5 +1,5 @@
 class Genre < ActiveRecord::Base
-  # CAMPOS: nombre, categoria
+  ######## RELATIONSHIPS
   has_many :bands
   has_many :bm_ad_genres
   has_many :band_musician_ad, through: :bm_ad_genres

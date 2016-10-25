@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
   before_filter :authenticate_user!, only: [:edit, :update]
-  before_action :set_user, only: [:show]
+  before_action :set_user_presenter, only: [:show]
   before_action :set_current_user, only: [:edit, :update]
   before_action :search_params, only: [:index]
   before_action :update_params, only: [:update]
@@ -43,28 +43,38 @@ class UsersController < ApplicationController
   end
 
   private
-
+    # Define la variable @user con el usuario pasado por parámetros
     def set_user
-      @user = UserPresenter.new(User.where(id: params[:id]).first)
+      @user = User.find(params[:id])
     end
 
+    # Define la variable @user con el UserPresenter del usuario actual
+    def set_user_presenter
+      @user = UserPresenter.new(set_user)
+    end
+
+    # Define la variable @user con el usuario actual
     def set_current_user
       @user = current_user
     end
 
+    # Define la variable @user con el UserPresenter del usuario actual
     def set_current_user_presenter
       @user = UserPresenter.new(current_user)
     end
 
+    # Parámetros permitidos en el controlador de usuarios
     def user_params
       params.require(:user).permit(:id, :email, :password, :name, :city, :state,
         :country, :profileable_type, :profileable_id, :role_id)
     end
 
+    # Método que actualiza el recurso sin necesidad de pedir confirmación por contraseña
     def update_resource(resource, params)
       resource.update_without_password(params)
     end
 
+    # Parámetros permitidos en la actualización del usuario
     def update_params
       allow = [ :id, :name, :bio, :avatar,
         profileable_attributes: [:id, :musician_status_id, :genre_1_id, :genre_2_id, :genre_3_id, :band_status_id],
@@ -74,6 +84,7 @@ class UsersController < ApplicationController
       params.require(:user).permit(allow)
     end
 
+    # Parámetros permitidos en la búsqueda de usuarios
     def search_params
       begin
         allow = [:name, :location, :country, :profileable_type, :role_id]

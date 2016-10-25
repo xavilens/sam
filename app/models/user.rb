@@ -18,21 +18,30 @@ class User < ActiveRecord::Base
   validates :social_networks_set_id, presence: true
 
   ######## SCOPES
-
   # Muestra si el usuario está online
+  # ref: http://stackoverflow.com/questions/5504130/whos-online-using-devise-in-rails
   scope :online, lambda{ where("updated_at > ?", 10.minutes.ago) }
+
   # Busca los usuarios con nombre parecido
   scope :name_like, -> (name){ where("name like :name", name: "%#{name}%") }
 
   ######## UPLOADERS
   mount_uploader :avatar, AvatarUploader
 
-  ########  RELACIONES
+  ######## RELATIONS
 
   # USER RELATED
   belongs_to :role
   belongs_to :profileable, polymorphic: true
   accepts_nested_attributes_for :profileable
+
+  # ADDRESS RELATED
+  has_one :address, as: :addresseable
+  accepts_nested_attributes_for :address
+
+  # SOCIAL NETWORK RELATED
+  belongs_to :social_networks_set
+  accepts_nested_attributes_for :social_networks_set
 
   # CONVERSATIONS RELATED
   # TODO: Soft-delete?? Borrar/ocultar solo si no quedan usuarios!!
@@ -41,20 +50,13 @@ class User < ActiveRecord::Base
   has_many :reverse_conversations, foreign_key: :user_2_id, class_name: 'Conversation'
   has_many :messages_inverse, through: :reverse_conversations
 
-  # POSTS RELATED
-  has_many :posts
-  # TODO: Soft-delete?
-  has_many :comments
-
-  # DELEGATED USER RELATED
-  has_many :delegated_users
+  # IMAGE RELATED
+  has_many :images, as: :imageable, dependent: :delete_all
+  accepts_nested_attributes_for :images, allow_destroy: true
 
   # EVENTS RELATED
   has_many :events, foreign_key: :creator_id, primary_key: :id
   has_many :event_participants
-
-  # ACTIVITY FEED RELATED
-  has_many :activities
 
   # FOLLOWSHIPS RELATED
   has_many :followships, foreign_key: 'follower_id'
@@ -62,34 +64,30 @@ class User < ActiveRecord::Base
   has_many :reverse_followships, foreign_key: :leader_id, class_name: 'Followship'
   has_many :followers, through: :reverse_followships
 
-  # SALAS RELATED
-  has_many :created_salas, class_name: 'Sala'
-  has_many :sala_reviews
-  has_many :sala_users
-  has_many :salas, through: :sala_users
+  # # AD RELATED
+  # has_many :ads
 
-  # REHEARSAL STUDIOS RELATED
-  has_many :created_rehearsal_studio, class_name: 'RehearsalStudio'
-  has_many :rehearsal_studio_reviews
-  has_many :rehearsal_studio_users
-  has_many :rehearsal_studios, through: :rehearsal_studio_users
+  # # POSTS RELATED
+  # has_many :posts
+  # has_many :comments
 
-  # AD RELATED
-  has_many :ads
+  # # DELEGATED USER RELATED
+  # has_many :delegated_users
 
-  # IMAGE RELATED
-  has_many :images, as: :imageable, dependent: :delete_all
-  accepts_nested_attributes_for :images
-  # has_one :image, as: :imageable, dependent: :delete
-  # accepts_nested_attributes_for :image
+  # # ACTIVITY FEED RELATED
+  # has_many :activities
 
-  # SOCIAL NETWORK RELATED
-  belongs_to :social_networks_set #, as: :socialeable
-  accepts_nested_attributes_for :social_networks_set
+  # # SALAS RELATED
+  # has_many :created_salas, class_name: 'Sala'
+  # has_many :sala_reviews
+  # has_many :sala_users
+  # has_many :salas, through: :sala_users
 
-  # SOCIAL NETWORK RELATED
-  has_one :address, as: :addresseable
-  accepts_nested_attributes_for :address
+  # # REHEARSAL STUDIOS RELATED
+  # has_many :created_rehearsal_studio, class_name: 'RehearsalStudio'
+  # has_many :rehearsal_studio_reviews
+  # has_many :rehearsal_studio_users
+  # has_many :rehearsal_studios, through: :rehearsal_studio_users
 
   ######## METHODS
 

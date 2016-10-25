@@ -1,13 +1,13 @@
 class Address < ActiveRecord::Base
-  # VALIDATIONS
+  ######## VALIDATIONS
   validates :addresseable_type, presence: true, uniqueness: {scope: :addresseable_id}
 
-  # SCOPES
+  ######## SCOPES
   scope :in_location, -> (location){
     where("city like :location or region like :location or municipality like :location or province like :location",
     location: "%#{location}%") }
 
-  # RELATIONS
+  ######## RELATIONSHIPS
   belongs_to :addresseable, polymorphic: true
 
 end

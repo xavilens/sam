@@ -1,10 +1,10 @@
 class Activity < ActiveRecord::Base
-  ################### VALIDACIONES ###################
+  ######## VALIDATIONS
   validates :user_id, presence: true
   validates :activity_type_id, presence: true
   validates :description, presence: true
 
-  ################### RELACIONES ###################
+  ######## RELATIONSHIPS
   belongs_to :user
   belongs_to :activity_type
 end

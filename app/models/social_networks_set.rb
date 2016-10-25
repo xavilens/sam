@@ -1,46 +1,75 @@
 class SocialNetworksSet < ActiveRecord::Base
-  # Redes Sociales
+  ######## VALIDATE
+  ['facebook', 'twitter', 'youtube', 'soundcloud', 'website', 'instagram', 'gplus'].each do |sn|
+
+    if sn != 'website' && sn != 'gplus'
+      url_format =  /((http|https):\/\/)?(www\.)?#{sn}\.[a-z]{2,5}(\/.*)?/i
+    else
+
+      case sn
+      when 'website'
+        # Formato de url
+        # ref: http://stackoverflow.com/questions/1128168/validation-for-url-domain-using-regex-rails/
+        url_format = /((http|https):\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(\/.*)?/i
+      when 'gplus'
+        url_format = /((http|https):\/\/)?plus.google.com(\/.*)?/i
+      end
+
+    end
+
+    validates ("#{sn}_url").to_sym, allow_blank: true, format: {with: url_format, message: 'Formato inválido'}
+  end
+
+  ######## METHODS
+  # Devuelve un objeto SocialNetwork con los datos de Facebook
   def facebook
     name = 'Facebook'
-    icono = icon (name)
+    icono = 'facebook'
     return SocialNetwork.new(name, facebook_url, icono)
   end
 
+  # Devuelve un objeto SocialNetwork con los datos de Facebook
   def twitter
     name = 'Twitter'
-    icono = icon (name)
+    icono = 'twitter'
     return SocialNetwork.new(name, twitter_url, icono)
   end
 
+  # Devuelve un objeto SocialNetwork con los datos de Facebook
   def youtube
     name = 'YouTube'
-    icono = icon (name)
+    icono = 'youtube'
     return SocialNetwork.new(name, youtube_url, icono)
   end
 
+  # Devuelve un objeto SocialNetwork con los datos de Facebook
   def soundcloud
     name = 'Soundcloud'
-    icono = icon (name)
+    icono = 'soundcloud'
     return SocialNetwork.new(name, soundcloud_url, icono)
   end
 
+  # Devuelve un objeto SocialNetwork con los datos de Facebook
   def website
     name = 'Website'
-    icono = icon (name)
+    icono = 'globe'
     return SocialNetwork.new(name, website_url, icono)
   end
 
+  # Devuelve un objeto SocialNetwork con los datos de Facebook
   def instagram
     name = 'Instagram'
-    icono = icon (name)
+    icono = 'instagram'
     return SocialNetwork.new(name, instagram_url, icono)
   end
 
+  # Devuelve un objeto SocialNetwork con los datos de Facebook
   def gplus
-    icono = icon ('Gplus')
+    icono = 'google-plus'
     return SocialNetwork.new('Google+', gplus_url, icono)
   end
 
+  # Devuelve un array de objetos SocialNetwork con los datos de las redes sociales definidas
   def avaliables
     social_networks_avaliable = ['facebook', 'twitter', 'youtube', 'soundcloud',
       'website', 'instagram', 'gplus']
@@ -73,20 +102,15 @@ class SocialNetworksSet < ActiveRecord::Base
     return social_networks
   end
 
+  # Devuelve Cierto si alguna de las redes sociales está definida
   def blank?
-    avaliables.blank?
-  end
+    res = true
 
-  private
-    def icon (social_network)
-      icons = {Facebook: 'facebook', Twitter: 'twitter', YouTube: 'youtube',
-        Soundcloud: 'soundcloud', Website: 'globe', Instagram: 'instagram',
-        Gplus: 'google-plus'}
-
-      icons.each do |sn, icono|
-        if sn.to_s == social_network
-          return icono
-        end
-      end
+    # Comprueba cada campo para saver si está creado
+    ['facebook', 'twitter', 'youtube', 'soundcloud', 'website', 'instagram', 'gplus'].each do |sn|
+      res = res && ("#{sn}_url".to_sym).blank?
     end
+
+    return res
+  end
 end

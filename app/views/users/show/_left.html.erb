@@ -1,4 +1,5 @@
 
+<!-- END: Profile Main Data -->
 <div class="profile-container">
   <div class="avatar-container">
     <%= image_tag @user.avatar, alt: @user.name, class: ['img-responsive'] %>
@@ -7,101 +8,111 @@
     <%= @user.name %> <small><%= @user.type %></small>
   </div>
   <div class="location-container"><%= @user.location %></div>
-  <hr> <!-- END: Profile Main Data -->
-
-  <% unless is_current_user? %>
-  <div class="options-container">
-    <div class="row">
-      <%= link_to fa_icon('envelope'), new_message_path(current_user.id, to_user: @user.id),
-        class: 'option-button-icon option-button btn btn-default col-md-2 col-md-offset-1 gap-right',
-        title: "Enviar mensaje" %>
-
-      <% if current_user.following? @user %>
-      <button type="button" class="option-button btn btn-default col-md-2 gap-right"
-        title="Deja de seguir a <%= @user.name %>">
-        <span class="option-button-icon"><%= fa_icon 'eye-slash' %></span>
-      </button>
-      <% else %>
-      <button type="button" class="option-button btn btn-default col-md-2 gap-right"
-        title="Sigue a <%= @user.name %>">
-        <span class="option-button-icon"><%= fa_icon 'eye' %></span>
-      </button>
-      <% end %>
-
-      <% if current_user.band? && @user.musician? %>
-        <% if current_user.profile.member? @user.profile %>
-          <button type="button" class="option-button btn btn-default col-md-2 gap-right"
-            title="Eliminar del grupo">
-            <span class="option-button-icon"><%= fa_icon 'user-minus' %></span>
-          </button>
-        <% else %>
-          <button type="button" class="option-button btn btn-default col-md-2 gap-right"
-            title="Agregaral grupo">
-            <span class="option-button-icon"><%= fa_icon 'user-plus' %></span>
-          </button>
-        <% end %>
-      <% elsif current_user.musician? && @user.band? %>
-        <% if current_user.profile.member? @user.profile %>
-          <button type="button" class="option-button btn btn-default col-md-2 gap-right"
-            title="Eliminarte del grupo">
-            <span class="option-button-icon"><%= fa_icon 'user-minus' %></span>
-          </button>
-        <% else %>
-          <button type="button" class="option-button btn btn-default col-md-2 gap-right"
-            title="Agregarte al grupo">
-            <span class="option-button-icon"><%= fa_icon 'user-plus' %></span>
-          </button>
-        <% end %>
-      <% end %>
-    </div>
-  </div>
-  <% end %> <!-- END: Options -->
-
-  <div class="user-data-container">
-    <div class="leftbar-name">Información</div>
-    <dl class="info-container">
-      <dt>Registrado</dt>
-      <dd><%= @user.register_at %></dd>
-      <dt>Última conexión</dt>
-      <dd>
-        <% if @user.online? %>
-          <div class="connected-circle pull-left"></div>¡Ahora conectado!
-        <% else %>
-          Hace <%= time_ago_in_words @user.last_seen_at %>
-        <% end %>
-      </dd>
-      <dt>Estado</dt>
-      <dd><%= @user.status %></dd>
-    </dl>
-  </div> <!-- END: User Data -->
-
-  <% if @user.social_networks? %>
-  <div class="contact-container">
-    <div class="leftbar-name">Contacto</div>
-    <div class="social-networks-container">
-      <div class="row">
-        <% @user.social_networks.each do |social_network| %>
-
-          <%= link_to fa_icon(social_network.icon, class: social_network.name), social_network.formatted_url,
-            type: "button", title:  social_network.name,
-            class: ["social-network", "btn btn-default col-md-2"] %>
-          </button>
-        <% end %>
-      </div>
-    </div>
-  </div>
-  <% end %> <!-- END: Social Networks Data -->
-
-  <% if @user.images? %>
-  <div class="images-container">
-    <div class="leftbar-name">Imágenes</div>
-  </div>
-  <% end %> <!-- END: Images Data -->
-
-  <% if @user.membership? %>
-  <div class="member-container">
-    <div class="member-header leftbar-name"><%= @user.member_header %></div>
-  </div>
-  <% end %> <!-- END: Membership Data -->
-
+  <hr>
 </div>
+  <!-- END: Profile Main Data -->
+
+<!-- Options -->
+<% unless is_current_user? %>
+<div class="options-container">
+  <div class="row">
+    <%= link_to fa_icon('envelope'), new_message_path(current_user.id, to_user: @user.id),
+      class: 'option-button-icon option-button btn btn-default col-md-2 col-md-offset-1 gap-right',
+      title: "Enviar mensaje" %>
+
+    <% if current_user.following? @user %>
+    <button type="button" class="option-button btn btn-default col-md-2 gap-right"
+      title="Deja de seguir a <%= @user.name %>">
+      <span class="option-button-icon"><%= fa_icon 'eye-slash' %></span>
+    </button>
+    <% else %>
+    <button type="button" class="option-button btn btn-default col-md-2 gap-right"
+      title="Sigue a <%= @user.name %>">
+      <span class="option-button-icon"><%= fa_icon 'eye' %></span>
+    </button>
+    <% end %>
+
+    <% if current_user.band? && @user.musician? %>
+      <% if current_user.profile.member? @user.profile %>
+        <button type="button" class="option-button btn btn-default col-md-2 gap-right"
+          title="Eliminar del grupo">
+          <span class="option-button-icon"><%= fa_icon 'user-minus' %></span>
+        </button>
+      <% else %>
+        <button type="button" class="option-button btn btn-default col-md-2 gap-right"
+          title="Agregaral grupo">
+          <span class="option-button-icon"><%= fa_icon 'user-plus' %></span>
+        </button>
+      <% end %>
+    <% elsif current_user.musician? && @user.band? %>
+      <% if current_user.profile.member? @user.profile %>
+        <button type="button" class="option-button btn btn-default col-md-2 gap-right"
+          title="Eliminarte del grupo">
+          <span class="option-button-icon"><%= fa_icon 'user-minus' %></span>
+        </button>
+      <% else %>
+        <button type="button" class="option-button btn btn-default col-md-2 gap-right"
+          title="Agregarte al grupo">
+          <span class="option-button-icon"><%= fa_icon 'user-plus' %></span>
+        </button>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+<% end %>
+<!-- END: Options -->
+
+<!-- User Data -->
+<div class="user-data-container">
+  <div class="leftbar-name">Información</div>
+  <dl class="info-container">
+    <dt>Registrado</dt>
+    <dd><%= @user.register_at %></dd>
+    <dt>Última conexión</dt>
+    <dd>
+      <% if @user.online? %>
+        <div class="connected-circle pull-left"></div>¡Ahora conectado!
+      <% else %>
+        Hace <%= time_ago_in_words @user.last_seen_at %>
+      <% end %>
+    </dd>
+    <dt>Estado</dt>
+    <dd><%= @user.status %></dd>
+  </dl>
+</div>
+<!-- END: User Data -->
+
+<!-- Social Networks Data -->
+<% if @user.social_networks? %>
+<div class="contact-container">
+  <div class="leftbar-name">Contacto</div>
+  <div class="social-networks-container">
+    <div class="row">
+      <% @user.social_networks.each do |social_network| %>
+
+        <%= link_to fa_icon(social_network.icon, class: social_network.name), social_network.formatted_url,
+          type: "button", title:  social_network.name, target: "_blank", 
+          class: ["social-network", "btn btn-default col-md-2"] %>
+        </button>
+      <% end %>
+    </div>
+  </div>
+</div>
+<% end %>
+<!-- END: Social Networks Data -->
+
+<!-- Images Data -->
+<% if @user.images? %>
+<div class="images-container">
+  <div class="leftbar-name">Imágenes</div>
+</div>
+<% end %>
+<!-- END: Images Data -->
+
+<!-- Membership Data -->
+<% if @user.membership? %>
+<div class="member-container">
+  <div class="member-header leftbar-name"><%= @user.member_header %></div>
+</div>
+<% end %>
+<!-- END: Membership Data -->

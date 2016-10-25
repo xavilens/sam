@@ -1,6 +1,7 @@
 class EventsController < ApplicationController
   before_filter :authenticate_user!, only: [:new, :edit, :update]
-  before_action :set_event, only: [:show, :edit, :update, :destroy]
+  before_action :set_event_presenter, only: [:show]
+  before_action :set_event, only: [:edit, :update, :destroy]
 
   def index
     @page = 'Calendario de eventos'
@@ -28,8 +29,6 @@ class EventsController < ApplicationController
 
     @event = Event.new(event_params)
     @event.creator_id = current_user
-
-    # raise params[:add_image].inspect
 
     if params[:add_image]
       @event.images.build
@@ -83,16 +82,23 @@ class EventsController < ApplicationController
   end
 
   private
-
+    # Seteamos la variable @event con el evento cuyo id obtenemos de los parametros
     def set_event
-      @event = EventPresenter.new(Event.find(params[:id]))
+      @event = Event.find(params[:id])
     end
 
+    # Seteamos la variable @event con el presentador del evento cuyo id obtenemos de los parametros
+    def set_event_presenter
+      @event = EventPresenter.new(set_event)
+    end
+
+    # Parámetros de evento permitidos por el controlador
     def event_params
       params.require(:event).permit(:name, :description, :date, :time, :event_status_id, :event_type_id, :street,
         :city, :state, :country, :address, :max_participants, :pvp, :creator, :sala)
     end
 
+    # Parámetros de imágenes de evento permitidos por el controlador
     def event_image_params
       params.require(:event).require(:image_attributes).permit(:image)
     end

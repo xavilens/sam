@@ -8,6 +8,7 @@ var autocomplete;
 var components = null;
 var resource;
 
+// Función que controla el comportamiento del autocompletado de Google Places
 function initAutocomplete(tipoDir, resourceParam){
   resource = resourceParam;
 
@@ -43,6 +44,7 @@ function initAutocomplete(tipoDir, resourceParam){
   autocomplete.addListener( 'place_changed', fillInAddress);
 }
 
+// Función que rellena los campos de la dirección necesarios
 function fillInAddress () {
   // Recibe los detalles del lugar elegido en el dropdown del autocompletado
   var place = autocomplete.getPlace();
@@ -50,7 +52,7 @@ function fillInAddress () {
   // Vaciamos los campos
   blankFields(resource, components);
 
-  // Rellenamos el campo GAddress con la direccion formateada de Google Place
+  // Rellenamos el campo GAddress con la dirección formateada de Google Place
   setFieldValueById(resource+"_address_attributes_"+"gaddress", place.formatted_address);
 
   // Rellenamos cada campo de los que tenemos en el formulario
@@ -66,6 +68,7 @@ function fillInAddress () {
   }
 }
 
+// Función que vacía los campos de la dirección
 function blankFields(resource, components){
   for (var component in components){
     var fieldId = resource + '_address_attributes_' + component;
@@ -73,14 +76,17 @@ function blankFields(resource, components){
   }
 }
 
+// Función que setea el valor del campo, seleccionando el campo por su id
 function setFieldValueById(fieldId, value){
   document.getElementById(fieldId).value = value;
 }
 
+// Función que devuelve el tipo de dirección del objeto 'place' en el índice 'index'
 function getAddressType(place, index){
   return place.address_components[index].types[0];
 }
 
+// Función que devuelve el valor del objeto 'place' en el índice 'index' 
 function getAddressValue(place, index){
   return place.address_components[index].long_name;
 }

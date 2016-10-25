@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
 
   private
 
+  # Método que permite saber cuando un usuario se encuentra online
   def user_activity
     current_user.try :touch
   end

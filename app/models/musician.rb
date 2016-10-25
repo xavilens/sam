@@ -1,14 +1,11 @@
 class Musician < ActiveRecord::Base
-  ################### ACCIONES ###################
-
+  ######## ACTIONS / FILTERS
   before_validation :set_default, on: :create
 
-  ################### VALIDACIONES ###################
-
+  ######## VALIDATIONS
   validates :musician_status_id, presence: true
 
-  ################### RELACIONES ###################
-
+  ######## RELATIONSHIPS
   has_one :user, as: :profileable, dependent: :destroy
 
   # TODO: Soft-delete?? Historial de grupos??
@@ -19,25 +16,30 @@ class Musician < ActiveRecord::Base
 
   belongs_to :musician_status
 
-  ################### METODOS ###################
-
+  ######## METHODS
+  # Indica si el músico es miembro del grupo 'band'
   def member?(band)
     bands.include? band
   end
 
-  # def member!(band)
-  #   unless member?(band)
-  #     bands << band
-  #   end
-  # end
+  # Si no es miembro del grupo lo incluye a la lista de grupos en los que es miembro, si lo es lo elimina
+  def member!(band)
+    unless member?(band)
+      bands << band
+    else
+      bands.destroy(band.id)
+    end
+  end
 
+  # Indica si el instrumento está ya incluido
   def instrument?(instrument)
     instruments.include? instrument
   end
 
-  def instrument!(instrument)
+  # Si el instrumento no es
+  def instrument!(instrument, level)
     unless instrument?(instrument)
-      instruments << instrument
+      MusicianKnowledge.create(musician: self, instrument: instrument, level: level)
     end
   end
 

@@ -28,9 +28,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
     # Creamos y añadimos el conjunto de redes sociales
     social_networks_set = SocialNetworksSet.create
 
-    # OLD: Llamamos a la clase padre
-    # super
-
     # Creamos el usuario
     build_resource(sign_up_params)
     resource.create_social_networks_set
@@ -83,21 +80,24 @@ class Users::RegistrationsController < Devise::RegistrationsController
     devise_parameter_sanitizer.permit(:account_update, keys: [:attribute])
   end
 
+  # Ruta utilizada tras registrarse
   def after_sign_up_path_for(resource)
     super(resource)
   end
 
-  # The path used after sign up for inactive accounts.
+  # Ruta utilizada tras registrarse cuando la cuenta se inhabilita
   def after_inactive_sign_up_path_for(resource)
     super(resource)
   end
 
+  # Parámetros permitidos para la creación de la dirección
   def address_params
     allow = [:gaddress, :city, :municipality, :province, :region, :country]
 
     params.require(:user).require(:address_attributes).permit(allow)
   end
 
+  # Parámetros permitidos en el registro
   def sign_up_params
     allow = [:email, :password, :name, :profileable_type, :profileable_id, :avatar, :social_network_set_id]
 

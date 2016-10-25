@@ -69,13 +69,13 @@
     </div>
 
       <%= f.simple_fields_for :social_networks_set do |sn| %>
-        <%= sn.input :website_url, label: (fa_icon 'globe')+" Website", wrapper: :field_3 %>
-        <%= sn.input :facebook_url, label: (fa_icon 'facebook')+" Facebook", wrapper: :field_3 %>
-        <%= sn.input :youtube_url, label: (fa_icon 'youtube')+" Youtube", wrapper: :field_3 %>
-        <%= sn.input :soundcloud_url, label: (fa_icon 'soundcloud')+" Soundcloud", wrapper: :field_3 %>
-        <%= sn.input :twitter_url, label: (fa_icon 'twitter')+" Twitter", wrapper: :field_3 %>
-        <%= sn.input :instagram_url, label: (fa_icon 'instagram')+" Instagram", wrapper: :field_3 %>
-        <%= sn.input :gplus_url, label: (fa_icon 'google-plus')+" Google Plus", pattern: :url, wrapper: :field_3 %>
+        <%= sn.input :website_url, label: (fa_icon 'globe')+" Website", as: :url, wrapper: :field_3 %>
+        <%= sn.input :facebook_url, label: (fa_icon 'facebook')+" Facebook", as: :url, wrapper: :field_3 %>
+        <%= sn.input :youtube_url, label: (fa_icon 'youtube')+" Youtube", as: :url, wrapper: :field_3 %>
+        <%= sn.input :soundcloud_url, label: (fa_icon 'soundcloud')+" Soundcloud", as: :url, wrapper: :field_3 %>
+        <%= sn.input :twitter_url, label: (fa_icon 'twitter')+" Twitter", as: :url, wrapper: :field_3 %>
+        <%= sn.input :instagram_url, label: (fa_icon 'instagram')+" Instagram", as: :url, wrapper: :field_3 %>
+        <%= sn.input :gplus_url, label: (fa_icon 'google-plus')+" Google Plus", as: :url, pattern: :url, wrapper: :field_3 %>
       <% end %>
     <!-- FIN REDES SOCIALES -->
     <% end %>

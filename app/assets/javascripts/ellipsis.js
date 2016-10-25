@@ -1,5 +1,8 @@
+// ELLIPSIS
+
+// Función que Captura el click en la opción 'Leer más' de la biografía de un usuario
 $(document).on('page:load',function() {
-  if ($('.ellipsis-control').outerHeight() < 60) {
+  if ($('.ellipsis-text').outerHeight() < 60) {
     $('.ellipsis-control').hide();
   }
 
@@ -10,6 +13,7 @@ $(document).on('page:load',function() {
   });
 });
 
+// Función que controla el comportamiento de la opción 'Leer más' de la biografía de un usuario
 function expand_ellipsis_text(){
   var ellipsis_control = $('.ellipsis-control');
   var ellipsis_text = $('.ellipsis-text');

@@ -1,10 +1,10 @@
 class Post < ActiveRecord::Base
-  # VALIDACIONES
+  ######## VALIDATIONS
   validates :title, presence: true
   validates :body, presence: true
   validates :user_id, presence: true
 
-  # RELACIONES
+  ######## RELATIONSHIPS
   belongs_to :user
 
   has_many :comments

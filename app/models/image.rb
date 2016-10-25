@@ -1,13 +1,9 @@
 class Image < ActiveRecord::Base
-
-  ################### VALIDACIONES ###################
-
+  ######## VALIDATIONS
   # validates_processing_of :image
   # validates :images, presence: true
 
-
-  ################### RELACIONES ###################
-
+  ######## RELATIONSHIPS
   belongs_to :imageable, polymorphic: true
 
   mount_uploader :image, ImageUploader

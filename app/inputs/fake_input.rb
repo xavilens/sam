@@ -1,3 +1,5 @@
+# Tipo de entrada para Simple Form que permite añadir un campo que no se obtiene del modelo
+# ref: https://github.com/plataformatec/simple_form/wiki/Create-a-fake-input-that-does-NOT-read-attributes
 class FakeInput < SimpleForm::Inputs::StringInput
   # This method only create a basic input without reading any value from object
   def input(wrapper_options = nil)
