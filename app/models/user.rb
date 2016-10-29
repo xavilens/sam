@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
   cattr_accessor :admin_id
 
   ######## FILTROS
+  # Ejecuta el método set-deault antes de efectuar las validaciones
+  # ref: https://github.com/plataformatec/devise/wiki/How-To:-Add-a-default-role-to-a-User
   before_validation :set_default, on: :create
 
   ######## VALIDACIONES
@@ -194,6 +196,8 @@ class User < ActiveRecord::Base
 
   private
 
+    # Define el rol por defecto del usuario como 'registrado'
+    # ref: https://github.com/plataformatec/devise/wiki/How-To:-Add-a-default-role-to-a-User
     def set_default
       self.role_id |= Role.find_by_name('registrado').id if self.role_id.blank?
     end

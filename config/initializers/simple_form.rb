@@ -62,9 +62,11 @@ SimpleForm.setup do |config|
 
       mdf.wrapper tag: 'div', class: "col-sm-#{col}" do |wr|
         wr.use :input, class: 'form-control'
-        wr.use :error, wrap_with: { tag: 'span', class: 'help-block' }
         wr.use :hint,  wrap_with: { tag: 'p', class: 'help-block' }
       end
+
+      # grid size: total (12) - etiqueta (2) - input (col) - margen (1) = 12-(col+3)
+      mdf.use :error, wrap_with: { tag: 'span', class: "help-block col-sm-#{12 - (col + 3)}" }
     end
 
     # Wrappers para inputs multilinea
@@ -88,6 +90,33 @@ SimpleForm.setup do |config|
       end
       ib.use :error, wrap_with: { tag: 'span', class: 'help-block' }
       ib.use :hint,  wrap_with: { tag: 'p', class: 'help-block' }
+    end
+
+    config.wrappers "inverse_bool_#{col}".to_sym, tag: 'div', class: "form-group text-left col-sm-#{col}", error_class: 'has-error' do |ib|
+      ib.use :html5
+      ib.optional :readonly
+
+      ib.wrapper tag: 'div', class: 'checkbox' do |ba|
+        ba.use :input
+        ba.use :label
+      end
+      ib.use :error, wrap_with: { tag: 'span', class: 'help-block' }
+      ib.use :hint,  wrap_with: { tag: 'p', class: 'help-block' }
+    end
+
+    1.upto(10) do |offset|
+      # Wrappers para tamaños de inputs y de etiquetas
+      config.wrappers "field_#{col}_offset_#{offset}".to_sym, tag: 'div', class: 'form-group', error_class: 'has-error' do |mdf|
+        mdf.use :html5
+        mdf.use :placeholder
+        mdf.use :label, class: "col-sm-2 col-sm-offset-#{offset} control-label"
+
+        mdf.wrapper tag: 'div', class: "col-sm-#{col}" do |wr|
+          wr.use :input, class: 'form-control'
+          wr.use :error, wrap_with: { tag: 'span', class: 'help-block' }
+          wr.use :hint,  wrap_with: { tag: 'p', class: 'help-block' }
+        end
+      end
     end
   end
 

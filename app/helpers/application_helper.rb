@@ -29,9 +29,10 @@ module ApplicationHelper
     content_for :title, title
   end
 
-  # Devuelve 'active' si nos encontramos en una página con el controlador indicado
-  def active_page controller
-    'active' if params[:controller] == controller
+  # Devuelve 'active' si nos encontramos en una página con el controlador
+  # indicado y, si queremos, si se ha ejecutado con una acción
+  def active_page controller, action = nil
+    'active' if (page? controller, action)
   end
 
   # Indica si estamos en una página con un controlador y, si queremos,
@@ -46,6 +47,15 @@ module ApplicationHelper
     end
 
     return res
+  end
+
+  # Devuelve el decorador con el número de mensajes no leídos
+  def unread_conversations_count
+    if Conversation.unread? (current_user.id)
+      messages_count = content_tag(:span, Conversation.unread_count(current_user.id), class: 'badge unread-conversations')
+    end
+
+    return messages_count
   end
 
 end

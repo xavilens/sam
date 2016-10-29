@@ -9,10 +9,8 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <% if false #active_page 'site' %>
-    <div class="landing">
-      Prueba?
-    </div>
+  <% if page? 'site' %>
+    <%= yield %>
   <% else %>
     <%= render "layouts/top_menu" %>
 

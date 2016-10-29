@@ -5,8 +5,12 @@ class MessagesController < ApplicationController
 
   def index
     @page = 'Mensajes'
+    if index_params[:show].blank? || index_params[:show] == 'inbox'
+      @conversations = Conversation.my_conversations(current_user.id).inbox(current_user.id)
+    elsif index_params[:show] == 'outbox'
+      @conversations = Conversation.my_conversations(current_user.id).outbox(current_user.id)
+    end
 
-    @conversations = Conversation.my_conversations(current_user.id)
     @conversations = ConversationPresenter.wrap(@conversations)
   end
 
@@ -78,7 +82,7 @@ class MessagesController < ApplicationController
 
     # Define los Strong Parameters de index
     def index_params
-
+      params.permit(:show)
     end
 
     # Define los Strong Parameters para la vista de enviar un nuevo mensaje/conversación

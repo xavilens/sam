@@ -3,13 +3,8 @@
 
   <!-- MENSAJES -->
   <li>
-    <%
-    if Conversation.unread? (current_user.id)
-      span = content_tag(:span, Conversation.unread_count(current_user.id), class: 'badge conversations-unread')
-    end %>
-
     <%= link_to messages_path do %>
-      <%= span %> Mensajes
+      <%= unread_conversations_count %> Mensajes
     <% end %>
   </li>
   <!-- FIN MENSAJES -->

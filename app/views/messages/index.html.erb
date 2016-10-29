@@ -1,50 +1,57 @@
 <%= render 'layouts/page_header' %>
 
-<% if @conversations.blank? %>
-  <p style="width: 100%; margin: 0 auto;">No hay aún ningún mensaje</p>
-<% else %>
-  <div class="conversations-container">
-    <div class="col-md-3">
-      BARRA IZQUIERDA
-    </div>
-
-    <div class="col-md-7">
-      <ul class="conversations-container list-unstyled">
-
-        <% @conversations.each do |conversation| %>
-          <% recipent = conversation_recipent conversation %>
-          <li class="conversation clearfix" data-conversation='<%= conversation.id %>'>
-            <div class="conversation-left pull-left">
-              <div class="recipent-avatar pull-left">
-                <%= image_tag recipent.conversation_avatar,
-                  class: ['image-responsive', 'img-circle', 'gap-right', 'gap-bottom'], alt: recipent.name %>
-              </div>
-              <div class="recipent-container pull-left">
-                <div class="recipent">
-                  <%= link_to recipent.name, user_path(recipent) %>
-                </div>
-                <div class="subject">
-                  <%= conversation.subject %>
-                </div>
-              </div>
-            </div>
-
-            <div class="conversation-right pull-right">
-              <div class="conversation-data">
-                <div class="conversation-messages">
-                  <% count_class = ' conversation-unread' if conversation_unread? (conversation) %>
-                  <span class="badge<%= count_class %>"><%= conversation.messages_count %></span>
-                </div>
-                <div class="conversation-time">
-                  <%= time_ago_in_words conversation.updated_at %>
-                </div>
-              </div>
-            </div>
-          </li>
-        <% end %>
-
-      </ul>
-    </div>
-
+<% unless @conversations.blank? %>
+  <!-- Opciones para mostrar conversaciones -->
+  <div class="col-md-3">
+    <%= render 'left' %>
   </div>
+  <!-- Fin Opciones -->
+
+  <!-- Conversaciones -->
+  <div class="col-md-7">
+    <ul class="conversations-container list-unstyled">
+
+      <% @conversations.each do |conversation| %>
+        <% recipent = conversation_recipent conversation %>
+        <!-- Conversación -->
+        <li class="conversation clearfix" data-conversation='<%= conversation.id %>'>
+          <!-- Conversación zona izquierda -->
+          <div class="conversation-left pull-left">
+            <div class="recipent-avatar pull-left">
+              <%= image_tag recipent.conversation_avatar,
+                class: ['image-responsive', 'img-circle', 'gap-right', 'gap-bottom'], alt: recipent.name %>
+            </div>
+            <div class="recipent-container pull-left">
+              <div class="recipent">
+                <%= link_to recipent.name, user_path(recipent) %>
+              </div>
+              <div class="subject">
+                <%= conversation.subject %>
+              </div>
+            </div>
+          </div>
+          <!-- FIN Conversación zona izquierda -->
+
+          <!-- Conversación zona derecha -->
+          <div class="conversation-right pull-right">
+            <div class="conversation-data">
+              <div class="conversation-messages">
+                <span class="badge<%= unread_class conversation %>">
+                  <%= conversation.messages_count %>
+                </span>
+              </div>
+              <div class="conversation-time">
+                <%= time_ago_in_words conversation.updated_at %>
+              </div>
+            </div>
+          </div>
+          <!-- FIN Conversación zona izquierda -->
+        </li>
+        <!-- Fin Conversación -->
+      <% end %>
+    </ul>
+  </div>
+  <!-- Fin Conversaciones -->
+<% else %>
+  <p class="no-data" style="width: 100%; margin: 0 auto;">No hay aún ningún mensaje</p>
 <% end %>

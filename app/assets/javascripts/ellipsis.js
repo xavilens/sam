@@ -2,15 +2,21 @@
 
 // Función que Captura el click en la opción 'Leer más' de la biografía de un usuario
 $(document).on('page:load',function() {
-  if ($('.ellipsis-text').outerHeight() < 60) {
-    $('.ellipsis-control').hide();
-  }
+  // if ($('.ellipsis-text').outerHeight() < 60) {
+  //   $('.ellipsis-control').hide();
+  // }
 
   $('.ellipsis-control').click(function(event){
     expand_ellipsis_text();
 
     event.preventDefault();
   });
+});
+
+$(document).on('page:before-render',function() {
+  if ($('.ellipsis-text').outerHeight() < 60) {
+    $('.ellipsis-control').hide();
+  }
 });
 
 // Función que controla el comportamiento de la opción 'Leer más' de la biografía de un usuario

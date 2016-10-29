@@ -12,8 +12,13 @@ module Sam
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
     config.paths['app/views'] << 'app/views/users'
+
     config.autoload_paths += %W(#{config.root}/app)
+
     config.eager_load_paths += %W(#{config.root}/app)
+
+    # ref: https://github.com/plataformatec/devise/wiki/How-To:-Redirect-to-a-specific-page-when-the-user-can-not-be-authenticated
+    config.autoload_paths << Rails.root.join('lib')
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.

@@ -1,21 +1,25 @@
 class Users::PasswordsController < Devise::PasswordsController
   # GET /resource/password/new
   def new
+    @page = 'Nueva contraseña'
     super
   end
 
   # POST /resource/password
   def create
+    @page = 'Nueva contraseña'
     super
   end
 
   # GET /resource/password/edit?reset_password_token=abcdef
   def edit
+    @page = 'Nueva contraseña'
     super
   end
 
   # PUT /resource/password
   def update
+    @page = 'Nueva contraseña'
     super
   end
 

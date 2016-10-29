@@ -17,13 +17,13 @@ class Conversation < ActiveRecord::Base
   }
 
   # Devuelve aquellas conversaciones con mensajes recibidos por el usuario (no los únicamente enviados)
-  scope :incoming, -> (user_id) {
+  scope :inbox, -> (user_id) {
     # my_conversations(user_id).joins(:messages).where("messages.author_id != :author_id",author_id: user_id)
     my_conversations(user_id).not_author(user_id)
   }
 
   # Devuelve aquellas conversaionces con mensajes enviados por el usuario aun sin tener respuesta
-  scope :sending, -> (user_id) {
+  scope :outbox, -> (user_id) {
     # my_conversations(user_id).joins(:messages).where("messages.author_id = :author_id",author_id: user_id)
     my_conversations(user_id).author(user_id)
   }
@@ -37,6 +37,9 @@ class Conversation < ActiveRecord::Base
   scope :not_author, -> (user_id) {
     joins(:messages).where("messages.author_id != :author_id",author_id: user_id)
   }
+
+  # Devuelve las conversaciones ordenadas de manera descendiente
+  scope :desc, -> { order(id: :desc) }
 
 
   ######## RELACIONES

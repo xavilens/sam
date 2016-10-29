@@ -8,4 +8,9 @@ module ConversationHelper
   def conversation_unread? conversation
     conversation.unread? (@user.id)
   end
+
+  # Devuelve clase para conversaciones con mensajes sin leer
+  def unread_class conversation
+    conversation.unread_conversation_class current_user.id
+  end
 end

@@ -1,19 +1,20 @@
 
-<% content_for :title, 'Nueva Contraseña | S.A.M. - Sociedad Anónima Músical' %>
-
 <%= render 'layouts/page_header' %>
 
 <%= simple_form_for( resource, as: resource_name, url: password_path(resource_name),
-  html: { method: :post }, wrapper: :horizontal_form ) do |f| %>
+  html: { method: :post, class: 'form-horizontal' },
+  wrapper: :horizontal_form,
+  wrapper_mappings: {
+    check_boxes: :horizontal_radio_and_checkboxes,
+    radio_buttons: :horizontal_radio_and_checkboxes,
+    file: :horizontal_file_input,
+    boolean: :horizontal_boolean
+  } ) do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.input :email, required: true, autofocus: true %>
+    <%= f.input :email, required: true, autofocus: true, wrapper: :field_3 %>
   </div>
 
-  <div class="form-actions">
-    <%= f.button :submit, "Send me reset password instructions" %>
-  </div>
+  <%= f.button :submit, "Reiniciar contraseña", class: 'btn btn-primary col-sm-offset-1 col-sm-3'%>
 <% end %>
-
-<%= render "users/shared/links" %>

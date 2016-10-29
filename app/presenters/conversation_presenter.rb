@@ -11,6 +11,10 @@ class ConversationPresenter < SimpleDelegator
     current_user.conversations.unread
   end
 
+  def unread_conversation_class user_id
+    (unread? (user_id)) ? ' unread-conversation' : ''
+  end
+
   # Formatea la fecha
   def formatted_time
     time = last_message_time
