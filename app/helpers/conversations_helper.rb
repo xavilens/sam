@@ -11,6 +11,14 @@ module ConversationsHelper
     recipent.name
   end
 
+  # Devuelve el decorador con el número de mensajes no leídos
+  def unread_conversations_count
+    unread_count = Conversation.unread_count(current_user.id)
+    if unread_count > 0
+      content_tag(:span, unread_count, class: 'badge unread-conversations')
+    end
+  end
+
   # Indica si hay conversaciones
   def any_conversation?
     !@conversations.blank?

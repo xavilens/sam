@@ -8,6 +8,24 @@
 
 <!-- Conversaciones -->
 <div class="col-md-9">
+
+  <!-- Buscador de mensajes -->
+  <%= render 'search_messages' %>
+  <!-- FIN Buscador de mensajes -->
+
+  <!-- Orden mensajes -->
+  <div class="conversations-order">
+    <small>
+      Ordernar por: <%= link_to "Nuevos", '#' %>,
+      <%= link_to 'Antiguos', '#' %>,
+      <%= link_to 'Nombres (asc)', '#' %>,
+      <%= link_to 'Nombres (des)', '#' %>,
+      <%= link_to 'Mensajes (asc)', '#' %>,
+      <%= link_to 'Mensajes (des)', '#' %>
+    </small>
+  </div>
+  <!-- FIN Orden mensajes -->
+
   <% if any_conversation? %>
     <ul class="conversations-container list-unstyled">
 
@@ -51,7 +69,7 @@
       <% end %>
     </ul>
   <% else %>
-    <p class="no-data text-center" style="width: 100%;">No hay aún ningún mensaje</p>
+    <p class="no-data text-center" style="width: 100%;">No tienes ningún mensaje</p>
   <% end %>
 </div>
 <!-- Fin Conversaciones -->

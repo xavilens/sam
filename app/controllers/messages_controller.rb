@@ -2,7 +2,10 @@ class MessagesController < ApplicationController
   before_filter :authenticate_user!
   before_filter :redirect_cancel, only: [:create]
   before_action :set_current_user
+  before_action :set_users_new, only: [:new]
+  before_action :set_users_create, only: [:create]
 
+  # Breadcrumbs generales
   add_breadcrumb "Inicio", :root_path
   add_breadcrumb "Mensajes", :messages_path
 
@@ -26,8 +29,6 @@ class MessagesController < ApplicationController
   def new
     # Definimos los usuarios participantes y creamos la conversacion y un mensaje en él
     to_user = User.find(new_params[:to_user])
-    @recipent = UserPresenter.new(to_user)
-    @sender = current_user
 
     @conversation = current_user.conversations.build(user_2: to_user)
     @conversation.messages.build(author: current_user)
@@ -37,36 +38,12 @@ class MessagesController < ApplicationController
   end
 
   def create
-    # Creamos la conversación
-    conversation = Conversation.new(create_params)
+    @conversation = Conversation.new(create_params)
 
-    # Si la conversación es valida la guardamos, si no (o si hay  volvemos y mostramos los errores
-    if conversation.valid?
-      if conversation.save
-
-        # Creamos los mensajes
-        create_message_params.each do |message_params|
-          author_id = message_params[1][:author_id]
-          body = message_params[1][:body]
-
-          # Si no se ha podido crear el mensaje se borra la conversación y se vuelve atrás
-          # mostrando los errores
-          message = conversation.messages.build(author_id: author_id, body: body)
-          unless message.save
-            conversation.delete
-            redirect_to :back, error: conversation.errors
-          end
-        end
-
-        # Si todo ha ido correctamente se vuelve al perfil con un mensaje
-        redirect_to user_path(create_params[:user_2_id]), notice: 'Mensaje enviado correctamente.'
-      else
-        # Si no se ha podido crear la conversación se vuelve atrás y se muestran los errores
-        redirect_to :back, error: conversation.errors
-      end
+    if @conversation.save
+      redirect_to @recipent, notice: 'Mensaje enviado correctamente.'
     else
-      # Si no se ha podido validar la conversación se vuelve atrás y se muestran los errores
-      redirect_to :back, error: conversation.errors
+      render action: :new
     end
   end
 
@@ -98,6 +75,28 @@ class MessagesController < ApplicationController
       @user = UserPresenter.new(current_user)
     end
 
+    # Definimos usuarios para acción create
+    def set_users_create
+      set_recipent User.find(create_params[:user_2_id])
+      set_sender
+    end
+
+    # Define usuarios para acción new
+    def set_users_new
+      set_recipent User.find(new_params[:to_user])
+      set_sender
+    end
+
+    # Define la variable @sender
+    def set_sender
+      @sender = current_user
+    end
+
+    # Define la variable @sender
+    def set_recipent to_user
+      @recipent = UserPresenter.new(to_user)
+    end
+
     # Realiza la redirección al presionar el botón de cancelar
     def redirect_cancel
       id = create_params[:user_2_id]
@@ -111,12 +110,13 @@ class MessagesController < ApplicationController
 
     # Define los Strong Parameters para la vista de enviar un nuevo mensaje/conversación
     def new_params
-      params.permit(:user_id, :id, :to_user)
+      params.permit(:id, :to_user)
     end
 
     # Define los Strong Parameters al crear una nuevo conversación
     def create_params
-      allow = [ :user_1_id, :user_2_id, :subject, :commit]
+      allow = [ :user_1_id, :user_2_id, :subject, :commit,
+        messages_attributes: [:author_id, :body, :conversation_id]]
 
       params.require(:conversation).permit(allow)
     end

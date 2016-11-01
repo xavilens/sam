@@ -49,15 +49,6 @@ module ApplicationHelper
     return res
   end
 
-  # Devuelve el decorador con el número de mensajes no leídos
-  def unread_conversations_count
-    if Conversation.unread? (current_user.id)
-      messages_count = content_tag(:span, Conversation.unread_count(current_user.id), class: 'badge unread-conversations')
-    end
-
-    return messages_count
-  end
-
   # Devuelve true si hay que mostrar el bloque con la alerta
   def alert?
     !notice.blank? || !alert.blank?

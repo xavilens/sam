@@ -1,15 +1,24 @@
+.search-messages
+  margin-bottom: 10px
+
+.conversations-order
+  margin: 0px 0 3px 0
+
 .conversations-container
+  // margin-top: -20px
   li
     display: block
 
 .conversation
+  $border-color: darken($gray-lighter, 15%)
+
   display: block
   padding-top: 10px
-  border-top: 1px solid darken($gray-lighter, 15%)
+  border-top: 1px solid $border-color
   // border-right: 1px solid darken($gray-lighter, 15%)
   // border-left: 1px solid darken($gray-lighter, 15%)
-  // &:last-child
-  //   border-bottom: 1px solid darken($gray-lighter, 15%)
+  &:last-child
+    border-bottom: 1px solid $border-color
   &:nth-child(odd)
     background-color: lighten($gray-light, 50%)
   &:nth-child(even)

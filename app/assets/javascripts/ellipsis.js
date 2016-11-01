@@ -1,5 +1,12 @@
 // ELLIPSIS
 
+// Función que elimina el div que contiene el controlador de la ellipsis si el texto no llega a ser truncado
+$(document).on('ready page:load',function() {
+  if ($('.ellipsis-text').outerHeight() < 60) {
+    $('.ellipsis-control').hide();
+  }
+});
+
 // Función que Captura el click en la opción 'Leer más' de la biografía de un usuario
 $(document).on('page:load',function() {
   $('.ellipsis-control').click(function(event){
@@ -7,13 +14,6 @@ $(document).on('page:load',function() {
 
     event.preventDefault();
   });
-});
-
-// Función que elimina el div que contiene el controlador de la ellipsis si el texto no llega a ser truncado
-$(document).on('ready page:load',function() {
-  if ($('.ellipsis-text').outerHeight() < 60) {
-    $('.ellipsis-control').hide();
-  }
 });
 
 // Función que controla el comportamiento de la opción 'Leer más' de la biografía de un usuario

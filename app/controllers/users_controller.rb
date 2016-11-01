@@ -25,8 +25,8 @@ class UsersController < ApplicationController
     # Redirige a inicio y muestra mensaje de error si no existe el usuario
     redirect_to root_path, alert: "No existe el usuario" if @user.blank?
 
-    # Breadcrumbs
-    # add_breadcrumb "#{@user.type}", ("#{@user.profileable_type}_path").to_sym
+    # Breadcrumb genérico para músicos y grupos
+    add_breadcrumb "#{@user.type.pluralize}", ("#{@user.profileable_type.downcase.pluralize}_path").to_sym
 
     # Definimos el nombre de la página
     @page = @user.name

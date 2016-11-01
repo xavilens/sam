@@ -1,6 +1,5 @@
 class Message < ActiveRecord::Base
   ######## VALIDACIONES
-  validates :conversation_id, presence: true
   validates :author_id, presence: true
   validates :body, presence: true
 
@@ -12,7 +11,9 @@ class Message < ActiveRecord::Base
   scope :my_messages, -> (user_id){ where(author_id: user_id) }
 
   # Devuelve aquellos mensajes que aun no han sido leídos
-  scope :unread, -> { where(read: false) }
+  scope :unread, -> (user_id){
+    recipent_messages(user_id).where(read: false)
+  }
 
   # Devuelve los mensajes ordenados de manera descendiente
   scope :desc, -> { order(id: :desc) }
