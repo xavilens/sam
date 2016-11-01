@@ -13,9 +13,9 @@ class Band < ActiveRecord::Base
   has_many :members, dependent: :delete_all
   has_many :musicians, through: :members
 
-  belongs_to :genre_1, class_name: 'Genre', foreign_key: "genre_id"
-  belongs_to :genre_2, class_name: 'Genre', foreign_key: "genre_id"
-  belongs_to :genre_3, class_name: 'Genre', foreign_key: "genre_id"
+  belongs_to :genre_1, class_name: 'Genre'
+  belongs_to :genre_2, class_name: 'Genre'
+  belongs_to :genre_3, class_name: 'Genre'
 
   belongs_to :band_status
 
@@ -37,7 +37,6 @@ class Band < ActiveRecord::Base
 
   # Devuelve un array con los géneros del grupo
   def genres
-    # {genre_1: genre_1.name, genre_2: genre_2.name, genre_3: genre_3.name}
     [genre_1.name, genre_2.name, genre_3.name]
   end
 

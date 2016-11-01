@@ -13,8 +13,14 @@ class UserPresenter < SimpleDelegator
     if user.musician?
       user.status #+ ' | ' + user.profile.instruments
     elsif user.band?
-      user.status #+ ' | ' + user.profile.genres
+      band_genres
     end
+  end
+
+  def band_genres
+    genres = user.profile.genres
+
+    "#{genres[0]} / #{genres[1]} / #{genres[2]}"
   end
 
   # Indica cuando se registró

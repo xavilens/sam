@@ -1,14 +1,14 @@
 <%= render 'layouts/page_header' %>
 
-<% unless @conversations.blank? %>
-  <!-- Opciones para mostrar conversaciones -->
-  <div class="col-md-3">
-    <%= render 'left' %>
-  </div>
-  <!-- Fin Opciones -->
+<!-- Opciones para mostrar conversaciones -->
+<div class="col-md-3">
+  <%= render 'left' %>
+</div>
+<!-- Fin Opciones -->
 
-  <!-- Conversaciones -->
-  <div class="col-md-7">
+<!-- Conversaciones -->
+<div class="col-md-7">
+  <% if @user.any_conversation? @show %>
     <ul class="conversations-container list-unstyled">
 
       <% @conversations.each do |conversation| %>
@@ -50,8 +50,8 @@
         <!-- Fin Conversación -->
       <% end %>
     </ul>
-  </div>
-  <!-- Fin Conversaciones -->
-<% else %>
-  <p class="no-data" style="width: 100%; margin: 0 auto;">No hay aún ningún mensaje</p>
-<% end %>
+  <% else %>
+    <p class="no-data text-center" style="width: 100%;">No hay aún ningún mensaje</p>
+  <% end %>
+</div>
+<!-- Fin Conversaciones -->

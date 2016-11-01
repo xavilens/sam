@@ -5,9 +5,11 @@ class MessagesController < ApplicationController
 
   def index
     @page = 'Mensajes'
-    if index_params[:show].blank? || index_params[:show] == 'inbox'
+    @show = index_params[:show]
+
+    if @show.blank? || @show == 'inbox'
       @conversations = Conversation.my_conversations(current_user.id).inbox(current_user.id)
-    elsif index_params[:show] == 'outbox'
+    elsif @show == 'outbox'
       @conversations = Conversation.my_conversations(current_user.id).outbox(current_user.id)
     end
 
@@ -59,9 +61,13 @@ class MessagesController < ApplicationController
 
   def show
     @conversation = Conversation.find(show_params[:id])
+
     @messages = @conversation.messages.desc
+    @messages = MessagePresenter.wrap(@messages)
 
     @conversation.read (@user.id)
+
+    @page = @conversation.subject
   end
 
   def send_message

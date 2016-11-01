@@ -40,7 +40,7 @@
         </button>
       <% else %>
         <button type="button" class="option-button btn btn-default col-md-2 gap-right"
-          title="Agregaral grupo">
+          title="Agregar al grupo">
           <span class="option-button-icon"><%= fa_icon 'user-plus' %></span>
         </button>
       <% end %>
@@ -91,7 +91,7 @@
       <% @user.social_networks.each do |social_network| %>
 
         <%= link_to fa_icon(social_network.icon, class: social_network.name), social_network.formatted_url,
-          type: "button", title:  social_network.name, target: "_blank", 
+          type: "button", title:  social_network.name, target: "_blank",
           class: ["social-network", "btn btn-default col-md-2"] %>
         </button>
       <% end %>

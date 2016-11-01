@@ -1,6 +1,9 @@
-
-<% if notice %>
-  <p class="alert alert-success text-center gap-top"><%= notice %></p>
-<% elsif alert %>
-  <p class="alert alert-danger text-center gap-top"><%= alert %></p>
+<!-- ref: http://stackoverflow.com/questions/22566072/rails-4-flash-notice -->
+<% flash.each do |name, msg| %>
+  <div class="alert <%= alert_class name %> alert-dismissible text-center gap-top">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <p><%= msg %></p>
+  </div>
 <% end %>

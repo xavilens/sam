@@ -25,8 +25,8 @@ Rails.application.routes.draw do
 
   resources :messages
   resources :events
-  # resources :bands
-  # resources :musicians
+  resources :bands, only: :index
+  resources :musicians, only: :index
   # resources :salas
   # resources :rehearsal_studio
   # resources :posts do

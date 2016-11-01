@@ -4,7 +4,6 @@
 <style type="text/css">
   /* ref: http://stackoverflow.com/questions/14404801/random-background-picture-css-rails */
   html body {
-    height: 100%;
     background: url(<%= randomized_background_image %>) no-repeat center center fixed;
     display: flex;
     justify-content: center;
@@ -14,11 +13,14 @@
   }
 </style>
 
+
 <div class="landing container-fluid">
   <!-- Espacio superior -->
   <div class="landing-blank ">
     <%= render "layouts/alerts" %>
   </div>
+  <!-- FIN Espacio superior -->
+
   <!-- Espacio intermedio -->
   <div class="landing-container row">
     <!-- Parte izquierda -->
@@ -35,7 +37,6 @@
       </div>
     </div>
   </div>
-  <!-- Parte izquierda -->
-  <div class="landing-blank ">
-  </div>
+  <!-- FIN Espacio intermedio -->
+
 </div>

@@ -58,4 +58,21 @@ module ApplicationHelper
     return messages_count
   end
 
+  # Devuelve true si hay que mostrar el bloque con la alerta
+  def alert?
+    !notice.blank? || !alert.blank?
+  end
+
+  # Devuelve la clase dependiendo del tipo de mensaje flash
+  def alert_class name
+    case name
+    when 'notice'
+      "alert-success"
+    when 'alert' || 'error'
+      "alert-danger"
+    when 'info'
+      "alert-warning"
+    end
+  end
+
 end

@@ -1,2 +1,56 @@
-<h1>Messages#create</h1>
-<p>Find me in app/views/messages/create.html.erb</p>
+<% page_title "Conversación #{@page}" %>
+
+<div class="gap-bottom">
+  <h2><%= @conversation.subject %></h2>
+</div>
+
+<!-- Datos de la conversación -->
+<div class="conversation-data row">
+  <div class="col-sm-2 gap-left gap-top text-left">
+    <% recipent = conversation_recipent @conversation %>
+    Entre <strong><%= link_to recipent.name, user_path(recipent) %></strong> y <strong><%= link_to 'Tú', user_path(current_user) %></strong>
+  </div>
+  <div class="col-sm-offset-6 col-sm-3 pull-right gap-right">
+    <%= link_to "Volver a conversaciones", messages_path, class: 'btn btn-default', type: 'button' %>
+  </div>
+</div>
+<!-- Fin Datos de la conversación -->
+
+<div class="col-sm-12 gap-top">
+  <!-- Mensajes -->
+  <ul class="messages-container list-unstyled gap-top">
+    <% @messages.each do |message| %>
+      <% author = message.author %>
+      <!-- Mensaje -->
+      <li class="message">
+
+        <!-- Cabecera Mensaje-->
+        <div class="message-header">
+          <div class="author-avatar pull-left">
+            <%= image_tag author.conversation_avatar,
+              class: ['image-responsive', 'gap-right', 'gap-bottom'], alt: author.name %>
+          </div>
+
+          <!-- Cabecera Derecha -->
+          <div class="message-time pull-right">
+            <small><%= time_ago_in_words @conversation.updated_at %></small>
+          </div>
+          <!-- FIN Cabecera Mensaje zona derecha -->
+
+          <div class="author">
+            <strong><%= link_to author.name, user_path(author) %></strong>
+          </div>
+        </div>
+        <!-- FIN Cabecera Mensaje -->
+        <div class="clearfix"></div>
+        <!-- Cuerpo Mensaje -->
+        <div class="message-body">
+          <%= message.body %>
+        </div>
+        <!-- FIN Cuerpo Mensaje -->
+      </li>
+      <!-- FIN Mensaje -->
+    <% end %>
+  </ul>
+  <!-- FIN Mensajes -->
+</div>

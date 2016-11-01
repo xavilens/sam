@@ -147,6 +147,15 @@ class User < ActiveRecord::Base
     social_networks_set.avaliables
   end
 
+  # Indica si tiene algún tipo de conversación
+  def any_conversation? page
+    if page == 'inbox' || page.blank?
+      !conversations.blank?
+    elsif page == 'outbox'
+      !reverse_conversations.blank?
+    end
+  end
+
   # Indica si el usuario sigue al leader
   def following?(leader)
     leaders.include? leader
