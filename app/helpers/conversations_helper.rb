@@ -1,7 +1,7 @@
 module ConversationsHelper
   # Devuelve el destinatario de la conversación
   def conversation_recipent conversation
-    conversation.recipent (@user.id)
+    conversation.recipent (current_user.id)
   end
 
   # Devuelve el nombre del destinatario de la conversación
@@ -11,9 +11,14 @@ module ConversationsHelper
     recipent.name
   end
 
+  # Indica si hay conversaciones
+  def any_conversation?
+    !@conversations.blank?
+  end
+
   # Indica si hay mensajes sin leer en la conversación
   def conversation_unread? conversation
-    conversation.unread? (@user.id)
+    conversation.unread? (current_user.id)
   end
 
   # Devuelve clase para conversaciones con mensajes sin leer

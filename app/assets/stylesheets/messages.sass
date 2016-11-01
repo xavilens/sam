@@ -1,18 +1,18 @@
 .message
-  $mes-bg: darken($gray-lighter, 2%)
-  $mes-border: darken($gray-lighter, 10%)
+  $msg-bg: darken($gray-lighter, 2%)
+  $msg-border: darken($gray-lighter, 10%)
 
-  background-color: $mes-bg
-  border: 1px solid $mes-border
+  background-color: $msg-bg
+  border: 1px solid $msg-border
   margin-bottom: 20px
 
   .message-header
     height: 30px
     background-color: darken($gray-lighter, 8%)
-    border-bottom: 1px solid $mes-border
+    border-bottom: 1px solid $msg-border
 
   .message-body
-    margin: (-30px) 5px 10px 70px
+    margin: (-30px) 5px 10px 76px
 
   .author
     font-size: 16px
@@ -23,7 +23,10 @@
     margin-top: 10px
 
     img
-      border: 3px solid $mes-bg
+      border: 3px solid $msg-bg
 
   .message-time
     margin: 5px 15px 5px 5px
+
+.messages-container
+  margin-top: -20px

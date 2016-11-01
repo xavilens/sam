@@ -6,28 +6,35 @@ class UsersController < ApplicationController
   before_action :search_params, only: [:index]
   before_action :update_params, only: [:update]
 
+  # Breadcrumbs
+  add_breadcrumb "Inicio", :root_path
+  add_breadcrumb "Usuarios", :users_path
+
   def index
+    # Define el tipo de perfil sacado de los parámetros
     profileable_type = search_params[:profileable_type] unless search_params.blank?
 
-    @page = unless profileable_type.blank?
-      profileable_type.pluralize
-    else
-      User.to_s.pluralize
-    end
+    # Definimos el nombre de la pantalla
+    @page = profileable_type.blank? ? User.to_s.pluralize : profileable_type.pluralize
 
+    # Obtenemos los usuarios a través del servicio de búsqueda de usuarios
     @users = SearchUsers.new(search_params).users
   end
 
   def show
-    @page = @user.name
-
+    # Redirige a inicio y muestra mensaje de error si no existe el usuario
     redirect_to root_path, alert: "No existe el usuario" if @user.blank?
+
+    # Breadcrumbs
+    # add_breadcrumb "#{@user.type}", ("#{@user.profileable_type}_path").to_sym
+
+    # Definimos el nombre de la página
+    @page = @user.name
   end
 
   def edit
+    # Definimos el nombre de la página
     @page = "Editar cuenta"
-
-    render :edit
   end
 
   def update

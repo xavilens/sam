@@ -1,24 +1,29 @@
-<% page_title "Conversación #{@page}" %>
+<%= render "layouts/page_header" %>
 
-<div class="gap-bottom">
-  <h2><%= @conversation.subject %></h2>
+<!-- Opciones para mostrar conversaciones -->
+<div class="col-md-3">
+  <%= render 'left' %>
 </div>
+<!-- Fin Opciones -->
 
-<!-- Datos de la conversación -->
-<div class="conversation-data row">
-  <div class="col-sm-2 gap-left gap-top text-left">
-    <% recipent = conversation_recipent @conversation %>
-    Entre <strong><%= link_to recipent.name, user_path(recipent) %></strong> y <strong><%= link_to 'Tú', user_path(current_user) %></strong>
-  </div>
-  <div class="col-sm-offset-6 col-sm-3 pull-right gap-right">
-    <%= link_to "Volver a conversaciones", messages_path, class: 'btn btn-default', type: 'button' %>
-  </div>
-</div>
-<!-- Fin Datos de la conversación -->
+<div class="col-sm-9 messages-container">
 
-<div class="col-sm-12 gap-top">
+  <h2 class="message-subject">Asunto: <%= @conversation.subject %></h2>
+
+  <!-- Datos de la conversación -->
+  <div class="message-data row">
+    <div class="col-sm-6 gap-left gap-top text-left">
+      <% recipent = conversation_recipent @conversation %>
+      Entre <strong><%= link_to recipent.name, user_path(recipent) %></strong> y <strong><%= link_to 'Tú', user_path(current_user) %></strong>
+    </div>
+    <div class="col-sm-offset-2 col-sm-3 pull-right gap-right">
+      <%= link_to "Volver a conversaciones", messages_path, class: 'btn btn-default', type: 'button' %>
+    </div>
+  </div>
+  <!-- Fin Datos de la conversación -->
+
   <!-- Mensajes -->
-  <ul class="messages-container list-unstyled gap-top">
+  <ul class="messages list-unstyled gap-top">
     <% @messages.each do |message| %>
       <% author = message.author %>
       <!-- Mensaje -->

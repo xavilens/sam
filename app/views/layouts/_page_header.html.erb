@@ -1,6 +1,11 @@
 
 <% page_title @page %>
+<!-- Breadcrumb -->
+<ol class="breadcrumb">
+  <%= render_breadcrumbs tag: :li, separator: "" %>
+</ol>
 
+<!-- Cabecera -->
 <div class="page-header">
   <h1><%= @page %></h1>
 </div>

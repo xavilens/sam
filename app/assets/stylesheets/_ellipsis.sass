@@ -1,5 +1,5 @@
-.ellipsis-control
-  text-align: right
+.ellipsis-control-container
+  margin-bottom: 10px
 
 .ellipsis-text
   max-height: 999px
@@ -11,6 +11,7 @@
 
   text-overflow: ellipsis
   text-overflow: -o-ellipsis-lastline
+
   // Para navegadores no webkit
   max-height: $font-size-base * $line-height-base * $lines-to-show
   overflow: hidden
@@ -19,9 +20,9 @@
 .ellipsis-text.index-ellipsis
   $lines-to-show: 2
 
-
   text-overflow: ellipsis
   text-overflow: -o-ellipsis-lastline
+
   // Para navegadores no webkit
   max-height: $font-size-base * $line-height-base * $lines-to-show
   overflow: hidden

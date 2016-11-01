@@ -10,9 +10,9 @@ $(document).on('page:load',function() {
 });
 
 // Función que elimina el div que contiene el controlador de la ellipsis si el texto no llega a ser truncado
-$(document).on('ready',function() {
+$(document).on('ready page:load',function() {
   if ($('.ellipsis-text').outerHeight() < 60) {
-    $('.ellipsis-control').text = '';
+    $('.ellipsis-control').hide();
   }
 });
 
