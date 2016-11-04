@@ -19,6 +19,30 @@ module ConversationsHelper
     end
   end
 
+  # Devuelve el decorador con el número de mensajes no leídos
+  def inbox_count
+    inbox_count = Conversation.inbox(current_user.id).size
+    if inbox_count > 0
+      content_tag(:span, inbox_count, class: 'badge unread-conversations')
+    end
+  end
+
+  # Devuelve el decorador con el número de mensajes no leídos
+  def outbox_count
+    outbox_count = Conversation.outbox(current_user.id).size
+    if outbox_count > 0
+      content_tag(:span, outbox_count, class: 'badge unread-conversations')
+    end
+  end
+
+  # Devuelve el decorador con el número de mensajes no leídos
+  def saved_count
+    saved_count = Conversation.outbox(current_user.id).size
+    if saved_count > 0
+      content_tag(:span, saved_count, class: 'badge unread-conversations')
+    end
+  end
+
   # Indica si hay conversaciones
   def any_conversation?
     !@conversations.blank?

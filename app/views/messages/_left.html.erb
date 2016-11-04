@@ -1,11 +1,17 @@
 
 <div class="col-sm-12 messages-options btn-group-vertical" role="group">
-  <%= link_to 'Mensajes recibidos', messages_path(show: 'inbox'),
-    class: "btn btn-primary #{active_conversation_box('inbox')}", type: 'button' %>
-  <%= link_to 'Mensajes enviados', messages_path(show: 'outbox'),
-    class: "btn btn-primary #{active_conversation_box('outbox')}", type: 'button' %>
-  <%= link_to 'Mensajes guardados', messages_path(show: 'outbox'),
-    class: "btn btn-primary #{active_conversation_box('outbox')}", type: 'button' %>
-  <%= link_to 'Mensajes guardados', messages_path(show: 'outbox'),
-    class: "btn btn-primary #{active_conversation_box('outbox')}", type: 'button' %>
+  <%= link_to messages_path(show: 'inbox'),
+    class: "btn btn-primary #{active_conversation_box('inbox')}", type: 'button' do %>
+    Mensajes recibidos <%= inbox_count %>
+  <% end %>
+
+  <%= link_to messages_path(show: 'outbox'),
+    class: "btn btn-primary #{active_conversation_box('outbox')}", type: 'button' do %>
+    Mensajes enviados <%= outbox_count %>
+  <% end %>
+
+  <%= link_to messages_path(show: 'outbox'),
+    class: "btn btn-primary #{active_conversation_box('saved')}", type: 'button' do %>
+    Mensajes guardados <%= saved_count %>
+  <% end %>
 </div>

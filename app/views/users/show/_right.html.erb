@@ -1,0 +1,40 @@
+
+<!-- Social Networks Data -->
+<% if @user.social_networks? %>
+<div class="calendar-container user-show-container">
+  <div class="leftbar-name">Calendario</div>
+  <div class="events-container">
+    <div class="row">
+      <% @events = @user.events
+        unless @events.blank? %>
+        <% @events.each do |event| %>
+          event.name
+        <% end %>
+      <% else %>
+        <p>No hay ningún evento.</p>
+      <% end %>
+    </div>
+  </div>
+</div>
+<% end %>
+<!-- END: Social Networks Data -->
+
+<!-- Social Networks Data -->
+<% if @user.social_networks? %>
+<div class="calendar-container">
+  <div class="leftbar-name">Calendario</div>
+  <div class="events-container">
+    <div class="row">
+      <% @events = @user.events
+        unless @events.blank? %>
+        <% @events.each do |event| %>
+          event.name
+        <% end %>
+      <% else %>
+        <p>No hay ningún evento.</p>
+      <% end %>
+    </div>
+  </div>
+</div>
+<% end %>
+<!-- END: Social Networks Data -->

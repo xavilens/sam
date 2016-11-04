@@ -59,7 +59,9 @@ module ApplicationHelper
     case name
     when 'notice'
       "alert-success"
-    when 'alert' || 'error'
+    when 'alert'
+      "alert-danger"
+    when 'error'
       "alert-danger"
     when 'info'
       "alert-warning"

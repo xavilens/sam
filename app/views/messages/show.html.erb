@@ -8,7 +8,7 @@
 
 <div class="col-sm-9 messages-container">
 
-  <h2 class="message-subject">Asunto: <%= @conversation.subject %></h2>
+  <h2 class="message-subject"><%= @conversation.subject %></h2>
 
   <!-- Datos de la conversación -->
   <div class="message-data row">
@@ -22,8 +22,37 @@
   </div>
   <!-- Fin Datos de la conversación -->
 
+
   <!-- Mensajes -->
   <ul class="messages list-unstyled gap-top">
+    <!-- Enviar nuevo mensaje -->
+    <li class="message">
+      <div class="message-header">
+        <div class="author-avatar pull-left">
+          <%= image_tag @user.conversation_avatar,
+            class: ['image-responsive', 'gap-right', 'gap-bottom'], alt: @user.name %>
+        </div>
+        <div class="author">
+          <strong><%= link_to "Yo", user_path(@user) %></strong>
+        </div>
+      </div>
+
+      <div class="clearfix"></div>
+
+      <div class="message-body">
+        <%= simple_form_for @conversation, url: message_path(@conversation), html: {class: 'col-sm-12'} do |f| %>
+          <%= f.simple_fields_for @conversation.messages.build(author: current_user) do |sf| %>
+            <%= sf.input :body, label: false, placeholder: 'Escribe aquí tu mensaje...' %>
+            <%= sf.input :author_id, as: :hidden %>
+          <% end %>
+          <%= f.button :submit, "Enviar mensaje", id: 'send_message', class: 'btn-sm btn-primary gap-bottom' %>
+        <% end %>
+      </div>
+
+      <div class="clearfix"></div>
+    </li>
+    <!-- FIN Enviar nuevo mensaje -->
+
     <% @messages.each do |message| %>
       <% author = message.author %>
       <!-- Mensaje -->
@@ -38,7 +67,7 @@
 
           <!-- Cabecera Derecha -->
           <div class="message-time pull-right">
-            <small><%= time_ago_in_words @conversation.updated_at %></small>
+            <small><%= time_ago_in_words message.created_at %></small>
           </div>
           <!-- FIN Cabecera Mensaje zona derecha -->
 
@@ -50,7 +79,7 @@
         <div class="clearfix"></div>
         <!-- Cuerpo Mensaje -->
         <div class="message-body">
-          <%= message.body %>
+          <%= message.body%>
         </div>
         <!-- FIN Cuerpo Mensaje -->
       </li>

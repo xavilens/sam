@@ -1,6 +1,7 @@
 class MessagesController < ApplicationController
   before_filter :authenticate_user!
   before_filter :redirect_cancel, only: [:create]
+
   before_action :set_current_user
   before_action :set_users_new, only: [:new]
   before_action :set_users_create, only: [:create]
@@ -65,11 +66,23 @@ class MessagesController < ApplicationController
     @page = "Mensajes"
   end
 
-  def send_message
+  # Al actualizar una conversación realmente lo que hacemos es mandar un mensaje
+  def update
+    @conversation = Conversation.find(params[:id])
+    @message = @conversation.messages.build(new_message_params)
 
+    if @message.save
+      flash[:notice] = 'Mensaje enviado correctamente'
+    else
+      flash[:error] = 'No se ha podido enviar el mensaje'
+    end
+
+    redirect_to message_path(@conversation)
   end
 
   private
+    ## SETTERS
+
     # Define la variable @user como el usuario actual
     def set_current_user
       @user = UserPresenter.new(current_user)
@@ -77,13 +90,18 @@ class MessagesController < ApplicationController
 
     # Definimos usuarios para acción create
     def set_users_create
-      set_recipent User.find(create_params[:user_2_id])
-      set_sender
+      set_sender_recipent User.find(create_params[:user_2_id])
     end
 
     # Define usuarios para acción new
     def set_users_new
-      set_recipent User.find(new_params[:to_user])
+      debugger
+      set_sender_recipent User.find(new_params[:to_user])
+    end
+
+    # Define usuarios para acción new
+    def set_sender_recipent to_user
+      set_recipent to_user
       set_sender
     end
 
@@ -97,11 +115,15 @@ class MessagesController < ApplicationController
       @recipent = UserPresenter.new(to_user)
     end
 
+    ## ACTIONS
+
     # Realiza la redirección al presionar el botón de cancelar
     def redirect_cancel
       id = create_params[:user_2_id]
       redirect_to user_path(id) if params[:cancel]
     end
+
+    ## STRONGS PARAMETERS
 
     # Define los Strong Parameters de index
     def index_params
@@ -113,7 +135,7 @@ class MessagesController < ApplicationController
       params.permit(:id, :to_user)
     end
 
-    # Define los Strong Parameters al crear una nuevo conversación
+    # Define los Strong Parameters al crear una nueva conversación
     def create_params
       allow = [ :user_1_id, :user_2_id, :subject, :commit,
         messages_attributes: [:author_id, :body, :conversation_id]]
@@ -134,5 +156,12 @@ class MessagesController < ApplicationController
       allow = [:id]
 
       params.permit(allow)
+    end
+
+    # Define los Strong Parameters al actualizar una conversación
+    def new_message_params
+      allow = [ :author_id, :body ]
+
+      params.require(:conversation).require(:message).permit(allow)
     end
 end

@@ -1,3 +1,4 @@
+// SITE
 
 // Cuenta los caracteres introducidos y devuelve los restantes hasta el máximo permitido
 // ref: http://stackoverflow.com/questions/5371089/count-characters-in-textarea

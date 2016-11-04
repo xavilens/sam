@@ -14,7 +14,7 @@
 
 <!-- Options -->
 <% unless is_current_user? %>
-<div class="options-container">
+<div class="options-container user-show-container">
   <div class="row">
     <%= link_to fa_icon('envelope'), new_message_path(to_user: @user.id),
       class: 'option-button-icon option-button btn btn-default col-md-2 col-md-offset-1 gap-right',
@@ -93,7 +93,6 @@
         <%= link_to fa_icon(social_network.icon, class: social_network.name), social_network.formatted_url,
           type: "button", title:  social_network.name, target: "_blank",
           class: ["social-network", "btn btn-default col-md-2"] %>
-        </button>
       <% end %>
     </div>
   </div>
@@ -103,7 +102,7 @@
 
 <!-- Images Data -->
 <% if @user.images? %>
-<div class="images-container">
+<div class="images-container user-show-container">
   <div class="leftbar-name">Imágenes</div>
 </div>
 <% end %>
@@ -111,7 +110,7 @@
 
 <!-- Membership Data -->
 <% if @user.membership? %>
-<div class="member-container">
+<div class="member-container user-show-container">
   <div class="member-header leftbar-name"><%= @user.member_header %></div>
 </div>
 <% end %>
