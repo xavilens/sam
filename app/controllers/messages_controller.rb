@@ -13,6 +13,7 @@ class MessagesController < ApplicationController
   def index
     # Obtenemos la bandeja de correo
     @show = index_params[:show]
+    @order = index_params[:order] || 'desc'
 
     # Dependiendo de la bandeja de correo pasada por parámetros mostramos unos correos u otros
     if @show.blank? || @show == 'inbox'
@@ -20,6 +21,8 @@ class MessagesController < ApplicationController
     elsif @show == 'outbox'
       @conversations = Conversation.outbox(current_user.id)
     end
+
+    @conversations = @conversations.send(@order) if @order
 
     @conversations = ConversationPresenter.wrap(@conversations)
 
@@ -127,7 +130,7 @@ class MessagesController < ApplicationController
 
     # Define los Strong Parameters de index
     def index_params
-      params.permit(:show)
+      params.permit(:show, :order)
     end
 
     # Define los Strong Parameters para la vista de enviar un nuevo mensaje/conversación

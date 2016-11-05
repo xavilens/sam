@@ -16,12 +16,11 @@
   <!-- Orden mensajes -->
   <div class="conversations-order">
     <small>
-      Ordernar por: <%= link_to "Nuevos", '#' %>,
-      <%= link_to 'Antiguos', '#' %>,
-      <%= link_to 'Nombres (asc)', '#' %>,
-      <%= link_to 'Nombres (des)', '#' %>,
-      <%= link_to 'Mensajes (asc)', '#' %>,
-      <%= link_to 'Mensajes (des)', '#' %>
+      Ordernar por:
+      <%= link_to "Nuevos", messages_path(show: @show, order: 'desc') %>,
+      <%= link_to 'Antiguos', messages_path(show: @show, order: 'asc') %>,
+      <%= link_to 'Asunto (asc)', messages_path(show: @show, order: 'subject_asc') %>,
+      <%= link_to 'Asunto (des)', messages_path(show: @show, order: 'subject_desc') %>
     </small>
   </div>
   <!-- FIN Orden mensajes -->
