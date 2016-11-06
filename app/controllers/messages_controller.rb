@@ -15,16 +15,26 @@ class MessagesController < ApplicationController
     @show = index_params[:show]
     @order = index_params[:order] || 'desc'
 
-    # Dependiendo de la bandeja de correo pasada por parámetros mostramos unos correos u otros
-    if @show.blank? || @show == 'inbox'
-      @conversations = Conversation.inbox(current_user.id)
-    elsif @show == 'outbox'
-      @conversations = Conversation.outbox(current_user.id)
+    if params[:messages]
+      @search = search_params[:body]
+      @show = 'search'
     end
 
-    @conversations = @conversations.send(@order) if @order
+    # Si hay busqueda cargamos las conversaciones de la búsqueda, si no cargamos dependiendo la bandeja
+    @conversations = if @search
+      Conversation.my_conversations(current_user.id).joins(:messages).where("messages.body like :text", text: "%#{@search}%").distinct(:id)
+    else
+      # Dependiendo de la bandeja de correo pasada por parámetros mostramos unos correos u otros
+      if @show.blank? || @show == 'inbox'
+        Conversation.inbox(current_user.id)
+      elsif @show == 'outbox'
+        Conversation.outbox(current_user.id)
+      end
+    end
 
-    @conversations = ConversationPresenter.wrap(@conversations)
+    @conversations = @conversations.send(@order) if @order and @conversations
+
+    @conversations = ConversationPresenter.wrap(@conversations) if @conversations
 
     # Definimos el nombre de la página
     @page = 'Mensajes'
@@ -131,6 +141,11 @@ class MessagesController < ApplicationController
     # Define los Strong Parameters de index
     def index_params
       params.permit(:show, :order)
+    end
+
+    # Define los Strong Parameters de index
+    def search_params
+      params.require(:messages).permit(:body)
     end
 
     # Define los Strong Parameters para la vista de enviar un nuevo mensaje/conversación

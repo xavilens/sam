@@ -1,11 +1,23 @@
 
-  <!-- Buscador de mensajes -->
+<!-- <%= form_tag :messages, method: "get", enforce_utf8: false do %>
   <div class=" search-messages input-group">
     <input type="text" class="form-control" placeholder="Buscar mensaje..." aria-describedby="search-input">
     <span class="input-group-btn" id="search-input">
-      <button class="btn btn-default" type="button">
+      <button class="btn btn-default" type="submit">
         <%= fa_icon 'search' %>
       </button>
     </span>
   </div>
-  <!-- FIN Buscador de mensajes -->
+<% end %> -->
+
+<%= form_tag :messages, method: "get", enforce_utf8: false do %>
+  <div class=" search-messages input-group">
+    <%= text_field :messages, :body,
+      {type: "text", class: "form-control", placeholder: "Buscar mensaje...", "aria-describedby": "search-input"} %>
+    <span class="input-group-btn" id="search-input">
+      <button class="btn btn-default" type="submit">
+        <%= fa_icon 'search' %>
+      </button>
+    </span>
+  </div>
+<% end %>

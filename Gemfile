@@ -23,37 +23,44 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
-# GEMS PFC
 
+####### GEMS PFC
 # Generador de usuarios con todas las opciones y vistas más utilizadas
 gem 'devise', '4.0.0'
-# Bootstrap gem
+
+## FRONT-END
+# Bootstrap: Frontend framework
 gem 'bootstrap-sass', '3.3.6'
-# breadcrumbs para navegación rápida
+# Font awesome: fonts de iconos
+gem 'font-awesome-rails', '4.6.3.1'
+# Breadcrumbs
 gem 'breadcrumbs_on_rails', '2.3.1'
 # Formularios más sencillos
 gem 'simple_form', '3.2.1'
 # Paginacion
 gem 'kaminari', '0.16.3'
+
 # internalizacion
 # gem 'i18n', '0.7.0'
 gem 'rails-i18n', '~> 4.0.0'
+
+## BACK-END
 # Tratar subida de imagenes
-# gem 'carrierwave', '0.11.0'
-gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'
+gem 'carrierwave', '0.11.0'
+# gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'
 gem 'mini_magick', '4.5.1'
-# Font awesome
-gem 'font-awesome-rails', '4.6.3.1'
 
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+# Draper: Simplifica los decoradores
+gem 'draper', '2.1'
+# Reform: Crea objetos tipo Form, para simplificar el uso complejo de formularios
+gem 'reform', '2.2.1'
+# gem "reform-rails", '0.1.7'
+gem 'dry-validation', ' 0.10.3'
+# Interactor: Nos proporciona una interfaz para el uso sencillo de Services Objects
+gem 'interactor', '3.1'
 
-# Use Unicorn as the app server
-# gem 'unicorn'
 
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
-
+## GEMS PARA CONTEXTOS ESPECÍFICOS
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'

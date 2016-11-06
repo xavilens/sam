@@ -60,7 +60,7 @@ module ConversationsHelper
 
   # Devuelve la clase active cuando se encuentra en alguna bandeja de conversaciones
   def active_conversation_box box
-    if params[:show] == box || (box == 'inbox' && params[:show].blank?)
+    if (params[:messages] && box == 'search') || params[:show] == box || (box == 'inbox' && params[:show].blank? && params[:messages].blank?)
       'active'
     end
   end
