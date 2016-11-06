@@ -14,7 +14,7 @@
   <!-- FIN Buscador de mensajes -->
 
   <!-- Orden mensajes -->
-  <div class="conversations-order">
+  <div class="conversations-order pull-right">
     <small>
       Ordernar por:
       <%= link_to "Nuevos", messages_path(show: @show, order: 'desc') %>,
@@ -24,6 +24,14 @@
     </small>
   </div>
   <!-- FIN Orden mensajes -->
+
+  <!-- Mensajes totales -->
+  <div class="conversations-count">
+    <small>
+      Mensajes totales: <strong><%= @conversations.size %></strong>
+    </small>
+  </div>
+  <!-- FIN Mensajes totales -->
 
   <% if any_conversation? %>
     <ul class="conversations-container list-unstyled">
@@ -68,7 +76,7 @@
       <% end %>
     </ul>
   <% else %>
-    <p class="no-data text-center" style="width: 100%;">No tienes ningún mensaje</p>
+    <p class="no-data alert-danger text-center" style="width: 100%;">No tienes ningún mensaje</p>
   <% end %>
 </div>
 <!-- Fin Conversaciones -->

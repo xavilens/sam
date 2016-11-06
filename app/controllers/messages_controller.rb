@@ -21,23 +21,25 @@ class MessagesController < ApplicationController
     end
 
     # Si hay busqueda cargamos las conversaciones de la búsqueda, si no cargamos dependiendo la bandeja
-    @conversations = if @search
-      Conversation.my_conversations(current_user.id).joins(:messages).where("messages.body like :text", text: "%#{@search}%").distinct(:id)
+    if @search
+      @conversations = Conversation.my_conversations(current_user.id).joins(:messages).where("messages.body like :text", text: "%#{@search}%").distinct(:id)
+      @page = 'Mensajes encontrados'
     else
       # Dependiendo de la bandeja de correo pasada por parámetros mostramos unos correos u otros
       if @show.blank? || @show == 'inbox'
-        Conversation.inbox(current_user.id)
+        @conversations = Conversation.inbox(current_user.id)
+        @page = 'Mensajes recibidos'
       elsif @show == 'outbox'
-        Conversation.outbox(current_user.id)
+        @conversations = Conversation.outbox(current_user.id)
+        @page = 'Mensajes enviados'
       end
     end
 
-    @conversations = @conversations.send(@order) if @order and @conversations
+    @conversations = @conversations.send(@order) if (@order and @conversations)
 
     @conversations = ConversationPresenter.wrap(@conversations) if @conversations
 
-    # Definimos el nombre de la página
-    @page = 'Mensajes'
+    @page ||= 'Mensajes'
   end
 
   def new
