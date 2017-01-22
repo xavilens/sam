@@ -9,8 +9,8 @@ class Band < ActiveRecord::Base
   has_one :user, as: :profileable, dependent: :destroy
   accepts_nested_attributes_for :user
 
-  # TODO: Soft-delete?? // Historial de musicos??
   has_many :members, dependent: :delete_all
+  accepts_nested_attributes_for :members
   has_many :musicians, through: :members
 
   belongs_to :genre_1, class_name: 'Genre'

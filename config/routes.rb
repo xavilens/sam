@@ -13,8 +13,14 @@ Rails.application.routes.draw do
   devise_for :delegated_users
 
   resources :users do
+    get 'edit/knowledges', action: :edit_knowledges, as: :edit_knowledges
+    put :update_knowledges
+    patch :update_knowledges
+    # get 'edit?edit=knowledge', to: :edit_knowledge, as: :edit_knowledge
+
     resources :images
     resources :events
+
     # resources :posts do
     #   resources :comments
     # end

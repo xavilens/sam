@@ -28,7 +28,7 @@
   <!-- Mensajes totales -->
   <div class="conversations-count">
     <small>
-      Mensajes totales: <strong><%= @conversations.size %></strong>
+      Mensajes totales: <strong><%=  @conversations ? @conversations.size : 0 %></strong>
     </small>
   </div>
   <!-- FIN Mensajes totales -->
@@ -47,11 +47,11 @@
                 class: ['image-responsive', 'img-circle', 'gap-right', 'gap-bottom'], alt: recipent.name %>
             </div>
             <div class="recipent-container pull-left">
-              <div class="recipent">
-                <%= link_to recipent.name, user_path(recipent) %>
-              </div>
               <div class="subject">
                 <%= conversation.subject %>
+              </div>
+              <div class="recipent">
+                <%= link_to recipent.name, user_path(recipent) %>
               </div>
             </div>
           </div>

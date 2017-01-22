@@ -7,11 +7,15 @@ class Musician < ActiveRecord::Base
 
   ######## RELATIONSHIPS
   has_one :user, as: :profileable, dependent: :destroy
+  accepts_nested_attributes_for :user
 
-  # TODO: Soft-delete?? Historial de grupos??
   has_many :members, dependent: :delete_all
+  accepts_nested_attributes_for :members
+
   has_many :bands, through: :members
+
   has_many :musician_knowledges, dependent: :delete_all
+  accepts_nested_attributes_for :musician_knowledges, allow_destroy: true
   has_many :instruments, through: :musician_knowledges
 
   belongs_to :musician_status
@@ -31,25 +35,33 @@ class Musician < ActiveRecord::Base
     end
   end
 
-  # Indica si el instrumento está ya incluido
-  def instrument?(instrument)
-    instruments.include? instrument
-  end
+  # TODO: BORRAR?
+  # # Indica si el instrumento está ya incluido
+  # def instrument?(instrument)
+  #   instruments.include? instrument
+  # end
+  #
+  # # Si el instrumento no está includo lo inclure
+  # def instrument!(instrument, level)
+  #   unless instrument?(instrument)
+  #     MusicianKnowledge.create(musician: self, instrument: instrument, level: level)
+  #   end
+  # end
+  #
+  # # Si el instrumento no está includo lo inclure
+  # def remove_instrument(instrument)
+  #   if instrument?(instrument)
+  #     instruments.delete(instrument)
+  #   end
+  # end
 
-  # Si el instrumento no es
-  def instrument!(instrument, level)
-    unless instrument?(instrument)
-      MusicianKnowledge.create(musician: self, instrument: instrument, level: level)
-    end
-  end
-
+  # Devuelve el estado del músico
   def status
     musician_status.name
   end
 
-
   private
-
+    # Establece el estado por defecto del músico
     def set_default
       self.musician_status_id = MusicianStatus.find_by_name('Activo').id if self.musician_status_id.blank?
     end

@@ -86,7 +86,7 @@ SimpleForm.setup do |config|
 
       ib.wrapper tag: 'div', class: 'checkbox' do |ba|
         ba.use :input
-        ba.use :label, class: 'sr-only'
+        ba.use :label
       end
       ib.use :error, wrap_with: { tag: 'span', class: 'help-block' }
       ib.use :hint,  wrap_with: { tag: 'p', class: 'help-block' }

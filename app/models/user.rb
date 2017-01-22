@@ -127,6 +127,15 @@ class User < ActiveRecord::Base
     end
   end
 
+  # Indica si tiene conocimiento en instrumentos
+  def instruments?
+    if musician?
+      !profile.instruments.blank?
+    elsif band?
+      false
+    end
+  end
+
   # Indica si tiene una Bio
   def bio?
     !bio.blank?

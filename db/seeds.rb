@@ -60,7 +60,7 @@ end
 ############################################ KNOWLEDGES ############################################
 
 # Conocimientos instrumentos cuerda
-['Guitarra', 'Bajo', 'Cantante', 'Cello', 'Violín', 'Contrabajo', 'Viola'].each do |knowledgement|
+['Guitarra', 'Bajo', 'Cello', 'Violín', 'Contrabajo', 'Viola'].each do |knowledgement|
   Instrument.find_or_create_by({name: knowledgement})
 end
 

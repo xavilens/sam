@@ -1,0 +1,8 @@
+
+<div class="edit-options btn-group-vertical" role="group">
+  <%= link_to "Editar perfil", edit_user_path(@user), class: "btn btn-primary #{active_page('users','edit')}", type: 'button' %>
+
+  <% if @user.musician? %>
+  <%= link_to "Editar instrumentos", user_edit_knowledges_path(@user), class: "btn btn-primary #{active_page('users','edit_knowledges')}", type: 'button' %>
+  <% end %>
+</div>

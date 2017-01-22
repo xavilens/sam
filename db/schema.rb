@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161017210037) do
+ActiveRecord::Schema.define(version: 20161206151721) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "user_id",          limit: 4,   null: false
@@ -290,14 +290,14 @@ ActiveRecord::Schema.define(version: 20161017210037) do
   add_index "messages", ["conversation_id"], name: "index_messages_on_conversation_id", using: :btree
 
   create_table "musician_knowledges", force: :cascade do |t|
-    t.integer  "musician_id",  limit: 4, null: false
-    t.integer  "knowledge_id", limit: 4, null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-    t.integer  "level_id",     limit: 4
+    t.integer  "musician_id",   limit: 4, null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "instrument_id", limit: 4
+    t.integer  "level_id",      limit: 4
   end
 
-  add_index "musician_knowledges", ["knowledge_id"], name: "index_musician_knowledges_on_knowledge_id", using: :btree
+  add_index "musician_knowledges", ["instrument_id"], name: "index_musician_knowledges_on_instrument_id", using: :btree
   add_index "musician_knowledges", ["level_id"], name: "index_musician_knowledges_on_level_id", using: :btree
   add_index "musician_knowledges", ["musician_id"], name: "index_musician_knowledges_on_musician_id", using: :btree
 
@@ -516,7 +516,7 @@ ActiveRecord::Schema.define(version: 20161017210037) do
   add_foreign_key "members", "musicians"
   add_foreign_key "messages", "conversations"
   add_foreign_key "messages", "users", column: "author_id"
-  add_foreign_key "musician_knowledges", "instruments", column: "knowledge_id"
+  add_foreign_key "musician_knowledges", "instruments"
   add_foreign_key "musician_knowledges", "levels"
   add_foreign_key "musician_knowledges", "musicians"
   add_foreign_key "posts", "users"

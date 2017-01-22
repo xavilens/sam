@@ -6,6 +6,6 @@ class MusicianKnowledge < ActiveRecord::Base
 
   ######## RELATIONSHIPS
   belongs_to :musician
-  belongs_to :instruments
-  belongs_to :levels
+  belongs_to :instrument
+  belongs_to :level
 end
