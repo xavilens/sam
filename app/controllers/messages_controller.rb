@@ -110,7 +110,6 @@ class MessagesController < ApplicationController
 
     # Define usuarios para acción new
     def set_users_new
-      debugger
       set_sender_recipent User.find(new_params[:to_user])
     end
 

@@ -16,7 +16,10 @@ Rails.application.routes.draw do
     get 'edit/knowledges', action: :edit_knowledges, as: :edit_knowledges
     put :update_knowledges
     patch :update_knowledges
-    # get 'edit?edit=knowledge', to: :edit_knowledge, as: :edit_knowledge
+
+    get 'membership/send/:to_user', action: :send_membership, controller: :users, as: :send_membership
+    put :add_membership, controller: :users
+    get 'membership/delete/:to_user', action: :delete_membership, as: :delete_membership
 
     resources :images
     resources :events
@@ -28,6 +31,7 @@ Rails.application.routes.draw do
     # resources :salas_review
     # resources :rehearsal_studio_review
   end
+
 
   resources :messages
   resources :events

@@ -46,9 +46,12 @@ class UsersController < ApplicationController
     end
   end
 
+  # Dirige a la página donde poder gestionar los conocimientos musicales
   def edit_knowledges
+    @musician.musician_knowledges.build
   end
 
+  # Método que actualiza los conocimientos musicales
   def update_knowledges
     if params[:add_musician_knowledge]
       @user.profile.musician_knowledges.build
@@ -59,6 +62,21 @@ class UsersController < ApplicationController
     end
 
     render action: :edit_knowledges
+  end
+
+  # Envía un mensaje pidiendo la membresía en un grupo
+  def send_membership (user)
+    redirect_to :back
+  end
+
+  # Añade al músico al grupo
+  def add_membership (user)
+    redirect_to :back
+  end
+
+  # Elimina al músico del grupo
+  def delete_membership (user)
+    redirect_to :back
   end
 
   private
