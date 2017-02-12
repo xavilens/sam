@@ -26,6 +26,7 @@
   <!-- Mensajes -->
   <ul class="messages list-unstyled gap-top">
     <!-- Enviar nuevo mensaje -->
+    <% if @conversation.add_member.blank? %>
     <li class="message">
       <div class="message-header">
         <div class="author-avatar pull-left">
@@ -51,6 +52,7 @@
 
       <div class="clearfix"></div>
     </li>
+    <% end %>
     <!-- FIN Enviar nuevo mensaje -->
 
     <% @messages.each do |message| %>

@@ -1,4 +1,5 @@
 class Message < ActiveRecord::Base
+
   ######## VALIDACIONES
   validates :author_id, presence: true
   validates :body, presence: true
@@ -18,9 +19,19 @@ class Message < ActiveRecord::Base
   # Devuelve los mensajes ordenados de manera descendiente
   scope :desc, -> { order(id: :desc) }
 
+  # Devolvemos los mensajes de un tipo determinado
+  scope :regular, -> { where(type: nil) }
+  scope :add_member, -> { where(type: 'AddMemberMessage') }
+
   ######## RELATIONSHIPS
   belongs_to :conversation
   belongs_to :author, class_name: 'User', primary_key: 'id', foreign_key: 'author_id'
+
+  self.inheritance_column = :type
+
+  def self.types
+    %w(AddMemberMessage)
+  end
 
   ######## METHODS
   # Indica si se ha leido el mensaje

@@ -3,7 +3,7 @@
 
   <!-- MENSAJES -->
   <li>
-    <%= link_to messages_path do %>
+    <%= link_to messages_path(show: 'inbox') do %>
       <%= unread_conversations_count %> Mensajes
     <% end %>
   </li>

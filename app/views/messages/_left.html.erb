@@ -2,12 +2,17 @@
 <div class="col-sm-12 messages-options btn-group-vertical" role="group">
   <%= link_to messages_path(show: 'inbox'),
     class: "btn btn-primary #{active_conversation_box('inbox')}", type: 'button' do %>
-    Mensajes recibidos
+    Mensajes recibidos <%= inbox_unread_count %>
   <% end %>
 
   <%= link_to messages_path(show: 'outbox'),
     class: "btn btn-primary #{active_conversation_box('outbox')}", type: 'button' do %>
-    Mensajes enviados
+    Mensajes enviados <%= outbox_unread_count %>
+  <% end %>
+
+  <%= link_to messages_path(show: 'membership'),
+    class: "btn btn-primary #{active_conversation_box('membership')}", type: 'button' do %>
+    Peticiones de membresía <%= membership_unread_count %>
   <% end %>
 
   <%= link_to messages_path(show: 'search'),

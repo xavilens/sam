@@ -32,6 +32,9 @@ class MessagesController < ApplicationController
       elsif @show == 'outbox'
         @conversations = Conversation.outbox(current_user.id)
         @page = 'Mensajes enviados'
+      elsif @show == 'membership'
+        @conversations = Conversation.membership(current_user.id)
+        @page = 'Peticiones de membresía'
       end
     end
 

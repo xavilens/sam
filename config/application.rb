@@ -14,6 +14,9 @@ module Sam
     config.paths['app/views'] << 'app/views/users'
 
     config.autoload_paths += %W(#{config.root}/app)
+    config.autoload_paths += %W(#{config.root}/app/models/conversations)
+    config.autoload_paths += %W(#{config.root}/app/models/messages)
+
 
     config.eager_load_paths += %W(#{config.root}/app)
 

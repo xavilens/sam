@@ -17,9 +17,9 @@ Rails.application.routes.draw do
     put :update_knowledges
     patch :update_knowledges
 
-    get 'membership/send/:to_user', action: :send_membership, controller: :users, as: :send_membership
-    put :add_membership, controller: :users
-    get 'membership/delete/:to_user', action: :delete_membership, as: :delete_membership
+    get 'membership/send/', action: :send_membership, controller: :users, as: :send_membership
+    put :add_member, controller: :users
+    get 'membership/delete/', action: :delete_membership, as: :delete_membership
 
     resources :images
     resources :events
@@ -32,6 +32,7 @@ Rails.application.routes.draw do
     # resources :rehearsal_studio_review
   end
 
+  post 'membership/add', action: :add, controller: :memberships
 
   resources :messages
   resources :events

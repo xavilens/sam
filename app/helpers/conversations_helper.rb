@@ -19,7 +19,7 @@ module ConversationsHelper
     end
   end
 
-  # Devuelve el decorador con el número de mensajes no leídos
+  # Devuelve el decorador con el número de mensajes recibidos
   def inbox_count
     inbox_count = Conversation.inbox(current_user.id).size
     if inbox_count > 0
@@ -27,7 +27,15 @@ module ConversationsHelper
     end
   end
 
-  # Devuelve el decorador con el número de mensajes no leídos
+  # Devuelve el decorador con el número de mensajes recibidos no leídos
+  def inbox_unread_count
+    inbox_count = Conversation.inbox_unread_count(current_user.id)
+    if inbox_count > 0
+      content_tag(:span, inbox_count, class: 'badge unread-conversations')
+    end
+  end
+
+  # Devuelve el decorador con el número de mensajes enviados
   def outbox_count
     outbox_count = Conversation.outbox(current_user.id).size
     if outbox_count > 0
@@ -35,12 +43,28 @@ module ConversationsHelper
     end
   end
 
-  # Devuelve el decorador con el número de mensajes no leídos
-  def saved_count
-    # saved_count = Conversation.outbox(current_user.id).size
-    # if saved_count > 0
-    #   content_tag(:span, saved_count, class: 'badge unread-conversations')
-    # end
+  # Devuelve el decorador con el número de mensajes enviados con respuestas no leídas
+  def outbox_unread_count
+    outbox_count = Conversation.outbox_unread_count(current_user.id)
+    if outbox_count > 0
+      content_tag(:span, outbox_count, class: 'badge unread-conversations')
+    end
+  end
+
+  # Devuelve el decorador con el número de peticiones de membresía
+  def membership_count
+    membership_count = Conversation.membership(current_user.id).size
+    if membership_count > 0
+      content_tag(:span, membership_count, class: 'badge unread-conversations')
+    end
+  end
+
+  # Devuelve el decorador con el número de peticiones de membresía no leídos
+  def membership_unread_count
+    membership_count = Conversation.membership_unread_count(current_user.id)
+    if membership_count > 0
+      content_tag(:span, membership_count, class: 'badge unread-conversations')
+    end
   end
 
   # Indica si hay conversaciones
@@ -60,7 +84,7 @@ module ConversationsHelper
 
   # Devuelve la clase active cuando se encuentra en alguna bandeja de conversaciones
   def active_conversation_box box
-    if (params[:messages] && box == 'search') || params[:show] == box || (box == 'inbox' && params[:show].blank? && params[:messages].blank?)
+    if (params[:messages] && box == 'search') || params[:show] == box || (box == 'inbox' && params[:show] == box && params[:messages].blank?)
       'active'
     end
   end
