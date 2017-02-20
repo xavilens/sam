@@ -69,6 +69,23 @@ SimpleForm.setup do |config|
       mdf.use :error, wrap_with: { tag: 'span', class: "help-block col-sm-#{12 - (col + 3)}" }
     end
 
+    # Wrapper para input horizontal
+    config.wrappers "horizontal_form_label_#{col}", tag: 'div', class: 'form-group', error_class: 'has-error' do |b|
+      b.use :html5
+      b.use :placeholder
+      b.optional :maxlength
+      b.optional :pattern
+      b.optional :min_max
+      b.optional :readonly
+      b.use :label, class: "col-sm-#{col} control-label"
+
+      b.wrapper tag: 'div', class: "col-sm-#{10-col}" do |ba|
+        ba.use :input, class: 'form-control'
+        ba.use :error, wrap_with: { tag: 'span', class: 'help-block' }
+        ba.use :hint,  wrap_with: { tag: 'p', class: 'help-block' }
+      end
+    end
+
     # Wrappers para inputs multilinea
     config.wrappers "inline_field_#{col}".to_sym, tag: 'div', class: "col-sm-#{col}", error_class: 'has-error' do |ic|
       ic.use :html5
@@ -105,7 +122,7 @@ SimpleForm.setup do |config|
     end
 
     1.upto(10) do |offset|
-      # Wrappers para tamaños de inputs y de etiquetas
+      # Wrappers para tamaños de inputs y de offset
       config.wrappers "field_#{col}_offset_#{offset}".to_sym, tag: 'div', class: 'form-group', error_class: 'has-error' do |mdf|
         mdf.use :html5
         mdf.use :placeholder
@@ -116,6 +133,40 @@ SimpleForm.setup do |config|
           wr.use :error, wrap_with: { tag: 'span', class: 'help-block' }
           wr.use :hint,  wrap_with: { tag: 'p', class: 'help-block' }
         end
+      end
+
+      1.upto(9) do |label|
+        # Wrappers para tamaños de inputs y etiquetas.
+        config.wrappers "field_#{col}_offset_#{offset}_label_#{label}".to_sym, tag: 'div', class: 'form-group', error_class: 'has-error' do |mdf|
+          mdf.use :html5
+          mdf.use :placeholder
+          mdf.use :label, class: "col-sm-#{label} control-label"
+
+          mdf.wrapper tag: 'div', class: "col-sm-#{col}" do |wr|
+            wr.use :input, class: 'form-control'
+            wr.use :hint,  wrap_with: { tag: 'p', class: 'help-block' }
+          end
+
+          # grid size: total (12) - etiqueta (2) - input (col) - margen (1) = 12-(col+label+1)
+          mdf.use :error, wrap_with: { tag: 'span', class: "help-block col-sm-#{12 - (col + label + offset + 1)}" }
+        end
+      end
+    end
+
+    1.upto(9) do |label|
+      # Wrappers para tamaños de inputs y etiquetas.
+      config.wrappers "field_#{col}_label_#{label}".to_sym, tag: 'div', class: 'form-group', error_class: 'has-error' do |mdf|
+        mdf.use :html5
+        mdf.use :placeholder
+        mdf.use :label, class: "col-sm-#{label} control-label"
+
+        mdf.wrapper tag: 'div', class: "col-sm-#{col}" do |wr|
+          wr.use :input, class: 'form-control'
+          wr.use :hint,  wrap_with: { tag: 'p', class: 'help-block' }
+        end
+
+        # grid size: total (12) - etiqueta (2) - input (col) - margen (1) = 12-(col+label+1)
+        mdf.use :error, wrap_with: { tag: 'span', class: "help-block col-sm-#{12 - (col + label + 1)}" }
       end
     end
   end

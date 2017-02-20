@@ -68,10 +68,8 @@ class UsersController < ApplicationController
   def send_membership
     user = User.find(params[:user_id])
 
-    send_membership_service = SendMembership.new(current_user, user)
-
     # Si es valido lo guarda y envía un mensaje de noticia, si no envía uno de advertencia
-    if send_membership_service.do
+    if SendMembership.new(current_user, user).do
       flash[:notice] = "Petición enviada a #{user.name}"
     else
       flash[:advert] = "No se ha podido enviar la petición a #{@user.name}"
@@ -167,7 +165,7 @@ class UsersController < ApplicationController
         profileable_attributes: [:id, :musician_status_id, :genre_1_id, :genre_2_id, :genre_3_id, :band_status_id],
         address_attributes: [:id, :gaddress, :city, :municipality, :province, :region, :country],
         social_networks_set_attributes: [:id, :facebook_url, :youtube_url, :twitter_url, :gplus_url, :soundcloud_url,
-          :instagram_url, :website_url]]
+        :instagram_url, :website_url]]
 
       params.require(:user).permit(allow)
     end

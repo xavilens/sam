@@ -17,9 +17,11 @@ Rails.application.routes.draw do
     put :update_knowledges
     patch :update_knowledges
 
-    get 'membership/send/', action: :send_membership, controller: :users, as: :send_membership
+    get 'membership/send/:from_user', action: :send_request, controller: :members, as: :send_membership
+    # get 'membership/new/', action: :send_request, controller: :members, as: :send_membership
+    # get 'membership/send/', action: :send_membership, controller: :users, as: :send_membership
     put :add_member, controller: :users
-    get 'membership/delete/', action: :delete_membership, as: :delete_membership
+    patch 'membership/delete/', action: :delete_membership, as: :delete_membership
 
     resources :images
     resources :events
@@ -34,10 +36,13 @@ Rails.application.routes.draw do
 
   post 'membership/add', action: :add, controller: :memberships
 
+
   resources :messages
   resources :events
   resources :bands, only: :index
   resources :musicians, only: :index
+  resources :members
+
   # resources :salas
   # resources :rehearsal_studio
   # resources :posts do

@@ -41,9 +41,9 @@
 
       <% else %>
 
-        <%= link_to fa_icon('user-plus'), user_send_membership_path(user_id: @user),
+        <%= link_to fa_icon('user-plus'), user_send_membership_path(user_id: @user, from_user: current_user),
           class:  'option-button-icon option-button btn btn-default col-md-2 gap-right',
-          title:"Invitar al grupo", data: { confirm: "¿Desea invitar a #{@user.name} al grupo?" } %>
+          title:"Invitar al grupo", remote: true %>
 
       <% end %>
     <% elsif current_user.musician? && @user.band? %>
@@ -55,9 +55,9 @@
 
       <% else %>
 
-        <%= link_to fa_icon('user-plus'), user_send_membership_path(user_id: @user),
+        <%= link_to fa_icon('user-plus'), user_send_membership_path(user_id: @user, from_user: current_user),
           class:  'option-button-icon option-button btn btn-default col-md-2 gap-right',
-          title:"Unirte al grupo", data: { confirm: "¿Desea pedir su ingreso en el grupo?" } %>
+          title:"Unirte al grupo", remote: true %>
 
       <% end %>
     <% end %>
