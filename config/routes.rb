@@ -34,14 +34,13 @@ Rails.application.routes.draw do
     # resources :rehearsal_studio_review
   end
 
-  post 'membership/add', action: :add, controller: :memberships
-
-
   resources :messages
   resources :events
   resources :bands, only: :index
   resources :musicians, only: :index
+
   resources :members
+  post '/members/send', action: :send_request_message, controller: :members
 
   # resources :salas
   # resources :rehearsal_studio
