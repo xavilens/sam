@@ -2,19 +2,15 @@
   <div class="modal-body">
     <%= f.input :band_id, as: :hidden %>
     <%= f.input :musician_id, as: :hidden %>
-    <% if type == "new" %>
-      <%= f.input :instrument_id, as: :hidden %>
-    <% else %>
-      <%= f.association :instrument, collection: Instrument.all.order(:name),
-        label: 'Instrumento', prompt: 'Elige un instrumento',
-        order: 'name', wrapper: :field_5_offset_2_label_3 %>
-    <% end %>
+    
+    <%= f.association :instrument, collection: Instrument.all.order(:name),
+      label: 'Instrumento', prompt: 'Elige un instrumento',
+      order: 'name', wrapper: :field_5_offset_2_label_3 %>
   </div>
 
   <div class="clearfix gap-top gap-bottom"></div>
 
   <div class="modal-footer">
-    <% submit_title = type == "new" ? 'Aceptar' : 'Enviar petición' %>
-    <%= f.submit submit_title, class: "btn btn-primary btn-md btn-block" %>
+    <%= f.submit 'Enviar petición', class: "btn btn-primary btn-md btn-block" %>
   </div>
 <% end %>

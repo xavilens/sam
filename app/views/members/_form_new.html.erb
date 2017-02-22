@@ -1,0 +1,13 @@
+<%= simple_form_for @member, remote: true do |f| %>
+  <div class="modal-body">
+    <%= f.input :band_id, as: :hidden %>
+    <%= f.input :musician_id, as: :hidden %>
+    <%= f.input :instrument_id, as: :hidden %>
+  </div>
+
+  <div class="clearfix gap-top gap-bottom"></div>
+
+  <div class="modal-footer">
+    <%= f.submit 'Aceptar', class: "btn btn-primary btn-md btn-block" %>
+  </div>
+<% end %>

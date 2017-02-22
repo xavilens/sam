@@ -35,7 +35,7 @@
     <% if current_user.band? && @user.musician? %>
       <% if current_user.profile.member? @user.profile %>
 
-        <%= link_to fa_icon('user-minus'), user_delete_membership_path(user_id: @user),
+        <%= link_to fa_icon('user-times'), user_delete_membership_path(user_id: @user),
           class:  'option-button-icon option-button btn btn-default col-md-2 gap-right',
           title:"Expulsar del grupo", data: { confirm: "¿Desea expulsar a #{@user.name} del grupo?" } %>
 
@@ -49,7 +49,7 @@
     <% elsif current_user.musician? && @user.band? %>
       <% if current_user.profile.member? @user.profile %>
 
-        <%= link_to fa_icon('user-minus'), user_delete_membership_path(user_id: @user),
+        <%= link_to fa_icon('user-times'), user_delete_membership_path(user_id: @user),
           class:  'option-button-icon option-button btn btn-default col-md-2 gap-right',
           title:"Dejar el grupo", data: { confirm: "¿Desea abandonar el grupo?" } %>
 
