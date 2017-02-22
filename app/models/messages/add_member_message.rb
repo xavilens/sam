@@ -40,7 +40,7 @@ class AddMemberMessage < Message
       "Unirte a #{from_user.name}"
     end
 
-    return "<form action='/members/create' method='POST'>" +
+    return "<form action='/members/new' data-remote='true' method='post'>" +
       "<input name='authenticity_token' value='<%= form_authenticity_token %>' type='hidden'>" +
       "<input name='band_id' value='#{band.id}' type='hidden' />" +
       "<input name='musician_id' value='#{musician.id}' type='hidden' />" +

@@ -1,0 +1,6 @@
+
+$(".main").prepend("<%= j render 'layouts/alerts' %>");
+
+<% if @conv.errors.empty? %>
+  $('#member-modal').modal('hide');
+<% end %>

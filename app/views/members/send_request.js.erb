@@ -1,1 +1,1 @@
-$('<%= j render "form", title: "Enviar petición" %>').modal();
+$('<%= j render "form", title: "#{@title}", type: "request", message: "#{@message}"  %>').modal();

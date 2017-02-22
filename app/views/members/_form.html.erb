@@ -10,27 +10,15 @@
 
       <div class="col-sm-12">
         <div class="gap-right gap-top gap-left gap-bottom">
-          Se va a enviar una petición a
-          <%= @member.band.user == current_user ? @member.musician.user.name : @member.band.user.name %>
-          para formar parte de su grupo. ¿Con qué instrumento desea incorporarse?
+          <%= message.html_safe %>
         </div>
       </div>
 
-      <%= simple_form_for @member, url: members_send_path, remote: true do |f| %>
-        <div class="modal-body">
-          <%= f.input :band_id, as: :hidden %>
-          <%= f.input :musician_id, as: :hidden %>
-
-          <%= f.association :instrument, collection: Instrument.all.order(:name),
-            label: 'Instrumento', prompt: 'Elige un instrumento',
-            order: 'name', wrapper: :field_5_offset_2_label_3 %>
-        </div>
-
-        <div class="clearfix gap-top gap-bottom"></div>
-
-        <div class="modal-footer">
-          <%= f.submit 'Enviar petición', class: "btn btn-primary btn-md btn-block" %>
-        </div>
+      <% debugger %>
+      <% if type == "new"%>
+        <%= render "form_create", type: type %>
+      <% else %>
+        <%= render "form_send", type: type %>
       <% end %>
     </div>
   </div>

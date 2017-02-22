@@ -9,10 +9,11 @@ class SendMembership
   # Ejecuta el servicio
   def do
     # Construye la conversación
-    conversation = build_conversation
+    # conversation = build_conversation
+    build_conversation
 
     # Guarda y devuelve el resultado (éxito o error)
-    return conversation.save
+    # return conversation.save
   end
 
   private

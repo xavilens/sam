@@ -41,6 +41,7 @@ Rails.application.routes.draw do
 
   resources :members
   post '/members/send', action: :send_request_message, controller: :members
+  post '/members/new', action: :new, controller: :members
 
   # resources :salas
   # resources :rehearsal_studio

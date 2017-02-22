@@ -1,4 +1,1 @@
-$('<%= j render "form", title: "¿Deseas formar parte del grupo?" %>').on('hidden.bs.modal', function (e) {
-  $(this).remove();
-  $('.modal-backdrop').remove();
-}).modal();
+$('<%= j render "form", title: "#{@title}", type: "new", message: "#{@message}" %>').modal();
