@@ -1,6 +1,6 @@
 require 'delegate'
 
-class UserPresenter < SimpleDelegator
+class UserDecorator < SimpleDelegator
   # Wrapper de colecciones
   def self.wrap(collection)
     collection.map do |obj|
@@ -61,7 +61,7 @@ class UserPresenter < SimpleDelegator
 
   # Devuelve todas las redes sociales
   def social_networks
-    SocialNetworkPresenter.wrap(user.social_networks)
+    SocialNetworkDecorator.wrap(user.social_networks)
   end
 
   # Indica si posee imagenes

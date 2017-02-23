@@ -1,11 +1,11 @@
 class EventsController < ApplicationController
   before_filter :authenticate_user!, only: [:new, :edit, :update]
-  before_action :set_event_presenter, only: [:show]
+  before_action :set_event_Decorator, only: [:show]
   before_action :set_event, only: [:edit, :update, :destroy]
 
   def index
     @page = 'Calendario de eventos'
-    @events = EventPresenter.wrap(Event.all)
+    @events = EventDecorator.wrap(Event.all)
   end
 
   def new
@@ -88,8 +88,8 @@ class EventsController < ApplicationController
     end
 
     # Seteamos la variable @event con el presentador del evento cuyo id obtenemos de los parametros
-    def set_event_presenter
-      @event = EventPresenter.new(set_event)
+    def set_event_Decorator
+      @event = EventDecorator.new(set_event)
     end
 
     # Parámetros de evento permitidos por el controlador

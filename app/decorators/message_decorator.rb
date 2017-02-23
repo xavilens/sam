@@ -1,6 +1,6 @@
 require 'delegate'
 
-class MessagePresenter < SimpleDelegator
+class MessageDecorator < SimpleDelegator
   # Wrapper para colecciones
   def self.wrap(collection)
     collection.map do |obj|
@@ -10,7 +10,7 @@ class MessagePresenter < SimpleDelegator
 
   # Devuelve el autor del mensaje
   def author
-    UserPresenter.new(message.author)
+    UserDecorator.new(message.author)
   end
 
   # Devuelve el cuerpo del mensaje

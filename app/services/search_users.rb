@@ -14,7 +14,7 @@ class SearchUsers
       User.all
     end
 
-    return UserPresenter.wrap(users)
+    return UserDecorator.wrap(users)
   end
 
   private

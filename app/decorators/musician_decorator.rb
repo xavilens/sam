@@ -1,6 +1,6 @@
 require 'delegate'
 
-class BandPresenter < SimpleDelegator
+class MusicianDecorator < SimpleDelegator
   # Wrapper para colecciones
   def self.wrap(collection)
     collection.map do |obj|
@@ -8,8 +8,8 @@ class BandPresenter < SimpleDelegator
     end
   end
 
-  # Devuelve el objeto band original
-  def band
+  # Devuelve el objeto musician original
+  def musician
     __getobj__
   end
 end

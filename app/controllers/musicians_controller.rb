@@ -61,6 +61,6 @@ class MusiciansController < ApplicationController
 
     # Define la variable @users como solo musicos
     def set_musicians
-      @users = UserPresenter.wrap(User.where(profileable_type: 'Musician'))
+      @users = UserDecorator.wrap(User.where(profileable_type: 'Musician'))
     end
 end

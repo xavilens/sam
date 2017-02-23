@@ -40,7 +40,7 @@ class MessagesController < ApplicationController
 
     @conversations = @conversations.send(@order) if (@order and @conversations)
 
-    @conversations = ConversationPresenter.wrap(@conversations) if @conversations
+    @conversations = ConversationDecorator.wrap(@conversations) if @conversations
 
     @page ||= 'Mensajes'
   end
@@ -72,7 +72,7 @@ class MessagesController < ApplicationController
 
     # Cargamos los mensajes
     @messages = @conversation.messages.desc
-    @messages = MessagePresenter.wrap(@messages)
+    @messages = MessageDecorator.wrap(@messages)
 
     # Marcamos la conversación como leída
     @conversation.read (@user.id)
@@ -103,7 +103,7 @@ class MessagesController < ApplicationController
 
     # Define la variable @user como el usuario actual
     def set_current_user
-      @user = UserPresenter.new(current_user)
+      @user = UserDecorator.new(current_user)
     end
 
     # Definimos usuarios para acción create
@@ -129,7 +129,7 @@ class MessagesController < ApplicationController
 
     # Define la variable @sender
     def set_recipent to_user
-      @recipent = UserPresenter.new(to_user)
+      @recipent = UserDecorator.new(to_user)
     end
 
     ## ACTIONS

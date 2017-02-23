@@ -1,9 +1,9 @@
 require 'delegate'
 
-class ConversationPresenter < SimpleDelegator
-  # Devuelve el UserPresenter del destinatario
+class ConversationDecorator < SimpleDelegator
+  # Devuelve el UserDecorator del destinatario
   def recipent user_id
-    UserPresenter.new(conversation.recipent(user_id))
+    UserDecorator.new(conversation.recipent(user_id))
   end
 
   # Devuelve las conversaciones no leídas

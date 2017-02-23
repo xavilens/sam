@@ -3,7 +3,7 @@ class BandsController < ApplicationController
 
   def index
     @page = 'Grupos'
-    @users = UserPresenter.wrap(User.where(profileable_type: 'Band'))
+    @users = UserDecorator.wrap(User.where(profileable_type: 'Band'))
   end
 
   # Breadcrumbs

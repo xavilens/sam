@@ -1,6 +1,6 @@
 require 'delegate'
 
-class EventPresenter < SimpleDelegator
+class EventDecorator < SimpleDelegator
   # Wrapper para colecciones
   def self.wrap(collection)
     collection.map do |obj|

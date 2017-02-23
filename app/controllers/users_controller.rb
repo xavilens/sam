@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_filter :authenticate_user!, only: [:edit, :update]
 
   before_action :set_edit_page, only: [:edit]
-  before_action :set_user_presenter, only: [:show]
+  before_action :set_user_Decorator, only: [:show]
   before_action :set_current_user, only: [:update, :update_knowledges]
   before_action :set_edit_musician_knowledges, only: [:edit_knowledges]
   before_action :set_musician, only: [:update_knowledges]
@@ -126,9 +126,9 @@ class UsersController < ApplicationController
       @user = User.find(params[:id])
     end
 
-    # Define la variable @user con el UserPresenter del usuario actual
-    def set_user_presenter
-      @user = UserPresenter.new(set_user)
+    # Define la variable @user con el UserDecorator del usuario actual
+    def set_user_Decorator
+      @user = UserDecorator.new(set_user)
     end
 
     # Define la variable @user con el usuario actual
@@ -136,9 +136,9 @@ class UsersController < ApplicationController
       @user = current_user
     end
 
-    # Define la variable @user con el UserPresenter del usuario actual
-    def set_current_user_presenter
-      @user = UserPresenter.new(current_user)
+    # Define la variable @user con el UserDecorator del usuario actual
+    def set_current_user_Decorator
+      @user = UserDecorator.new(current_user)
     end
 
     # Define lo necesario para que la vista EditKnowledge funcione correctamente

@@ -1,6 +1,6 @@
 require 'delegate'
 
-class SocialNetworkPresenter < SimpleDelegator
+class SocialNetworkDecorator < SimpleDelegator
   # Devuelve el icono de la red social
   def icon
     fa_icon
