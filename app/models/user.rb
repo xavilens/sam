@@ -127,6 +127,11 @@ class User < ActiveRecord::Base
     end
   end
 
+  # Devuelve los aquellos registros en los que el usuario conste como grupo o como músico
+  def members
+    profile.members
+  end
+
   # Indica si tiene conocimiento en instrumentos
   def instruments?
     if musician?

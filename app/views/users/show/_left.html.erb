@@ -2,7 +2,7 @@
 <!-- END: Profile Main Data -->
 <div class="profile-container">
   <div class="avatar-container">
-    <%= image_tag @user.avatar, alt: @user.name, class: ['img-responsive'] %>
+    <%= image_tag @user.avatar, alt: @user.name, class: ['img-responsive', 'img-border'] %>
   </div>
   <div class="leftbar-name">
     <%= @user.name %> <small><%= @user.type %></small>
@@ -104,15 +104,7 @@
 <% end %>
 <!-- END: Social Networks Data -->
 
-<!-- Membership Data -->
-<% if @user.membership? %>
-<div class="member-container user-show-container">
-  <div class="member-header leftbar-name"><%= @user.member_header %></div>
-</div>
-<% end %>
-<!-- END: Membership Data -->
-
-<!-- Images Data -->
+<!-- Instruments Data -->
 <% if @user.instruments? %>
 <div class="instruments-container user-show-container">
   <div class="leftbar-name">Instrumentos</div>
@@ -124,7 +116,7 @@
     <% end %>
 </div>
 <% end %>
-<!-- END: Images Data -->
+<!-- END: Instruments Data -->
 
 <!-- Images Data -->
 <% if @user.images? %>

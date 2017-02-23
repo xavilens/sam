@@ -17,10 +17,22 @@ class UserDecorator < SimpleDelegator
     end
   end
 
+  # Devuelve un string con los géneros del grupo
   def band_genres
     genres = user.profile.genres
 
-    "#{genres[0]} / #{genres[1]} / #{genres[2]}"
+    genres_s = ""
+    genres_size =  genres.size - 1
+
+    0.upto(genres_size) do |i|
+      genres_s += "#{genres[i]}"
+
+      if(i != genres_size)
+        genres_s += " / "
+      end
+    end
+
+    return genres_s
   end
 
   # Indica cuando se registró
@@ -29,11 +41,9 @@ class UserDecorator < SimpleDelegator
     "el #{time.strftime("%d/%m/%Y")}"
   end
 
-  # Indica cuando se registró
+  # Indica cuando se vió por ultima vez
   def last_seen_at
     updated_at.time
-    # time = updated_at.time
-    # "el #{time.strftime("%d/%m/%Y")}"
   end
 
   # Devuelve la cabecera de la sección Members de la pantalla Show User
@@ -43,6 +53,11 @@ class UserDecorator < SimpleDelegator
     elsif user.band?
       'Miembros'
     end
+  end
+
+  # Devuelve el número de miembros en los que forma parte el usuario
+  def members_size
+    profile.members.size
   end
 
   # Devuelve la bio formateada
