@@ -1,0 +1,12 @@
+<div class="row form-group">
+    <div class="form-group select required member_instrument">
+      <div class="form-group select required member_instrument">
+        <label class="select required gap-left col-sm-3 control-label" for="member_instrument_id">
+          <abbr title="obligatorio">*</abbr> Instrumento
+        </label>
+        <div class="col-sm-4">
+          <%= select('members', 'instrument', Instrument.all, {include_blank: true}, {class: 'select required form-control'} ) %>
+        </div>
+      </div>
+    </div>
+</div>

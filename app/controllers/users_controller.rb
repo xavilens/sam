@@ -64,34 +64,6 @@ class UsersController < ApplicationController
     render action: :edit_knowledges
   end
 
-  # Envía un mensaje pidiendo la membresía en un grupo o de un músico
-  def send_membership
-    user = User.find(params[:user_id])
-
-    # Si es valido lo guarda y envía un mensaje de noticia, si no envía uno de advertencia
-    if SendMembership.new(current_user, user).do
-      flash[:notice] = "Petición enviada a #{user.name}"
-    else
-      flash[:advert] = "No se ha podido enviar la petición a #{@user.name}"
-    end
-
-    redirect_to :back
-  end
-
-  # Añade al músico al grupo
-  def add_member
-    user = User.find(params[:user_id])
-
-    redirect_to :back
-  end
-
-  # Elimina al músico del grupo
-  def delete_membership
-    user = User.find(params[:user_id])
-
-    redirect_to :back
-  end
-
   private
     ## SETTERS
 

@@ -1,0 +1,18 @@
+<%= simple_form_for @member, url: members_send_path, remote: true, html: { class: 'form-horizontal'},
+  wrapper: 'horizontal_form',
+  wrapper_mappings: {
+    check_boxes: :horizontal_radio_and_checkboxes,
+    radio_buttons: :horizontal_radio_and_checkboxes,
+    file: :horizontal_file_input,
+    boolean: :horizontal_boolean
+  } do |f| %>
+  <div class="modal-body">
+    <%= message %>
+    <%= f.input :band_id, as: :hidden %>
+    <%= f.input :musician_id, as: :hidden %>
+  </div>
+
+  <div class="modal-footer">
+    <%= f.submit 'Enviar petición', class: "btn btn-primary btn-md btn-block" %>
+  </div>
+<% end %>

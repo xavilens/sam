@@ -18,13 +18,12 @@ Rails.application.routes.draw do
     patch :update_knowledges
 
     get 'membership/send/:from_user', action: :send_request, controller: :members, as: :send_membership
-    # get 'membership/new/', action: :send_request, controller: :members, as: :send_membership
-    # get 'membership/send/', action: :send_membership, controller: :users, as: :send_membership
-    put :add_member, controller: :users
-    patch 'membership/delete/', action: :delete_membership, as: :delete_membership
+    get 'membership/delete/:member_id', action: :delete, controller: :members, as: :band_membership_delete
+    get 'membership/delete/', action: :delete, controller: :members, as: :membership_delete
 
     resources :images
     resources :events
+    resources :members, only: [:edit, :index]
 
     # resources :posts do
     #   resources :comments
@@ -42,6 +41,7 @@ Rails.application.routes.draw do
   resources :members
   post '/members/send', action: :send_request_message, controller: :members
   post '/members/new', action: :new, controller: :members
+  patch '/members/delete/', action: :delete_member, controller: :members, as: :members_delete
 
   # resources :salas
   # resources :rehearsal_studio

@@ -119,15 +119,22 @@ class User < ActiveRecord::Base
   end
 
   # Indica si posee alguna relacion de Member
-  def membership?
+  def memberships?
     if musician?
-      !profile.bands.blank?
+      # !profile.bands.blank?
+      !profile.members.blank?
     elsif band?
+      # !profile.members.blank?
       !profile.members.blank?
     end
   end
 
-  # Devuelve los aquellos registros en los que el usuario conste como grupo o como músico
+  # Devuelve aquellos registros en los que el usuario conste como grupo o como músico
+  def members_history
+    profile.members
+  end
+
+  # Devuelve aquellos registros en los que el usuario conste como grupo o como músico del que no haya sido expulsado
   def members
     profile.members
   end

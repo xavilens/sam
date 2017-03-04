@@ -2,5 +2,5 @@
 if($("#member-modal").length > 0){
   $("#member-modal").modal();
 }else{
-  $('<%= j render "modal", title: "#{@title}", type: "new", message: "#{@message}" %>').modal();
+  $('<%= j render "modal", type: "delete", title: "#{@title}", message: "#{@message}" %>').modal();
 }

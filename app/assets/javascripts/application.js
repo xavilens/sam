@@ -14,5 +14,7 @@
 //= require jquery_ujs
 //= require jquery.dotdotdot
 //= require bootstrap-sprockets
+//= require bootstrap-datepicker/core
+//= require bootstrap-datepicker/locales/bootstrap-datepicker.es.js
 //= require turbolinks
 //= require_tree .

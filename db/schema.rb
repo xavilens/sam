@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170212185941) do
+ActiveRecord::Schema.define(version: 20170304185525) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "user_id",          limit: 4,   null: false
@@ -256,6 +256,16 @@ ActiveRecord::Schema.define(version: 20170212185941) do
 
   add_index "main_posts", ["post_id"], name: "index_main_posts_on_post_id", using: :btree
 
+  create_table "member_instruments", force: :cascade do |t|
+    t.integer  "member_id",     limit: 4, null: false
+    t.integer  "instrument_id", limit: 4, null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "member_instruments", ["instrument_id"], name: "index_member_instruments_on_instrument_id", using: :btree
+  add_index "member_instruments", ["member_id"], name: "index_member_instruments_on_member_id", using: :btree
+
   create_table "member_to_bands", force: :cascade do |t|
     t.string   "city",       limit: 255
     t.string   "state",      limit: 255
@@ -265,15 +275,13 @@ ActiveRecord::Schema.define(version: 20170212185941) do
   end
 
   create_table "members", force: :cascade do |t|
-    t.integer  "band_id",       limit: 4, null: false
-    t.integer  "musician_id",   limit: 4, null: false
-    t.integer  "instrument_id", limit: 4, null: false
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.integer  "band_id",     limit: 4, null: false
+    t.integer  "musician_id", limit: 4, null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
   add_index "members", ["band_id"], name: "index_members_on_band_id", using: :btree
-  add_index "members", ["instrument_id"], name: "index_members_on_instrument_id", using: :btree
   add_index "members", ["musician_id"], name: "index_members_on_musician_id", using: :btree
 
   create_table "messages", force: :cascade do |t|
@@ -512,8 +520,9 @@ ActiveRecord::Schema.define(version: 20170212185941) do
   add_foreign_key "followships", "users", column: "follower_id"
   add_foreign_key "followships", "users", column: "leader_id"
   add_foreign_key "main_posts", "posts"
+  add_foreign_key "member_instruments", "instruments"
+  add_foreign_key "member_instruments", "members"
   add_foreign_key "members", "bands"
-  add_foreign_key "members", "instruments"
   add_foreign_key "members", "musicians"
   add_foreign_key "messages", "conversations"
   add_foreign_key "messages", "users", column: "author_id"

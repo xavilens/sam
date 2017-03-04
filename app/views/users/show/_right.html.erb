@@ -1,9 +1,9 @@
 
 <!-- Membership Data -->
-<% if @user.membership? %>
+<% if @user.memberships? %>
 <div class="member-container user-show-container">
   <div class="member-header leftbar-name"><%= @user.member_header %></div>
-  <% @user.members.first(5).each do |member| %>
+  <% @user.members.each do |member| %>
     <% member_user = member.user @user %>
     <div class="media member">
       <div class="media-left">
@@ -13,7 +13,21 @@
       </div>
       <div class="media-body">
         <h4 class="media-heading"><%= link_to member_user.name, user_path(member_user) %></h4>
-        <%= member.instrument.name %>
+        <div class="member-instruments">
+          <%= member.instruments_names %>
+        </div>
+        <% if @user == current_user and @user.band? %>
+        <div class="member-links">
+          <small>
+            <%= link_to "Actualizar", edit_user_member_path(user_id: @user.id, id: member.id), remote: true %>
+          </small>
+           ·
+          <small>
+            <%= link_to "Eliminar", user_band_membership_delete_path(user_id: @user, member_id: member.id),
+              remote: true %>
+          </small>
+        </div>
+        <% end %>
       </div>
     </div>
   <% end %>

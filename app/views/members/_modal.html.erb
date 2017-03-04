@@ -8,16 +8,16 @@
         <h4 class="modal-title"><%= title %></h4>
       </div>
 
-      <div class="col-sm-12">
-        <div class="gap-right gap-top gap-left gap-bottom">
-          <%= message.html_safe %>
-        </div>
-      </div>
-
       <% if type == "new"%>
-        <%= render "form_new" %>
-      <% else %>
-        <%= render "form_send" %>
+        <%= render "new", message: message.html_safe %>
+      <% elsif type == "request" %>
+        <%= render "send", message: message.html_safe %>
+      <% elsif type == "index" %>
+        <%= render "members", message: message.html_safe %>
+      <% elsif type == "edit" %>
+        <%= render "show", message: message.html_safe %>
+      <% elsif type == "delete" %>
+        <%= render "delete", message: message.html_safe %>
       <% end %>
     </div>
   </div>

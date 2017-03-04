@@ -1,0 +1,16 @@
+<%= simple_form_for @member, url: {action: :delete_member, controller: :members}, remote: true do |f| %>
+  <div class="modal-body">
+    <%= message %>
+    
+    <%= f.input :id, as: :hidden %>
+    <div class="form-group hidden type">
+      <input id="type" value="delete" class="hidden form-control" name="type" type="hidden">
+    </div>
+  </div>
+
+  <div class="clearfix gap-top gap-bottom"></div>
+
+  <div class="modal-footer">
+    <%= f.submit 'Eliminar', class: "btn btn-primary btn-md btn-block" %>
+  </div>
+<% end %>

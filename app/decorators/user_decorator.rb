@@ -55,6 +55,16 @@ class UserDecorator < SimpleDelegator
     end
   end
 
+  # Devuelve los miembros decorados
+  def members
+    user.members.decorate
+  end
+
+  # Devuelve los miembros históricos decorados
+  def members_history
+    user.members_history.decorate
+  end
+
   # Devuelve el número de miembros en los que forma parte el usuario
   def members_size
     profile.members.size

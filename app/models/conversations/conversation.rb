@@ -69,7 +69,18 @@ class Conversation < ActiveRecord::Base
     joins(:messages).where("messages.author_id != :author_id",author_id: user_id)
   }
 
-  ## ORDER
+  # Devuelve aquellos mensajes que no han sido enviado por el usuario
+  scope :add_member_conversation, -> (user_1_id, user_2_id) {
+    add_member.where("user_1_id in (:user_1_id, :user_2_id) and user_2_id in (:user_1_id, :user_2_id)",
+      user_1_id: user_1_id, user_2_id: user_2_id)
+  }
+
+  # Devuelve aquellos mensajes que no han sido enviado por el usuario
+  scope :search, -> (user_id, text) {
+    my_conversations(user_id).joins(:messages).where("body like :text or subject like :text", text: "%#{text}%").distinct(:id)
+  }
+
+  ######## ORDER
   # Devuelve las conversaciones ordenadas de manera descendiente
   scope :desc, -> { order(id: :desc) }
 

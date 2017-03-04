@@ -39,6 +39,8 @@ gem 'breadcrumbs_on_rails', '2.3.1'
 gem 'simple_form', '3.2.1'
 # Paginacion
 gem 'kaminari', '0.16.3'
+# Datepicker con tema de bootstrap
+gem 'bootstrap-datepicker-rails', '1.6.4.1'
 
 # internalizacion
 # gem 'i18n', '0.7.0'
@@ -63,7 +65,7 @@ gem 'interactor', '3.1'
 ## GEMS PARA CONTEXTOS ESPECÍFICOS
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug'
+  gem 'byebug', '9.0.5'
 
   gem 'pry-rails', '0.3.4'
 

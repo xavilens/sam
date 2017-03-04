@@ -12,7 +12,7 @@
 
   <%= link_to messages_path(show: 'membership'),
     class: "btn btn-primary #{active_conversation_box('membership')}", type: 'button' do %>
-    Peticiones de membresía <%= membership_unread_count %>
+    Peticiones de miembros <%= membership_unread_count %>
   <% end %>
 
   <%= link_to messages_path(show: 'search'),

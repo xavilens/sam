@@ -10,7 +10,7 @@ class Musician < ActiveRecord::Base
   accepts_nested_attributes_for :user
 
   has_many :members, dependent: :delete_all
-  accepts_nested_attributes_for :members
+  accepts_nested_attributes_for :members, allow_destroy: true
 
   has_many :bands, through: :members
 

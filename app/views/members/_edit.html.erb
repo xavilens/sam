@@ -1,0 +1,47 @@
+<%= simple_form_for @member, wrapper: 'horizontal_form', remote: true, html: { class: 'form-horizontal'},
+  wrapper_mappings: {
+    check_boxes: :horizontal_radio_and_checkboxes,
+    radio_buttons: :horizontal_radio_and_checkboxes,
+    file: :horizontal_file_input,
+    boolean: :horizontal_boolean
+  } do |f| %>
+  <%= f.input :id, as: :hidden %>
+
+  <div class="modal-body">
+    <div class="row">
+        <%= message %>
+    </div>
+
+    <div class="form-group optional string">
+      <%= f.input :join_date, label: 'Fecha de entrada', as: :string, wrapper: :field_4_label_3 %>
+    </div>
+
+    <%= f.simple_fields_for :member_instruments do |mi| %>
+      <%= mi.association :instrument, label: 'Instrumento', wrapper: :field_4_label_3 %>
+      <% if mi.persisted? %>
+        <%= link_to :_destroy, user_edit_members_path %>
+      <% end %>
+    <% end %>
+
+    <div class="form-actions">
+      <%= link_to "Añadir instrumento", " "%>
+    </div>
+  </div>
+
+  <div class="clearfix gap-top gap-bottom"></div>
+
+  <div class="modal-footer">
+    <%= f.submit 'Actualizar', class: "btn btn-primary btn-md btn-block" %>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.datepicker').datepicker({
+      todayBtn: "linked",
+      clearBtn: true,
+      language: "es",
+      autoclose: true
+    });
+  });
+</script>

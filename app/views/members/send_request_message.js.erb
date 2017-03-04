@@ -1,6 +1,10 @@
+// Esconde el modal
+$('#member-modal').modal('hide');
 
+// Elimina las alertas para que no se acumulen
+if($(".alert").length > 0){
+  $(".alert").remove();
+}
+
+// Añade las nuevas alertas
 $(".main").prepend("<%= j render 'layouts/alerts' %>");
-
-<% if @conv.errors.empty? %>
-  $('#member-modal').modal('hide');
-<% end %>

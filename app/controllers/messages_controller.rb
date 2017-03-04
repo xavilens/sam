@@ -22,7 +22,8 @@ class MessagesController < ApplicationController
 
     # Si hay busqueda cargamos las conversaciones de la búsqueda, si no cargamos dependiendo la bandeja
     if @search
-      @conversations = Conversation.my_conversations(current_user.id).joins(:messages).where("messages.body like :text", text: "%#{@search}%").distinct(:id)
+      # @conversations = Conversation.my_conversations(current_user.id).joins(:messages).where("messages.body like :text", text: "%#{@search}%").distinct(:id)
+      @conversations = Conversation.search(current_user.id, @search)
       @page = 'Mensajes encontrados'
     else
       # Dependiendo de la bandeja de correo pasada por parámetros mostramos unos correos u otros
