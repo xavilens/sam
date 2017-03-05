@@ -18,8 +18,8 @@ Rails.application.routes.draw do
     patch :update_knowledges
 
     get 'membership/send/:from_user', action: :send_request, controller: :members, as: :send_membership
-    get 'membership/delete/:member_id', action: :delete, controller: :members, as: :band_membership_delete
-    get 'membership/delete/', action: :delete, controller: :members, as: :membership_delete
+    get 'membership/delete/:member_id', action: :delete_view, controller: :members, as: :band_membership_delete
+    get 'membership/delete/', action: :delete_view, controller: :members, as: :membership_delete
 
     resources :images
     resources :events

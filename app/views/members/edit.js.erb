@@ -1,6 +1,11 @@
 // Si existe el modal lo muestra, si no lo agrega
+// if($("#member-modal").length > 0){
+//   $("#member-modal").modal();
+// }else{
+//   $('<%= j render "modal", type: "edit", title: "#{@title}", message: "#{@message}" %>').modal();
+// }
 if($("#member-modal").length > 0){
-  $("#member-modal").modal();
-}else{
-  $('<%= j render "modal", type: "edit", title: "#{@title}", message: "#{@message}" %>').modal();
+  $("#member-modal").remove();
 }
+
+$('<%= j render "modal", type: "edit", title: "#{@title}", message: "#{@message}" %>').modal();

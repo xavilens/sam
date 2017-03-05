@@ -58,7 +58,8 @@ class User < ActiveRecord::Base
 
   # EVENTS RELATED
   has_many :events, foreign_key: :creator_id, primary_key: :id
-  has_many :event_participants
+  has_many :event_participants, foreign_key: :participant
+  has_many :reverse_events, through: :event_participants
 
   # FOLLOWSHIPS RELATED
   has_many :followships, foreign_key: 'follower_id'
@@ -129,11 +130,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  # Devuelve aquellos registros en los que el usuario conste como grupo o como músico
-  def members_history
-    profile.members
-  end
-
   # Devuelve aquellos registros en los que el usuario conste como grupo o como músico del que no haya sido expulsado
   def members
     profile.members
@@ -171,6 +167,26 @@ class User < ActiveRecord::Base
   # Devuelve todas las conversaciones en las que interviene el usuario
   def my_conversations
     conversations + reverse_conversations
+  end
+
+  # Indica si está asociado a algún evento
+  def events?
+    my_events? and reverse_events?
+  end
+
+  # Indica si tiene algún evento propio
+  def my_events?
+    events.blank?
+  end
+
+  # Indica si tiene algún evento en calidad de participante
+  def reverse_events?
+    reverse_events.blank?
+  end
+
+  # Devuelve todos los eventos en los que participa, propio o de participante
+  def events_all
+    events + reverse_events
   end
 
   # Indica si el usuario sigue al leader
@@ -211,6 +227,8 @@ class User < ActiveRecord::Base
 
   # Indica si el usuario es Admin
   def is_admin?
+    User.initialize_attributes!
+
     role_id == User.admin_id
   end
 
@@ -228,6 +246,7 @@ class User < ActiveRecord::Base
       self.role_id |= Role.find_by_name('registrado').id if self.role_id.blank?
     end
 
+    # Define el id del rol 'admin'
     def self.set_admin_id
       Role.find_by_name('admin').id
     end

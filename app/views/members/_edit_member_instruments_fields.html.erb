@@ -1,0 +1,14 @@
+<div class="nested-fields">
+  <div class="form-group">
+    <%= f.label :instrument_id, 'Instrumento', class: 'col-sm-4 select control-label' %>
+
+    <div class="col-sm-4">
+      <%= f.collection_select :instrument_id, Instrument.order(:name), :id,
+        :name, {prompt: ''}, {class: 'form-control select'} %>
+    </div>
+
+    <div class="col-sm-2 control-label">
+      <%= link_to_remove_association fa_icon('times')+' Eliminar', f %>
+    </div>
+  </div>
+</div>

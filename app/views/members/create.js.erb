@@ -1,10 +1,14 @@
 // Esconde el modal
-$('#member-modal').modal('hide');
+// $('#member-modal').modal('hide');
 
 // Elimina las alertas para que no se acumulen
-if($(".alert").length > 0){
-  $(".alert").remove();
-}
+// if($(".alert").length > 0){
+//   $(".alert").remove();
+// }
+
+// http://stackoverflow.com/questions/25970454/redirect-to-from-jquery-in-rails-4
+// Volvemos a la página de usuario
+ $(location).attr('href','<%=j user_path(current_user) %>');
 
 // Añade las nuevas alertas
 $(".main").prepend("<%= j render 'layouts/alerts' %>");
