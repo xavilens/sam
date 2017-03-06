@@ -21,9 +21,9 @@ Rails.application.routes.draw do
     get 'membership/delete/:member_id', action: :delete_view, controller: :members, as: :band_membership_delete
     get 'membership/delete/', action: :delete_view, controller: :members, as: :membership_delete
 
+    resources :members, only: [:edit, :index]
     resources :images
     resources :events
-    resources :members, only: [:edit, :index]
 
     # resources :posts do
     #   resources :comments

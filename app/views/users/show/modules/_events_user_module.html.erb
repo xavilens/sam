@@ -1,0 +1,26 @@
+
+<div class="calendar-container">
+  <div class="leftbar-name">Calendario</div>
+  <table class="table table-bordered table-striped table-hover">
+    <tbody>
+    <% if @user.any_events? %>
+      <% @user.all_events.each do |event| %>
+        <tr class="event">
+          <td>
+            <small class="event-user-date text-right"><%= event.date %></small>
+            <h4><%= link_to event.name, event_path(event) %>
+              <small><%= event.type %></small>
+            </h4>
+            <small class="text-right"><%= event.location_city %></small>
+          </td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>No hay ningún evento.</tr>
+    <% end %>
+    </tbody>
+  </table>
+  <div class="events-user-links text-right">
+    <%= link_to 'Nuevo evento', new_user_event_path(user_id: @user.id) %> | <%= link_to 'Más eventos', user_events_path(user_id: @user.id) %>
+  </div>
+</div>

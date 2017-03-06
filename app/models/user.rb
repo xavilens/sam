@@ -53,7 +53,7 @@ class User < ActiveRecord::Base
   has_many :messages_inverse, through: :reverse_conversations
 
   # IMAGE RELATED
-  has_many :images, as: :imageable, dependent: :delete_all
+  has_many :images, as: :imageable, dependent: :destroy
   accepts_nested_attributes_for :images, allow_destroy: true
 
   # EVENTS RELATED
@@ -170,23 +170,23 @@ class User < ActiveRecord::Base
   end
 
   # Indica si está asociado a algún evento
-  def events?
-    my_events? and reverse_events?
+  def any_events?
+    events? or reverse_events?
   end
 
   # Indica si tiene algún evento propio
-  def my_events?
-    events.blank?
+  def events?
+    !events.blank?
   end
 
   # Indica si tiene algún evento en calidad de participante
   def reverse_events?
-    reverse_events.blank?
+    !reverse_events.blank?
   end
 
   # Devuelve todos los eventos en los que participa, propio o de participante
-  def events_all
-    events + reverse_events
+  def all_events
+    (events + reverse_events).sort_by{ |event| event[:date] }
   end
 
   # Indica si el usuario sigue al leader

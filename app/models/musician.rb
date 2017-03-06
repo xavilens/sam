@@ -9,12 +9,12 @@ class Musician < ActiveRecord::Base
   has_one :user, as: :profileable, dependent: :destroy
   accepts_nested_attributes_for :user
 
-  has_many :members, dependent: :delete_all
+  has_many :members, dependent: :destroy
   accepts_nested_attributes_for :members, allow_destroy: true
 
   has_many :bands, through: :members
 
-  has_many :musician_knowledges, dependent: :delete_all
+  has_many :musician_knowledges, dependent: :destroy
   accepts_nested_attributes_for :musician_knowledges, allow_destroy: true
   has_many :instruments, through: :musician_knowledges
 

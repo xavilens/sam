@@ -1,80 +1,8 @@
 
 <!-- Membership Data -->
-<% if @user.memberships? %>
-<div class="member-container user-show-container">
-  <div class="member-header leftbar-name"><%= @user.member_header %></div>
-  <% @user.members.each do |member| %>
-    <% member_user = member.user @user %>
-    <div class="media member">
-      <div class="media-left">
-        <%= link_to user_path(member_user) do %>
-          <%= image_tag member_user.thumb_s_avatar, alt: member_user.name, class: ['img-border'] %>
-        <% end %>
-      </div>
-      <div class="media-body">
-        <h4 class="media-heading"><%= link_to member_user.name, user_path(member_user) %></h4>
-        <div class="member-instruments">
-          <%= member.instruments_names %>
-        </div>
-        <% if @user == current_user and @user.band? %>
-        <div class="member-links">
-          <small>
-            <%= link_to "Actualizar", edit_user_member_path(user_id: @user.id, id: member.id), remote: true %>
-          </small>
-           ·
-          <small>
-            <%= link_to "Eliminar", user_band_membership_delete_path(user_id: @user, member_id: member.id),
-              remote: true %>
-          </small>
-        </div>
-        <% end %>
-      </div>
-    </div>
-  <% end %>
-
-  <% if @user.members_size > 4 %>
-  <div class="members-more gap-top"><%= link_to 'Más...', members_path %></div>
-  <% end %>
-</div>
-<% end %>
+<%= render "show/modules/members_user_module" %>
 <!-- END: Membership Data -->
 
 <!-- Events -->
-<% if @user.events? %>
-<div class="event-container user-show-container">
-  <div class="leftbar-name event-header">Eventos</div>
-  <div class="event">
-    <div class="row">
-      <% @events = @user.events_all
-        unless @events.blank? %>
-        <% @events.each do |event| %>
-          event.name
-        <% end %>
-      <% else %>
-        <p>No hay ningún evento.</p>
-      <% end %>
-    </div>
-  </div>
-</div>
-<% end %>
+<%= render "show/modules/events_user_module" %>
 <!-- END: Events -->
-
-<!-- Social Networks Data -->
-<% if @user.social_networks? %>
-<div class="calendar-container">
-  <div class="leftbar-name">Calendario</div>
-  <div class="events-container">
-    <div class="row">
-      <% @events = @user.events
-        unless @events.blank? %>
-        <% @events.each do |event| %>
-          event.name
-        <% end %>
-      <% else %>
-        <p>No hay ningún evento.</p>
-      <% end %>
-    </div>
-  </div>
-</div>
-<% end %>
-<!-- END: Social Networks Data -->

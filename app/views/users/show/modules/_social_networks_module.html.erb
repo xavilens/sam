@@ -1,0 +1,16 @@
+
+<% if @user.social_networks? %>
+<div class="contact-container">
+  <div class="leftbar-name">Contacto</div>
+  <div class="social-networks-container">
+    <div class="row">
+      <% @user.social_networks.each do |social_network| %>
+
+        <%= link_to fa_icon(social_network.icon, class: social_network.name), social_network.formatted_url,
+          type: "button", title:  social_network.name, target: "_blank",
+          class: ["social-network", "btn btn-default col-md-2"] %>
+      <% end %>
+    </div>
+  </div>
+</div>
+<% end %>

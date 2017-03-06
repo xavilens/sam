@@ -9,7 +9,7 @@ class Band < ActiveRecord::Base
   has_one :user, as: :profileable, dependent: :destroy
   accepts_nested_attributes_for :user
 
-  has_many :members, dependent: :delete_all
+  has_many :members, dependent: :destroy
   accepts_nested_attributes_for :members
   has_many :musicians, through: :members
 

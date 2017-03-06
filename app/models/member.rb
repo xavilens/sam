@@ -11,7 +11,7 @@ class Member < ActiveRecord::Base
   belongs_to :band
   belongs_to :musician
 
-  has_many :member_instruments, dependent: :delete_all
+  has_many :member_instruments, dependent: :destroy
   accepts_nested_attributes_for :member_instruments, allow_destroy: true
   has_many :instruments, through: :member_instruments
 

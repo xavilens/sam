@@ -1,0 +1,17 @@
+<div class="user-data-container">
+  <div class="leftbar-name">Información</div>
+  <dl class="info-container">
+    <dt>Registrado</dt>
+    <dd><%= @user.register_at %></dd>
+    <dt>Última conexión</dt>
+    <dd>
+      <% if @user.online? %>
+        <div class="connected-circle pull-left"></div>¡Ahora conectado!
+      <% else %>
+        Hace <%= time_ago_in_words @user.last_seen_at %>
+      <% end %>
+    </dd>
+    <dt>Estado</dt>
+    <dd><%= @user.status %></dd>
+  </dl>
+</div>

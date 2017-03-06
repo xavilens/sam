@@ -21,6 +21,23 @@ class Event < ActiveRecord::Base
 
   belongs_to :sala
 
-  has_many :images, as: :imageable, dependent: :delete_all
+  has_many :images, as: :imageable, dependent: :destroy
   accepts_nested_attributes_for :images, :allow_destroy => true
+
+  ######## METHODS
+  # Devuelve la localización del evento sólo en ciudad y comunidad
+  def location_city
+    city + ', ' + state
+  end
+
+  # Devuelve el tipo del evento
+  def type
+    event_type.name
+  end
+
+  # Devuelve el estado del evento
+  def status
+    event_status.name
+  end
+
 end

@@ -1,136 +1,24 @@
 
 <!-- END: Profile Main Data -->
-<div class="profile-container">
-  <div class="avatar-container">
-    <%= image_tag @user.avatar, alt: @user.name, class: ['img-responsive', 'img-border'] %>
-  </div>
-  <div class="leftbar-name">
-    <%= @user.name %> <small><%= @user.type %></small>
-  </div>
-  <div class="location-container"><%= @user.location %></div>
-  <hr>
-</div>
-  <!-- END: Profile Main Data -->
+<%= render "show/modules/profile_main_module" %>
+<!-- END: Profile Main Data -->
 
 <!-- Options -->
-<% unless is_current_user? %>
-<div class="options-container user-show-container">
-  <div class="row">
-    <%= link_to fa_icon('envelope'), new_message_path(to_user: @user.id),
-      class: 'option-button-icon option-button btn btn-default col-md-2 col-md-offset-1 gap-right',
-      title: "Enviar mensaje" %>
-
-    <% if current_user.following? @user %>
-    <button type="button" class="option-button btn btn-default col-md-2 gap-right"
-      title="Deja de seguir a <%= @user.name %>">
-      <span class="option-button-icon"><%= fa_icon 'eye-slash' %></span>
-    </button>
-    <% else %>
-    <button type="button" class="option-button btn btn-default col-md-2 gap-right"
-      title="Sigue a <%= @user.name %>">
-      <span class="option-button-icon"><%= fa_icon 'eye' %></span>
-    </button>
-    <% end %>
-
-    <% if current_user.band? && @user.musician? %>
-      <% if current_user.profile.member? @user.profile %>
-
-        <!-- <%= link_to fa_icon('user-times'), user_membership_delete_path(user_id: @user.id),
-          class:  'option-button-icon option-button btn btn-default col-md-2 gap-right',
-          title:"Expulsar del grupo", data: { confirm: "¿Desea expulsar a #{@user.name} del grupo?" } %> -->
-
-        <%= link_to fa_icon('user-times'), user_membership_delete_path(user_id: @user.id),
-          class:  'option-button-icon option-button btn btn-default col-md-2 gap-right',
-          title:"Expulsar del grupo", remote: true %>
-
-
-      <% else %>
-
-        <%= link_to fa_icon('user-plus'), user_send_membership_path(user_id: @user, from_user: current_user),
-          class:  'option-button-icon option-button btn btn-default col-md-2 gap-right',
-          title:"Invitar al grupo", remote: true %>
-
-      <% end %>
-    <% elsif current_user.musician? && @user.band? %>
-      <% if current_user.profile.member? @user.profile %>
-
-        <!-- <%= link_to fa_icon('user-times'), user_membership_delete_path(user_id: @user),
-          class:  'option-button-icon option-button btn btn-default col-md-2 gap-right',
-          title:"Dejar el grupo", data: { confirm: "¿Desea abandonar el grupo?" } %> -->
-
-        <%= link_to fa_icon('user-times'), user_membership_delete_path(user_id: @user),
-          class:  'option-button-icon option-button btn btn-default col-md-2 gap-right',
-          title:"Dejar el grupo", remote: true %>
-
-      <% else %>
-
-        <%= link_to fa_icon('user-plus'), user_send_membership_path(user_id: @user, from_user: current_user),
-          class:  'option-button-icon option-button btn btn-default col-md-2 gap-right',
-          title:"Unirte al grupo", remote: true %>
-
-      <% end %>
-    <% end %>
-  </div>
-</div>
-<% end %>
+<%= render "show/modules/options_module" %>
 <!-- END: Options -->
 
 <!-- User Data -->
-<div class="user-data-container">
-  <div class="leftbar-name">Información</div>
-  <dl class="info-container">
-    <dt>Registrado</dt>
-    <dd><%= @user.register_at %></dd>
-    <dt>Última conexión</dt>
-    <dd>
-      <% if @user.online? %>
-        <div class="connected-circle pull-left"></div>¡Ahora conectado!
-      <% else %>
-        Hace <%= time_ago_in_words @user.last_seen_at %>
-      <% end %>
-    </dd>
-    <dt>Estado</dt>
-    <dd><%= @user.status %></dd>
-  </dl>
-</div>
+<%= render "show/modules/user_data_module" %>
 <!-- END: User Data -->
 
 <!-- Social Networks Data -->
-<% if @user.social_networks? %>
-<div class="contact-container">
-  <div class="leftbar-name">Contacto</div>
-  <div class="social-networks-container">
-    <div class="row">
-      <% @user.social_networks.each do |social_network| %>
-
-        <%= link_to fa_icon(social_network.icon, class: social_network.name), social_network.formatted_url,
-          type: "button", title:  social_network.name, target: "_blank",
-          class: ["social-network", "btn btn-default col-md-2"] %>
-      <% end %>
-    </div>
-  </div>
-</div>
-<% end %>
+<%= render "show/modules/social_networks_module" %>
 <!-- END: Social Networks Data -->
 
 <!-- Instruments Data -->
-<% if @user.instruments? %>
-<div class="instruments-container user-show-container">
-  <div class="leftbar-name">Instrumentos</div>
-    <% @user.profile.musician_knowledges.each do |mk| %>
-    <dl class="info-container">
-      <dt><%= mk.instrument.name %></dt>
-      <dd><%= mk.level.name %></dd>
-    </dl>
-    <% end %>
-</div>
-<% end %>
+<%= render "show/modules/instruments_user_module" %>
 <!-- END: Instruments Data -->
 
 <!-- Images Data -->
-<% if @user.images? %>
-<div class="images-container user-show-container">
-  <div class="leftbar-name">Imágenes</div>
-</div>
-<% end %>
+<%= render "show/modules/images_user_module" %>
 <!-- END: Images Data -->

@@ -95,7 +95,7 @@ class Conversation < ActiveRecord::Base
 
 
   ######## RELACIONES
-  has_many :messages, dependent: :delete_all
+  has_many :messages, dependent: :destroy
   accepts_nested_attributes_for :messages
 
   belongs_to :user_1, class_name: 'User', primary_key: 'id', foreign_key: 'user_1_id'

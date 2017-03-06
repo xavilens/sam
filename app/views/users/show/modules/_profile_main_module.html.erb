@@ -1,0 +1,10 @@
+<div class="profile-container">
+  <div class="avatar-container">
+    <%= image_tag @user.avatar, alt: @user.name, class: ['img-responsive', 'img-border'] %>
+  </div>
+  <div class="leftbar-name">
+    <%= @user.name %> <small><%= @user.type %></small>
+  </div>
+  <div class="location-container"><%= @user.location %></div>
+  <hr>
+</div>
