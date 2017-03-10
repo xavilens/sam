@@ -3,15 +3,8 @@
   <h3 class="col-sm-offset-1"><%= @page %></h3>
 </div>
 
-<% unless @image.image.blank? %>
-  <div class="row">
-    <div class="image-container col-sm-12">
-      <%= image_tag @image.image_url, alt: @image.title, class: 'img-responsive' %>
-    </div>
-  </div>
-<% end %>
-
-<%= simple_form_for @user, url: {action: :create, controller: :images}, html: { multipart: true, class: 'form-horizontal'},
+<%= simple_form_for @user, url: {action: :create, controller: :images}, method: :post,
+  html: { multipart: true, class: 'form-horizontal'},
   wrapper: 'horizontal_form',
   wrapper_mappings: {
     check_boxes: :horizontal_radio_and_checkboxes,
@@ -21,12 +14,9 @@
   } do |f| %>
 
   <div id="images">
-    <%= f.simple_fields_for @images do |image_form| %>
+    <%= f.simple_fields_for :images, @user.images.build do |image_form| %>
       <%= render 'nested_image_fields', f: image_form %>
     <% end %>
-  </div>
-
-  <div class="row links gap-left">
   </div>
 
   <div class="form-actions">
@@ -35,7 +25,8 @@
         <%= f.button :submit, 'Publicar', class: "btn btn-primary btn-md col-sm-3 " %>
         <%= link_to_add_association 'Añadir imagen', f, :images, partial: 'nested_image_fields',
           class: 'gap-left btn btn-default btn-md col-sm-3',
-          'data-association-insertion-node': '#images' %>
+          'data-association-insertion-node': '#images',
+          'data-association-insertion-method': 'prepend' %>
       </div>
     </div>
   </div>

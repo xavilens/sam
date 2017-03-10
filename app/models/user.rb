@@ -54,7 +54,8 @@ class User < ActiveRecord::Base
 
   # IMAGE RELATED
   has_many :images, as: :imageable, dependent: :destroy
-  accepts_nested_attributes_for :images, allow_destroy: true, reject_if: :all_blank
+  accepts_nested_attributes_for :images, allow_destroy: true,
+    reject_if: proc { |att| att['title'].blank?  or att['image'].blank? }
 
   # EVENTS RELATED
   has_many :events, foreign_key: :creator_id, primary_key: :id
@@ -247,5 +248,10 @@ class User < ActiveRecord::Base
     # Define el id del rol 'admin'
     def self.set_admin_id
       Role.find_by_name('admin').id
+    end
+
+    # Indica si se puede guardar la image o si se considera vacía
+    def image_blank?(att)
+      att[:title].blank? || att[:image].blank?
     end
 end

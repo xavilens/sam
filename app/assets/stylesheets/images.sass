@@ -2,15 +2,27 @@
 .img-border
   border: 1px solid #ccc
 
+.img-border-black
+  border: 1px solid #000
+
 .image-user-btn
   margin-bottom: 5px
 
 .image-form-fields
   border: 1px solid darken($gray-lighter, 5%)
   padding: 10px
-  margin-bottom: 5px
+  margin-bottom: 10px
   background-color: lighten($gray-lighter, 2%)
   @include border-left-radius(5px)
   @include border-right-radius(5px)
   @include border-top-radius(5px)
   @include border-bottom-radius(5px)
+
+.image-user-row
+  @include make-row(0px)
+
+.image-user-thumb
+  @include make-sm-column(3, 0px)
+
+.image-user
+  @include make-sm-column(3, 0px)

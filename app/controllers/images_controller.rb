@@ -3,6 +3,7 @@ class ImagesController < ApplicationController
 
   before_action :set_image, only: [:show, :edit, :update, :destroy]
   before_action :set_user, only: [:index, :show]
+  before_action :set_new, only: [:new]
   before_action :set_current_user, only: [:new, :create, :edit, :update, :destroy]
   before_action :author?, only: [:edit, :update, :destroy]
 
@@ -19,9 +20,6 @@ end
 
 # GET /post_attachments/new
 def new
-  @images = @user.images.build
-
-  @page = 'Nueva imagen'
 end
 
 # GET /post_attachments/1/edit
@@ -33,7 +31,7 @@ end
 # POST /post_attachments
 # POST /post_attachments.json
 def create
-  # @image = Image.new(image_params)
+  debugger
 
   respond_to do |format|
     # if @image.save
@@ -41,7 +39,11 @@ def create
       format.html { redirect_to @user, notice: 'Imágenes publicadas' }
       format.json { render :show, status: :created, location: @user }
     else
-      format.html { render :new }
+      format.html {
+        set_new
+        flash[:alert] = 'No se puede procesar una imagen vacía'
+        render action: :new
+      }
       format.json { render json: @user.errors, status: :unprocessable_entity }
     end
   end
@@ -79,12 +81,16 @@ private
 
   # Use callbacks to share common setup or constraints between actions.
   def set_user
-    @user = User.params[:user_id].decorate
+    @user = User.find(params[:user_id]).decorate
   end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_current_user
     @user = current_user.decorate
+  end
+
+  def set_new
+    @page = 'Nueva imagen'
   end
 
   # Indica si el usuario actual que intenta modificar la imagen es el autor de esta
@@ -103,7 +109,7 @@ private
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def image_create_params
-    params.require(:user).permit(images_attributtes: [:title, :description, :image])
+    params.require(:user).permit(images_attributes: [:title, :description, :image, :imageable])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
