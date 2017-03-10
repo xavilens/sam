@@ -12,7 +12,7 @@ class Event < ActiveRecord::Base
   validates :event_status_id, presence: true
 
   ######## RELACIONESHIPS
-  belongs_to :creator_id, class_name: 'User', primary_key: "id", foreign_key: "creator_id"
+  belongs_to :creator, class_name: 'User', primary_key: "id", foreign_key: "creator_id"
   belongs_to :event_status
   belongs_to :event_type
 

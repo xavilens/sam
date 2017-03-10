@@ -22,7 +22,7 @@ Rails.application.routes.draw do
     get 'membership/delete/', action: :delete_view, controller: :members, as: :membership_delete
 
     resources :members, only: [:edit, :index]
-    resources :images
+    resources :images, only: [:show, :index]
     resources :events
 
     # resources :posts do
@@ -42,6 +42,8 @@ Rails.application.routes.draw do
   post '/members/send', action: :send_request_message, controller: :members
   post '/members/new', action: :new, controller: :members
   patch '/members/delete/', action: :delete_member, controller: :members, as: :members_delete
+
+  resources :images, only: [:new, :create, :edit, :update, :destroy]
 
   # resources :salas
   # resources :rehearsal_studio

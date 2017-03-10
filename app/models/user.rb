@@ -35,15 +35,15 @@ class User < ActiveRecord::Base
   # USER RELATED
   belongs_to :role
   belongs_to :profileable, polymorphic: true
-  accepts_nested_attributes_for :profileable
+  accepts_nested_attributes_for :profileable, allow_destroy: true
 
   # ADDRESS RELATED
   has_one :address, as: :addresseable
-  accepts_nested_attributes_for :address
+  accepts_nested_attributes_for :address, allow_destroy: true
 
   # SOCIAL NETWORK RELATED
   belongs_to :social_networks_set
-  accepts_nested_attributes_for :social_networks_set
+  accepts_nested_attributes_for :social_networks_set, allow_destroy: true
 
   # CONVERSATIONS RELATED
   # TODO: Soft-delete?? Borrar/ocultar solo si no quedan usuarios!!
@@ -54,7 +54,7 @@ class User < ActiveRecord::Base
 
   # IMAGE RELATED
   has_many :images, as: :imageable, dependent: :destroy
-  accepts_nested_attributes_for :images, allow_destroy: true
+  accepts_nested_attributes_for :images, allow_destroy: true, reject_if: :all_blank
 
   # EVENTS RELATED
   has_many :events, foreign_key: :creator_id, primary_key: :id
@@ -122,11 +122,9 @@ class User < ActiveRecord::Base
   # Indica si posee alguna relacion de Member
   def memberships?
     if musician?
-      # !profile.bands.blank?
-      !profile.members.blank?
+      profile.members.any?
     elsif band?
-      # !profile.members.blank?
-      !profile.members.blank?
+      profile.members.any?
     end
   end
 
@@ -138,7 +136,7 @@ class User < ActiveRecord::Base
   # Indica si tiene conocimiento en instrumentos
   def instruments?
     if musician?
-      !profile.instruments.blank?
+      profile.instruments.any?
     elsif band?
       false
     end
@@ -176,12 +174,12 @@ class User < ActiveRecord::Base
 
   # Indica si tiene algún evento propio
   def events?
-    !events.blank?
+    events.any?
   end
 
   # Indica si tiene algún evento en calidad de participante
   def reverse_events?
-    !reverse_events.blank?
+    reverse_events.any?
   end
 
   # Devuelve todos los eventos en los que participa, propio o de participante

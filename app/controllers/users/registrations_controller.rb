@@ -11,6 +11,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
     resource.build_address
   end
 
+
+  # TODO: CAMBIAR LA CREACION DEL PERFIL Y EL CONJUNTO DE REDES SOCIALES
   def create
     # Comprobamos qué tipo de perfil tiene el usuario y creamos el perfil al que
     # lo asociaremos

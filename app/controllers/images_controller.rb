@@ -1,5 +1,10 @@
 class ImagesController < ApplicationController
+  before_filter :authenticate_user!
+
   before_action :set_image, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:index, :show]
+  before_action :set_current_user, only: [:new, :create, :edit, :update, :destroy]
+  before_action :author?, only: [:edit, :update, :destroy]
 
 # GET /post_attachments
 # GET /post_attachments.json
@@ -14,25 +19,30 @@ end
 
 # GET /post_attachments/new
 def new
-  @image = Image.new
+  @images = @user.images.build
+
+  @page = 'Nueva imagen'
 end
 
 # GET /post_attachments/1/edit
 def edit
+
+  @page = 'Editar imagen'
 end
 
 # POST /post_attachments
 # POST /post_attachments.json
 def create
-  @image = Image.new(image_params)
+  # @image = Image.new(image_params)
 
   respond_to do |format|
-    if @image.save
-      format.html { redirect_to @image, notice: 'Imagen creada correctamente.' }
-      format.json { render :show, status: :created, location: @image }
+    # if @image.save
+    if @user.update(image_create_params)
+      format.html { redirect_to @user, notice: 'Imágenes publicadas' }
+      format.json { render :show, status: :created, location: @user }
     else
       format.html { render :new }
-      format.json { render json: @image.errors, status: :unprocessable_entity }
+      format.json { render json: @user.errors, status: :unprocessable_entity }
     end
   end
 end
@@ -65,6 +75,35 @@ private
   # Use callbacks to share common setup or constraints between actions.
   def set_image
     @image = Image.find(params[:id])
+  end
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = User.params[:user_id].decorate
+  end
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_current_user
+    @user = current_user.decorate
+  end
+
+  # Indica si el usuario actual que intenta modificar la imagen es el autor de esta
+  def author?
+    is_user = case @image.imageable_type
+    when 'User'
+      @image.imageable == @user
+    when 'Event'
+      @image.imageable == @event
+    end
+
+    unless is_user
+      redirect_to :back, alert: 'No tiene permisos para acceder a esa página'
+    end
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def image_create_params
+    params.require(:user).permit(images_attributtes: [:title, :description, :image])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

@@ -3,9 +3,9 @@
 <div class="instruments-container user-show-container">
   <div class="leftbar-name">Instrumentos</div>
     <% @user.profile.musician_knowledges.each do |mk| %>
-    <dl class="info-container">
-      <dt><%= mk.instrument.name %></dt>
-      <dd><%= mk.level.name %></dd>
+    <dl class="instrument">
+      <dt class="instrument-name"><%= mk.instrument.name %></dt>
+      <dd class="instrument-level"><%= mk.level.name %></dd>
     </dl>
     <% end %>
 </div>

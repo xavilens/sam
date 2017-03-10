@@ -1,6 +1,11 @@
-require 'delegate'
+# require 'delegate'
 
-class UserDecorator < SimpleDelegator
+# class UserDecorator < SimpleDelegator
+
+# TODO: PROBAR NUEVO DECORATOR
+class UserDecorator < Draper::Decorator
+  delegate_all
+
   # Wrapper de colecciones
   def self.wrap(collection)
     collection.map do |obj|
@@ -128,7 +133,7 @@ class UserDecorator < SimpleDelegator
     avatar_url(:thumb_xs)
   end
 
-  def user
-    __getobj__
-  end
+  # def user
+  #   __getobj__
+  # end
 end

@@ -4,6 +4,11 @@ module UsersHelper
     @user.id == current_user.id
   end
 
+  # Alias para is_current_user?
+  def current_user?
+    is_current_user?
+  end
+
   # Devuelve la url necesaria para tratar el formulario (edit/new registration)
   def url_form_action
     if (page? 'users', 'edit') || (page? 'users', 'update')

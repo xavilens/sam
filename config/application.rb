@@ -12,6 +12,12 @@ module Sam
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
     config.paths['app/views'] << 'app/views/users'
+    config.paths['app/views'] << 'app/views/layouts'
+    config.paths['app/views'] << 'app/views/events'
+    config.paths['app/views'] << 'app/views/messages'
+    config.paths['app/views'] << 'app/views/modules'
+    config.paths['app/views'] << 'app/views/images'
+    config.paths['app/views'] << 'app/views/forms'
 
     config.autoload_paths += %W(#{config.root}/app)
     config.autoload_paths += %W(#{config.root}/app/models/conversations)
@@ -40,7 +46,5 @@ module Sam
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
-
-
   end
 end
