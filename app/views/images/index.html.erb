@@ -1,0 +1,41 @@
+<% page_title @page %>
+
+<div class="row">
+  <div class="col-md-3">
+    <%= render 'left' %>
+  </div>
+
+  <div class="col-md-9">
+    <!-- image-show-container -->
+    <div class="image-show-container">
+
+      <!-- Image Header -->
+      <div class="image-header">
+        <div class="row">
+          <div class="col-sm-12">
+            <h3 class="col-sm-offset-1"><%= @title %></h3>
+          </div>
+        </div>
+      </div>
+      <!-- FIN Image Header -->
+
+      <!-- Image Thumbnail -->
+      <div class="row">
+        <div class="images-index-container">
+          <% @user.images.order(id: :desc).decorate.each do |image| %>
+          <div class="col-sm-2">
+            <div class="image-index-thumb">
+              <%= link_to user_image_path(user_id: @user.id, id: image.id), title: image.title do %>
+                <%= image_tag image.image_url(:thumb_lg), alt: image.title, class: 'img-responsive' %>
+              <% end %>
+            </div>
+          </div>
+          <% end %>
+        </div>
+      </div>
+      <!-- FIN Image Thumbnail -->
+
+    </div>
+    <!-- FIN image-show-container -->
+  </div>
+</div>

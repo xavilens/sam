@@ -20,8 +20,8 @@
     <% end %>
     </tbody>
   </table>
-  <div class="events-user-links text-right">
-    <%= link_to 'Nuevo evento', new_user_event_path(user_id: @user.id) if current_user? %> 
-    | <%= link_to 'Ver todos', user_events_path(user_id: @user.id) %>
+  <div class="user-links text-right">
+    <%= link_to 'Nuevo evento', new_user_event_path(user_id: @user.id), class: 'pull-left' if current_user? %>
+    <%= link_to 'Ver todos', user_events_path(user_id: @user.id), class: 'pull-right' if @user.any_events? %>
   </div>
 </div>

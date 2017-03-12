@@ -12,17 +12,26 @@ def index
   @images = Image.all
 
   @page = "Imágenes de #{@user.name}"
-  @title = "Imágenes"
+  @title = @page
 end
 
 def show
   @page = "Imágenes de #{@user.name}"
 
-  images = @user.images.order(id: :desc)
+  images = @user.images.select(:id).order(id: :desc)
   image_pos = images.index(@image)
 
-  @prev_image = images.at(image_pos - 1)
-  @next_image = images.at(image_pos + 1)
+  @prev_image = if image_pos - 1 < 0
+    nil
+  else
+    images.at(image_pos - 1)
+  end
+
+  @next_image = if image_pos + 1 >= images.size
+    nil
+  else
+    images.at(image_pos + 1)
+  end
 
   @title = @image.title
 end

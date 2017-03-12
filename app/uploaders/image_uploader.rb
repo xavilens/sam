@@ -20,7 +20,7 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   # VERSIONES
   version :gallery_lg do
-    process resize_to_fill: [1000, 1000]
+    process resize_to_limit: [1500, 1000]
   end
 
   version :gallery do
@@ -28,7 +28,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   end
 
   version :thumb_lg do
-    process resize_to_fill: [150, 150]
+    process resize_to_fill: [120, 120]
   end
 
   version :thumb do
@@ -42,7 +42,6 @@ class ImageUploader < CarrierWave::Uploader::Base
   version :thumb_s do
     process resize_to_fill: [50, 50]
   end
-
 
   def extension_white_list
     %w(jpg jpeg gif png)

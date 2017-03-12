@@ -8,7 +8,8 @@
 
         <%= link_to fa_icon(social_network.icon, class: social_network.name), social_network.formatted_url,
           type: "button", title:  social_network.name, target: "_blank",
-          class: ["social-network", "btn btn-default col-md-2"] %>
+          class: ["social-network", "btn btn-default col-md-2", "has-tooltip"],
+          data: {toggle: 'tooltip', place: 'bottom'}  %>
       <% end %>
     </div>
   </div>

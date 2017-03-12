@@ -1,28 +1,28 @@
 
 <% if @user.images? or @user == current_user %>
-<div class="images-container user-show-container">
+<div class="user-show-container">
   <div class="leftbar-name">Imágenes</div>
-  <% if @user.images? %>
-    <div class="image-user-row">
-      <% @user.images.last(12).each do |image| %>
-      <div class="image-user">
-        <%= link_to user_image_path(user_id: @user.id, id: image.id) do %>
-          <%= image_tag image.image_url(:thumb), alt: image.title, class: ['img-border-black','img-responsive'] %>
+
+  <div class="images-container">
+    <% if @user.images? %>
+      <div class="image-user-row">
+        <% @user.images.order(id: :desc).first(12).each do |image| %>
+        <div class="image-user">
+          <%= link_to user_image_path(user_id: @user.id, id: image.id) do %>
+            <%= image_tag image.image_url(:thumb), alt: image.title, class: ['img-border-black','img-responsive'] %>
+          <% end %>
+        </div>
         <% end %>
       </div>
-      <% end %>
-    </div>
-  <% else %>
-    <p class="text-center">No hay ninguna imagen.</p>
-  <% end %>
+    <% else %>
+      <p class="text-center">No hay ninguna imagen.</p>
+    <% end %>
+  </div>
 
   <div class="row">
-    <div class="images-user-links col-sm-12 gap-top text-left">
-      <% if current_user? %>
-        <%= link_to 'Nueva imagen', new_image_path %> |
-      <% end %>
-
-      <%= link_to 'Ver todas', images_path %>
+    <div class="user-links col-sm-12 gap-top text-left">
+      <%= link_to 'Nueva imagen', new_image_path, class: 'pull-left' if current_user? %>
+      <%= link_to 'Ver todas', user_images_path(user_id: @user), class: 'pull-right' if @user.images? %>
     </div>
   </div>
 </div>

@@ -6,10 +6,16 @@
   <div class="instruments">
     <% @user.profile.musician_knowledges.each do |mk| %>
     <dl class="instrument">
-      <dt class="instrument-name"><%= mk.instrument.name %></dt>
+      <dt class="instrument-name">- <%= mk.instrument.name %></dt>
       <dd class="instrument-level"><%= mk.level.name %></dd>
     </dl>
     <% end %>
+  </div>
+
+  <div class="row">
+    <div class="user-links col-sm-12 gap-top">
+      <%= link_to 'Añadir instrumento', new_image_path if current_user? %>
+    </div>
   </div>
 </div>
 <% end %>

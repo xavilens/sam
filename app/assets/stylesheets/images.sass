@@ -1,13 +1,16 @@
 
+////////////////// MISC
 .img-border
   border: 1px solid #ccc
 
-.img-border-black
-  border: 1px solid #000
+.image-header
+  background-color: darken($gray-lighter, 5%)
+  padding-bottom: 5px
+  color: lighten($gray-dark, 2%)
+  border-bottom: 1px solid darken($gray-lighter, 10%)
 
-.image-user-btn
-  margin-bottom: 5px
 
+////////////////// FORM
 .image-form-fields
   border: 1px solid darken($gray-lighter, 5%)
   padding: 10px
@@ -16,6 +19,8 @@
   @include border-top-radius(5px)
   @include border-bottom-radius(5px)
 
+
+////////////////// USER SHOW
 .image-user-row
   @include make-row(0px)
 
@@ -25,19 +30,17 @@
 .image-user
   @include make-sm-column(3, 0px)
 
-.image-header
-  background-color: darken($gray-lighter, 5%)
-  padding-bottom: 5px
-  color: lighten($gray-dark, 2%)
-  border-bottom: 1px solid darken($gray-lighter, 10%)
-
 .image-show-container
   margin: 0 10px
   background-color: lighten($gray-lighter, 2%)
   border: 1px solid darken($gray-lighter, 10%)
   @include border-bottom-radius(5px)
 
+.images-container
+  margin-bottom: 15px
 
+
+////////////////// SHOW
 .image-container
   background-color: lighten($gray-light, 47%)
   min-height: 350px
@@ -70,3 +73,14 @@
   &:last-of-type
     border-right: none
     @include border-bottom-radius(0)
+
+
+////////////////// INDEX
+.images-index-container
+  margin: 5px 15px
+
+.image-index-thumb
+  margin-top: 10px
+  margin-bottom: 15px
+  border: 1px solid darken($gray-lighter, 10%)
+  @include border-bottom-radius(5px)
