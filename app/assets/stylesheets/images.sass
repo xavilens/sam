@@ -64,6 +64,7 @@
 .image-link
   display: inline-block
   text-align: center
+  border-collapse: collapse
   @include make-sm-column(3, 0px)
   border: 1px solid darken($gray-lighter, 10%)
   border-right: none
@@ -83,4 +84,7 @@
   margin-top: 10px
   margin-bottom: 15px
   border: 1px solid darken($gray-lighter, 10%)
-  @include border-bottom-radius(5px)
+
+.image-index-links
+  background-color: darken($gray-lighter, 2%)
+  padding: 5px

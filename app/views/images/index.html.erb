@@ -26,7 +26,23 @@
           <div class="col-sm-2">
             <div class="image-index-thumb">
               <%= link_to user_image_path(user_id: @user.id, id: image.id), title: image.title do %>
-                <%= image_tag image.image_url(:thumb_lg), alt: image.title, class: 'img-responsive' %>
+                <%= image_tag image.image_url(:thumb_lg), alt: image.title, class: 'img-responsive img-border' %>
+              <% end %>
+
+              <% if current_user? %>
+                <div class="image-index-links">
+                  <div class="row">
+                    <div class="col-sm-12 text-center">
+                      <%= link_to 'Editar', edit_image_path(image), class: 'btn btn-link btn-sm' %>
+
+                      <%= link_to 'Eliminar', user_image_path(user_id: @user, id: image.id),
+                        class: 'image-delete btn btn-link btn-sm', remote: true %>
+
+                      <!-- <%= link_to 'Eliminar',image, method: :delete, class: 'btn btn-link btn-sm',
+                        data: {confirm: 'Está a punto de eliminar la imagen, ¿está seguro? La operación no podrá deshacerse'} %> -->
+                    </div>
+                  </div>
+                </div>
               <% end %>
             </div>
           </div>

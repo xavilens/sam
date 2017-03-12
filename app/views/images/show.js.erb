@@ -1,0 +1,6 @@
+//
+if($("#image-modal").length > 0){
+  $("#image-modal").remove();
+}
+
+$('<%= j render "delete_modal", image: "#{@image.id}" %>').modal();

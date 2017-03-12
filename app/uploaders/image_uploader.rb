@@ -5,7 +5,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   storage :file
 
   def store_dir
-    "images/#{model.imageable_type.downcase}/#{mounted_as}/#{model.id}"
+    "images/#{model.imageable_type.underscore}/#{model.imageable_id}/#{mounted_as}/#{model.id}"
   end
 
   def default_url

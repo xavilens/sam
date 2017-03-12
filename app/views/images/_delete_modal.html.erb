@@ -1,0 +1,21 @@
+<div id="image-modal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Borrar imagen</h4>
+      </div>
+
+      <div class="modal-body">
+        <p>¿Está seguro de que desea eliminar la imagen? La operación no podrá deshacerse una vez realizada.</p>
+      </div>
+
+      <div class="modal-footer">
+        <%= link_to "Eliminar", image_path(image), method: :delete, class: "btn btn-primary btn-md btn-block"  %>
+      </div>
+
+    </div>
+  </div>
+</div>
