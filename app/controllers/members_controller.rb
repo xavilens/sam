@@ -83,7 +83,7 @@ class MembersController < ApplicationController
       end
     else
       respond_to do |format|
-        format.html { redirect_to :back, alert: "No se ha podido actualizar al miembro" }
+        format.html { redirect_to :back, alert: "No se ha podido actualizar al miembro:<br> #{@member.errors.messages.each do |m| puts m+'<br>' end}" }
         format.js { flash.now[:alert] = "No se ha podido actualizar al miembro" }
       end
     end

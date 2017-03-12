@@ -19,6 +19,17 @@
   @include border-top-radius(5px)
   @include border-bottom-radius(5px)
 
+.image-edit-fields
+  border-top: 1px solid darken($gray-lighter, 5%)
+  padding: 10px
+
+.image-edit-links
+  margin-left: 35px
+  margin-bottom: 20px
+
+.image-edit-link
+  margin-left: -15px
+
 
 ////////////////// USER SHOW
 .image-user-row
@@ -30,17 +41,18 @@
 .image-user
   @include make-sm-column(3, 0px)
 
-.image-show-container
-  margin: 0 10px
-  background-color: lighten($gray-lighter, 2%)
-  border: 1px solid darken($gray-lighter, 10%)
-  @include border-bottom-radius(5px)
-
 .images-container
   margin-bottom: 15px
 
 
 ////////////////// SHOW
+
+.image-show-container
+  margin: 0 10px
+  background-color: lighten($gray-lighter, 2%)
+  border: 1px solid darken($gray-lighter, 10%)
+  // @include border-bottom-radius(5px)
+
 .image-container
   background-color: lighten($gray-light, 47%)
   min-height: 350px
@@ -67,6 +79,21 @@
   border-collapse: collapse
   @include make-sm-column(3, 0px)
   border: 1px solid darken($gray-lighter, 10%)
+  border-right: none
+  &:first-of-type
+    border-left: none
+    @include border-top-radius(0)
+  &:last-of-type
+    border-right: none
+    @include border-bottom-radius(0)
+
+.image-author-link
+  margin-top: 1px
+  display: inline-block
+  text-align: center
+  border-collapse: collapse
+  @include make-sm-column(6, 0px)
+  border-top: 1px solid darken($gray-lighter, 10%)
   border-right: none
   &:first-of-type
     border-left: none

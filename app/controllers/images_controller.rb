@@ -51,7 +51,7 @@ def create
     else
       format.html {
         set_new
-        flash[:alert] = 'No se pueden procesar las imágenes'
+        flash[:alert] = @user.errors
         render action: :new
       }
       format.json { render json: @user.errors, status: :unprocessable_entity }
@@ -62,10 +62,16 @@ end
 def update
   respond_to do |format|
     if @image.update(image_params)
-      format.html { redirect_to @image.imageable, notice: 'Imagen actualizada correctamente.' }
+      format.html {
+        redirect_to user_image_path(user_id: @user.id, id: @image.id),
+        notice: 'Imagen actualizada correctamente.'
+      }
       format.json { render :show, status: :ok, location: @image }
     else
-      format.html { render :edit }
+      format.html {
+        set_edit
+        flash[:alert] = @image.errors
+        render :edit }
       format.json { render json: @image.errors, status: :unprocessable_entity }
     end
   end
@@ -101,6 +107,7 @@ private
 
   def set_edit
     @page = 'Editar imagen'
+    @title = @page
   end
 
   # Indica si el usuario actual que intenta modificar la imagen es el autor de esta
@@ -124,6 +131,6 @@ private
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def image_params
-    params.require(:images).permit(:title, :description, :imageable, :image)
+    params.require(:image).permit(:title, :description, :image)
   end
 end

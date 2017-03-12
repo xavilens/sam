@@ -6,7 +6,7 @@
   <div class="images-container">
     <% if @user.images? %>
       <div class="image-user-row">
-        <% @user.images.order(id: :desc).first(12).each do |image| %>
+        <% @user.images.order(id: :desc).first(9).each do |image| %>
         <div class="image-user">
           <%= link_to user_image_path(user_id: @user.id, id: image.id) do %>
             <%= image_tag image.image_url(:thumb), alt: image.title, class: ['img-border-black','img-responsive'] %>
@@ -15,7 +15,7 @@
         <% end %>
       </div>
     <% else %>
-      <p class="text-center">No hay ninguna imagen.</p>
+      <p class="gap-left">No hay ninguna imagen.</p>
     <% end %>
   </div>
 

@@ -24,6 +24,7 @@ Rails.application.routes.draw do
     resources :members, only: [:edit, :index]
     resources :images, only: [:show, :index]
     resources :events
+    # resources :events, only: [:show, :index]
 
     # resources :posts do
     #   resources :comments
@@ -38,7 +39,7 @@ Rails.application.routes.draw do
   resources :bands, only: :index
   resources :musicians, only: :index
 
-  resources :members
+  resources :members, only: [:create, :new, :edit, :update, :destroy]
   post '/members/send', action: :send_request_message, controller: :members
   post '/members/new', action: :new, controller: :members
   patch '/members/delete/', action: :delete_member, controller: :members, as: :members_delete

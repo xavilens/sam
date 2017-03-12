@@ -1,9 +1,9 @@
 
 <div class="calendar-container">
   <div class="leftbar-name">Calendario</div>
+  <% if @user.any_events? %>
   <table class="table table-bordered table-striped table-hover">
     <tbody>
-    <% if @user.any_events? %>
       <% @user.all_events.each do |event| %>
         <tr class="event">
           <td>
@@ -15,13 +15,16 @@
           </td>
         </tr>
       <% end %>
-    <% else %>
-      <tr>No hay ningún evento.</tr>
-    <% end %>
     </tbody>
   </table>
-  <div class="user-links text-right">
-    <%= link_to 'Nuevo evento', new_user_event_path(user_id: @user.id), class: 'pull-left' if current_user? %>
-    <%= link_to 'Ver todos', user_events_path(user_id: @user.id), class: 'pull-right' if @user.any_events? %>
+  <% else %>
+    <p class="gap-left gap-bottom">No hay ningún evento.</p>
+  <% end %>
+
+  <% if is_current_user? || @user.any_events? %>
+  <div class="user-links">
+    <%= link_to 'Nuevo evento', new_user_event_path(user_id: @user.id), class: 'text-left' if current_user? %>
+    <%= link_to 'Ver todos', user_events_path(user_id: @user.id), class: 'text-right' if @user.any_events? %>
   </div>
+  <% end %>
 </div>
