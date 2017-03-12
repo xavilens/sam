@@ -9,7 +9,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
   end
 
   def default_url
-    "default_avatar/" + [version_name, "default.jpg"].compact.join('_')
+    "default/" + [version_name, "default.jpg"].compact.join('_')
     # ActionView::Helpers::AssetUrlHelper.image_path("default_avatar/" + [version_name, "default.jpg"].compact.join('_'))
     # ActionController::Base.helpers.asset_path("default_avatar/" + [version_name, "default.jpg"].compact.join('_'))
     # asset_path("default_avatar/" + [version_name, "default.jpg"].compact.join('_'))

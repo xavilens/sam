@@ -13,8 +13,6 @@
   padding: 10px
   margin-bottom: 10px
   background-color: lighten($gray-lighter, 2%)
-  @include border-left-radius(5px)
-  @include border-right-radius(5px)
   @include border-top-radius(5px)
   @include border-bottom-radius(5px)
 
@@ -26,3 +24,49 @@
 
 .image-user
   @include make-sm-column(3, 0px)
+
+.image-header
+  background-color: darken($gray-lighter, 5%)
+  padding-bottom: 5px
+  color: lighten($gray-dark, 2%)
+  border-bottom: 1px solid darken($gray-lighter, 10%)
+
+.image-show-container
+  margin: 0 10px
+  background-color: lighten($gray-lighter, 2%)
+  border: 1px solid darken($gray-lighter, 10%)
+  @include border-bottom-radius(5px)
+
+
+.image-container
+  background-color: lighten($gray-light, 47%)
+  min-height: 350px
+
+.image
+  display: block
+  margin: 0 auto
+
+.image-description-container
+  padding: 10px 20px
+
+.image-description-header
+  font-weight: bold
+  font-size: 20px
+  color: lighten($gray-dark, 2%)
+  margin-bottom: -5px
+
+.image-description
+  padding: 10px 20px
+
+.image-link
+  display: inline-block
+  text-align: center
+  @include make-sm-column(3, 0px)
+  border: 1px solid darken($gray-lighter, 10%)
+  border-right: none
+  &:first-of-type
+    border-left: none
+    @include border-top-radius(0)
+  &:last-of-type
+    border-right: none
+    @include border-bottom-radius(0)

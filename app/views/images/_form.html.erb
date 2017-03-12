@@ -13,7 +13,8 @@
     boolean: :horizontal_boolean
   } do |f| %>
 
-  <div id="images">
+  <div id="images-form">
+    <!-- http://stackoverflow.com/questions/14884704/how-to-get-rails-build-and-fields-for-to-create-only-a-new-record-and-not-includ -->
     <%= f.simple_fields_for :images, @user.images.build do |image_form| %>
       <%= render 'nested_image_fields', f: image_form %>
     <% end %>
@@ -25,7 +26,7 @@
         <%= f.button :submit, 'Publicar', class: "btn btn-primary btn-md col-sm-3 " %>
         <%= link_to_add_association 'Añadir imagen', f, :images, partial: 'nested_image_fields',
           class: 'gap-left btn btn-default btn-md col-sm-3',
-          'data-association-insertion-node': '#images',
+          'data-association-insertion-node': '#images-form',
           'data-association-insertion-method': 'prepend' %>
       </div>
     </div>

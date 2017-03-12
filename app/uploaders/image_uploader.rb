@@ -5,14 +5,14 @@ class ImageUploader < CarrierWave::Uploader::Base
   storage :file
 
   def store_dir
-    "images/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+    "images/#{model.imageable_type.downcase}/#{mounted_as}/#{model.id}"
   end
 
   def default_url
-    "/images/default_avatar/" + [version_name, "default_avatar.jpg"].compact.join('_')
+    "/images/default/" + [version_name, "default_avatar.jpg"].compact.join('_')
   end
 
-  process scale: [1500, 99999]
+  process scale: [3500, 99999]
 
   def scale(width, height)
     resize_to_limit(width, height)

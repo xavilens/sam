@@ -1,0 +1,65 @@
+<% page_title @page %>
+
+<div class="row">
+  <div class="col-md-3">
+    <%= render 'show/left' %>
+  </div>
+
+  <div class="col-md-9">
+
+    <!-- image-show-container -->
+    <div class="image-show-container">
+
+      <div class="image-header">
+        <div class="row">
+          <div class="col-sm-12">
+            <h3 class="col-sm-offset-1"><%= @title %></h3>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="image-container">
+            <%= image_tag @image.image_url(:gallery), class: 'image' %>
+          </div>
+        </div>
+      </div>
+
+      <ul class="list-group image-links">
+        <% unless @prev_image.blank? %>
+          <%= link_to fa_icon('chevron-left'), user_image_path(user_id: @user.id, id: @prev_image.id),
+            class: 'list-group-item image-link' %>
+        <% else %>
+          <%= link_to fa_icon('chevron-left'), "",
+            class: 'list-group-item image-link disabled' %>
+        <% end %>
+
+        <%= link_to "Volver a la galería", user_images_path(user_id: @user.id),
+          class: 'list-group-item image-link' %>
+
+        <%= link_to "Volver al perfil", user_path(@user),
+          class: 'list-group-item image-link' %>
+
+        <% unless @next_image.blank? %>
+          <%= link_to fa_icon("chevron-right"), user_image_path(user_id: @user.id, id: @next_image.id),
+            class: 'list-group-item image-link' %>
+        <% else %>
+          <%= link_to fa_icon("chevron-right"), "",
+            class: 'list-group-item image-link disabled' %>
+        <% end %>
+      </ul>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="image-description-container">
+            <div class="image-description-header">Descripción</div>
+            <div class="image-description"><%= @image.description %></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- FIN image-show-container -->
+  </div>
+</div>

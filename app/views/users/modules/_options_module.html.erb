@@ -4,7 +4,7 @@
   <div class="row">
     <%= link_to fa_icon('envelope'), new_message_path(to_user: @user.id),
       class: 'option-button-icon option-button btn btn-default col-md-2 col-md-offset-1 gap-right',
-      title: "Enviar mensaje" %>
+      title: "Enviar mensaje", data: {toggle: 'tooltip', place: 'top'} %>
 
     <% if current_user.following? @user %>
     <button type="button" class="option-button btn btn-default col-md-2 gap-right"

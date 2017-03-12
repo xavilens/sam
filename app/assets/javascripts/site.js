@@ -11,3 +11,7 @@ function countChar(val) {
     $('#charNum').text((maxlen - len) + " caracteres restantes");
   }
 };
+
+$(document).on('ready page:change', function() {
+  $('.has-tooltip').tooltip();
+});

@@ -4,35 +4,36 @@ class ImagesController < ApplicationController
   before_action :set_image, only: [:show, :edit, :update, :destroy]
   before_action :set_user, only: [:index, :show]
   before_action :set_new, only: [:new]
+  before_action :set_edit, only: [:edit]
   before_action :set_current_user, only: [:new, :create, :edit, :update, :destroy]
   before_action :author?, only: [:edit, :update, :destroy]
 
-# GET /post_attachments
-# GET /post_attachments.json
 def index
   @images = Image.all
+
+  @page = "Imágenes de #{@user.name}"
+  @title = "Imágenes"
 end
 
-# GET /post_attachments/1
-# GET /post_attachments/1.json
 def show
+  @page = "Imágenes de #{@user.name}"
+
+  images = @user.images.order(id: :desc)
+  image_pos = images.index(@image)
+
+  @prev_image = images.at(image_pos - 1)
+  @next_image = images.at(image_pos + 1)
+
+  @title = @image.title
 end
 
-# GET /post_attachments/new
 def new
 end
 
-# GET /post_attachments/1/edit
 def edit
-
-  @page = 'Editar imagen'
 end
 
-# POST /post_attachments
-# POST /post_attachments.json
 def create
-  debugger
-
   respond_to do |format|
     # if @image.save
     if @user.update(image_create_params)
@@ -41,7 +42,7 @@ def create
     else
       format.html {
         set_new
-        flash[:alert] = 'No se puede procesar una imagen vacía'
+        flash[:alert] = 'No se pueden procesar las imágenes'
         render action: :new
       }
       format.json { render json: @user.errors, status: :unprocessable_entity }
@@ -49,8 +50,6 @@ def create
   end
 end
 
-# PATCH/PUT /post_attachments/1
-# PATCH/PUT /post_attachments/1.json
 def update
   respond_to do |format|
     if @image.update(image_params)
@@ -63,8 +62,6 @@ def update
   end
 end
 
-# DELETE /post_attachments/1
-# DELETE /post_attachments/1.json
 def destroy
   @image.destroy
   respond_to do |format|
@@ -90,19 +87,23 @@ private
   end
 
   def set_new
-    @page = 'Nueva imagen'
+    @page = 'Publicar imágenes'
+  end
+
+  def set_edit
+    @page = 'Editar imagen'
   end
 
   # Indica si el usuario actual que intenta modificar la imagen es el autor de esta
   def author?
-    is_user = case @image.imageable_type
+    is_author = case @image.imageable_type
     when 'User'
       @image.imageable == @user
     when 'Event'
-      @image.imageable == @event
+      @image.imageable.creator == @user
     end
 
-    unless is_user
+    unless is_author
       redirect_to :back, alert: 'No tiene permisos para acceder a esa página'
     end
   end
