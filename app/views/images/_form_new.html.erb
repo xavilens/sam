@@ -1,35 +1,45 @@
 
-<div class="form-header row">
-  <h3 class="col-sm-offset-1"><%= @page %></h3>
-</div>
-
-<%= simple_form_for @user, url: {action: :create, controller: :images}, method: :post,
-  html: { multipart: true, class: 'form-horizontal'},
-  wrapper: 'horizontal_form',
-  wrapper_mappings: {
-    check_boxes: :horizontal_radio_and_checkboxes,
-    radio_buttons: :horizontal_radio_and_checkboxes,
-    file: :horizontal_file_input,
-    boolean: :horizontal_boolean
-  } do |f| %>
-
-  <div id="images-form">
-    <!-- http://stackoverflow.com/questions/14884704/how-to-get-rails-build-and-fields-for-to-create-only-a-new-record-and-not-includ -->
-    <%= f.simple_fields_for :images, @user.images.build do |image_form| %>
-      <%= render 'nested_image_fields', f: image_form %>
-    <% end %>
-  </div>
-
-  <div class="form-actions">
+<!-- image-new-container -->
+<div class="image-new-container">
+  <div class="image-header">
     <div class="row">
-      <div class="col-sm-offset-1">
-        <%= f.button :submit, 'Publicar', class: "btn btn-primary btn-md col-sm-3 " %>
-        <%= link_to_add_association 'Añadir imagen', f, :images, partial: 'nested_image_fields',
-          class: 'gap-left btn btn-default btn-md col-sm-3',
-          'data-association-insertion-node': '#images-form',
-          'data-association-insertion-method': 'prepend' %>
+      <div class="col-sm-12">
+        <h3 class="col-sm-offset-1"><%= @title %></h3>
       </div>
     </div>
   </div>
 
-<% end %>
+  <%= simple_form_for @user, url: {action: :create, controller: :images}, method: :post,
+    html: { multipart: true, class: 'form-horizontal'},
+    wrapper: 'horizontal_form',
+    wrapper_mappings: {
+      check_boxes: :horizontal_radio_and_checkboxes,
+      radio_buttons: :horizontal_radio_and_checkboxes,
+      file: :horizontal_file_input,
+      boolean: :horizontal_boolean
+    } do |f| %>
+
+    <div id="images-form">
+      <!-- http://stackoverflow.com/questions/14884704/how-to-get-rails-build-and-fields-for-to-create-only-a-new-record-and-not-includ -->
+      <%= f.simple_fields_for :images, @user.images.build do |image_form| %>
+        <%= render 'nested_image_fields', f: image_form %>
+      <% end %>
+    </div>
+
+    <!-- Image Links -->
+    <div class="row image-edit-links">
+      <div class="col-sm-3 image-new-link">
+        <%= f.button :submit, 'Publicar', class: "btn btn-primary btn-block" %>
+      </div>
+      <div class="col-sm-3 image-new-link">
+        <%= link_to_add_association 'Añadir imagen', f, :images, partial: 'nested_image_fields',
+          class: 'gap-left btn btn-default btn-block',
+          'data-association-insertion-node': '#images-form',
+          'data-association-insertion-method': 'append' %>
+      </div>
+    </div>
+    <!-- END Image Links -->
+
+  <% end %>
+</div>
+<!-- END image-new-container -->

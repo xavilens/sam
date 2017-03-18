@@ -1,6 +1,6 @@
 
-<!-- image-show-container -->
-<div class="image-show-container">
+<!-- image-edit-container -->
+<div class="image-edit-container">
   <div class="image-header">
     <div class="row">
       <div class="col-sm-12">
@@ -9,7 +9,7 @@
     </div>
   </div>
 
-  <!-- Formulario -->
+  <!-- Image Form -->
   <%= simple_form_for @image, html: { multipart: true, class: 'form-horizontal'},
     wrapper: 'horizontal_form',
     wrapper_mappings: {
@@ -27,15 +27,15 @@
           </div>
         </div>
       </div>
-      <!-- FIN Image -->
+      <!-- END Image -->
 
-      <!-- Campos del formulario -->
+      <!-- Image Fields Form -->
       <div class="image-edit-fields">
         <%= render 'image_fields', f: f %>
       </div>
-      <!-- FIN Campos del formulario -->
+      <!-- END Image Fields Form -->
 
-      <!-- FIN Image Links -->
+      <!-- Image Links -->
       <div class="row image-edit-links">
         <div class="col-sm-3 image-edit-link">
           <%= f.button :submit, 'Actualizar', class: "btn btn-primary btn-block" %>
@@ -44,10 +44,10 @@
           <%= link_to 'Volver', :back, class: "btn btn-default btn-block" %>
         </div>
       </div>
-      <!-- FIN Image Links -->
+      <!-- END Image Links -->
 
   <% end %>
-  <!-- FIN Formulario -->
+  <!-- END Image Form -->
 
 </div>
-<!-- FIN image-show-container -->
+<!-- END image-edit-container -->

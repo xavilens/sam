@@ -13,6 +13,8 @@ class Band < ActiveRecord::Base
   accepts_nested_attributes_for :members
   has_many :musicians, through: :members
 
+  has_many :events, through: :user
+
   belongs_to :genre_1, class_name: 'Genre'
   belongs_to :genre_2, class_name: 'Genre'
   belongs_to :genre_3, class_name: 'Genre'

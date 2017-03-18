@@ -1,6 +1,11 @@
-
 <% page_title @page %>
 
-<%= render 'layouts/page_header'%>
+<div class="row">
+  <div class="col-md-3 user-show-left">
+    <%= render 'left' %>
+  </div>
 
-<%= render "form" %>
+  <div class="col-md-9 user-show-middle">
+    <%= render 'form' %>
+  </div>
+</div>

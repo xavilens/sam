@@ -1,37 +1,54 @@
+<!-- Members container -->
 <% if @user.memberships? %>
 <div class="member-container user-show-container">
-  <div class="member-header leftbar-name"><%= @user.member_header %></div>
+  <!-- Member Header -->
+  <div class="member-header leftbar-name">
+    <%= @user.member_header %>
+  </div>
+  <!-- END Member Header -->
+
+  <!-- Members -->
   <% @user.members.each do |member| %>
     <% member_user = member.user @user %>
     <div class="media member">
+
+      <!-- Other User in Member Avatar -->
       <div class="media-left">
         <%= link_to user_path(member_user) do %>
           <%= image_tag member_user.thumb_s_avatar, alt: member_user.name, class: ['img-border'] %>
         <% end %>
       </div>
+      <!-- END Other User in Member Avatar -->
+
+      <!-- Member Description -->
       <div class="media-body">
         <h4 class="media-heading"><%= link_to member_user.name, user_path(member_user) %></h4>
         <div class="member-instruments">
           <%= member.instruments_names %>
         </div>
-        <% if @user == current_user and @user.band? %>
+
+        <!-- Member Links -->
+        <% if is_current_user? and @user.band? %>
         <div class="member-links">
           <small>
             <%= link_to "Actualizar", edit_user_member_path(user_id: @user.id, id: member.id), remote: true %>
           </small>
-           ·
+
           <small>
             <%= link_to "Eliminar", user_band_membership_delete_path(user_id: @user, member_id: member.id),
               remote: true %>
           </small>
         </div>
         <% end %>
+        <!-- END Member Links -->
+
       </div>
+      <!-- END Member Description -->
+
     </div>
   <% end %>
+  <!-- END Members -->
 
-  <% if @user.members_size > 4 %>
-  <div class="members-more gap-top"><%= link_to 'Más...', members_path %></div>
-  <% end %>
 </div>
 <% end %>
+<!-- END Members container -->

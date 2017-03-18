@@ -89,6 +89,10 @@ class UserDecorator < Draper::Decorator
     SocialNetworkDecorator.wrap(user.social_networks)
   end
 
+  def events_user_show
+    all_events.sort_by!{|event| event.date}.first(5)
+  end
+
   # Indica si posee imagenes
   def images?
     !images.blank?

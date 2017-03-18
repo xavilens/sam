@@ -1,6 +1,8 @@
 <div class="profile-container">
   <div class="avatar-container">
-    <%= image_tag @user.avatar, alt: @user.name, class: ['img-responsive', 'img-border'] %>
+    <%= link_to @user do %>
+      <%= image_tag @user.avatar, alt: @user.name, class: ['img-responsive', 'img-border'] %>
+    <% end %>
   </div>
   <div class="leftbar-name">
     <%= @user.name %> <small><%= @user.type %></small>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170304185525) do
+ActiveRecord::Schema.define(version: 20170318131550) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "user_id",          limit: 4,   null: false
@@ -196,10 +196,6 @@ ActiveRecord::Schema.define(version: 20170304185525) do
     t.date     "date",                                         null: false
     t.time     "time",                                         null: false
     t.integer  "event_status_id",  limit: 4,                   null: false
-    t.string   "street",           limit: 255,                 null: false
-    t.string   "city",             limit: 255,                 null: false
-    t.string   "state",            limit: 255,                 null: false
-    t.string   "country",          limit: 255,                 null: false
     t.integer  "max_participants", limit: 4
     t.decimal  "pvp",                            precision: 2
     t.integer  "creator_id",       limit: 4,                   null: false

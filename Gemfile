@@ -41,6 +41,13 @@ gem 'simple_form', '3.2.1'
 gem 'kaminari', '0.16.3'
 # Datepicker con tema de bootstrap
 gem 'bootstrap-datepicker-rails', '1.6.4.1'
+#
+gem 'momentjs-rails', '2.17.1'
+#Datepicker para Fechas, Horas y Ambas
+gem 'bootstrap3-datetimepicker-rails', '~> 4.14.30'
+# Formateador numérico
+gem 'autonumeric-rails', '2.0.0.1'
+
 
 # internalizacion
 # gem 'i18n', '0.7.0'
@@ -66,11 +73,13 @@ gem 'interactor', '3.1'
 
 ## GEMS PARA CONTEXTOS ESPECÍFICOS
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  # Consola debug
   gem 'byebug', '9.0.5'
 
+  # Consola avanzada
   gem 'pry-rails', '0.3.4'
 
+  #
   gem 'awesome_print', '1.7.0'
 end
 

@@ -4,11 +4,11 @@
   <% if @user.any_events? %>
   <table class="table table-bordered table-striped table-hover">
     <tbody>
-      <% @user.all_events.each do |event| %>
+      <% @user.events_user_show.each do |event| %>
         <tr class="event">
           <td>
             <small class="event-user-date text-right"><%= event.date %></small>
-            <h4 class="event-user-header"><%= link_to event.name, event_path(event) %>
+            <h4 class="event-user-header"><%= link_to event.name, user_event_path(user_id: @user.id, id: event.id) %>
               <small class="event-user-type"><%= event.type %></small>
             </h4>
             <small class="event-user-location text-right"><%= event.location_city %></small>
@@ -23,8 +23,10 @@
 
   <% if is_current_user? || @user.any_events? %>
   <div class="user-links">
-    <%= link_to 'Nuevo evento', new_user_event_path(user_id: @user.id), class: 'text-left' if current_user? %>
-    <%= link_to 'Ver todos', user_events_path(user_id: @user.id), class: 'text-right' if @user.any_events? %>
+    <% if current_user? %>
+      <%= link_to 'Nuevo evento', new_event_path %> |
+    <% end %>
+    <%= link_to 'Ver todos', user_events_path(user_id: @user.id) if @user.any_events? %>
   </div>
   <% end %>
 </div>

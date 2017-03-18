@@ -12,7 +12,7 @@ class Member < ActiveRecord::Base
   belongs_to :musician
 
   has_many :member_instruments, dependent: :destroy
-  accepts_nested_attributes_for :member_instruments, allow_destroy: true
+  accepts_nested_attributes_for :member_instruments, allow_destroy: true, reject_if: :all_blank
   has_many :instruments, through: :member_instruments
 
   ######## METHODS

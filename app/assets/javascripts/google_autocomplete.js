@@ -56,6 +56,8 @@ function fillInAddress () {
   setFieldValueById(resource+"_address_attributes_"+"gaddress", place.formatted_address);
 
   // Rellenamos cada campo de los que tenemos en el formulario
+  var street_number_index = null;
+
   for (var i = 0; i < place.address_components.length; i++) {
     var addressType = getAddressType(place, i);
     var addressTypeAux = translateAddressType(addressType);
@@ -64,7 +66,22 @@ function fillInAddress () {
       var fieldId = resource + "_address_attributes_" + addressTypeAux;
       var val = getAddressValue(place, i);
       setFieldValueById(fieldId, val)
+    }else if(addressTypeAux == 'street_number'){
+      street_number_index = i;
     }
+  }
+
+  // Si el municipio no ha sido rellenado lo rellenamos con el valor de la ciudad
+  if($("#"+resource+"_address_attributes_municipality").val() == ""){
+    var text = $("#"+resource+"_address_attributes_city").val();
+    $("#"+resource+"_address_attributes_municipality").val(text);
+  }
+
+  // Si disponemos del numero de la calle lo añadiremos
+  if(street_number_index >= 0){
+    var street_numer = getAddressValue(place, street_number_index);
+    var street = $("#"+resource+"_address_attributes_street").val();
+    $("#"+resource+"_address_attributes_street").val(street+" "+street_numer);
   }
 }
 
@@ -86,7 +103,7 @@ function getAddressType(place, index){
   return place.address_components[index].types[0];
 }
 
-// Función que devuelve el valor del objeto 'place' en el índice 'index' 
+// Función que devuelve el valor del objeto 'place' en el índice 'index'
 function getAddressValue(place, index){
   return place.address_components[index].long_name;
 }

@@ -1,6 +1,6 @@
 class Address < ActiveRecord::Base
   ######## VALIDATIONS
-  validates :addresseable_type, presence: true, uniqueness: {scope: :addresseable_id}
+  # validates :addresseable, presence: true
 
   ######## SCOPES
   scope :in_location, -> (location){

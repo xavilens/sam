@@ -1,3 +1,4 @@
+<%= image_tag f.object.image_url(:thumb), alt: :title, class: 'img-border col-sm-offset-2' if f.object.persisted? %>
 
 <%= f.input :image, as: :file, label: 'Imagen' %>
 <%= f.input :title, label: 'Título', wrapper: :field_9 %>

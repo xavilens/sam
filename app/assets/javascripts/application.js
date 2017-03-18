@@ -14,8 +14,21 @@
 //= require jquery_ujs
 //= require jquery.dotdotdot
 //= require bootstrap-sprockets
-//= require bootstrap-datepicker/core
-//= require bootstrap-datepicker/locales/bootstrap-datepicker.es.js
+
+// DATE PICKER
+// = require bootstrap-datepicker/core
+// = require bootstrap-datepicker/locales/bootstrap-datepicker.es.js
+
+// DATE AND TIME PICKER
+//= require moment
+//= require bootstrap-datetimepicker
+//= require moment/es
+
+// Dynamics Forms
 //= require cocoon
+
+// NUMERIC AUTOFORMAT
+//= require autonumeric
+
 //= require turbolinks
 //= require_tree .

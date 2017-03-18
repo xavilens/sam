@@ -103,6 +103,7 @@ private
 
   def set_new
     @page = 'Publicar imágenes'
+    @title = @page
   end
 
   def set_edit
@@ -131,6 +132,6 @@ private
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def image_params
-    params.require(:image).permit(:title, :description, :image)
+    params.require(:image).permit(:title, :description, :image, , :_destroy)
   end
 end

@@ -19,7 +19,7 @@
     <% end %>
 
     <% if current_user.band? && @user.musician? %>
-      <% if current_user.profile.member? @user.profile %>>
+      <% if current_user.profile.member? @user.profile %>
 
         <%= link_to fa_icon('user-times'), user_membership_delete_path(user_id: @user.id),
           class:  'option-button-icon option-button btn btn-default col-md-2 gap-right has-tooltip',

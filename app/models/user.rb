@@ -55,12 +55,12 @@ class User < ActiveRecord::Base
   # IMAGE RELATED
   has_many :images, as: :imageable, dependent: :destroy
   accepts_nested_attributes_for :images, allow_destroy: true,
-    reject_if: proc { |att| att['title'].blank?  or att['image'].blank? }
+    reject_if: proc { |att| att['title'].blank? || att['image'].blank? }
 
   # EVENTS RELATED
   has_many :events, foreign_key: :creator_id, primary_key: :id
   has_many :event_participants, foreign_key: :participant
-  has_many :reverse_events, through: :event_participants
+  has_many :reverse_events, through: :event_participants, source: :event
 
   # FOLLOWSHIPS RELATED
   has_many :followships, foreign_key: 'follower_id'
@@ -183,9 +183,20 @@ class User < ActiveRecord::Base
     reverse_events.any?
   end
 
+  # Indica si tiene algún evento en calidad de participante
+  def member_events
+    profileable.events if musician?
+  end
+
   # Devuelve todos los eventos en los que participa, propio o de participante
   def all_events
-    (events + reverse_events).sort_by{ |event| event[:date] }
+    # (events.decorate + reverse_events.decorate).sort_by{ |event| event[:date] }
+    # every_events = events.next_five + reverse_events.next_five + member_events.next_five
+    every_events = events.decorate + reverse_events.decorate
+    every_events += member_events.decorate if musician?
+
+    # return every_events.sort_by!{|event| event.date}.first(5)
+    return every_events
   end
 
   # Indica si el usuario sigue al leader

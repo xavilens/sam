@@ -14,14 +14,27 @@
 .image-form-fields
   border: 1px solid darken($gray-lighter, 5%)
   padding: 10px
-  margin-bottom: 10px
+  margin: 10px 0
   background-color: lighten($gray-lighter, 2%)
   @include border-top-radius(5px)
   @include border-bottom-radius(5px)
 
+.image-new-container
+  @extend .image-show-container
+
+.image-new-links
+  @extend .image-edit-links
+
+.image-new-link
+  @extend .image-edit-link
+
+
 .image-edit-fields
   border-top: 1px solid darken($gray-lighter, 5%)
   padding: 10px
+
+.image-edit-container
+  @extend .image-show-container
 
 .image-edit-links
   margin-left: 35px
@@ -42,6 +55,7 @@
   @include make-sm-column(3, 0px)
 
 .images-container
+  padding: 0 10px
   margin-bottom: 15px
 
 
