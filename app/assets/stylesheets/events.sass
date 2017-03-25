@@ -1,15 +1,104 @@
-// Place all the styles related to the Events controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+
+////////////////// USER SHOW
 .event-user-date
-  float: right
+  background-color: $brand-primary
+  // background-color: $gray-darker
+  text-align: center
+  padding-top: 1px
+  padding-bottom: 3px
+  @include border-top-radius(2px)
+  @include border-bottom-radius(2px)
+  .month
+    font-weight: bold
+    text-transform: uppercase
+    color: $gray-lighter
+    font-size: 85%
+  .day
+    background-color: $gray-lighter
+    color: $brand-primary
+    @include border-top-radius(2px)
+    @include border-bottom-radius(2px)
+    width: 80%
+    margin: 0 auto
 
 .events-user-links
   margin-top: -15px
 
 .event-user-location
-  margin-top: -15px
+  margin-top: -5px
 
 .event-user-type
-  margin-bottom: -15px
-  padding-bottom: -15px
+  color: $gray-light
+
+.event-user-header
+  margin-bottom: 0px
+  a
+    font-weight: bold
+
+////////////////// EVENT SHOW
+.event-show-container
+  margin: 0 10px
+  background-color: lighten($gray-lighter, 2%)
+  border: 1px solid darken($gray-lighter, 10%)
+
+.event-data-container
+  margin: 0 25px
+
+.event-header
+  background-color: darken($gray-lighter, 5%)
+  padding-bottom: 5px
+  color: lighten($gray-dark, 2%)
+  border-bottom: 1px solid darken($gray-lighter, 10%)
+
+.event-author-link
+  margin-top: 1px
+  display: inline-block
+  text-align: center
+  border-collapse: collapse
+  @include make-sm-column(6, 0px)
+  border-top: 1px solid darken($gray-lighter, 10%)
+  border-bottom: 0
+  border-right: none
+  &:first-of-type
+    border-left: none
+    @include border-top-radius(0)
+  &:last-of-type
+    border-right: none
+    @include border-bottom-radius(0)
+
+.event-description-container
+  padding: 10px 5px
+
+.event-location-text
+  margin-bottom: -20px
+
+.event-field-header
+  font-weight: bold
+  font-size: 20px
+  color: lighten($gray-dark, 2%)
+  margin-bottom: -5px
+  &.small
+    font-size: 18px
+    margin-bottom: 5px
+
+.event-description
+  padding: 10px 20px
+
+.event-container
+  margin-bottom: 10px
+
+.event-field-text
+  padding: 0 20px
+
+.event-link
+  display: inline-block
+  text-align: center
+  border-collapse: collapse
+  border: 1px solid darken($gray-lighter, 10%)
+  border-right: none
+  &:first-of-type
+    border-left: none
+    @include border-top-radius(0)
+  &:last-of-type
+    border-right: none
+    @include border-bottom-radius(0)

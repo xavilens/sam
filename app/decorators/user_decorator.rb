@@ -1,8 +1,3 @@
-# require 'delegate'
-
-# class UserDecorator < SimpleDelegator
-
-# TODO: PROBAR NUEVO DECORATOR
 class UserDecorator < Draper::Decorator
   delegate_all
 
@@ -89,8 +84,32 @@ class UserDecorator < Draper::Decorator
     SocialNetworkDecorator.wrap(user.social_networks)
   end
 
+  # Devuelve los N próximos conciertos en los que participa el usuario
   def events_user_show
     all_events.sort_by!{|event| event.date}.first(5)
+  end
+
+  # Devuelve los N próximos conciertos en los que participa el usuario y el nombre del grupo con el que los realiza
+  def events_in_show n
+    show_events = []
+
+    events.next(n).each do |event|
+      show_events.push [event.decorate, name]
+    end
+
+    reverse_events.next(n).each do |event|
+      show_events.push [event.decorate, name]
+    end
+
+    if musician?
+      profile.bands.each do |band|
+        band.events.next(n).each do |event|
+          show_events.push [event.decorate, band.name]
+        end
+      end
+    end
+
+    return show_events.sort_by!{|array| array[0].date}.first(n)
   end
 
   # Indica si posee imagenes
@@ -136,8 +155,4 @@ class UserDecorator < Draper::Decorator
   def thumb_xs_avatar
     avatar_url(:thumb_xs)
   end
-
-  # def user
-  #   __getobj__
-  # end
 end

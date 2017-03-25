@@ -23,9 +23,29 @@ class Band < ActiveRecord::Base
 
 
   ######## METHODS
+  # Devuelve el nombre del grupo
+  def name
+    user.name
+  end
+
   # Devuelve si un músico es miembro del grupo
-  def member?(musician)
+  def musician_member?(musician)
     musicians.include? musician
+  end
+
+  # Devuelve si un músico es miembro del grupo
+  def member? user
+    musician = if user.is_a? User and user.musician?
+      user.profile
+    elsif user.is_a? Musician
+      user
+    end
+
+    if musician
+      musician_member? musician
+    else
+      false
+    end
   end
 
   # Método que añade al músico a los miembros del grupo si no es miembro ya y lo elimina si es miembro

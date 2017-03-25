@@ -1,40 +1,54 @@
 
+<!-- User Header -->
 <div class="user-show-header">
-  <!-- Breadcrumb -->
-  <ol class="breadcrumb">
-    <%= render_breadcrumbs tag: :li, separator: "" %>
-  </ol>
-
   <div class="user-header">
     <%= @page %> <small><%= @user.type %></small>
   </div>
   <div class="user-sub-header">
     <%= @user.sub_header %>
   </div>
-</div> <!-- END: HEADER -->
+</div>
+<!-- END User Header -->
 
 <hr>
 
+<!-- User Bio -->
 <% if @user.bio? %>
   <div class="bio-container">
     <div class="center-name">Biografía</div>
     <div class="bio-text">
-      <div class="user-bio ellipsis-text ellipsis"><%= @user.bio %></div>
+      <div class="user-bio ellipsis">
+        <%= @user.bio %>
+      </div>
       <div class="ellipsis-control-container">
         <%= link_to fa_icon("caret-down")+" Leer más...", '',
           class: 'ellipsis-control pull-right' %>
       </div>
     </div>
   </div>
-<% end %> <!-- END: BIO -->
+<% end %>
+<!-- END User Bio -->
 
 <div class="clearfix"></div>
 
+<!-- User Music -->
+<% if @user.bio? %> <!-- TODO -->
+  <div class="music-container">
+    <div class="center-name">Canciones</div>
+    <div class="music-player col-sm-12">
+      <iframe width="100%" height="166" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/46363213&amp;color=ff5500&amp;auto_play=false&amp;hide_related=true&amp;show_comments=false&amp;show_user=false&amp;show_reposts=false"></iframe>    
+    </div>
+  </div>
+<% end %>
+<!-- END User Music -->
+
+<!-- User Videos -->
 <% if @user.bio? %> <!-- TODO -->
   <div class="videos-container">
     <div class="center-name">Videos</div>
-    <div class="video-player">
-      <!-- TODO -->
+    <div class="video-player col-sm-12">
+      <iframe width="525" height="294" src="https://www.youtube.com/embed/Tgcc5V9Hu3g" frameborder="0" allowfullscreen></iframe>
     </div>
   </div>
-<% end %> <!-- END: VIDEOS -->
+<% end %>
+<!-- END User Videos -->

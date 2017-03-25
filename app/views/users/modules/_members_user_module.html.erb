@@ -10,7 +10,7 @@
   <!-- Members -->
   <% @user.members.each do |member| %>
     <% member_user = member.user @user %>
-    <div class="media member">
+    <div class="media member-user-show">
 
       <!-- Other User in Member Avatar -->
       <div class="media-left">
@@ -22,8 +22,8 @@
 
       <!-- Member Description -->
       <div class="media-body">
-        <h4 class="media-heading"><%= link_to member_user.name, user_path(member_user) %></h4>
-        <div class="member-instruments">
+        <h4 class="media-heading member-user-name"><%= link_to member_user.name, user_path(member_user) %></h4>
+        <div class="member-user-instruments">
           <%= member.instruments_names %>
         </div>
 

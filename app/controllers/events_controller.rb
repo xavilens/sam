@@ -1,31 +1,50 @@
 class EventsController < ApplicationController
   before_filter :authenticate_user!
 
-  before_action :set_event_Decorator, only: [:show]
-  before_action :set_event, only: [:edit, :update, :destroy]
   before_action :set_user, only: [:show, :index]
   before_action :set_current_user, only: [:new, :create, :edit, :update, :destroy]
+
+  before_action :set_event, only: [:show, :edit, :update, :destroy]
+  before_action :set_events, only: [:index, :show]
 
   # after_create :set_uploads_images
 
   def index
     @page = 'Calendario de eventos'
-    @events = EventDecorator.wrap(Event.all)
+    @title = @page
   end
 
   def new
     @event = Event.new
     @page = 'Nuevo evento'
+
     @event.build_address
     @event.images.build
   end
 
   def show
+    # Calculamos el evento anterior y el siguiente
+    event_pos = @events.index(@event)
+    @prev_event = if event_pos - 1 < 0
+      nil
+    else
+      @events.at(event_pos - 1)
+    end
+
+    @next_event = if event_pos + 1 >= @events.size
+      nil
+    else
+      @events.at(event_pos + 1)
+    end
+
+    # Definimos el título y el nombre de la página
     @page = @event.name
+    @title = @page
   end
 
   def edit
     @page = 'Editar evento'
+    @title = @page
   end
 
   def create
@@ -46,11 +65,9 @@ class EventsController < ApplicationController
   end
 
   def update
-    debugger
-
     respond_to do |format|
       if @event.update(event_update_params)
-        format.html { redirect_to @event, notice: 'Evento creado satisfactoriamente.' }
+        format.html { redirect_to user_event_path(user_id: @event.creator_id, id: @event), notice: 'Evento creado satisfactoriamente.' }
         format.json { render :show, status: :created, location: @event }
       else
         format.html { render :new }
@@ -71,23 +88,24 @@ class EventsController < ApplicationController
   private
     # Seteamos la variable @event con el evento cuyo id obtenemos de los parametros
     def set_event
-      @event = Event.find(params[:id])
+      @event = if params[:user_id]
+        @user.events.find(params[:id]).decorate
+      else
+        Event.find(params[:id]).decorate
+      end
     end
 
-    # Seteamos la variable @event con el presentador del evento cuyo id obtenemos de los parametros
-    def set_event_Decorator
-      @event = EventDecorator.new(set_event)
+    def set_events
+      @events = if params[:user_id]
+        @user.events.asc.decorate
+      else
+        Event.all.asc.decorate
+      end
     end
 
     # Seteamos la variable @event con el evento cuyo id obtenemos de los parametros
     def set_user
-      @user = if params[:user_id]
-        User.find(params[:user_id])
-      else
-        @event.creator
-      end
-
-      return @user.decorate
+      @user = User.find(params[:user_id]).decorate
     end
 
     # Seteamos la variable @event con el presentador del evento cuyo id obtenemos de los parametros

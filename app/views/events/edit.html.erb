@@ -1,6 +1,11 @@
-
 <% page_title @page %>
 
-<%= render 'layouts/page_header'%>
+<div class="row">
+  <div class="col-md-3 event-edit-left">
+    <%= render 'events/user_module' %>
+  </div>
 
-<%= render "form" %>
+  <div class="col-md-9 event-edit-main">
+    <%= render 'events/form' %>
+  </div>
+</div>

@@ -59,7 +59,7 @@ class User < ActiveRecord::Base
 
   # EVENTS RELATED
   has_many :events, foreign_key: :creator_id, primary_key: :id
-  has_many :event_participants, foreign_key: :participant
+  has_many :event_participants, foreign_key: :participant_id
   has_many :reverse_events, through: :event_participants, source: :event
 
   # FOLLOWSHIPS RELATED
@@ -134,6 +134,17 @@ class User < ActiveRecord::Base
     profile.members
   end
 
+  # Indica si el usuario pasado es miembro del grupo del usuario o viceversa
+  def member? user
+    if band? && user.musician?
+      profile.member? user
+    elsif musician? && user.band?
+      user.profile.member? self
+    else
+      false
+    end
+  end
+
   # Indica si tiene conocimiento en instrumentos
   def instruments?
     if musician?
@@ -190,12 +201,9 @@ class User < ActiveRecord::Base
 
   # Devuelve todos los eventos en los que participa, propio o de participante
   def all_events
-    # (events.decorate + reverse_events.decorate).sort_by{ |event| event[:date] }
-    # every_events = events.next_five + reverse_events.next_five + member_events.next_five
     every_events = events.decorate + reverse_events.decorate
     every_events += member_events.decorate if musician?
 
-    # return every_events.sort_by!{|event| event.date}.first(5)
     return every_events
   end
 

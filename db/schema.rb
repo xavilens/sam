@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170318131550) do
+ActiveRecord::Schema.define(version: 20170325191029) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "user_id",          limit: 4,   null: false
@@ -174,13 +174,14 @@ ActiveRecord::Schema.define(version: 20170318131550) do
   add_index "delegated_users", ["delegated_user"], name: "index_delegated_users_on_delegated_user", using: :btree
 
   create_table "event_participants", force: :cascade do |t|
-    t.integer  "event_id",    limit: 4, null: false
-    t.integer  "participant", limit: 4, null: false
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.integer  "event_id",       limit: 4, null: false
+    t.integer  "participant_id", limit: 4, null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
-  add_index "event_participants", ["participant"], name: "index_event_participants_on_participant", using: :btree
+  add_index "event_participants", ["event_id"], name: "index_event_participants_on_event_id", using: :btree
+  add_index "event_participants", ["participant_id"], name: "index_event_participants_on_participant_id", using: :btree
 
   create_table "event_statuses", force: :cascade do |t|
     t.string "name", limit: 255, null: false
@@ -194,7 +195,7 @@ ActiveRecord::Schema.define(version: 20170318131550) do
     t.string   "name",             limit: 255,                 null: false
     t.text     "description",      limit: 65535
     t.date     "date",                                         null: false
-    t.time     "time",                                         null: false
+    t.string   "time",             limit: 255,                 null: false
     t.integer  "event_status_id",  limit: 4,                   null: false
     t.integer  "max_participants", limit: 4
     t.decimal  "pvp",                            precision: 2
@@ -508,7 +509,8 @@ ActiveRecord::Schema.define(version: 20170318131550) do
   add_foreign_key "conversations", "users", column: "user_2_id"
   add_foreign_key "delegated_users", "users", column: "current_user"
   add_foreign_key "delegated_users", "users", column: "delegated_user"
-  add_foreign_key "event_participants", "users", column: "participant"
+  add_foreign_key "event_participants", "events"
+  add_foreign_key "event_participants", "users", column: "participant_id"
   add_foreign_key "events", "event_statuses"
   add_foreign_key "events", "event_types"
   add_foreign_key "events", "salas"

@@ -16,8 +16,7 @@ def index
 end
 
 def show
-  @page = "Imágenes de #{@user.name}"
-
+  # Calculamos la imágen anterior y la siguiente
   images = @user.images.select(:id).order(id: :desc)
   image_pos = images.index(@image)
 
@@ -33,6 +32,8 @@ def show
     images.at(image_pos + 1)
   end
 
+  # Definimos el título y el nombre de la página
+  @page = "Imágenes de #{@user.name}"
   @title = @image.title
 end
 
@@ -132,6 +133,6 @@ private
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def image_params
-    params.require(:image).permit(:title, :description, :image, , :_destroy)
+    params.require(:image).permit(:title, :description, :image, :_destroy)
   end
 end

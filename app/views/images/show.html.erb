@@ -73,7 +73,7 @@
             <%= link_to fa_icon("pencil")+" Editar", edit_image_path(@image),
             class: 'list-group-item image-author-link' %>
 
-            <%= link_to fa_icon("times")+" Eliminar", user_image_path(user_id: @user.id, id: @image.id),
+            <%= link_to fa_icon("trash")+" Eliminar", user_image_path(user_id: @user.id, id: @image.id),
               remote: true, class: 'list-group-item image-author-link' %>
           </ul>
         </div>

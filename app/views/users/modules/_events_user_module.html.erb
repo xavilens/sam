@@ -2,16 +2,31 @@
 <div class="calendar-container">
   <div class="leftbar-name">Calendario</div>
   <% if @user.any_events? %>
-  <table class="table table-bordered table-striped table-hover">
+  <table class="table table-bordered table-condensed table-hover">
     <tbody>
-      <% @user.events_user_show.each do |event| %>
+      <% @user.all_events.each do |event| %>
         <tr class="event">
           <td>
-            <small class="event-user-date text-right"><%= event.date %></small>
-            <h4 class="event-user-header"><%= link_to event.name, user_event_path(user_id: @user.id, id: event.id) %>
-              <small class="event-user-type"><%= event.type %></small>
-            </h4>
-            <small class="event-user-location text-right"><%= event.location_city %></small>
+
+            <div class="col-sm-2 event-user-date">
+              <div class="row month">
+                <%= event.month(:abbr) %>
+              </div>
+              <div class="row">
+                <div class="day">
+                  <%= event.day %>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-10 event-user-data">
+              <div class="event-user-header">
+                <%= link_to event.name, user_event_path(user_id: event.creator_id, id: event.id) %>
+                <small class="event-user-type"><%= event.type %></small>
+              </div>
+              <small class="event-user-location"><%= event.location_city %></small>
+            </div>
+
           </td>
         </tr>
       <% end %>

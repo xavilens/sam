@@ -35,7 +35,9 @@ Rails.application.routes.draw do
   end
 
   resources :messages
-  resources :events
+  resources :events do
+    resources :event_participants, only: [:new, :create, :destroy]
+  end
   resources :bands, only: :index
   resources :musicians, only: :index
 

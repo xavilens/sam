@@ -2,18 +2,21 @@ class Event < ActiveRecord::Base
   ######## VALIDACIONES
   validates :name, presence: true
   validates :date, presence: true
-  # validates :time, presence: true
-  # validates :street, presence: true
-  # validates :city, presence: true
-  # validates :state, presence: true
-  # validates :country, presence: true
-  # validates :max_participants, presence: true
   validates :event_type_id, presence: true
   validates :event_status_id, presence: true
 
   ######## SCOPES
+  # Ordena por fecha de manera ascendente
+  scope :asc, -> { order(date: :asc)}
+
   # Devuelve los 5 próximos eventos
-  scope :next_five, -> { order(date: :asc).first(5) }
+  scope :next, -> (n){ asc.first(n) }
+
+  # Devuelve los eventos de una ciudad
+  scope :city, -> (city){ joins(:address).where(addresses: {city: city}).asc }
+
+  # Devuelve los eventos de una comunidad autónoma
+  scope :region, -> (region){ joins(:address).where("addresses.region like '%#{region}%'").asc }
 
   ######## RELATIONSHIPS
   belongs_to :creator, class_name: 'User', primary_key: "id", foreign_key: "creator_id"
@@ -22,7 +25,8 @@ class Event < ActiveRecord::Base
 
   has_many :event_participants
   accepts_nested_attributes_for :event_participants, allow_destroy: true, reject_if: :all_blank
-  has_many :participants, through: :event_participants, class_name: "User", primary_key: "id", foreign_key: "user_id"
+  # has_many :participants, through: :event_participants, class_name: "User", primary_key: "id", foreign_key: "user_id"
+  has_many :participants, through: :event_participants
 
   # belongs_to :sala
   has_one :address, as: :addresseable
@@ -42,6 +46,16 @@ class Event < ActiveRecord::Base
   # Devuelve el estado del evento
   def status
     event_status.name
+  end
+
+  # Indica si hay participantes
+  def participants?
+    participants.any?
+  end
+
+  # Indica si hay imágenes
+  def images?
+    images.any?
   end
 
 end
