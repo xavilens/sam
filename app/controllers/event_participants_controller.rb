@@ -1,6 +1,8 @@
 class EventParticipantsController < ApplicationController
-  before_filter :authenticate_user!
   respond_to :js
+
+  before_filter :authenticate_user!
+  before_action :check_participants_avaliable, only: [:new, :create, :participant_request, :send_request]
 
   def new
     # Obtenemos el evento y el participante a través de los parámetros
@@ -8,7 +10,7 @@ class EventParticipantsController < ApplicationController
     participant = User.find params[:participant_id]
 
     # Definimos el título del modal
-    @title = "Incorporar a #{participant.name} al evento '#{event.name}'"
+    @title = "Incorporar participante"
 
     # Definimos el mensaje del modal
     @message = "Está a punto de aceptar la petición de <b>#{participant.name}</b> para participar en su evento <b>#{event.name}</b>."
@@ -19,25 +21,19 @@ class EventParticipantsController < ApplicationController
   end
 
   def create
-    debugger
-    @event_participant = EventParticipant.new(event_participants_param)
+    @event_participant = EventParticipant.new(event_participants_params)
 
     # Persistimos el participante en la BD, si no mostramos una alerta
     if @event_participant.save
-      # Definimos el otro usuario implicado en el miembro
-      # Si el usuario es grupo el otro será el músico y viceversa
-      other_user =  @member.user current_user
+      # Definimos el creador del evento
+      creator =  @event_participant.creator
 
       # Borramos todos los mensajes de petición de membresía para esta relación
-      Conversation.add_participant_conversation(current_user.id, other_user.id).destroy_all
+      Conversation.add_participant_conversation(current_user.id, creator.id).destroy_all
 
-      # Definimos una alerta de éxito
-      flash.now[:notice] ||= "Miembro añadido"
-
-      redirect_to root_path
+      redirect_to root_path, notice: "Miembro añadido"
     else
-      flash.now[:alert] ||= "No se ha podido procesar la petición debido a un error"
-      redirect_to :back
+      redirect_to :back, notice: "No se ha podido procesar la petición debido a un error"
     end
   end
 
@@ -45,7 +41,41 @@ class EventParticipantsController < ApplicationController
     debugger
   end
 
+  def destroy_view
+    debugger
+    # Comprobamos que se hay coherencia en los datos y que se tienen los privilegios para realizar la acción
+    participant = User.find params[:id]
+    event = Event.find params[:event_id]
+    @event_participant = EventParticipant.where(event_id: event.id, participant_id: participant.id).first
+    creator = event.creator
+
+    if current_user != creator && current_user != participant
+      redirect_to :back, alert: 'No tiene privilegios para acceder a la página'
+    end
+
+    # Definimos los datos para la vista
+    @title = "Eliminar participante"
+
+    @message = if creator == current_user
+      "Está a punto de eliminar a #{participant.name} del evento."
+    else
+      "Está a punto de dejar de participar en el evento."
+    end
+    @message += "<br><br>¿Desea continuar?"
+  end
+
   def destroy
+    debugger
+    @event_participant = EventParticipant.find params[:id]
+    @event_participant.destroy
+
+    event = @event_participant.event
+
+    unless @event_participant.persisted?
+      redirect_to event_path(user_id: event.creator_id, id: event.id), notice: "Eliminada la participación del evento"
+    else
+      redirect_to :back, alert: 'No se ha podido procesar la petición debido a un error'
+    end
   end
 
   def participant_request
@@ -54,7 +84,7 @@ class EventParticipantsController < ApplicationController
     creator = event.creator
 
     # Definimos el título del modal y el mensaje que mostraremos
-    @title = "¿Deseas participar en el evento?"
+    @title = "Enviar petición de participación"
 
     @message = "Está a punto de enviar una petición a #{creator.name} para participar en su evento."
     @message += "<br><br>¿Desea continuar?"
@@ -77,6 +107,21 @@ class EventParticipantsController < ApplicationController
   end
 
   private
+    # Comprueba y actúa en relación a si puede participar
+    def check_participants_avaliable
+      redirect_to :back, alert: 'Ya se ha llegado al máximo de participantes posibles para el evento' unless can_participate?
+    end
+
+    # Indica si se puede participar
+    def can_participate?
+      event = if params[:event_id]
+        Event.find params[:event_id]
+      else
+        Event.find event_participants_params[:event_id]
+      end
+
+      return event.max_participants > event.participants.size
+    end
 
     def event_participants_params
       params.require(:event_participant).permit(:event_id, :participant_id)

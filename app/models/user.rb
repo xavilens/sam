@@ -175,9 +175,11 @@ class User < ActiveRecord::Base
 
   # Devuelve todos los eventos en los que participa, propio o de participante
   def all_events
+    # Obtenemos todos los eventos
     every_events = events.decorate + reverse_events.decorate
     every_events += member_events.decorate if musician?
 
+    # Ordenamos los eventos
     return every_events.sort_by! { |event| event.date }
   end
 

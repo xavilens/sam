@@ -21,10 +21,8 @@
 
   <div class="row">
     <div class="user-links col-sm-12 gap-top text-left">
-      <% if current_user? %>
-        <%= link_to 'Nueva imagen', new_image_path %> |
-      <% end %>
-      <%= link_to 'Ver todas', user_images_path(user_id: @user) if @user.images? %>
+      <%= link_to 'Nueva imagen', new_image_path, class: 'btn btn-sm btn-link' if current_user? %> 
+      <%= link_to 'Ver todas', user_images_path(user_id: @user), class: 'btn btn-sm btn-link' if @user.images? %>
     </div>
   </div>
 </div>

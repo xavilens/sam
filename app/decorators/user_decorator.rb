@@ -91,25 +91,40 @@ class UserDecorator < Draper::Decorator
 
   # Devuelve los N próximos conciertos en los que participa el usuario y el nombre del grupo con el que los realiza
   def events_in_show n
-    show_events = []
+    # show_events = []
+    #
+    # events.next(n).each do |event|
+    #   show_events.push [event.decorate, name]
+    # end
+    #
+    # reverse_events.next(n).each do |event|
+    #   show_events.push [event.decorate, name]
+    # end
+    #
+    # if musician?
+    #   profile.bands.each do |band|
+    #     band.events.next(n).each do |event|
+    #       show_events.push [event.decorate, band.name]
+    #     end
+    #   end
+    # end
+    #
+    # show_events.sort_by!{|array| array[0].date}.first(n)
 
-    events.next(n).each do |event|
-      show_events.push [event.decorate, name]
-    end
+    show_events = all_events
+    show_events.sort_by!{|event| event.date}
 
-    reverse_events.next(n).each do |event|
-      show_events.push [event.decorate, name]
-    end
-
-    if musician?
-      profile.bands.each do |band|
-        band.events.next(n).each do |event|
-          show_events.push [event.decorate, band.name]
-        end
+    events_ids = []
+    show_events.each do |event|
+      if events_ids.include? event.id
+        show_events.delete event
+        show_events << event
+      else
+        events_ids << event.id
       end
     end
-
-    return show_events.sort_by!{|array| array[0].date}.first(n)
+    
+    return show_events.first(n)
   end
 
   # Indica si posee imagenes
@@ -117,7 +132,7 @@ class UserDecorator < Draper::Decorator
     !images.blank?
   end
 
-  # AVATAR
+  ## AVATAR
   # Indica si posee un avatar de la version pasada
   def avatar?(version = nil)
     !user.avatar_url(version).blank?

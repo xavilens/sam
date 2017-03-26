@@ -13,6 +13,8 @@
         <%= render "new", message: message %>
       <% elsif type == "request" %>
         <%= render "request", message: message %>
+      <% elsif type == "delete" %>
+        <%= render "delete", message: message %>
       <% end %>
     </div>
   </div>

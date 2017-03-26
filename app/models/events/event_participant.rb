@@ -1,6 +1,5 @@
 class EventParticipant < ActiveRecord::Base
   ######## VALIDATIONS
-  # validates :participant_id, presence: true
   validates :event_id, presence: true
   validates :participant_id, presence: true, uniqueness: {scope: :event_id}
 

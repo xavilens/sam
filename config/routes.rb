@@ -50,8 +50,7 @@ Rails.application.routes.draw do
   resources :images, only: [:new, :create, :edit, :update, :destroy]
 
   resources :events do
-    resources :participants, only: [:show], controller: :event_participants
-
+    get "participants/:id", action: :destroy_view, controller: :event_participants, as: :participant_destroy
     collection do
       get "participants/request", action: :participant_request, controller: :event_participants, as: :participant_request
       post "participants/send", action: :send_request, controller: :event_participants, as: :send_participant_request

@@ -130,8 +130,8 @@
                       <td>
                         <%= image_tag participant.thumb_xs_avatar, alt: participant.name, class: 'img-border' %>
                         <%= link_to participant.name, user_path(participant), class: 'btn btn-link' %>
-                        <%= link_to fa_icon("times"), event_participant_path(event_id: @event.id, id: participant.id),
-                          class: 'btn btn-link' if is_creator? %>
+                        <%= link_to fa_icon("times"), event_participant_destroy_path(event_id: @event.id, id: participant.id),
+                          remote: true, class: 'btn btn-link' if is_creator? or participant == current_user %>
                       </td>
                     </tr>
                   <% end %>

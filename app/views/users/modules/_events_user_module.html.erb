@@ -4,7 +4,7 @@
   <% if @user.any_events? %>
   <table class="table table-bordered table-condensed table-hover">
     <tbody>
-      <% @user.all_events.each do |event| %>
+      <% @user.events_in_show(5).each do |event| %>
         <tr class="event">
           <td>
 
@@ -38,10 +38,8 @@
 
   <% if is_current_user? || @user.any_events? %>
   <div class="user-links">
-    <% if current_user? %>
-      <%= link_to 'Nuevo evento', new_event_path %> |
-    <% end %>
-    <%= link_to 'Ver todos', user_events_path(user_id: @user.id) if @user.any_events? %>
+    <%= link_to 'Nuevo evento', new_event_path, class: 'btn btn-sm btn-link' if current_user? %>
+    <%= link_to 'Ver todos', user_events_path(user_id: @user.id), class: 'btn btn-sm btn-link' if @user.any_events? %>
   </div>
   <% end %>
 </div>

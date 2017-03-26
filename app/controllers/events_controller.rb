@@ -87,6 +87,20 @@ class EventsController < ApplicationController
 
   private
     # Seteamos la variable @event con el evento cuyo id obtenemos de los parametros
+    def set_user
+      @user = if params[:user_id]
+        User.find(params[:user_id]).decorate
+      else
+        set_current_user
+      end
+    end
+
+    # Seteamos la variable @event con el presentador del evento cuyo id obtenemos de los parametros
+    def set_current_user
+      @user = current_user.decorate
+    end
+
+    # Seteamos la variable @event con el evento cuyo id obtenemos de los parametros
     def set_event
       @event = if params[:user_id]
         @user.events.find(params[:id]).decorate
@@ -95,22 +109,13 @@ class EventsController < ApplicationController
       end
     end
 
+    # Seteamos la variable @events con los eventos del usuario o con todos los existentes
     def set_events
       @events = if params[:user_id]
         @user.events.asc.decorate
       else
         Event.all.asc.decorate
       end
-    end
-
-    # Seteamos la variable @event con el evento cuyo id obtenemos de los parametros
-    def set_user
-      @user = User.find(params[:user_id]).decorate
-    end
-
-    # Seteamos la variable @event con el presentador del evento cuyo id obtenemos de los parametros
-    def set_current_user
-      @user = current_user.decorate
     end
 
     # Parámetros de evento permitidos por el controlador
