@@ -15,6 +15,11 @@
     Peticiones de miembros <%= membership_unread_count %>
   <% end %>
 
+  <%= link_to messages_path(show: 'participants'),
+    class: "btn btn-primary #{active_conversation_box('participants')}", type: 'button' do %>
+    Participantes de eventos <%= participants_unread_count %>
+  <% end %>
+
   <%= link_to messages_path(show: 'search'),
     class: "btn btn-primary #{active_conversation_box('search')}", type: 'button' do %>
     Mensajes encontrados

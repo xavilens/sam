@@ -110,10 +110,11 @@
               <% else %>
                 <%= @event.unlimited_participants %>
               <% end %>
-              <% if @event.can_participate? %>
-              <br>
-              <%= link_to fa_icon("plus")+" Participar", new_event_event_participant_path(event_id: @event.id),
-                remote: true, class: "" %>
+
+              <% if @event.can_participate? and !is_creator? %>
+                <br>
+                <%= link_to fa_icon("plus")+" Participar", participant_request_events_path(event_id: @event.id),
+                  remote: true, class: "" %>
               <% end %>
             </div>
           </div>
@@ -121,7 +122,7 @@
           <div class="col-sm-4 col-sm-offset-1">
             <% if @event.participants? %>
               <div class="panel panel-default">
-                <div class="panel-heading">Participantes</div>
+                <div class="panel-heading"><strong>Participantes</strong></div>
                 <table class="table table-bordered table-hover table-condensed">
                   <tbody>
                   <% @event.participants.decorate.each do |participant| %>
@@ -129,6 +130,8 @@
                       <td>
                         <%= image_tag participant.thumb_xs_avatar, alt: participant.name, class: 'img-border' %>
                         <%= link_to participant.name, user_path(participant), class: 'btn btn-link' %>
+                        <%= link_to fa_icon("times"), event_participant_path(event_id: @event.id, id: participant.id),
+                          class: 'btn btn-link' if is_creator? %>
                       </td>
                     </tr>
                   <% end %>

@@ -36,6 +36,9 @@ class MessagesController < ApplicationController
       elsif @show == 'membership'
         @conversations = Conversation.membership(current_user.id)
         @page = 'Peticiones de membresía'
+      elsif @show == 'participants'
+        @conversations = Conversation.participants(current_user.id)
+        @page = 'Peticiones de participación'
       end
     end
 

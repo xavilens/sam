@@ -4,8 +4,6 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  cattr_accessor :admin_id
-
   ######## FILTROS
   # Ejecuta el método set-deault antes de efectuar las validaciones
   # ref: https://github.com/plataformatec/devise/wiki/How-To:-Add-a-default-role-to-a-User
@@ -68,30 +66,6 @@ class User < ActiveRecord::Base
   has_many :reverse_followships, foreign_key: :leader_id, class_name: 'Followship'
   has_many :followers, through: :reverse_followships
 
-  # # AD RELATED
-  # has_many :ads
-
-  # # POSTS RELATED
-  # has_many :posts
-  # has_many :comments
-
-  # # DELEGATED USER RELATED
-  # has_many :delegated_users
-
-  # # ACTIVITY FEED RELATED
-  # has_many :activities
-
-  # # SALAS RELATED
-  # has_many :created_salas, class_name: 'Sala'
-  # has_many :sala_reviews
-  # has_many :sala_users
-  # has_many :salas, through: :sala_users
-
-  # # REHEARSAL STUDIOS RELATED
-  # has_many :created_rehearsal_studio, class_name: 'RehearsalStudio'
-  # has_many :rehearsal_studio_reviews
-  # has_many :rehearsal_studio_users
-  # has_many :rehearsal_studios, through: :rehearsal_studio_users
 
   ######## METHODS
 
@@ -204,7 +178,7 @@ class User < ActiveRecord::Base
     every_events = events.decorate + reverse_events.decorate
     every_events += member_events.decorate if musician?
 
-    return every_events
+    return every_events.sort_by! { |event| event.date }
   end
 
   # Indica si el usuario sigue al leader
@@ -243,17 +217,9 @@ class User < ActiveRecord::Base
     end
   end
 
-  # Indica si el usuario es Admin
+  # Indica si es administrador
   def is_admin?
-    User.initialize_attributes!
-
-    role_id == User.admin_id
-  end
-
-  def self.initialize_attributes!
-    if User.admin_id.blank?
-      User.admin_id = User.set_admin_id
-    end
+    role.name.downcase == 'admin'
   end
 
   private
@@ -262,11 +228,6 @@ class User < ActiveRecord::Base
     # ref: https://github.com/plataformatec/devise/wiki/How-To:-Add-a-default-role-to-a-User
     def set_default
       self.role_id |= Role.find_by_name('registrado').id if self.role_id.blank?
-    end
-
-    # Define el id del rol 'admin'
-    def self.set_admin_id
-      Role.find_by_name('admin').id
     end
 
     # Indica si se puede guardar la image o si se considera vacía

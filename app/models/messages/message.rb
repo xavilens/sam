@@ -22,6 +22,7 @@ class Message < ActiveRecord::Base
   # Devolvemos los mensajes de un tipo determinado
   scope :regular, -> { where(type: nil) }
   scope :add_member, -> { where(type: 'AddMemberMessage') }
+  scope :add_participant, -> { where(type: 'AddParticipantMessage') }
 
   ######## RELATIONSHIPS
   belongs_to :conversation
@@ -30,7 +31,7 @@ class Message < ActiveRecord::Base
   self.inheritance_column = :type
 
   def self.types
-    %w(AddMemberMessage)
+    %w(AddMemberMessage, AddParticipantMessage)
   end
 
   ######## METHODS

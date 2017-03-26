@@ -1,4 +1,16 @@
 Rails.application.routes.draw do
+  get 'event_participants/new'
+
+  get 'event_participants/create'
+
+  get 'event_participants/show'
+
+  get 'event_participants/destroy'
+
+  get 'event_participants/send_request'
+
+  get 'event_participants/send_request_message'
+
   root 'site#index'
 
   devise_for :users, controllers: {
@@ -24,22 +36,11 @@ Rails.application.routes.draw do
     resources :members, only: [:edit, :index]
     resources :images, only: [:show, :index]
     resources :events
-    # resources :events, only: [:show, :index]
-
-    # resources :posts do
-    #   resources :comments
-    # end
-    # resources :ads
-    # resources :salas_review
-    # resources :rehearsal_studio_review
   end
 
-  resources :messages
-  resources :events do
-    resources :event_participants, only: [:new, :create, :destroy]
-  end
   resources :bands, only: :index
   resources :musicians, only: :index
+  resources :messages
 
   resources :members, only: [:create, :new, :edit, :update, :destroy]
   post '/members/send', action: :send_request_message, controller: :members
@@ -48,25 +49,14 @@ Rails.application.routes.draw do
 
   resources :images, only: [:new, :create, :edit, :update, :destroy]
 
-  # resources :salas
-  # resources :rehearsal_studio
-  # resources :posts do
-  #   resources :comments
-  # end
+  resources :events do
+    resources :participants, only: [:show], controller: :event_participants
 
-  # Example resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
+    collection do
+      get "participants/request", action: :participant_request, controller: :event_participants, as: :participant_request
+      post "participants/send", action: :send_request, controller: :event_participants, as: :send_participant_request
+    end
+  end
 
-  # Example resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
-
-  # Example resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
+  resources :participants, only: [:new, :create, :destroy], controller: :event_participants
 end

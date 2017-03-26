@@ -67,6 +67,22 @@ module ConversationsHelper
     end
   end
 
+  # Devuelve el decorador con el número de peticiones de membresía
+  def participants_count
+    participants_count = Conversation.participants(current_user.id).size
+    if participants_count > 0
+      content_tag(:span, participants_count, class: 'badge unread-conversations')
+    end
+  end
+
+  # Devuelve el decorador con el número de peticiones de membresía no leídos
+  def participants_unread_count
+    participants_count = Conversation.participants_unread_count(current_user.id)
+    if participants_count > 0
+      content_tag(:span, participants_count, class: 'badge unread-conversations')
+    end
+  end
+
   # Indica si hay conversaciones
   def any_conversation?
     !@conversations.blank?

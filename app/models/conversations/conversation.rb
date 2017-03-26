@@ -6,6 +6,20 @@ class Conversation < ActiveRecord::Base
 
 
   ######## SCOPES
+
+  ## BASIC
+  # Devuelve aquellos mensajes sin tipo
+  scope :regular, -> { joins(:messages).where("messages.type is null") }
+
+  # Devuelve aquellos mensajes que han sido enviado por el usuario
+  scope :author, -> (user_id) {
+    joins(:messages).where("messages.author_id = :author_id",author_id: user_id)
+  }
+
+  # Devuelve aquellos mensajes que no han sido enviado por el usuario
+  scope :not_author, -> (user_id) {
+    joins(:messages).where("messages.author_id != :author_id",author_id: user_id)
+  }
   # Devuelve todas las conversaciones en las que participa el usuario
   scope :my_conversations, -> (user_id){
     where("user_1_id = :user_id OR user_2_id = :user_id", user_id: user_id)
@@ -23,6 +37,12 @@ class Conversation < ActiveRecord::Base
     my_conversations(user_id).joins(:messages).where("messages.author_id != :user_id and messages.read = false", user_id: user_id).distinct(:id)
   }
 
+  # Devuelve aquellos mensajes que no han sido enviado por el usuario
+  scope :search, -> (user_id, text) {
+    my_conversations(user_id).joins(:messages).where("body like :text or subject like :text", text: "%#{text}%").distinct(:id)
+  }
+
+  ## INBOX
   # Devuelve aquellas conversaciones con mensajes recibidos por el usuario (no los únicamente enviados)
   scope :inbox, -> (user_id) {
     my_conversations(user_id).regular.not_author(user_id).distinct(:id)
@@ -33,6 +53,7 @@ class Conversation < ActiveRecord::Base
     inbox(user_id).unread(user_id).size
   }
 
+  ## OUTBOX
   # Devuelve aquellas conversaciones con mensajes enviados por el usuario aun sin tener respuesta
   scope :outbox, -> (user_id) {
     my_conversations(user_id).regular.author(user_id).distinct(:id)
@@ -43,6 +64,7 @@ class Conversation < ActiveRecord::Base
     outbox(user_id).unread(user_id).size
   }
 
+  ## MEMBERSHIPS
   # Devuelve aquellas conversaionces con mensajes enviados por el usuario aun sin tener respuesta
   scope :membership, -> (user_id) {
     my_conversations(user_id).add_member.not_author(user_id).distinct(:id)
@@ -53,21 +75,8 @@ class Conversation < ActiveRecord::Base
     membership(user_id).unread(user_id).size
   }
 
-  # Devuelve aquellos mensajes sin tipo
-  scope :regular, -> { joins(:messages).where("messages.type is null") }
-
   # Devuelve aquellos mensajes que sean peticiones de amistad
   scope :add_member, -> { joins(:messages).where("messages.type = 'AddMemberMessage'") }
-
-  # Devuelve aquellos mensajes que han sido enviado por el usuario
-  scope :author, -> (user_id) {
-    joins(:messages).where("messages.author_id = :author_id",author_id: user_id)
-  }
-
-  # Devuelve aquellos mensajes que no han sido enviado por el usuario
-  scope :not_author, -> (user_id) {
-    joins(:messages).where("messages.author_id != :author_id",author_id: user_id)
-  }
 
   # Devuelve aquellos mensajes que no han sido enviado por el usuario
   scope :add_member_conversation, -> (user_1_id, user_2_id) {
@@ -75,9 +84,24 @@ class Conversation < ActiveRecord::Base
       user_1_id: user_1_id, user_2_id: user_2_id)
   }
 
+  ## PARTICIPANTS
+  # Devuelve aquellas conversaciones referentes a peticiones de participación en eventos
+  scope :participants, -> (user_id) {
+    my_conversations(user_id).add_participant.not_author(user_id).distinct(:id)
+  }
+
+  # Devuelve las peticiones de membresía no leídas
+  scope :participants_unread_count, -> (user_id) {
+    participants(user_id).unread(user_id).size
+  }
+
+  # Devuelve aquellos mensajes que sean peticiones de participación en eventos
+  scope :add_participant, -> { joins(:messages).where("messages.type = 'AddParticipantMessage'") }
+
   # Devuelve aquellos mensajes que no han sido enviado por el usuario
-  scope :search, -> (user_id, text) {
-    my_conversations(user_id).joins(:messages).where("body like :text or subject like :text", text: "%#{text}%").distinct(:id)
+  scope :add_participant_conversation, -> (user_1_id, user_2_id) {
+    add_participant.where("user_1_id in (:user_1_id, :user_2_id) and user_2_id in (:user_1_id, :user_2_id)",
+      user_1_id: user_1_id, user_2_id: user_2_id)
   }
 
   ######## ORDER
@@ -102,6 +126,7 @@ class Conversation < ActiveRecord::Base
   belongs_to :user_2, class_name: 'User', primary_key: 'id', foreign_key: 'user_2_id'
 
   delegate :add_member, to: :messages
+  delegate :add_participant, to: :messages
 
   ######## METHODS
   # Indica si hay mensajes sin leer

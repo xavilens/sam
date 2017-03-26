@@ -32,4 +32,9 @@ module EventsHelper
   def next_event_url
     user_event_path(user_id: @user.id, id: @next_event) if next_event?
   end
+
+  # Indica si el creador del evento es el usuario actual
+  def is_creator?
+    @user == current_user
+  end
 end
