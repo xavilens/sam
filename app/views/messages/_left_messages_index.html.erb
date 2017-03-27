@@ -12,12 +12,12 @@
 
   <%= link_to messages_path(show: 'membership'),
     class: "btn btn-primary #{active_conversation_box('membership')}", type: 'button' do %>
-    Peticiones de miembros <%= membership_unread_count %>
+    Miembros <%= membership_unread_count %>
   <% end %>
 
   <%= link_to messages_path(show: 'participants'),
     class: "btn btn-primary #{active_conversation_box('participants')}", type: 'button' do %>
-    Participantes de eventos <%= participants_unread_count %>
+    Eventos <%= participants_unread_count %>
   <% end %>
 
   <%= link_to messages_path(show: 'search'),

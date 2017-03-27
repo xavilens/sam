@@ -35,7 +35,7 @@ Rails.application.routes.draw do
 
     resources :members, only: [:edit, :index]
     resources :images, only: [:show, :index]
-    resources :events
+    resources :events, only: [:show, :index]
   end
 
   resources :bands, only: :index
@@ -50,7 +50,8 @@ Rails.application.routes.draw do
   resources :images, only: [:new, :create, :edit, :update, :destroy]
 
   resources :events do
-    get "participants/:id", action: :destroy_view, controller: :event_participants, as: :participant_destroy
+    get :delete, action: :destroy_view, controller: :events
+    get "participants/:id/delete", action: :destroy_view, controller: :event_participants, as: :participant_destroy
     collection do
       get "participants/request", action: :participant_request, controller: :event_participants, as: :participant_request
       post "participants/send", action: :send_request, controller: :event_participants, as: :send_participant_request

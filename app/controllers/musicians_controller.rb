@@ -3,11 +3,6 @@ class MusiciansController < ApplicationController
   before_action :set_musician, only: [:edit, :update]
   before_action :set_musicians, only: [:index]
 
-  # Breadcrumbs
-  add_breadcrumb "Inicio", :root_path
-  add_breadcrumb "Usuarios", :users_path
-  add_breadcrumb "Músicos", :musicians_path
-
   def index
     # Definimos el nombre de la página
     @page = 'Músicos'

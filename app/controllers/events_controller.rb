@@ -2,12 +2,10 @@ class EventsController < ApplicationController
   before_filter :authenticate_user!
 
   before_action :set_user, only: [:show, :index]
-  before_action :set_current_user, only: [:new, :create, :edit, :update, :destroy]
+  before_action :set_current_user, only: [:new, :create, :edit, :update, :destroy_view, :destroy]
 
   before_action :set_event, only: [:show, :edit, :update, :destroy]
   before_action :set_events, only: [:index, :show]
-
-  # after_create :set_uploads_images
 
   def index
     @page = 'Calendario de eventos'
@@ -76,11 +74,22 @@ class EventsController < ApplicationController
     end
   end
 
+  def destroy_view
+    # Comprobamos que se hay coherencia en los datos y que se tienen los privilegios para realizar la acción
+    @event = current_user.events.find params[:event_id]
+
+    # Definimos los datos para la vista
+    @title = "Eliminar evento"
+
+    @message = "Está a punto de eliminar el evento <b>'#{@event.name}'</b>.<br><br>¿Desea continuar?"
+  end
+
   def destroy
-    @event.images.destroy
+    debugger
+    # @event.images.destroy
     @event.destroy
     respond_to do |format|
-      format.html { redirect_to :back, notice: 'Evento borrado correctamente.' }
+      format.html { redirect_to user_path(current_user), notice: 'Evento borrado correctamente.' }
       format.json { head :no_content }
     end
   end

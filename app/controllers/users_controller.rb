@@ -9,10 +9,6 @@ class UsersController < ApplicationController
   before_action :search_params, only: [:index]
   before_action :update_params, only: [:update]
 
-  # Breadcrumbs
-  add_breadcrumb "Inicio", :root_path
-  add_breadcrumb "Usuarios", :users_path
-
   def index
     # Define el tipo de perfil sacado de los parámetros
     profileable_type = search_params[:profileable_type] unless search_params.blank?

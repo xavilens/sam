@@ -2,5 +2,5 @@
 if($("#participant-modal").length > 0){
   $("#participant-modal").modal();
 }else{
-  $('<%= j render "modal", type: "delete", title: "#{@title}", message: "#{@message}" %>').modal();
+  $('<%= j render "event_participants/modal", type: "delete", title: "#{@title}", message: "#{@message}" %>').modal();
 }

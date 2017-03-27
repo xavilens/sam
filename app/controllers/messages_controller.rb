@@ -6,10 +6,6 @@ class MessagesController < ApplicationController
   before_action :set_users_new, only: [:new]
   before_action :set_users_create, only: [:create]
 
-  # Breadcrumbs generales
-  add_breadcrumb "Inicio", :root_path
-  add_breadcrumb "Mensajes", :messages_path
-
   def index
     # Obtenemos la bandeja de correo
     @show = index_params[:show]
@@ -35,10 +31,13 @@ class MessagesController < ApplicationController
         @page = 'Mensajes enviados'
       elsif @show == 'membership'
         @conversations = Conversation.membership(current_user.id)
-        @page = 'Peticiones de membresía'
+        @page = 'Mensajes de miembros'
       elsif @show == 'participants'
         @conversations = Conversation.participants(current_user.id)
-        @page = 'Peticiones de participación'
+        @page = 'Mensajes de eventos'
+      elsif @show == 'search'
+        @conversations = nil
+        @page = 'Mensajes encontrados'
       end
     end
 

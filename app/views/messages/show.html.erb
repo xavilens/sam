@@ -26,7 +26,7 @@
   <!-- Mensajes -->
   <ul class="messages list-unstyled gap-top">
     <!-- Enviar nuevo mensaje -->
-    <% if @conversation.add_member.blank? %>
+    <% if @conversation.regular.any? %>
     <li class="message">
       <div class="message-header">
         <div class="author-avatar pull-left">

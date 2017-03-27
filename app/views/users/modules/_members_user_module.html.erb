@@ -31,12 +31,13 @@
         <% if is_current_user? and @user.band? %>
         <div class="member-links">
           <small>
-            <%= link_to "Actualizar", edit_user_member_path(user_id: @user.id, id: member.id), remote: true %>
+            <%= link_to "Actualizar", edit_user_member_path(user_id: @user.id, id: member.id),
+              class: 'btn btn-sm btn-link', remote: true %>
           </small>
 
           <small>
             <%= link_to "Eliminar", user_band_membership_delete_path(user_id: @user, member_id: member.id),
-              remote: true %>
+              class: 'btn btn-sm btn-link',remote: true %>
           </small>
         </div>
         <% end %>

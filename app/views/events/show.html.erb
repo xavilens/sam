@@ -128,7 +128,10 @@
                   <% @event.participants.decorate.each do |participant| %>
                     <tr>
                       <td>
-                        <%= image_tag participant.thumb_xs_avatar, alt: participant.name, class: 'img-border' %>
+                        <%= link_to user_path(participant) do %>
+                          <%= image_tag participant.thumb_xs_avatar, alt: participant.name, class: 'img-border' %>
+                        <% end %>
+
                         <%= link_to participant.name, user_path(participant), class: 'btn btn-link' %>
                         <%= link_to fa_icon("times"), event_participant_destroy_path(event_id: @event.id, id: participant.id),
                           remote: true, class: 'btn btn-link' if is_creator? or participant == current_user %>
@@ -164,7 +167,7 @@
             <%= link_to fa_icon("pencil")+" Editar", edit_event_path(@event),
               class: 'list-group-item event-author-link' %>
 
-            <%= link_to fa_icon("trash")+" Eliminar", user_event_path(user_id: @user.id, id: @event.id),
+            <%= link_to fa_icon("trash")+" Eliminar", event_delete_path(event_id: @event.id),
               remote: true, class: 'list-group-item event-author-link' %>
           </ul>
         </div>

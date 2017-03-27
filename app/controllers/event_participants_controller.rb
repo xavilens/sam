@@ -1,7 +1,7 @@
 class EventParticipantsController < ApplicationController
+  before_filter :authenticate_user!
   respond_to :js
 
-  before_filter :authenticate_user!
   before_action :check_participants_avaliable, only: [:new, :create, :participant_request, :send_request]
 
   def new
@@ -37,12 +37,7 @@ class EventParticipantsController < ApplicationController
     end
   end
 
-  def show
-    debugger
-  end
-
   def destroy_view
-    debugger
     # Comprobamos que se hay coherencia en los datos y que se tienen los privilegios para realizar la acción
     participant = User.find params[:id]
     event = Event.find params[:event_id]
@@ -72,6 +67,8 @@ class EventParticipantsController < ApplicationController
     event = @event_participant.event
 
     unless @event_participant.persisted?
+      SendRemoveParticipantMessage.new(@event_participant, current_user).do
+
       redirect_to event_path(user_id: event.creator_id, id: event.id), notice: "Eliminada la participación del evento"
     else
       redirect_to :back, alert: 'No se ha podido procesar la petición debido a un error'

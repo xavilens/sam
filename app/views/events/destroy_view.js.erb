@@ -1,0 +1,6 @@
+// Si existe el modal lo muestra, si no lo agrega
+if($("#event-modal").length > 0){
+  $("#event-modal").modal();
+}else{
+  $('<%= j render "events/modal", title: "#{@title}", message: "#{@message}" %>').modal();
+}

@@ -87,7 +87,7 @@ class Conversation < ActiveRecord::Base
   ## PARTICIPANTS
   # Devuelve aquellas conversaciones referentes a peticiones de participación en eventos
   scope :participants, -> (user_id) {
-    my_conversations(user_id).add_participant.not_author(user_id).distinct(:id)
+    my_conversations(user_id).participant_related.not_author(user_id).distinct(:id)
   }
 
   # Devuelve las peticiones de membresía no leídas
@@ -96,11 +96,13 @@ class Conversation < ActiveRecord::Base
   }
 
   # Devuelve aquellos mensajes que sean peticiones de participación en eventos
-  scope :add_participant, -> { joins(:messages).where("messages.type = 'AddParticipantMessage'") }
+  scope :participant_related, -> {
+    joins(:messages).where("messages.type in ('AddParticipantMessage','RemoveParticipantMessage')")
+  }
 
   # Devuelve aquellos mensajes que no han sido enviado por el usuario
-  scope :add_participant_conversation, -> (user_1_id, user_2_id) {
-    add_participant.where("user_1_id in (:user_1_id, :user_2_id) and user_2_id in (:user_1_id, :user_2_id)",
+  scope :participant_related_conversations, -> (user_1_id, user_2_id) {
+    participant_related.where("user_1_id in (:user_1_id, :user_2_id) and user_2_id in (:user_1_id, :user_2_id)",
       user_1_id: user_1_id, user_2_id: user_2_id)
   }
 
@@ -125,8 +127,10 @@ class Conversation < ActiveRecord::Base
   belongs_to :user_1, class_name: 'User', primary_key: 'id', foreign_key: 'user_1_id'
   belongs_to :user_2, class_name: 'User', primary_key: 'id', foreign_key: 'user_2_id'
 
+  delegate :regular, to: :messages
   delegate :add_member, to: :messages
   delegate :add_participant, to: :messages
+  delegate :remove_participant, to: :messages
 
   ######## METHODS
   # Indica si hay mensajes sin leer
