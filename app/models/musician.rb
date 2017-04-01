@@ -37,26 +37,6 @@ class Musician < ActiveRecord::Base
     end
   end
 
-  # TODO: BORRAR?
-  # # Indica si el instrumento está ya incluido
-  # def instrument?(instrument)
-  #   instruments.include? instrument
-  # end
-  #
-  # # Si el instrumento no está includo lo inclure
-  # def instrument!(instrument, level)
-  #   unless instrument?(instrument)
-  #     MusicianKnowledge.create(musician: self, instrument: instrument, level: level)
-  #   end
-  # end
-  #
-  # # Si el instrumento no está includo lo inclure
-  # def remove_instrument(instrument)
-  #   if instrument?(instrument)
-  #     instruments.delete(instrument)
-  #   end
-  # end
-
   # Devuelve el estado del músico
   def status
     musician_status.name

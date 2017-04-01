@@ -1,6 +1,7 @@
 class EventsController < ApplicationController
   before_filter :authenticate_user!
 
+  before_action :is_user_calendar?, only: [:index]
   before_action :set_user, only: [:show, :index]
   before_action :set_current_user, only: [:new, :create, :edit, :update, :destroy_view, :destroy]
 
@@ -8,8 +9,23 @@ class EventsController < ApplicationController
   before_action :set_events, only: [:index, :show]
 
   def index
+    today = Date.today
+    start_date = Date.new today.year, today.month
+    finish_date = start_date.end_of_month
+
+    @calendar = if @is_user_calendar
+      EventCalendar.new start_date, finish_date, @user
+    else
+      EventCalendar.new start_date, finish_date
+    end
+
     @page = 'Calendario de eventos'
-    @title = @page
+
+    @title = if @is_user_calendar
+      "Eventos de #{@user.name}"
+    else
+      @page
+    end
   end
 
   def new
@@ -76,7 +92,7 @@ class EventsController < ApplicationController
 
   def destroy_view
     # Comprobamos que se hay coherencia en los datos y que se tienen los privilegios para realizar la acción
-    @event = current_user.events.find params[:event_id]
+    @event = current_user.created_events.find params[:event_id]
 
     # Definimos los datos para la vista
     @title = "Eliminar evento"
@@ -85,8 +101,6 @@ class EventsController < ApplicationController
   end
 
   def destroy
-    debugger
-    # @event.images.destroy
     @event.destroy
     respond_to do |format|
       format.html { redirect_to user_path(current_user), notice: 'Evento borrado correctamente.' }
@@ -96,8 +110,13 @@ class EventsController < ApplicationController
 
   private
     # Seteamos la variable @event con el evento cuyo id obtenemos de los parametros
+    def is_user_calendar?
+      @is_user_calendar = params[:user_id].present?
+    end
+
+    # Seteamos la variable @event con el evento cuyo id obtenemos de los parametros
     def set_user
-      @user = if params[:user_id]
+      @user = if @is_user_calendar
         User.find(params[:user_id]).decorate
       else
         set_current_user
@@ -111,8 +130,8 @@ class EventsController < ApplicationController
 
     # Seteamos la variable @event con el evento cuyo id obtenemos de los parametros
     def set_event
-      @event = if params[:user_id]
-        @user.events.find(params[:id]).decorate
+      @event = if @is_user_calendar
+        @user.created_events.find(params[:id]).decorate
       else
         Event.find(params[:id]).decorate
       end
@@ -120,8 +139,8 @@ class EventsController < ApplicationController
 
     # Seteamos la variable @events con los eventos del usuario o con todos los existentes
     def set_events
-      @events = if params[:user_id]
-        @user.events.asc.decorate
+      @events = if @is_user_calendar
+        @user.events
       else
         Event.all.asc.decorate
       end

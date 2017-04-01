@@ -1,16 +1,4 @@
 Rails.application.routes.draw do
-  get 'event_participants/new'
-
-  get 'event_participants/create'
-
-  get 'event_participants/show'
-
-  get 'event_participants/destroy'
-
-  get 'event_participants/send_request'
-
-  get 'event_participants/send_request_message'
-
   root 'site#index'
 
   devise_for :users, controllers: {

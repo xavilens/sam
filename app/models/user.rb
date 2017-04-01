@@ -56,9 +56,10 @@ class User < ActiveRecord::Base
     reject_if: proc { |att| att['title'].blank? || att['image'].blank? }
 
   # EVENTS RELATED
-  has_many :events, foreign_key: :creator_id, primary_key: :id
+  # has_many :events, foreign_key: :creator_id, primary_key: :id
+  has_many :created_events, foreign_key: :creator_id, primary_key: :id, class_name: 'Event'
   has_many :event_participants, foreign_key: :participant_id
-  has_many :reverse_events, through: :event_participants, source: :event
+  has_many :participated_events, through: :event_participants, source: :event
 
   # FOLLOWSHIPS RELATED
   has_many :followships, foreign_key: 'follower_id'
@@ -153,19 +154,14 @@ class User < ActiveRecord::Base
     conversations + reverse_conversations
   end
 
-  # Indica si está asociado a algún evento
-  def any_events?
-    events? or reverse_events?
-  end
-
   # Indica si tiene algún evento propio
   def events?
-    events.any?
+    !events.empty?
   end
 
   # Indica si tiene algún evento en calidad de participante
-  def reverse_events?
-    reverse_events.any?
+  def participated_events?
+    participated_events.any?
   end
 
   # Indica si tiene algún evento en calidad de participante
@@ -174,10 +170,10 @@ class User < ActiveRecord::Base
   end
 
   # Devuelve todos los eventos en los que participa, propio o de participante
-  def all_events
+  def events
     # Obtenemos todos los eventos
-    every_events = events.decorate + reverse_events.decorate
-    every_events += member_events.decorate if musician?
+    every_events = created_events.asc.decorate + participated_events.asc.decorate
+    every_events += member_events.asc.decorate if musician?
 
     # Ordenamos los eventos
     return every_events.sort_by! { |event| event.date }

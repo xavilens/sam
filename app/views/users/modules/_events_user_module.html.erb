@@ -1,7 +1,7 @@
 
 <div class="calendar-container">
   <div class="leftbar-name">Calendario</div>
-  <% if @user.any_events? %>
+  <% if @user.events? %>
   <table class="table table-bordered table-condensed table-hover">
     <tbody>
       <% @user.events_in_show(5).each do |event| %>
@@ -36,10 +36,10 @@
     <p class="gap-left gap-bottom">No hay ningún evento.</p>
   <% end %>
 
-  <% if is_current_user? || @user.any_events? %>
+  <% if is_current_user? || @user.events? %>
   <div class="user-links">
     <%= link_to 'Nuevo evento', new_event_path, class: 'btn btn-sm btn-link' if current_user? %>
-    <%= link_to 'Ver todos', user_events_path(user_id: @user.id), class: 'btn btn-sm btn-link' if @user.any_events? %>
+    <%= link_to 'Ver todos', user_events_path(user_id: @user.id), class: 'btn btn-sm btn-link' if @user.events? %>
   </div>
   <% end %>
 </div>

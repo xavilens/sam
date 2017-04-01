@@ -18,6 +18,9 @@
       label_html: {class: 'text-shadow'}, wrapper: :inverse_bool_12 %>
 
     <%= f.button :submit, "Acceder", class: 'btn btn-md btn-primary col-sm-12' %>
-    <%= link_to '¿Olvidaste tu contraseña?', new_password_path(:user), class: 'landing-font gap-top text-left col-sm-12 text-shadow' %>
+    <%= link_to '¿Olvidaste tu contraseña?', new_password_path(:user),
+      class: 'landing-font gap-top text-center col-sm-12 text-shadow' %>
+    <%= link_to 'Registrarse', new_user_registration_path,
+      class: 'landing-font gap-top text-center col-sm-12 text-shadow' %>
   </div>
 <% end %>

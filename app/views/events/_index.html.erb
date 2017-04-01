@@ -1,0 +1,15 @@
+
+<% if @is_user_calendar %>
+  <div class="page-header border">
+    <h1><%= @title %></h1>
+  </div>
+<% else %>
+  <%= render 'events/search_form' %>
+<% end %>
+
+<% @events.each do |event| %>
+  <h3><%= link_to event.name, event_path(event.id) %></h3>
+  <p><%= event.date.to_s + " a las " + event.time.to_s %></p>
+  <p>Ubicación: <%= event.location_city %></p>
+  <span><%= event.description %></span>
+<% end %>
