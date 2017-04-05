@@ -1,14 +1,7 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
-
+# TODO: Más datos?
 ############################################ ROLES ############################################
 
-['registrado', 'baneado', 'inactivo', 'mod', 'admin'].each do |rol|
+['Registrado', 'Baneado', 'Inactivo', 'Mod', 'Admin'].each do |rol|
   Role.find_or_create_by({name: rol})
 end
 
@@ -20,41 +13,28 @@ end
 
 ############################################ EVENT_ESTATUSES ############################################
 
-# TODO: Más estados de eventos??
-['Abierto', 'Cerrado'].each do |evStatus|
+['Abierto', 'Cerrado', 'Buscando participantes'].each do |evStatus|
   EventStatus.find_or_create_by({name: evStatus})
 end
 
 ############################################ EVENT_TYPES ############################################
 
-# TODO: Más tipos de eventos
-['Concierto', 'Festival', 'Concierto acústico'].each do |evType|
+['Concierto', 'Festival', 'Acústico'].each do |evType|
   EventType.find_or_create_by({name: evType})
 end
 
 ############################################ BAND_ESTATUSES ############################################
 
-['Buscando miembros', 'Buscando conciertos', 'Buscando management', 'Buscando local', 'Activo', 'Inactivo', 'Buscando equipo'].each do |bStatus|
+['Buscando miembros', 'Buscando conciertos', 'Buscando management', 'Buscando local', 'Activo',
+  'Inactivo', 'Buscando equipo'].each do |bStatus|
   BandStatus.find_or_create_by({name: bStatus})
 end
 
 ############################################ MUSICIAN_ESTATUSES ############################################
 
-['Buscando grupo', 'Buscando conciertos', 'Buscando management', 'Activo', 'Inactivo', 'Buscando equipo'].each do |mStatus|
+['Buscando grupo', 'Buscando conciertos', 'Buscando management', 'Activo', 'Inactivo',
+  'Buscando equipo'].each do |mStatus|
   MusicianStatus.find_or_create_by({name: mStatus})
-end
-
-############################################ ACTIVITY_TYPES ############################################
-
-# TODO: Más tipos de actividades
-['Post', 'Comment', 'Event', 'Event participant', 'New member', 'Not member', 'New user'].each do |actType|
-  ActivityType.find_or_create_by({name: actType})
-end
-['New knowledge', 'New role', 'Event done', 'Event canceled', 'New sala review', 'New local review'].each do |actType|
-  ActivityType.find_or_create_by({name: actType})
-end
-['New followed', 'New follower'].each do |actType|
-  ActivityType.find_or_create_by({name: actType})
 end
 
 ############################################ KNOWLEDGES ############################################
@@ -70,17 +50,17 @@ end
 end
 
 # Conocimientos instrumentos de percusión
-['Batería', 'Percusión', 'Celesta', 'Marimba'].each do |knowledgement|
+['Batería', 'Percusión', 'Steeldrum', 'Marimba'].each do |knowledgement|
  Instrument.find_or_create_by({name: knowledgement})
 end
 
 # Conocimientos instrumentos de tecla
-['Teclados', 'Piano', 'Acordeón'].each do |knowledgement|
+['Teclado', 'Piano', 'Acordeón'].each do |knowledgement|
  Instrument.find_or_create_by({name: knowledgement})
 end
 
 # Conocimientos vocales
-['Cantante', 'Coro'].each do |knowledgement|
+['Cantante', 'Coros'].each do |knowledgement|
  Instrument.find_or_create_by({name: knowledgement})
 end
 
@@ -108,21 +88,4 @@ end
   'Minimal', 'Dubstep', 'Trap', 'Folk', 'Funk', "Drum'n'Bass", 'Experimental', 'Doom', 'Speed', 'Math',
   'Disco', 'Flamenco', 'Rumba', 'Bulería', 'Nu', 'New Age', 'Heavy', 'Hard', 'Death', 'Slow', 'Down Tempo'].each do |genre|
  Genre.find_or_create_by({name: genre})
-end
-
-############################################ ADS ############################################
-
-# TAdTypes
-['Vendo', 'Compro', 'Alquilo', 'Cambio'].each do |tadtype|
- TAdType.find_or_create_by({name: tadtype})
-end
-
-# TAdItem
-['Instrumentos', 'Amplificadores', 'Equipo técnico', 'Otros'].each do |taditem|
- TAdItem.find_or_create_by({name: taditem})
-end
-
-# BTBAdType
-['Grupos para concierto', 'Grupos para local', 'Local compartido'].each do |btbadtype|
- BTBAdType.find_or_create_by({name: btbadtype})
 end

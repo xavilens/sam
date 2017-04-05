@@ -1,4 +1,11 @@
 module EventsHelper
+  ##### MISC
+  # Indica si el creador del evento es el usuario actual
+  def is_creator?
+    @user == current_user
+  end
+
+  ##### SHOW
   # Indica si hay un evento previo
   def prev_event?
     !@prev_event.blank?
@@ -33,8 +40,25 @@ module EventsHelper
     user_event_path(user_id: @user.id, id: @next_event) if next_event?
   end
 
-  # Indica si el creador del evento es el usuario actual
-  def is_creator?
-    @user == current_user
+  ##### CALENDAR
+  # Devuelve la cadena de cabecera para las fechas
+  def calendar_month_header date
+    "#{I18n.translate('date.month_names')[date.month]} #{date.year}"
   end
+
+  # Devuelve la cadena de cabecera para las fechas
+  def calendar_date_header date
+    "#{I18n.translate('date.day_names')[date.wday]} #{I18n.localize date, format: :long}"
+  end
+
+  # Devuelve la url del evento anterior
+  def prev_calendar_url
+    events_path(date: (@start_date - 1.month))
+  end
+
+  # Devuelve la url del evento siguiente
+  def next_calendar_url
+    events_path(date: (@start_date + 1.month))
+  end
+
 end

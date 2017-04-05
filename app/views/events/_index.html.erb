@@ -1,15 +1,86 @@
 
-<% if @is_user_calendar %>
-  <div class="page-header border">
-    <h1><%= @title %></h1>
-  </div>
-<% else %>
-  <%= render 'events/search_form' %>
+<div class="page-header border">
+  <h1><%= @title %></h1>
+</div>
+
+<% unless @is_user_calendar %>
+  <ul class="list-group calendar-links">
+    <%= link_to fa_icon('chevron-left'), prev_calendar_url,
+      class: "list-group-item calendar-link no-gutter-sm-3" %>
+
+    <li class="list-group-item calendar-link no-gutter-sm-6">
+      <%= calendar_month_header(@start_date) %>
+    </li>
+
+    <%= link_to fa_icon("chevron-right"), next_calendar_url,
+      class: "list-group-item calendar-link no-gutter-sm-3" %>
+  </ul>
 <% end %>
 
-<% @events.each do |event| %>
-  <h3><%= link_to event.name, event_path(event.id) %></h3>
-  <p><%= event.date.to_s + " a las " + event.time.to_s %></p>
-  <p>Ubicación: <%= event.location_city %></p>
-  <span><%= event.description %></span>
+<table class="table table-bordered table-striped">
+  <tbody>
+  <% @start_date.upto(@finish_date).each do |date| %>
+    <% if @is_user_calendar %>
+
+      <% if @calendar.any_event?(date) %>
+        <tr>
+          <td class="event-header">
+            <h4><%= calendar_date_header date %></h4>
+          </td>
+        </tr>
+
+        <% @calendar.day(date).each do |event| %>
+          <%= render 'events/event_index_row', event: event %>
+        <% end %>
+      <% end %>
+
+    <% else %>
+
+      <tr>
+        <td class="event-header">
+          <h4><%= calendar_date_header date %></h4>
+        </td>
+      </tr>
+
+      <% if @calendar.any_event?(date) %>
+        <% @calendar.day(date).each do |event| %>
+          <%= render 'events/event_index_row', event: event %>
+        <% end %>
+
+        <tr>
+          <td>
+            <%= link_to fa_icon('plus')+" Crear evento", new_event_path(date: date.to_s),
+              class: 'btn btn-sm btn-primary' %>
+          </td>
+        </tr>
+      <% else %>
+        <tr>
+          <td>
+            <p>No hay ningún evento para esta fecha</p>
+
+            <%= link_to fa_icon('plus')+" Crear evento", new_event_path(date: date.to_s),
+              class: 'btn btn-sm btn-primary' %>
+            </td>
+        </tr>
+      <% end %>
+
+    <% end %>
+  <% end %>
+  </tbody>
+</table>
+
+<% unless @is_user_calendar %>
+  <ul class="list-group calendar-links">
+    <%= link_to fa_icon('chevron-left'), prev_calendar_url,
+      class: "list-group-item calendar-link no-gutter-sm-3" %>
+
+    <li class="list-group-item calendar-link no-gutter-sm-6">
+      <%= calendar_month_header(@start_date) %>
+    </li>
+
+    <%= link_to fa_icon("chevron-right"), next_calendar_url,
+      class: "list-group-item calendar-link no-gutter-sm-3" %>
+  </ul>
 <% end %>
+
+<%= render 'scripts/dotdotdot' %>

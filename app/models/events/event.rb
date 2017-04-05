@@ -62,6 +62,11 @@ class Event < ActiveRecord::Base
     images.any?
   end
 
+  # Devuelve la primera imagen
+  def image
+    images.first
+  end
+
   # Devuelve el año en que se celebra el evento
   def year
     date.year

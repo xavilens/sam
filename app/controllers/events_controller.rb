@@ -9,14 +9,24 @@ class EventsController < ApplicationController
   before_action :set_events, only: [:index, :show]
 
   def index
-    today = Date.today
-    start_date = Date.new today.year, today.month
-    finish_date = start_date.end_of_month
+    if @is_user_calendar
+      @start_date = Date.new 1900, 1
+      @finish_date = Date.new 9999, 12
+    else
+      if params[:date].present?
+        @start_date = Date.parse(params[:date])
+      else
+        today = Date.today
+        @start_date = Date.new today.year, today.month
+      end
+
+      @finish_date = @start_date.end_of_month
+    end
 
     @calendar = if @is_user_calendar
-      EventCalendar.new start_date, finish_date, @user
+      EventCalendar.new @start_date, @finish_date, @user
     else
-      EventCalendar.new start_date, finish_date
+      EventCalendar.new @start_date, @finish_date
     end
 
     @page = 'Calendario de eventos'

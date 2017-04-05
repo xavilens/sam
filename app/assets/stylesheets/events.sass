@@ -102,3 +102,47 @@
   &:last-of-type
     border-right: none
     @include border-bottom-radius(0)
+
+////////////////// EVENT INDEX
+.calendar-container
+  margin: 0 10px
+  background-color: lighten($gray-lighter, 2%)
+  border: 1px solid darken($gray-lighter, 10%)
+
+.event-index
+  border: 1px solid darken($gray-lighter, 10%)
+
+.event-index-info
+  float: left
+  margin-right: 20px
+  color: lighten($gray-light, 5%)
+  font-size: 90%
+
+.event-index-description
+  text-overflow: ellipsis
+  white-space: nowrap
+  overflow: hidden
+  margin-top: 10px
+  margin-bottom: 10px
+
+.event-index-header
+  margin-top: -10px
+  margin-bottom: -10px
+
+////////////////// CALENDAR
+.calendar-links
+  height: 40px
+  font-size: 28px
+
+.calendar-link
+  display: inline-block
+  text-align: center
+  border-collapse: collapse
+  border: 1px solid darken($gray-lighter, 10%)
+  border-right: none
+  &:first-of-type
+    border-left: none
+    @include border-top-radius(0)
+  &:last-of-type
+    border-right: none
+    @include border-bottom-radius(0)

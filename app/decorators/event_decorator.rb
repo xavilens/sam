@@ -1,13 +1,6 @@
 class EventDecorator < Draper::Decorator
   delegate_all
 
-  # Wrapper para colecciones
-  def self.wrap(collection)
-    collection.map do |obj|
-        new obj
-    end
-  end
-
   ##### PARTICIPANTS
   # Indica si se ha definido los participantes máximos
   def max_participants_define?
@@ -15,13 +8,17 @@ class EventDecorator < Draper::Decorator
   end
 
   # Devuelve el número de participantes que hay del máximo posible
-  def participants_count
-    "#{participants_size} de #{max_participants}"
+  def participants_count type = nil
+    if type = :long
+      "#{participants_size} de #{max_participants} #{max_participants > 1 ? 'participantes' : 'participante'}"
+    else
+      "#{participants_size} de #{max_participants}"
+    end
   end
 
   # Devuelve el número de participantes que hay del máximo posible
   def unlimited_participants
-    "No hay un número máximo de participantes"
+    "Abierto"
   end
 
   # Devuelve la cantidad de participantes apuntados al evento
@@ -55,15 +52,29 @@ class EventDecorator < Draper::Decorator
     address.gaddress
   end
 
-  # Devuelve la localización formateada
+  # Devuelve la localización de la ciudad
   def location_city
+    address.city
+  end
+
+  # Devuelve la localización de la comunidad
+  def location_region
     "#{address.city}, #{address.region}"
+  end
+
+  # Devuelve la localización de la calle
+  def location_street
+    "#{address.street}, #{address.city}, #{address.region}"
   end
 
   ##### DESCRIPTION
   # Devuelve la descripición del evento debidamente formateada
   def description
-    (event.description.gsub(/\n/, '<br/>')).html_safe
+    if description?
+      (event.description.gsub(/\n/, '<br/>')).html_safe
+    else
+      ""
+    end
   end
 
   ##### DATE

@@ -1,5 +1,5 @@
 class EventCalendar
-  attr_reader :calendar
+  attr_reader :calendar, :start_date, :finish_date
 
   def initialize start_date, finish_date, user = nil
     # Definimos las fechas y el calendario
@@ -27,15 +27,19 @@ class EventCalendar
 
   # Devuelve los eventos de la fecha pasada si existen, o un array vacío si no
   def day date
-    if calendar[date].present?
+    if any_event? date
       calendar[date]
     else
       []
     end
   end
 
+  def any_event? date
+    calendar[date].present?
+  end
+
   private
-    attr_accessor :events, :start_date, :finish_date
+    attr_accessor :events
 
     # Define el calendario como un hash de fechas asociadas a un array de eventos celebrados en dicha fecha
     def set_calendar
@@ -53,8 +57,8 @@ class EventCalendar
 
     # Define las fechas
     def set_dates start_date, finish_date
-      self.start_date = set_date start_date
-      self.finish_date = set_date finish_date
+      @start_date = set_date start_date
+      @finish_date = set_date finish_date
     end
 
     # Define las fechas

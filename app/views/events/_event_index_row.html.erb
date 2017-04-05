@@ -1,0 +1,44 @@
+<tr>
+  <td>
+    <div class="row">
+      <div class="col-sm-12 event-index-header">
+        <h4>
+          <%= link_to event.name, user_event_path(user_id: event.creator, id: event.id) %>
+          <small><%= event.type %></small>
+        </h4>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12 event-index-description ellipsis">
+        <%= event.description %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="event-index-info event-index-location">
+          <%= fa_icon('map-marker', class: 'fa-lg', title: 'Localización')+" #{event.location_city}" %>
+        </div>
+
+        <% if @is_user_calendar %>
+        <div class="event-index-info event-index-creator">
+          <%= fa_icon('user', class: 'fa-lg', title: 'Creador')+" #{event.creator.name}" %>
+        </div>
+        <% end %>
+
+        <div class="event-index-info event-index-participants">
+            <%= fa_icon('users', class: 'fa-lg', title: 'Participantes')+" " %>
+            <% if event.max_participants_define? %>
+              <%= event.participants_count %>
+            <% else %>
+              <%= event.unlimited_participants %>
+            <% end %>
+        </div>
+        <div class="event-index-info event-index-status">
+          <%= fa_icon('info-circle', class: 'fa-lg', title: 'Estado')+" #{event.status}" %>
+        </div>
+      </div>
+    </div>
+  </td>
+</tr>

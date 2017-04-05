@@ -156,11 +156,13 @@
         <small id="charNum" class="char-left"><%= 2500 - @user.bio_size %> caracteres restantes</small>
       </div>
     </div>
-    <%= f.input :bio, label: 'Biografía', maxlength: 2500, input_html:{rows: 10, onkeyup: 'countChar(this)'}, wrapper: :field_6%>
+    <%= f.input :bio, label: 'Biografía', maxlength: 2500, input_html:{rows: 10, onkeyup: 'countChar(this)'},
+      wrapper: :field_6 %>
     <!-- FIN INFORMACIÓN DEL PERFIL -->
     <% end %>
   </div>
   <hr>
+  
   <!-- BOTONES -->
   <div class="form-actions">
     <div class="row">

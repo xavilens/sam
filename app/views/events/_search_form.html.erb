@@ -1,0 +1,36 @@
+<div class="well">
+  <h4 class="well-header">Buscador</h4>
+
+  <%= simple_form_for :event_calendar, url: events_path, method: 'get' do |f| %>
+    <%= f.input :name, label: 'Nombre', required: false, as: :fake  %>
+    <!-- <%= f.input :start_date, label: 'Desde', required: false, as: :date_picker %>
+    <%= f.input :finish_date, label: 'Hasta', required: false, as: :date_picker %> -->
+
+    <% if @is_user_calendar %>
+    <div class="row">
+      <div class="col-sm-6">
+        <%= f.input :start_date, label: 'Desde', required: false, input_html: {class: 'datepicker'} %>
+      </div>
+      <div class="col-sm-6">
+        <%= f.input :finish_date, label: 'Hasta', required: false, input_html: {class: 'datepicker'} %>
+      </div>
+    </div>
+    <% end %>
+
+    <div class="form-group optional event_calendar_type">
+      <%= f.label :type, 'Tipo', class: 'optional control-label' %>
+      <%= f.collection_check_boxes :type, EventType.all, :id, :name, required: false,
+        item_wrapper_class: 'checkbox checkbox-container' %>
+    </div>
+
+    <div class="form-group optional event_calendar_status">
+      <%= f.label :status, 'Estado', class: 'optional control-label' %>
+      <%= f.collection_check_boxes :status, EventStatus.all, :id, :name,required: false,
+        item_wrapper_class: 'checkbox checkbox-container' %>
+    </div>
+
+    <%= f.button :submit, 'Filtrar', class: 'btn btn-sm btn-primary' %>
+  <% end %>
+</div>
+
+<%= render 'scripts/datepicker' %>

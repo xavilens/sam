@@ -1,19 +1,19 @@
 <% page_title @page %>
 
 <div class="row">
-  <% if @is_user_calendar %>
-    <div class="col-md-3 event-index-right">
-      <%= render "events/user_module" %>
-    </div>
-  <% end %>
+  <div class="col-md-3 event-index-right">
+    <%= render 'events/search_form' %>
+  </div>
 
-  <div class="col-md-9">
+  <div class="<%= "col-md-#{ @is_user_calendar ? 6 : 7}" %>">
     <%= render 'events/index' %>
   </div>
 
-  <% unless @is_user_calendar %>
-    <div class="col-md-3 event-index-right">
+  <div class="<%= "col-md-#{ @is_user_calendar ? 3 : 2}" %> event-index-right">
+    <% if @is_user_calendar %>
       <%= render "events/user_module" %>
-    </div>
-  <% end %>
+    <% else %>
+      <%= render 'events/index_right' %>
+    <% end %>
+  </div>
 </div>
