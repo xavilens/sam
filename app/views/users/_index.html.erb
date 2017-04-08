@@ -22,8 +22,8 @@
 
           <% unless user.bio.blank? %>
           <div class="index-bio">
-            <p class="pull-left ellipsis-text index-ellipsis">"<%= user.bio %></p>
-            <p class="pull-left clearfix">&#8230"</p>
+            <div class="pull-left ellipsis"><%= user.bio %></div>
+            <!-- <p class="pull-left clearfix">&#8230"</p> -->
           </div>
 
           <% end %>
@@ -37,3 +37,5 @@
     <% end %>
   </div>
 </div>
+
+<%= render 'scripts/dotdotdot' %>

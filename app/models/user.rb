@@ -18,6 +18,12 @@ class User < ActiveRecord::Base
   validates :social_networks_set_id, presence: true
 
   ######## SCOPES
+  # Devuelve los usuarios con perfil de Grupo (Band)
+  scope :bands, -> { where(profileable_type: "Band") }
+
+  # Devuelve los usuarios con perfil de Músico (Musician)
+  scope :musicians, -> { where(profileable_type: "Musician") }
+
   # Muestra si el usuario está online
   # ref: http://stackoverflow.com/questions/5504130/whos-online-using-devise-in-rails
   scope :online, lambda{ where("updated_at > ?", 10.minutes.ago) }

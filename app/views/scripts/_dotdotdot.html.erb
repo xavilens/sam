@@ -1,9 +1,10 @@
 
 <script type="text/javascript">
-  $(function () {
-    $('.ellipsis').dotdotdot(
-      /*	The text to add as ellipsis. */
-  		ellipsis	: '... '
-    );
+  $(document).ready(function() {
+    $(".ellipsis").dotdotdot({
+      height: 65,
+      tolerance: 5,
+      after: "a.readmore"
+    });
   });
 </script>

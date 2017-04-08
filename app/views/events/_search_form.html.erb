@@ -2,9 +2,7 @@
   <h4 class="well-header">Buscador</h4>
 
   <%= simple_form_for :event_calendar, url: events_path, method: 'get' do |f| %>
-    <%= f.input :name, label: 'Nombre', required: false, as: :fake  %>
-    <!-- <%= f.input :start_date, label: 'Desde', required: false, as: :date_picker %>
-    <%= f.input :finish_date, label: 'Hasta', required: false, as: :date_picker %> -->
+    <%= f.input :name, label: 'Nombre', required: false, placeholder: 'Filtrar por nombre...', as: :fake  %>
 
     <% if @is_user_calendar %>
     <div class="row">
@@ -17,17 +15,23 @@
     </div>
     <% end %>
 
-    <div class="form-group optional event_calendar_type">
-      <%= f.label :type, 'Tipo', class: 'optional control-label' %>
-      <%= f.collection_check_boxes :type, EventType.all, :id, :name, required: false,
-        item_wrapper_class: 'checkbox checkbox-container' %>
-    </div>
+    <%= f.input :type, collection: EventType.all, value_method: :id, label_method: :name, required: false,
+      label: 'Tipo', as: :check_boxes %>
 
-    <div class="form-group optional event_calendar_status">
-      <%= f.label :status, 'Estado', class: 'optional control-label' %>
-      <%= f.collection_check_boxes :status, EventStatus.all, :id, :name,required: false,
-        item_wrapper_class: 'checkbox checkbox-container' %>
-    </div>
+    <%= f.input :status, collection: EventStatus.all, value_method: :id, label_method: :name,required: false,
+      label: 'Estado', as: :check_boxes %>
+
+    <%= f.input :location_type, collection: [['city', 'Ciudad'], ['province', 'Provincia'], ['region', 'Comunidad autónoma']],
+      value_method: :first, label_method: :last, label: 'Buscar por', required: false, as: :radio_buttons %>
+
+    <%= f.input :city, collection: Address.events.cities, label_method: :city, prompt: 'Filtrar por localidad...',
+      value_method: :city, label: 'Localidad', required: false, as: :select %>
+
+    <%= f.input :province, collection: Address.events.provinces, label_method: :province, prompt: 'Filtrar por provincia...',
+      value_method: :province, label: 'Provincia', required: false, as: :select %>
+
+    <%= f.input :region, collection: Address.events.regions, label_method: :region, prompt: 'Filtrar por comunidad...',
+      value_method: :region, label: 'Comunidad autónoma', required: false, as: :select %>
 
     <%= f.button :submit, 'Filtrar', class: 'btn btn-sm btn-primary' %>
   <% end %>

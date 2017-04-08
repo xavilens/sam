@@ -27,9 +27,6 @@
 .event-user-location
   margin-top: -5px
 
-.event-user-type
-  color: $gray-light
-
 .event-user-header
   margin-bottom: 0px
   a
@@ -110,7 +107,7 @@
   border: 1px solid darken($gray-lighter, 10%)
 
 .event-index
-  border: 1px solid darken($gray-lighter, 10%)
+  border-bottom: 1px solid darken($gray-lighter, 10%)
 
 .event-index-info
   float: left
@@ -124,6 +121,7 @@
   overflow: hidden
   margin-top: 10px
   margin-bottom: 10px
+  width: 645px
 
 .event-index-header
   margin-top: -10px
@@ -134,15 +132,6 @@
   height: 40px
   font-size: 28px
 
-.calendar-link
-  display: inline-block
-  text-align: center
-  border-collapse: collapse
-  border: 1px solid darken($gray-lighter, 10%)
-  border-right: none
-  &:first-of-type
-    border-left: none
-    @include border-top-radius(0)
-  &:last-of-type
-    border-right: none
-    @include border-bottom-radius(0)
+  .calendar-link
+    display: inline-block
+    text-align: center
