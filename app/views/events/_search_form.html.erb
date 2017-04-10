@@ -1,8 +1,8 @@
 <div class="well">
   <h4 class="well-header">Buscador</h4>
 
-  <%= simple_form_for :event_calendar, url: events_path, method: 'get' do |f| %>
-    <%= f.input :name, label: 'Nombre', required: false, placeholder: 'Filtrar por nombre...', as: :fake  %>
+  <%= simple_form_for @search_form, {url: events_path, method: 'get'} do |f| %>
+    <%= f.input :name, label: 'Nombre', required: false, placeholder: 'Filtrar por nombre...'  %>
 
     <% if @is_user_calendar %>
     <div class="row">
@@ -16,10 +16,10 @@
     <% end %>
 
     <%= f.input :type, collection: EventType.all, value_method: :id, label_method: :name, required: false,
-      label: 'Tipo', as: :check_boxes %>
+      label: 'Tipo', include_blank: false, as: :check_boxes %>
 
     <%= f.input :status, collection: EventStatus.all, value_method: :id, label_method: :name,required: false,
-      label: 'Estado', as: :check_boxes %>
+      label: 'Estado', include_blank: false, as: :check_boxes %>
 
     <%= f.input :location_type, collection: [['city', 'Ciudad'], ['province', 'Provincia'], ['region', 'Comunidad autónoma']],
       value_method: :first, label_method: :last, label: 'Buscar por', required: false, as: :radio_buttons %>

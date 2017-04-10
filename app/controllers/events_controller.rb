@@ -9,6 +9,7 @@ class EventsController < ApplicationController
   before_action :set_events, only: [:index, :show]
 
   def index
+    # Definimos fechas
     if @is_user_calendar
       @start_date = Date.new 1900, 1
       @finish_date = Date.new 9999, 12
@@ -23,12 +24,17 @@ class EventsController < ApplicationController
       @finish_date = @start_date.end_of_month
     end
 
+    debugger
+    @search_form = EventSearchForm.new(event_search_params)
+
+    # Creamos calendario
     @calendar = if @is_user_calendar
       EventCalendar.new @start_date, @finish_date, @user
     else
       EventCalendar.new @start_date, @finish_date
     end
 
+    # Datos página
     @page = 'Calendario de eventos'
 
     @title = if @is_user_calendar
@@ -179,6 +185,16 @@ class EventsController < ApplicationController
         address_attributes: [:id, :addresseable_type, :addresseable_id, :street, :gaddress, :city, :region,
           :country, :municipality, :postal_code, :province],
         images_attributes: [:id, :image, :title, :desciption, :_destroy])
+    end
+
+    # Parámetros de evento permitidos por el controlador
+    def event_search_params
+      if params[:event_search_form].present?
+        params.require(:event_search_form).permit(:name, :start_date, :finish_date,
+          :location_type, :city, :province, :region, type: [], status: [])
+      else
+        {}
+      end
     end
 
     # Parámetros de imágenes de evento permitidos por el controlador

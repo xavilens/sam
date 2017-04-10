@@ -9,7 +9,7 @@ class EventDecorator < Draper::Decorator
 
   # Devuelve el número de participantes que hay del máximo posible
   def participants_count type = nil
-    if type = :long
+    if type == :long
       "#{participants_size} de #{max_participants} #{max_participants > 1 ? 'participantes' : 'participante'}"
     else
       "#{participants_size} de #{max_participants}"
