@@ -1,20 +1,17 @@
 class EventCalendar
   attr_reader :calendar, :start_date, :finish_date
 
-  def initialize start_date, finish_date, user = nil
-    # Definimos las fechas y el calendario
+  def initialize start_date, finish_date, search, user = nil
+    # Definimos los atributos
+    @search = search
+
     set_dates start_date, finish_date
 
-    # Si está definido el usuario obtiene de él los eventos en las fechas dadas,
-    # si no los saca de todos los eventos creados
-    @events = if user.present?
-      user.created_events.date(start_date, finish_date) +
-      user.participated_events.date(start_date, finish_date) +
-      user.member_events.date(start_date, finish_date)
-    else
-      Event.all.date(start_date, finish_date)
-    end
+    @search.start_date ||= @start_date
+    @search.finish_date ||= @finish_date
 
+    set_events user
+    
     set_calendar
   end
 
@@ -34,12 +31,13 @@ class EventCalendar
     end
   end
 
+  # Indica si hay algún evento en la fecha pasada
   def any_event? date
     calendar[date].present?
   end
 
   private
-    attr_accessor :events
+    attr_accessor :events, :search
 
     # Define el calendario como un hash de fechas asociadas a un array de eventos celebrados en dicha fecha
     def set_calendar
@@ -67,6 +65,20 @@ class EventCalendar
         Date.parse(date)
       else
         date
+      end
+    end
+
+    # Define los eventos
+    def set_events user
+      # Si está definido el usuario obtiene de él los eventos en las fechas dadas,
+      # si no los saca de todos los eventos creados
+      @events = if user.present?
+        search.events(user.created_events) +
+        search.events(user.participated_events) +
+        search.events(user.member_events)
+        # search.events user.member_events.date(start_date, finish_date)
+      else
+        search.events Event
       end
     end
 end

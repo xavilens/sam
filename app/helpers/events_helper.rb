@@ -53,12 +53,22 @@ module EventsHelper
 
   # Devuelve la url del evento anterior
   def prev_calendar_url
-    events_path(date: (@start_date - 1.month))
+    # events_path(params)
+    # events_path(date: (@start_date - 1.month))
+    if params[:event_search_form].present?
+      events_path(date: (@start_date - 1.month), event_search_form: params[:event_search_form])
+    else
+      events_path(date: (@start_date - 1.month))
+    end
   end
 
   # Devuelve la url del evento siguiente
   def next_calendar_url
-    events_path(date: (@start_date + 1.month))
+    if params[:event_search_form].present?
+      events_path(date: (@start_date + 1.month), event_search_form: params[:event_search_form])
+    else
+      events_path(date: (@start_date + 1.month))
+    end
   end
 
 end

@@ -1,7 +1,7 @@
-<div class="well">
+<div class="well search-form event-search-form">
   <h4 class="well-header">Buscador</h4>
 
-  <%= simple_form_for @search_form, {url: events_path, method: 'get'} do |f| %>
+  <%= simple_form_for @search, {url: events_path, method: 'get'} do |f| %>
     <%= f.input :name, label: 'Nombre', required: false, placeholder: 'Filtrar por nombre...'  %>
 
     <% if @is_user_calendar %>
@@ -13,13 +13,16 @@
         <%= f.input :finish_date, label: 'Hasta', required: false, input_html: {class: 'datepicker'} %>
       </div>
     </div>
+    <% else %>
+      <%= f.input :start_date, label: 'Mes', required: false, discard_day: true,
+        default: @start_date, with_css_classes: true, as: :date %>
     <% end %>
 
     <%= f.input :type, collection: EventType.all, value_method: :id, label_method: :name, required: false,
-      label: 'Tipo', include_blank: false, as: :check_boxes %>
+      label: 'Tipo', as: :check_boxes %>
 
     <%= f.input :status, collection: EventStatus.all, value_method: :id, label_method: :name,required: false,
-      label: 'Estado', include_blank: false, as: :check_boxes %>
+      label: 'Estado', as: :check_boxes %>
 
     <%= f.input :location_type, collection: [['city', 'Ciudad'], ['province', 'Provincia'], ['region', 'Comunidad autónoma']],
       value_method: :first, label_method: :last, label: 'Buscar por', required: false, as: :radio_buttons %>

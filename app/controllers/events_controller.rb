@@ -14,8 +14,11 @@ class EventsController < ApplicationController
       @start_date = Date.new 1900, 1
       @finish_date = Date.new 9999, 12
     else
-      if params[:date].present?
-        @start_date = Date.parse(params[:date])
+      if params[:date].present? || event_search_params["start_date(2i)"].present?
+        date = params[:date].present? ? params[:date] : "01/#{event_search_params['start_date(2i)'].to_i}/#{event_search_params['start_date(1i)'].to_i}"
+
+        @start_date = Date.parse(date)
+        @start_date = @start_date.beginning_of_month
       else
         today = Date.today
         @start_date = Date.new today.year, today.month
@@ -24,15 +27,13 @@ class EventsController < ApplicationController
       @finish_date = @start_date.end_of_month
     end
 
-    debugger
-    @search_form = EventSearchForm.new(event_search_params)
+    @search = EventSearchForm.new(event_search_params)
+
+    @search.start_date = @start_date
+    @search.finish_date = @finish_date
 
     # Creamos calendario
-    @calendar = if @is_user_calendar
-      EventCalendar.new @start_date, @finish_date, @user
-    else
-      EventCalendar.new @start_date, @finish_date
-    end
+    @calendar = EventCalendar.new @start_date, @finish_date, @search, (@is_user_calendar ? @user : nil)
 
     # Datos página
     @page = 'Calendario de eventos'
@@ -190,8 +191,8 @@ class EventsController < ApplicationController
     # Parámetros de evento permitidos por el controlador
     def event_search_params
       if params[:event_search_form].present?
-        params.require(:event_search_form).permit(:name, :start_date, :finish_date,
-          :location_type, :city, :province, :region, type: [], status: [])
+        params.require(:event_search_form).permit(:name, :finish_date, :location_type,
+          :city, :province, :region, :start_date, type: [], status: [])
       else
         {}
       end
