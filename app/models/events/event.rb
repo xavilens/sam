@@ -29,10 +29,8 @@ class Event < ActiveRecord::Base
 
   has_many :event_participants
   accepts_nested_attributes_for :event_participants, allow_destroy: true, reject_if: :all_blank
-  # has_many :participants, through: :event_participants, class_name: "User", primary_key: "id", foreign_key: "user_id"
   has_many :participants, through: :event_participants
 
-  # belongs_to :sala
   has_one :address, as: :addresseable
   accepts_nested_attributes_for :address, allow_destroy: true
 

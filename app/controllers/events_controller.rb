@@ -166,7 +166,7 @@ class EventsController < ApplicationController
     # Parámetros de evento permitidos por el controlador
     def event_params
       params.require(:event).permit(:name, :description, :date, :time, :event_status_id, :event_type_id,
-       :max_participants, :pvp, :creator_id, :sala_id, :_destroy,
+       :max_participants, :pvp, :creator_id, :_destroy,
        address_attributes: [:street, :gaddress, :city, :region, :country, :municipality, :postal_code,
          :province])
     end
@@ -174,7 +174,7 @@ class EventsController < ApplicationController
     # Parámetros de evento permitidos por el controlador
     def event_with_images_params
       params.require(:event).permit(:name, :description, :date, :time, :event_status_id, :event_type_id,
-        :max_participants, :pvp, :creator_id, :sala_id, :_destroy,
+        :max_participants, :pvp, :creator_id, :_destroy,
         address_attributes: [:street, :gaddress, :city, :region, :country, :municipality, :postal_code, :province],
         images_attributes: [:image, :title, :desciption])
     end
@@ -182,7 +182,7 @@ class EventsController < ApplicationController
     # Parámetros de evento permitidos por el controlador
     def event_update_params
       params.require(:event).permit(:name, :description, :date, :time, :event_status_id, :event_type_id,
-        :max_participants, :pvp, :creator_id, :sala_id, :_destroy,
+        :max_participants, :pvp, :creator_id, :_destroy,
         address_attributes: [:id, :addresseable_type, :addresseable_id, :street, :gaddress, :city, :region,
           :country, :municipality, :postal_code, :province],
         images_attributes: [:id, :image, :title, :desciption, :_destroy])

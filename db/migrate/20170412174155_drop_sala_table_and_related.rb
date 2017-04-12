@@ -18,8 +18,10 @@ class DropSalaTableAndRelated < ActiveRecord::Migration
     remove_index :sala_genres, name: "index_sala_genres_on_sala_id"
     drop_table :sala_genres
 
-    remove_foreign_key :salas, :users
+    remove_foreign_key :salas, column: "creator_id"
+    remove_foreign_key :events, :salas
     remove_index :salas, name: "index_salas_on_creator_id"
+    remove_index :events, name: "index_events_on_sala_id"
     drop_table :salas
   end
 end

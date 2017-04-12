@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170412171401) do
+ActiveRecord::Schema.define(version: 20170412174155) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "user_id",          limit: 4,   null: false
@@ -197,7 +197,6 @@ ActiveRecord::Schema.define(version: 20170412171401) do
   add_index "events", ["creator_id"], name: "index_events_on_creator_id", using: :btree
   add_index "events", ["event_status_id"], name: "index_events_on_event_status_id", using: :btree
   add_index "events", ["event_type_id"], name: "index_events_on_event_type_id", using: :btree
-  add_index "events", ["sala_id"], name: "index_events_on_sala_id", using: :btree
 
   create_table "followships", force: :cascade do |t|
     t.integer  "leader_id",   limit: 4, null: false
@@ -342,59 +341,6 @@ ActiveRecord::Schema.define(version: 20170412171401) do
     t.string "name", limit: 255, null: false
   end
 
-  create_table "sala_genres", force: :cascade do |t|
-    t.integer  "sala_id",    limit: 4, null: false
-    t.integer  "genre_id",   limit: 4, null: false
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-  end
-
-  add_index "sala_genres", ["genre_id"], name: "index_sala_genres_on_genre_id", using: :btree
-  add_index "sala_genres", ["sala_id"], name: "index_sala_genres_on_sala_id", using: :btree
-
-  create_table "sala_reviews", force: :cascade do |t|
-    t.string   "title",        limit: 255,                                           null: false
-    t.text     "desciption",   limit: 65535
-    t.boolean  "rent_paid",                                          default: false
-    t.decimal  "rent_price",                 precision: 5, scale: 2
-    t.decimal  "service_rate",               precision: 5, scale: 1,                 null: false
-    t.decimal  "gear_rate",                  precision: 5, scale: 1,                 null: false
-    t.decimal  "total_rate",                 precision: 5, scale: 1,                 null: false
-    t.decimal  "money_earned",               precision: 5, scale: 2
-    t.integer  "user_id",      limit: 4,                                             null: false
-    t.integer  "sala_id",      limit: 4,                                             null: false
-    t.datetime "created_at",                                                         null: false
-    t.datetime "updated_at",                                                         null: false
-  end
-
-  add_index "sala_reviews", ["sala_id"], name: "index_sala_reviews_on_sala_id", using: :btree
-  add_index "sala_reviews", ["user_id"], name: "index_sala_reviews_on_user_id", using: :btree
-
-  create_table "sala_users", force: :cascade do |t|
-    t.integer  "sala_id",    limit: 4, null: false
-    t.integer  "user_id",    limit: 4, null: false
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-  end
-
-  add_index "sala_users", ["sala_id"], name: "index_sala_users_on_sala_id", using: :btree
-  add_index "sala_users", ["user_id"], name: "index_sala_users_on_user_id", using: :btree
-
-  create_table "salas", force: :cascade do |t|
-    t.string   "name",         limit: 255,                            null: false
-    t.string   "street",       limit: 255,                            null: false
-    t.string   "city",         limit: 255,                            null: false
-    t.string   "state",        limit: 255,                            null: false
-    t.string   "country",      limit: 255,                            null: false
-    t.integer  "creator_id",   limit: 4,                              null: false
-    t.integer  "n_reviews",    limit: 4,                  default: 0, null: false
-    t.decimal  "total_rating",             precision: 10
-    t.datetime "created_at",                                          null: false
-    t.datetime "updated_at",                                          null: false
-  end
-
-  add_index "salas", ["creator_id"], name: "index_salas_on_creator_id", using: :btree
-
   create_table "social_networks_sets", force: :cascade do |t|
     t.string   "facebook_url",   limit: 255
     t.string   "website_url",    limit: 255
@@ -479,7 +425,6 @@ ActiveRecord::Schema.define(version: 20170412171401) do
   add_foreign_key "event_participants", "users", column: "participant_id"
   add_foreign_key "events", "event_statuses"
   add_foreign_key "events", "event_types"
-  add_foreign_key "events", "salas"
   add_foreign_key "events", "users", column: "creator_id"
   add_foreign_key "followships", "users", column: "follower_id"
   add_foreign_key "followships", "users", column: "leader_id"
@@ -495,13 +440,6 @@ ActiveRecord::Schema.define(version: 20170412171401) do
   add_foreign_key "rehearsal_studio_users", "rehearsal_studios"
   add_foreign_key "rehearsal_studio_users", "users"
   add_foreign_key "rehearsal_studios", "users", column: "creator_id"
-  add_foreign_key "sala_genres", "genres"
-  add_foreign_key "sala_genres", "salas"
-  add_foreign_key "sala_reviews", "salas"
-  add_foreign_key "sala_reviews", "users"
-  add_foreign_key "sala_users", "salas"
-  add_foreign_key "sala_users", "users"
-  add_foreign_key "salas", "users", column: "creator_id"
   add_foreign_key "trade_ads", "t_ad_items"
   add_foreign_key "trade_ads", "t_ad_types"
   add_foreign_key "users", "roles"
