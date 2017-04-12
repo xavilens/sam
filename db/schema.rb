@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170412182351) do
+ActiveRecord::Schema.define(version: 20170412184747) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "addresseable_id",   limit: 255, null: false
@@ -57,22 +57,6 @@ ActiveRecord::Schema.define(version: 20170412182351) do
 
   add_index "conversations", ["user_1_id"], name: "index_conversations_on_user_1_id", using: :btree
   add_index "conversations", ["user_2_id"], name: "index_conversations_on_user_2_id", using: :btree
-
-  create_table "delegated_users", force: :cascade do |t|
-    t.integer  "sign_in_count",      limit: 4,   default: 0,     null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip", limit: 255
-    t.string   "last_sign_in_ip",    limit: 255
-    t.integer  "delegated_user",     limit: 4,                   null: false
-    t.integer  "current_user",       limit: 4,                   null: false
-    t.boolean  "active",                         default: false, null: false
-    t.datetime "created_at",                                     null: false
-    t.datetime "updated_at",                                     null: false
-  end
-
-  add_index "delegated_users", ["current_user"], name: "index_delegated_users_on_current_user", unique: true, using: :btree
-  add_index "delegated_users", ["delegated_user"], name: "index_delegated_users_on_delegated_user", using: :btree
 
   create_table "event_participants", force: :cascade do |t|
     t.integer  "event_id",       limit: 4, null: false
@@ -258,8 +242,6 @@ ActiveRecord::Schema.define(version: 20170412182351) do
   add_foreign_key "bands", "genres", column: "genre_3_id"
   add_foreign_key "conversations", "users", column: "user_1_id"
   add_foreign_key "conversations", "users", column: "user_2_id"
-  add_foreign_key "delegated_users", "users", column: "current_user"
-  add_foreign_key "delegated_users", "users", column: "delegated_user"
   add_foreign_key "event_participants", "events"
   add_foreign_key "event_participants", "users", column: "participant_id"
   add_foreign_key "events", "event_statuses"
