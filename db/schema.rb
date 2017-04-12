@@ -11,22 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170412180322) do
-
-  create_table "activities", force: :cascade do |t|
-    t.integer  "user_id",          limit: 4,   null: false
-    t.integer  "activity_type_id", limit: 4,   null: false
-    t.string   "description",      limit: 255, null: false
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
-  end
-
-  add_index "activities", ["activity_type_id"], name: "index_activities_on_activity_type_id", using: :btree
-  add_index "activities", ["user_id"], name: "index_activities_on_user_id", using: :btree
-
-  create_table "activity_types", force: :cascade do |t|
-    t.string "name", limit: 255
-  end
+ActiveRecord::Schema.define(version: 20170412181622) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "addresseable_id",   limit: 255, null: false
@@ -363,8 +348,6 @@ ActiveRecord::Schema.define(version: 20170412180322) do
   add_index "users", ["role_id"], name: "index_users_on_role_id", using: :btree
   add_index "users", ["social_networks_set_id"], name: "index_users_on_social_networks_set_id", using: :btree
 
-  add_foreign_key "activities", "activity_types"
-  add_foreign_key "activities", "users"
   add_foreign_key "ads", "users"
   add_foreign_key "band_to_band_ads", "btb_ad_types"
   add_foreign_key "bands", "genres", column: "genre_1_id"
