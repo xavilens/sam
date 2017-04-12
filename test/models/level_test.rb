@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class BtmAdInstrumentTest < ActiveSupport::TestCase
+class LevelTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

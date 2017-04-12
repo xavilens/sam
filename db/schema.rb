@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170412181622) do
+ActiveRecord::Schema.define(version: 20170412182351) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "addresseable_id",   limit: 255, null: false
@@ -30,45 +30,9 @@ ActiveRecord::Schema.define(version: 20170412181622) do
 
   add_index "addresses", ["addresseable_id"], name: "index_addresses_on_addresseable_id", using: :btree
 
-  create_table "ads", force: :cascade do |t|
-    t.integer  "user_id",      limit: 4,     null: false
-    t.integer  "adeable_id",   limit: 4,     null: false
-    t.string   "adeable_type", limit: 255,   null: false
-    t.string   "title",        limit: 255,   null: false
-    t.text     "body",         limit: 65535
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.string   "city",         limit: 255,   null: false
-    t.string   "state",        limit: 255,   null: false
-    t.string   "country",      limit: 255,   null: false
-  end
-
-  add_index "ads", ["adeable_type", "adeable_id"], name: "index_ads_on_adeable_type_and_adeable_id", using: :btree
-  add_index "ads", ["user_id"], name: "index_ads_on_user_id", using: :btree
-
-  create_table "band_musician_ads", force: :cascade do |t|
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-    t.string   "city",       limit: 255, null: false
-    t.string   "state",      limit: 255, null: false
-    t.string   "country",    limit: 255, null: false
-    t.string   "type",       limit: 255, null: false
-  end
-
   create_table "band_statuses", force: :cascade do |t|
     t.string "name", limit: 255
   end
-
-  create_table "band_to_band_ads", force: :cascade do |t|
-    t.string   "city",           limit: 255, null: false
-    t.string   "state",          limit: 255, null: false
-    t.string   "country",        limit: 255, null: false
-    t.integer  "btb_ad_type_id", limit: 4,   null: false
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-  end
-
-  add_index "band_to_band_ads", ["btb_ad_type_id"], name: "index_band_to_band_ads_on_btb_ad_type_id", using: :btree
 
   create_table "bands", force: :cascade do |t|
     t.integer  "genre_1_id",     limit: 4
@@ -82,42 +46,6 @@ ActiveRecord::Schema.define(version: 20170412181622) do
   add_index "bands", ["genre_1_id"], name: "index_bands_on_genre_1_id", using: :btree
   add_index "bands", ["genre_2_id"], name: "index_bands_on_genre_2_id", using: :btree
   add_index "bands", ["genre_3_id"], name: "index_bands_on_genre_3_id", using: :btree
-
-  create_table "bm_ad_genres", force: :cascade do |t|
-    t.integer  "band_musician_ad_id", limit: 4
-    t.integer  "genre_id",            limit: 4
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
-  end
-
-  add_index "bm_ad_genres", ["band_musician_ad_id"], name: "index_bm_ad_genres_on_band_musician_ad_id", using: :btree
-  add_index "bm_ad_genres", ["genre_id"], name: "index_bm_ad_genres_on_genre_id", using: :btree
-
-  create_table "bm_ad_instruments", force: :cascade do |t|
-    t.integer  "band_musician_ad_id", limit: 4, null: false
-    t.integer  "instrument_id",       limit: 4, null: false
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
-  end
-
-  add_index "bm_ad_instruments", ["band_musician_ad_id"], name: "index_bm_ad_instruments_on_band_musician_ad_id", using: :btree
-  add_index "bm_ad_instruments", ["instrument_id"], name: "index_bm_ad_instruments_on_instrument_id", using: :btree
-
-  create_table "btb_ad_genres", force: :cascade do |t|
-    t.integer  "band_to_band_ad_id", limit: 4
-    t.integer  "genre_id",           limit: 4
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
-  end
-
-  add_index "btb_ad_genres", ["band_to_band_ad_id"], name: "index_btb_ad_genres_on_band_to_band_ad_id", using: :btree
-  add_index "btb_ad_genres", ["genre_id"], name: "index_btb_ad_genres_on_genre_id", using: :btree
-
-  create_table "btb_ad_types", force: :cascade do |t|
-    t.string   "name",       limit: 255, null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-  end
 
   create_table "conversations", force: :cascade do |t|
     t.integer  "user_1_id",  limit: 4,   null: false
@@ -298,29 +226,6 @@ ActiveRecord::Schema.define(version: 20170412181622) do
     t.string   "youtube_url",    limit: 255
   end
 
-  create_table "t_ad_items", force: :cascade do |t|
-    t.string   "name",       limit: 255, null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-  end
-
-  create_table "t_ad_types", force: :cascade do |t|
-    t.string   "name",       limit: 255, null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-  end
-
-  create_table "trade_ads", force: :cascade do |t|
-    t.integer  "t_ad_type_id", limit: 4,               null: false
-    t.integer  "t_ad_item_id", limit: 4,               null: false
-    t.decimal  "price",                  precision: 2
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
-  end
-
-  add_index "trade_ads", ["t_ad_item_id"], name: "index_trade_ads_on_t_ad_item_id", using: :btree
-  add_index "trade_ads", ["t_ad_type_id"], name: "index_trade_ads_on_t_ad_type_id", using: :btree
-
   create_table "users", force: :cascade do |t|
     t.string   "email",                  limit: 255,   default: "", null: false
     t.string   "encrypted_password",     limit: 255,   default: "", null: false
@@ -348,17 +253,9 @@ ActiveRecord::Schema.define(version: 20170412181622) do
   add_index "users", ["role_id"], name: "index_users_on_role_id", using: :btree
   add_index "users", ["social_networks_set_id"], name: "index_users_on_social_networks_set_id", using: :btree
 
-  add_foreign_key "ads", "users"
-  add_foreign_key "band_to_band_ads", "btb_ad_types"
   add_foreign_key "bands", "genres", column: "genre_1_id"
   add_foreign_key "bands", "genres", column: "genre_2_id"
   add_foreign_key "bands", "genres", column: "genre_3_id"
-  add_foreign_key "bm_ad_genres", "band_musician_ads"
-  add_foreign_key "bm_ad_genres", "genres"
-  add_foreign_key "bm_ad_instruments", "band_musician_ads"
-  add_foreign_key "bm_ad_instruments", "instruments"
-  add_foreign_key "btb_ad_genres", "band_to_band_ads"
-  add_foreign_key "btb_ad_genres", "genres"
   add_foreign_key "conversations", "users", column: "user_1_id"
   add_foreign_key "conversations", "users", column: "user_2_id"
   add_foreign_key "delegated_users", "users", column: "current_user"
@@ -379,8 +276,6 @@ ActiveRecord::Schema.define(version: 20170412181622) do
   add_foreign_key "musician_knowledges", "instruments"
   add_foreign_key "musician_knowledges", "levels"
   add_foreign_key "musician_knowledges", "musicians"
-  add_foreign_key "trade_ads", "t_ad_items"
-  add_foreign_key "trade_ads", "t_ad_types"
   add_foreign_key "users", "roles"
   add_foreign_key "users", "social_networks_sets"
 end
