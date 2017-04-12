@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170412174155) do
+ActiveRecord::Schema.define(version: 20170412180322) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "user_id",          limit: 4,   null: false
@@ -296,47 +296,6 @@ ActiveRecord::Schema.define(version: 20170412174155) do
     t.integer  "musician_status_id", limit: 4
   end
 
-  create_table "rehearsal_studio_reviews", force: :cascade do |t|
-    t.string   "title",               limit: 255,               null: false
-    t.string   "description",         limit: 255
-    t.decimal  "rate",                            precision: 1, null: false
-    t.decimal  "room_dimension",                  precision: 2
-    t.decimal  "room_price",                      precision: 2
-    t.string   "avaliability",        limit: 255
-    t.boolean  "equipped_room"
-    t.boolean  "shared_room"
-    t.integer  "bands_in_room",       limit: 4
-    t.integer  "user_id",             limit: 4
-    t.integer  "rehearsal_studio_id", limit: 4
-    t.datetime "created_at",                                    null: false
-    t.datetime "updated_at",                                    null: false
-  end
-
-  create_table "rehearsal_studio_users", force: :cascade do |t|
-    t.integer  "rehearsal_studio_id", limit: 4, null: false
-    t.integer  "user_id",             limit: 4, null: false
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
-  end
-
-  add_index "rehearsal_studio_users", ["rehearsal_studio_id"], name: "index_rehearsal_studio_users_on_rehearsal_studio_id", using: :btree
-  add_index "rehearsal_studio_users", ["user_id"], name: "index_rehearsal_studio_users_on_user_id", using: :btree
-
-  create_table "rehearsal_studios", force: :cascade do |t|
-    t.string   "name",            limit: 255,               null: false
-    t.string   "street",          limit: 255,               null: false
-    t.string   "city",            limit: 255,               null: false
-    t.string   "state",           limit: 255,               null: false
-    t.string   "country",         limit: 255,               null: false
-    t.integer  "rooms_avaliable", limit: 4
-    t.integer  "creator_id",      limit: 4,                 null: false
-    t.decimal  "total_rate",                  precision: 2
-    t.datetime "created_at",                                null: false
-    t.datetime "updated_at",                                null: false
-  end
-
-  add_index "rehearsal_studios", ["creator_id"], name: "index_rehearsal_studios_on_creator_id", using: :btree
-
   create_table "roles", force: :cascade do |t|
     t.string "name", limit: 255, null: false
   end
@@ -437,9 +396,6 @@ ActiveRecord::Schema.define(version: 20170412174155) do
   add_foreign_key "musician_knowledges", "instruments"
   add_foreign_key "musician_knowledges", "levels"
   add_foreign_key "musician_knowledges", "musicians"
-  add_foreign_key "rehearsal_studio_users", "rehearsal_studios"
-  add_foreign_key "rehearsal_studio_users", "users"
-  add_foreign_key "rehearsal_studios", "users", column: "creator_id"
   add_foreign_key "trade_ads", "t_ad_items"
   add_foreign_key "trade_ads", "t_ad_types"
   add_foreign_key "users", "roles"

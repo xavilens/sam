@@ -25,7 +25,6 @@ module Sam
     config.autoload_paths += %W(#{config.root}/app/models/events)
     config.autoload_paths += %W(#{config.root}/app/models/uploads)
     config.autoload_paths += %W(#{config.root}/app/models/ads)
-    config.autoload_paths += %W(#{config.root}/app/models/rehearsal_studios)
 
 
     config.eager_load_paths += %W(#{config.root}/app)
