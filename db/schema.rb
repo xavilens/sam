@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170325191029) do
+ActiveRecord::Schema.define(version: 20170412171401) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "user_id",          limit: 4,   null: false
@@ -134,18 +134,6 @@ ActiveRecord::Schema.define(version: 20170325191029) do
     t.datetime "updated_at",             null: false
   end
 
-  create_table "comments", force: :cascade do |t|
-    t.integer  "post_id",    limit: 4,                     null: false
-    t.integer  "user_id",    limit: 4,                     null: false
-    t.text     "body",       limit: 65535,                 null: false
-    t.boolean  "edited",                   default: false, null: false
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
-  end
-
-  add_index "comments", ["post_id"], name: "index_comments_on_post_id", using: :btree
-  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
-
   create_table "conversations", force: :cascade do |t|
     t.integer  "user_1_id",  limit: 4,   null: false
     t.integer  "user_2_id",  limit: 4,   null: false
@@ -245,14 +233,6 @@ ActiveRecord::Schema.define(version: 20170325191029) do
     t.string "name", limit: 255, null: false
   end
 
-  create_table "main_posts", force: :cascade do |t|
-    t.integer  "post_id",    limit: 4, null: false
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-  end
-
-  add_index "main_posts", ["post_id"], name: "index_main_posts_on_post_id", using: :btree
-
   create_table "member_instruments", force: :cascade do |t|
     t.integer  "member_id",     limit: 4, null: false
     t.integer  "instrument_id", limit: 4, null: false
@@ -316,18 +296,6 @@ ActiveRecord::Schema.define(version: 20170325191029) do
     t.datetime "updated_at",                   null: false
     t.integer  "musician_status_id", limit: 4
   end
-
-  create_table "posts", force: :cascade do |t|
-    t.string   "title",      limit: 255,                   null: false
-    t.integer  "user_id",    limit: 4,                     null: false
-    t.text     "body",       limit: 65535,                 null: false
-    t.boolean  "published",                default: false, null: false
-    t.boolean  "edited",                   default: false, null: false
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
-  end
-
-  add_index "posts", ["user_id"], name: "index_posts_on_user_id", using: :btree
 
   create_table "rehearsal_studio_reviews", force: :cascade do |t|
     t.string   "title",               limit: 255,               null: false
@@ -503,8 +471,6 @@ ActiveRecord::Schema.define(version: 20170325191029) do
   add_foreign_key "bm_ad_instruments", "instruments"
   add_foreign_key "btb_ad_genres", "band_to_band_ads"
   add_foreign_key "btb_ad_genres", "genres"
-  add_foreign_key "comments", "posts"
-  add_foreign_key "comments", "users"
   add_foreign_key "conversations", "users", column: "user_1_id"
   add_foreign_key "conversations", "users", column: "user_2_id"
   add_foreign_key "delegated_users", "users", column: "current_user"
@@ -517,7 +483,6 @@ ActiveRecord::Schema.define(version: 20170325191029) do
   add_foreign_key "events", "users", column: "creator_id"
   add_foreign_key "followships", "users", column: "follower_id"
   add_foreign_key "followships", "users", column: "leader_id"
-  add_foreign_key "main_posts", "posts"
   add_foreign_key "member_instruments", "instruments"
   add_foreign_key "member_instruments", "members"
   add_foreign_key "members", "bands"
@@ -527,7 +492,6 @@ ActiveRecord::Schema.define(version: 20170325191029) do
   add_foreign_key "musician_knowledges", "instruments"
   add_foreign_key "musician_knowledges", "levels"
   add_foreign_key "musician_knowledges", "musicians"
-  add_foreign_key "posts", "users"
   add_foreign_key "rehearsal_studio_users", "rehearsal_studios"
   add_foreign_key "rehearsal_studio_users", "users"
   add_foreign_key "rehearsal_studios", "users", column: "creator_id"

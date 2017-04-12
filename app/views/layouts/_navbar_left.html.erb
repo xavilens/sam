@@ -7,32 +7,12 @@
   </a>
   <ul class="dropdown-menu">
     <li class="header-dropdown-separator">Secciones</li>
-    <li><%= link_to 'Entrevistas', '#' %></li>
-    <li><%= link_to 'Concursos', '#' %></li>
-    <li><%= link_to 'Reportajes', '#' %></li>
-    <li><%= link_to 'Artículos', '#' %></li>
-    <li><%= link_to 'Tutoriales', '#' %></li>
-    <li class="header-dropdown-separator">Opiniones</li>
-    <li><%= link_to 'Salas', '#' %></li>
-    <li><%= link_to 'Locales de Ensayo', '#' %></li>
+    <li><%= link_to 'Imágenes', '#' %></li>
+    <li><%= link_to 'Videos', '#' %></li>
+    <li><%= link_to 'Canciones', '#' %></li>
   </ul>
 </li> -->
 <!-- FIN CONTENIDOS -->
-
-<!-- ANUNCIOS -->
-<!-- <li class="dropdown <%= active_page 'ads' %>">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-    aria-haspopup="true" aria-expanded="false">
-    Anuncios <i class="caret"></i>
-  </a>
-  <ul class="dropdown-menu">
-    <li><%= link_to 'Músico busca músico', '#' %></li>
-    <li><%= link_to 'Músico busca grupo', '#' %></li>
-    <li><%= link_to 'Grupo busca músico', '#' %></li>
-    <li><%= link_to 'Grupo busca grupo', '#' %></li>
-  </ul>
-</li> -->
-<!-- FIN ANUNCIOS -->
 
 <!-- USUARIOS -->
 <li class="dropdown <%= active_page 'users' %>">
@@ -41,8 +21,6 @@
     Usuarios <i class="caret"></i>
   </a>
   <ul class="dropdown-menu">
-    <!-- <li><%= link_to 'Músicos', users_path(search: {profileable_type: 'Musician'}) %></li>
-    <li><%= link_to 'Grupos', users_path(search: {profileable_type: 'Band'}) %></li> -->
     <li><%= link_to 'Músicos', musicians_path %></li>
     <li><%= link_to 'Grupos', bands_path %></li>
   </ul>
