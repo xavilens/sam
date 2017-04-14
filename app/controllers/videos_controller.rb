@@ -1,49 +1,49 @@
-class SongsController < ApplicationController
+class VideosController < ApplicationController
   before_action :set_user, only: [:index]
   before_action :set_current_user, only: [:new, :create, :edit, :update, :destroy]
-  before_action :set_song, only: [:edit, :update, :destroy]
+  before_action :set_video, only: [:edit, :update, :destroy]
 
   def index
-    @songs = @user.songs
+    @videos = @user.videos
   end
 
   def new
-    @song = @user.songs.build
+    @video = @user.videos.build
   end
 
   def edit
   end
 
   def create
-    @song = @user.songs.build(song_params)
+    @video = @user.videos.build(video_params)
 
     respond_to do |format|
-      if @song.save
-        format.html { redirect_to @user, notice: 'Tema añadido correctamente' }
+      if @video.save
+        format.html { redirect_to @user, notice: 'Video creado correctamente' }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }
-        format.json { render json: @song.errors, status: :unprocessable_entity }
+        format.json { render json: @video.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def update
     respond_to do |format|
-      if @song.update(song_params)
-        format.html { redirect_to @user, notice: 'Tema actualizado correctamente' }
+      if @video.update(video_params)
+        format.html { redirect_to @user, notice: 'Video actualizado correctamente' }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit }
-        format.json { render json: @song.errors, status: :unprocessable_entity }
+        format.json { render json: @video.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def destroy
-    @song.destroy
+    @video.destroy
     respond_to do |format|
-      format.html { redirect_to @user, notice: 'Tema eliminado correctamente' }
+      format.html { redirect_to videos_url, notice: 'Video eliminado correctamente' }
       format.json { head :no_content }
     end
   end
@@ -60,12 +60,12 @@ class SongsController < ApplicationController
     end
 
     # Use callbacks to share common setup or constraints between actions.
-    def set_song
-      @song = @user.songs.find(params[:id])
+    def set_video
+      @video = @user.videos.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def song_params
-      params.require(:song).permit(:name, :url, :user_id, :in_user_page)
+    def video_params
+      params.require(:video).permit(:name, :url, :track_id, :user_id, :in_user_page)
     end
 end

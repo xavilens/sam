@@ -74,6 +74,7 @@ class User < ActiveRecord::Base
 
   # MEDIA RELATED
   has_many :songs
+  has_many :videos
 
   ######## METHODS
 
@@ -189,6 +190,11 @@ class User < ActiveRecord::Base
   # Indica si el usuario tiene canciones
   def songs?
     songs.any?
+  end
+
+  # Indica si el usuario tiene canciones
+  def videos?
+    videos.any?
   end
 
   # Indica si el usuario sigue al leader

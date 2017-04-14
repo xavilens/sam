@@ -15,6 +15,7 @@ class Song < ActiveRecord::Base
     embed_info = client.get('/oembed', url: url, show_comments: false)
 
     # imprime el html del widget de embebido
-    puts embed_info['html']
+    # puts embed_info['html'].html_safe
+    return embed_info['html'].html_safe
   end
 end

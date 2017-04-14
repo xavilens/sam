@@ -43,13 +43,12 @@
 <!-- END User Music -->
 
 <!-- User Videos -->
-<% if @user.bio? %> <!-- TODO: Video player -->
+<% if @user.videos? %> <!-- TODO: Video player -->
   <div class="videos-container">
     <div class="center-name">Videos</div>
     <div class="user-videos col-sm-12">
       <div class="embed-responsive embed-responsive-16by9">
         <iframe src="https://www.youtube.com/embed/Tgcc5V9Hu3g" frameborder="0" allowfullscreen></iframe>
-        <!-- <iframe width="525" height="294" src="https://www.youtube.com/embed/Tgcc5V9Hu3g" frameborder="0" allowfullscreen></iframe> -->
       </div>
     </div>
   </div>

@@ -25,6 +25,7 @@ Rails.application.routes.draw do
     resources :events, only: [:show, :index]
 
     resources :songs, only: [:index]
+    resources :videos, only: [:index]
   end
 
   resources :bands, only: :index
@@ -50,4 +51,5 @@ Rails.application.routes.draw do
   resources :participants, only: [:new, :create, :destroy], controller: :event_participants
 
   resources :songs, only: [:new, :create, :edit, :update, :destroy]
+  resources :videos, only: [:new, :create, :edit, :update, :destroy]
 end
