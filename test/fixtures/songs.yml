@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  url: MyString
+  track_id: MyString
+  user_id: 
+  in_user_page: false
+
+two:
+  url: MyString
+  track_id: MyString
+  user_id: 
+  in_user_page: false

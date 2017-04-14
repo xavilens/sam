@@ -20,10 +20,15 @@
 
 <table class="table table-bordered table-striped">
   <tbody>
+  <%
+    no_data = true
+    is_search = !@search.empty?
+  %>
   <% @start_date.upto(@finish_date).each do |date| %>
-    <% if @is_user_calendar %>
+    <% if @is_user_calendar || is_search %>
 
       <% if @calendar.any_event?(date) %>
+        <% no_data = false %>
         <tr>
           <td class="event-header">
             <h4><%= calendar_date_header date %></h4>
@@ -72,19 +77,8 @@
   </tbody>
 </table>
 
-<% unless @is_user_calendar %>
-  <div class="row calendar-links">
-
-    <%= link_to fa_icon('chevron-left'), prev_calendar_url,
-      class: "calendar-link no-gutter-sm-3" %>
-
-    <div class="calendar-link no-gutter-sm-6">
-      <%= calendar_month_header(@start_date) %>
-    </div>
-
-    <%= link_to fa_icon("chevron-right"), next_calendar_url,
-      class: "calendar-link no-gutter-sm-3" %>
-  </div>
+<% if no_data %>
+  <div class="no-data">No hay ningún evento que mostrar.</div>
 <% end %>
 
 <%= render 'scripts/dotdotdot' %>

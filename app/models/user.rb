@@ -50,7 +50,6 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :social_networks_set, allow_destroy: true
 
   # CONVERSATIONS RELATED
-  # TODO: Soft-delete?? Borrar/ocultar solo si no quedan usuarios!!
   has_many :conversations, foreign_key: :user_1_id
   has_many :messages, through: :conversations
   has_many :reverse_conversations, foreign_key: :user_2_id, class_name: 'Conversation'
@@ -73,6 +72,8 @@ class User < ActiveRecord::Base
   has_many :reverse_followships, foreign_key: :leader_id, class_name: 'Followship'
   has_many :followers, through: :reverse_followships
 
+  # MEDIA RELATED
+  has_many :songs
 
   ######## METHODS
 
@@ -183,6 +184,11 @@ class User < ActiveRecord::Base
 
     # Ordenamos los eventos
     return every_events.sort_by! { |event| event.date }
+  end
+
+  # Indica si el usuario tiene canciones
+  def songs?
+    songs.any?
   end
 
   # Indica si el usuario sigue al leader

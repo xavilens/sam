@@ -1,5 +1,4 @@
-class EventSearchForm
-  include ActiveModel::Model
+class EventSearchForm < Search
 
   attr_accessor :name, :start_date, :finish_date, :type, :status, :location_type, :city, :province, :region
   attr_reader :events
@@ -23,7 +22,16 @@ class EventSearchForm
 
   # Indica si se ha rellenado algún campo de la búsqueda
   def empty?
-    name.blank? && start_date.blank? && finish_date.blank? && type.blank? && status.blank? && location_type.blank? && city.blank? && province.blank? && region.blank?
+    empty = name.blank?
+    # empty = empty && start_date.blank?
+    # empty = empty && finish_date.blank?
+    empty = empty && type.blank?
+    empty = empty && status.blank?
+    empty = empty && !(location_type == 'city' && city.present?)
+    empty = empty && !(location_type == 'province' && province.present?)
+    empty = empty && !(location_type == 'region' && region.present?)
+
+    return empty
   end
 
   # Devuelve los eventos encontrados
@@ -42,11 +50,11 @@ class EventSearchForm
       events = events.where(event_status_id: status) if status.present?
       events = events.where(event_type_id: type) if type.present?
 
-      if (location_type = 'city' && city.present?)
+      if (location_type == 'city' && city.present?)
         events = events.joins(:address).where(addresses: {city: city})
-      elsif (location_type = 'province' && province.present?)
+      elsif (location_type == 'province' && province.present?)
         events = events.joins(:address).where(addresses: {province: province})
-      elsif (location_type = 'region' && region.present?)
+      elsif (location_type == 'region' && region.present?)
         events = events.joins(:address).where(addresses: {region: region})
       end
 

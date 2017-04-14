@@ -12,10 +12,10 @@
     <% end %>
   </div>
 
-  <% if current_user? %>
+  <% if current_user? && page?('users', 'show') %>
   <div class="row">
     <div class="user-links col-sm-12 gap-top">
-      <%= link_to 'Añadir instrumento', new_image_path, class: 'btn btn-sm btn-link'  %>
+      <%= link_to 'Añadir instrumento',  user_edit_knowledges_path(user_id: current_user.id), class: 'btn btn-sm btn-link'  %>
     </div>
   </div>
   <% end %>

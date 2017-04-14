@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   root 'site#index'
 
   devise_for :users, controllers: {
@@ -9,8 +10,6 @@ Rails.application.routes.draw do
     sessions: 'users/sessions',
     unlocks: 'users/unlocks'
   }
-
-  devise_for :delegated_users
 
   resources :users do
     get 'edit/knowledges', action: :edit_knowledges, as: :edit_knowledges
@@ -24,6 +23,8 @@ Rails.application.routes.draw do
     resources :members, only: [:edit, :index]
     resources :images, only: [:show, :index]
     resources :events, only: [:show, :index]
+
+    resources :songs, only: [:index]
   end
 
   resources :bands, only: :index
@@ -47,4 +48,6 @@ Rails.application.routes.draw do
   end
 
   resources :participants, only: [:new, :create, :destroy], controller: :event_participants
+
+  resources :songs, only: [:new, :create, :edit, :update, :destroy]
 end

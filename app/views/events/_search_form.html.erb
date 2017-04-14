@@ -27,14 +27,14 @@
     <%= f.input :location_type, collection: [['city', 'Ciudad'], ['province', 'Provincia'], ['region', 'Comunidad autónoma']],
       value_method: :first, label_method: :last, label: 'Buscar por', required: false, as: :radio_buttons %>
 
-    <%= f.input :city, collection: Address.events.cities, label_method: :city, prompt: 'Filtrar por localidad...',
-      value_method: :city, label: 'Localidad', required: false, as: :select %>
+    <%= f.input :city, collection: Address.events.cities, label_method: :city,
+      value_method: :city, label: 'Localidad', include_blank: true, required: false, as: :select %>
 
-    <%= f.input :province, collection: Address.events.provinces, label_method: :province, prompt: 'Filtrar por provincia...',
-      value_method: :province, label: 'Provincia', required: false, as: :select %>
+    <%= f.input :province, collection: Address.events.provinces, label_method: :province,
+      value_method: :province, label: 'Provincia', include_blank: true, required: false, as: :select %>
 
-    <%= f.input :region, collection: Address.events.regions, label_method: :region, prompt: 'Filtrar por comunidad...',
-      value_method: :region, label: 'Comunidad autónoma', required: false, as: :select %>
+    <%= f.input :region, collection: Address.events.regions, label_method: :region,
+      value_method: :region, label: 'Comunidad autónoma', include_blank: true, required: false, as: :select %>
 
     <%= f.button :submit, 'Filtrar', class: 'btn btn-sm btn-primary' %>
   <% end %>

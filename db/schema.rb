@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170412184747) do
+ActiveRecord::Schema.define(version: 20170414155821) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "addresseable_id",   limit: 255, null: false
@@ -210,6 +210,16 @@ ActiveRecord::Schema.define(version: 20170412184747) do
     t.string   "youtube_url",    limit: 255
   end
 
+  create_table "songs", force: :cascade do |t|
+    t.string   "url",          limit: 255,                 null: false
+    t.integer  "user_id",      limit: 4,                   null: false
+    t.boolean  "in_user_page",             default: false, null: false
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+  end
+
+  add_index "songs", ["user_id"], name: "index_songs_on_user_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                  limit: 255,   default: "", null: false
     t.string   "encrypted_password",     limit: 255,   default: "", null: false
@@ -258,6 +268,7 @@ ActiveRecord::Schema.define(version: 20170412184747) do
   add_foreign_key "musician_knowledges", "instruments"
   add_foreign_key "musician_knowledges", "levels"
   add_foreign_key "musician_knowledges", "musicians"
+  add_foreign_key "songs", "users"
   add_foreign_key "users", "roles"
   add_foreign_key "users", "social_networks_sets"
 end

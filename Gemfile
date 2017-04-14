@@ -59,12 +59,14 @@ gem 'carrierwave', '0.11.0'
 # gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'
 gem 'mini_magick', '4.5.1'
 
+# Cocoon: Nos proporciona una forma sencilla de hacer asociaciones dinámicamente en un formulario
+gem 'cocoon', '1.2.9'
+# Soundloud: Nos proporciona métodos para poder contactar con los datos de Soundcloud
+gem 'soundcloud', '0.3.4'
 # Draper: Simplifica los decorators
 gem 'draper', '2.1'
 # Reform: Crea objetos tipo Form, para simplificar el uso complejo de formularios
 gem 'reform', '2.2.1'
-# Cocoon: Nos proporciona una forma sencilla de hacer asociaciones dinámicamente en un formulario
-gem 'cocoon', '1.2.9'
 # gem "reform-rails", '0.1.7'
 gem 'dry-validation', ' 0.10.3'
 # Interactor: Nos proporciona una interfaz para el uso sencillo de Services Objects
@@ -79,7 +81,6 @@ group :development, :test do
   # Consola avanzada
   gem 'pry-rails', '0.3.4'
 
-  #
   gem 'awesome_print', '1.7.0'
 end
 
