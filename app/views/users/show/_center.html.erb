@@ -16,13 +16,10 @@
 <% if @user.bio? %>
   <div class="bio-container">
     <div class="center-name">Biografía</div>
+
     <div class="bio-text">
       <div class="user-bio ellipsis">
         <%= @user.bio %>
-      </div>
-      <div class="ellipsis-control-container">
-        <%= link_to fa_icon("caret-down")+" Leer más...", '',
-          class: 'ellipsis-control pull-right' %>
       </div>
     </div>
   </div>
@@ -43,14 +40,20 @@
 <!-- END User Music -->
 
 <!-- User Videos -->
-<% if @user.videos? %> <!-- TODO: Video player -->
+<% if @user.profile_videos? %> <!-- TODO: Video player -->
   <div class="videos-container">
-    <div class="center-name">Videos</div>
-    <div class="user-videos col-sm-12">
-      <div class="embed-responsive embed-responsive-16by9">
-        <iframe src="https://www.youtube.com/embed/Tgcc5V9Hu3g" frameborder="0" allowfullscreen></iframe>
+    <div class="center-name">
+      Videos
+      <div class="pull-right">
+        <%= link_to 'Ver todos', user_videos_path(user_id: @user.id), class: 'btn btn-link' %>
       </div>
     </div>
+
+    <% @user.profile_videos.each do |video| %>
+      <div class="video-container">
+        <%= render 'videos/video_row', video: video %>
+      </div>
+    <% end %>
   </div>
 <% end %>
 <!-- END User Videos -->

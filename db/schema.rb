@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170414181806) do
+ActiveRecord::Schema.define(version: 20170416161225) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "addresseable_id",   limit: 255, null: false
@@ -249,13 +249,18 @@ ActiveRecord::Schema.define(version: 20170414181806) do
   add_index "users", ["social_networks_set_id"], name: "index_users_on_social_networks_set_id", using: :btree
 
   create_table "videos", force: :cascade do |t|
-    t.string   "name",         limit: 255,                 null: false
+    t.string   "title",        limit: 255
     t.string   "url",          limit: 255,                 null: false
-    t.string   "track_id",     limit: 255,                 null: false
+    t.string   "video_id",     limit: 255
     t.integer  "user_id",      limit: 4,                   null: false
     t.boolean  "in_user_page",             default: false, null: false
     t.datetime "created_at",                               null: false
     t.datetime "updated_at",                               null: false
+    t.string   "thumbnail",    limit: 255
+    t.integer  "duration",     limit: 4
+    t.string   "provider",     limit: 255,                 null: false
+    t.string   "embed_code",   limit: 255
+    t.string   "description",  limit: 255
   end
 
   add_index "videos", ["user_id"], name: "index_videos_on_user_id", using: :btree

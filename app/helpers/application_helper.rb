@@ -67,5 +67,4 @@ module ApplicationHelper
       "alert-warning"
     end
   end
-
 end

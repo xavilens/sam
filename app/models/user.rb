@@ -74,15 +74,14 @@ class User < ActiveRecord::Base
 
   # MEDIA RELATED
   has_many :songs
+  has_many :profile_songs,-> {where(in_user_page: true)}, class_name: 'Song'
+
   has_many :videos
+  has_many :profile_videos,-> {where(in_user_page: true)}, class_name: 'Video'
 
   ######## METHODS
 
-  # Indica si el usuario es uno mismo
-  def current_user?
-    id == current_user.id
-  end
-
+  ## USER DATA
   # Indica si el perfil es de Musician
   def musician?
     profileable_type == 'Musician'
@@ -95,14 +94,55 @@ class User < ActiveRecord::Base
 
   # Devuelve el perfil
   def profile
-    self.profileable
+    profileable
   end
 
   # Devuelve el estado
   def status
-    self.profileable.status
+    profile.status
   end
 
+  # Indica si tiene una Bio
+  def bio?
+    !bio.blank?
+  end
+
+  # Devuelve la longitud de la Bio
+  def bio_size
+    bio? ? bio.size : 0
+  end
+
+  # Indica si el usuario está online
+  def online?
+    updated_at > 10.minutes.ago
+  end
+
+  # Indica el tipo de perfil en Español
+  def type
+    if musician?
+      'Músico'
+    elsif band?
+      'Grupo'
+    end
+  end
+
+  # Indica si es administrador
+  def is_admin?
+    role.name.downcase == 'admin'
+  end
+
+  ## SOCIAL NETWORKS
+  # Indica si tiene redes sociales definidas
+  def social_networks?
+    !social_networks_set.blank?
+  end
+
+  # Devuelve todas las redes sociales
+  def social_networks
+    social_networks_set.avaliables
+  end
+
+  ## MEMBERS
   # Indica si posee alguna relacion de Member
   def memberships?
     if musician?
@@ -128,6 +168,7 @@ class User < ActiveRecord::Base
     end
   end
 
+  ## INSTRUMENTS
   # Indica si tiene conocimiento en instrumentos
   def instruments?
     if musician?
@@ -137,24 +178,10 @@ class User < ActiveRecord::Base
     end
   end
 
-  # Indica si tiene una Bio
-  def bio?
-    !bio.blank?
-  end
-
-  # Devuelve la longitud de la Bio
-  def bio_size
-    bio? ? bio.size : 0
-  end
-
-  # Indica si tiene redes sociales definidas
-  def social_networks?
-    !social_networks_set.blank?
-  end
-
-  # Devuelve todas las redes sociales
-  def social_networks
-    social_networks_set.avaliables
+  ## MESSAGES
+  # Devuelve todas las conversaciones en las que participa el usuario
+  def conversations_all
+    conversations + reverse_conversations
   end
 
   # Devuelve todas las conversaciones en las que interviene el usuario
@@ -162,6 +189,7 @@ class User < ActiveRecord::Base
     conversations + reverse_conversations
   end
 
+  ## EVENTS
   # Indica si tiene algún evento propio
   def events?
     !events.empty?
@@ -187,9 +215,15 @@ class User < ActiveRecord::Base
     return every_events.sort_by! { |event| event.date }
   end
 
+  ## MEDIA
   # Indica si el usuario tiene canciones
   def songs?
     songs.any?
+  end
+
+  # Indica si el usuario tiene canciones que mostrar en su pagina
+  def profile_songs?
+    profile_songs.any?
   end
 
   # Indica si el usuario tiene canciones
@@ -197,6 +231,12 @@ class User < ActiveRecord::Base
     videos.any?
   end
 
+  # Indica si el usuario tiene canciones que mostrar en su pagina
+  def profile_videos?
+    profile_videos.any?
+  end
+
+  ## FOLLOWSHIPS
   # Indica si el usuario sigue al leader
   def following?(leader)
     leaders.include? leader
@@ -212,30 +252,6 @@ class User < ActiveRecord::Base
   # Indica si el usuario es seguido por el follower
   def followed?(follower)
     followers.include? follower
-  end
-
-  # Indica si el usuario está online
-  def online?
-    updated_at > 10.minutes.ago
-  end
-
-  # Devuelve todas las conversaciones en las que participa el usuario
-  def conversations_all
-    conversations + reverse_conversations
-  end
-
-  # Indica el tipo de perfil en Español
-  def type
-    if musician?
-      'Músico'
-    elsif band?
-      'Grupo'
-    end
-  end
-
-  # Indica si es administrador
-  def is_admin?
-    role.name.downcase == 'admin'
   end
 
   private

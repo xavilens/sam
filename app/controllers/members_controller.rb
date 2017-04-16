@@ -73,7 +73,6 @@ class MembersController < ApplicationController
   end
 
   def update
-    debugger
     @member = Member.find(member_update_params[:id])
 
     if @member.update(member_update_params)

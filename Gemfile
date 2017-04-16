@@ -45,8 +45,9 @@ gem 'bootstrap-datepicker-rails', '1.6.4.1'
 gem 'momentjs-rails', '2.17.1'
 #Datepicker para Fechas, Horas y Ambas
 gem 'bootstrap3-datetimepicker-rails', '~> 4.14.30'
-# Formateador numérico
+# Formateador numérico FIXME
 gem 'autonumeric-rails', '2.0.0.1'
+
 
 
 # internalizacion
@@ -58,6 +59,8 @@ gem 'rails-i18n', '~> 4.0.0'
 gem 'carrierwave', '0.11.0'
 # gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'
 gem 'mini_magick', '4.5.1'
+# Video-Info: Proporciona información de los videos
+gem 'video_info', '2.7'
 
 # Cocoon: Nos proporciona una forma sencilla de hacer asociaciones dinámicamente en un formulario
 gem 'cocoon', '1.2.9'

@@ -5,13 +5,21 @@ class VideosController < ApplicationController
 
   def index
     @videos = @user.videos
+
+    @page = "Vídeos"
+    @title = "Vídeos de #{@user.name}"
   end
 
   def new
     @video = @user.videos.build
+
+    @page = "Nuevo vídeo"
+    @title = @page
   end
 
   def edit
+    @page = "Editar vídeo"
+    @title = @page
   end
 
   def create
@@ -19,7 +27,7 @@ class VideosController < ApplicationController
 
     respond_to do |format|
       if @video.save
-        format.html { redirect_to @user, notice: 'Video creado correctamente' }
+        format.html { redirect_to user_path(@user), notice: 'Video creado correctamente' }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }
@@ -66,6 +74,6 @@ class VideosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def video_params
-      params.require(:video).permit(:name, :url, :track_id, :user_id, :in_user_page)
+      params.require(:video).permit(:title, :url, :in_user_page)
     end
 end

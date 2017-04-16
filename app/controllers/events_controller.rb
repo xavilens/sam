@@ -133,7 +133,7 @@ class EventsController < ApplicationController
 
     # Seteamos la variable @event con el evento cuyo id obtenemos de los parametros
     def set_user
-      @user = if @is_user_calendar
+      @user = if params[:user_id].present?
         User.find(params[:user_id]).decorate
       else
         set_current_user

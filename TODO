@@ -1,5 +1,7 @@
-# TODO: Create Followships
 # TODO: Create Videos
+# TODO: Create Followships
+# TODO: Fix Events (PVP, AddParticipant...)
+# TODO: Fix Image Show (PVP, AddParticipant...)
 # TODO: Messages by AJAX
 # TODO: Finalize user index and user search
 # TODO: Check control dependencies (controller)

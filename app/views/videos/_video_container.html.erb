@@ -1,0 +1,54 @@
+
+<div class="row">
+  <div class="col-sm-12">
+
+    <div class="video-container">
+      <div class="video-header">
+        <div class="row">
+          <div class="col-sm-12">
+            <h3 class="video-title">
+              <%= video.title %>
+
+              <% if is_video_owner? video %>
+                <span> <%= link_to_edit_video video %> </span>
+                <span> <%= link_to_remove_video video %> </span>
+              <% end %>
+            </h3>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIDEO -->
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="video">
+            <%= render 'videos/video_row', video: video %>
+          </div>
+        </div>
+      </div>
+      <!-- END VIDEO -->
+
+      <!-- VIDEO DATA -->
+      <div class="row">
+        <div class="col-sm-12">
+          <h3 class="video-title border">
+            <%= video.title %>
+          </h3>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="video-datas col-sm-12">
+          <div class="video-data video-provider">
+            <%= fa_icon(video.provider.downcase, class: "fa-lg #{video.provider}", title: 'Proveedor de video')+" #{video.provider}" %>
+          </div>
+
+          <div class="video-data video-duration">
+            <%= fa_icon('clock-o', class: "fa-lg", title: 'Duración')+" #{seconds_to_time video.duration}" %>
+          </div>
+        </div>
+      </div>
+      <!-- END VIDEO DATA -->
+    </div>
+  </div>
+</div>

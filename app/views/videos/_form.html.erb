@@ -1,15 +1,56 @@
-<%= simple_form_for(@video) do |f| %>
-  <%= f.error_notification %>
+<div class="video-form form-container">
+  <%= simple_form_for @video, html: { class: 'form-horizontal'},
+    wrapper: 'horizontal_form',
+    wrapper_mappings: {
+      check_boxes: :horizontal_radio_and_checkboxes,
+      radio_buttons: :horizontal_radio_and_checkboxes,
+      file: :horizontal_file_input,
+      boolean: :horizontal_boolean
+    }  do |f| %>
+    <%= f.error_notification %>
 
-  <div class="form-inputs">
-    <%= f.input :name %>
-    <%= f.input :url %>
-    <%= f.input :track_id %>
-    <%= f.association :user %>
-    <%= f.input :in_user_page %>
-  </div>
+    <div class="form-header">
+      <div class="row">
+        <div class="col-sm-12">
+          <h3 class="col-sm-offset-1"><%= @title %></h3>
+        </div>
+      </div>
+    </div>
 
-  <div class="form-actions">
-    <%= f.button :submit %>
-  </div>
-<% end %>
+    <div class="form-inputs">
+      <%= f.input :url, label: 'URL', required: true, wrapper: :field_9 %>
+
+      <div class="col-sm-offset-2 col-sm-10">
+        <%= f.input :in_user_page, label: 'Mostrar en el perfil del usuario', wrapper: :vertical_boolean %>
+      </div>
+
+      <div class="form-group check_boxes">
+        <div class="col-sm-offset-1 col-sm-11">
+          <%= check_box_tag(:api_data, 1,{onchange: 'javascript:api_data()'}) %>
+          <%= label_tag(:api_data, 'Obtener datos directamente del video', {onchange: 'javascript:api_data()'}) %>
+        </div>
+      </div>
+
+      <%= f.input :title, label: 'Título', wrapper: :field_8 %>
+      <%= f.input :description, label: 'Descripción', wrapper: :field_8 %>
+    </div>
+
+    <div class="form-actions gap-bottom gap-left">
+      <div class="row">
+        <div class="col-sm-3 gap-left">
+          <%= f.button :submit, "Aceptar", class: 'btn btn-block btn-primary', data: {"disable-with": "Creando..."} %>
+        </div>
+
+        <% if is_edit_form? %>
+        <div class="col-sm-3">
+          <%= link_to "Borrar", video_path(video), method: :delete, data: {"disable-with": "Borrando..."} ,class: 'btn btn-block btn-default' %>
+        </div>
+        <% end %>
+
+        <div class="col-sm-3">
+          <%= link_to "Volver", :back, class: 'btn btn-block btn-default' %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,10 @@
+
+<% if @user.videos? or @user == current_user %>
+<div class="user-show-container">
+  <div class="leftbar-name">
+    <%= link_to user_videos_path(user_id: @user.id) do %>
+    Vídeos <small class="small">Ver todos</small>
+    <% end %>
+  </div>
+</div>
+<% end %>

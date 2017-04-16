@@ -1,3 +1,27 @@
-// Place all the styles related to the videos controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.video-container
+  margin: 5px 0
+
+.video-header
+  @extend .form-header
+  margin-bottom: 0
+
+.video-container
+  @extend .image-show-container
+
+.video-title
+  padding-bottom: 5px
+  padding-left: $grid-gutter-width
+  padding-right: $grid-gutter-width
+
+  margin-top: 20px
+  margin-left: $grid-gutter-width / 2
+  margin-right: $grid-gutter-width / 2
+  &.border
+    border-bottom: 1px solid #c6c6c6
+
+.video-datas
+  color: $gray-light
+  margin: 10px
+  .video-data
+    display: inline-block
+    margin-right: 10px

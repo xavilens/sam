@@ -14,4 +14,14 @@ module FormHelper
     params[resource][param].blank?
   end
 
+  # Indica si se encuentra en el formulario de editar
+  def is_edit_form?
+    params[:action] == 'edit'
+  end
+
+  # Indica si se encuentra en el formulario de crear
+  def is_new_form?
+    params[:action] == 'new'
+  end
+
 end
