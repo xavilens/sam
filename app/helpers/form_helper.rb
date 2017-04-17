@@ -1,4 +1,5 @@
 module FormHelper
+  ######### FORM INPUT
   # Rellena el campo del recurso 'resource' con el parámetro 'param'
   def fill_input resource, param
     params[resource][param] unless resource_blank?(resource) || param_blank?(resource, param)
@@ -14,6 +15,7 @@ module FormHelper
     params[resource][param].blank?
   end
 
+  ######### FORM TYPE
   # Indica si se encuentra en el formulario de editar
   def is_edit_form?
     params[:action] == 'edit'
@@ -24,4 +26,23 @@ module FormHelper
     params[:action] == 'new'
   end
 
+  # Devuelve el mensaje a mostrar en el botón submit
+  def data_disable_submit_message
+    if is_new_form?
+      'Creando...'
+    else
+      'Actualizando...'
+    end
+  end
+
+  ######### FORM ERRORS
+  # Mensaje por defecto de la sección de errores de un formulario
+  def form_errors_title
+    "Algo fue mal... Por favor, revise los siguientes problemas:"
+  end
+
+  # Devuelve la sección de error por defecto
+  def form_errors_section object
+    render 'layouts/errors', object: object
+  end
 end

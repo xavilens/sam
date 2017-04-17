@@ -32,8 +32,20 @@
       <div class="row">
         <div class="col-sm-12">
           <h3 class="video-title border">
-            <%= video.title %>
+            <%= link_to video.title, video.url %>
           </h3>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="video-description border">
+            <% if video.description? %>
+              <%= video.description %>
+            <% else %>
+              Este vídeo no tiene descripción
+            <% end %>
+          </div>
         </div>
       </div>
 

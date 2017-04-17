@@ -1,4 +1,4 @@
-$(document).on('ready', function(){
+$(document).on('ready page:load', function(){
   // Intercambia entre la introducción manual de datos y la obtención de estos a través de la api
   $('#api_data').click(function(){
     if($(this).is(':checked')){

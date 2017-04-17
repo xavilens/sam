@@ -1,8 +1,13 @@
 <% page_title @page %>
 
 <div class="row">
-
   <div class="col-md-9">
+    <!-- END Video Header -->
+    <div class="page-header border">
+      <h1><%= @title %></h1>
+    </div>
+    <!-- END Video Header -->
+
     <!-- Video Actions -->
     <div class="row">
       <div class="col-sm-12">
@@ -21,9 +26,11 @@
     </div>
     <!-- END Video Actions -->
 
+    <!-- Videos -->
     <% @videos.each do |video| %>
       <%= render 'videos/video_container', video: video %>
     <% end %>
+    <!-- END Videos -->
   </div>
 
   <div class="col-md-3">

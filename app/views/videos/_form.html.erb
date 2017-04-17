@@ -7,7 +7,6 @@
       file: :horizontal_file_input,
       boolean: :horizontal_boolean
     }  do |f| %>
-    <%= f.error_notification %>
 
     <div class="form-header">
       <div class="row">
@@ -17,7 +16,13 @@
       </div>
     </div>
 
+    <%= render 'layouts/errors', object: @video %>
+
     <div class="form-inputs">
+      <p class="text-muted col-sm-10 col-sm-offset-2">
+        Proveedores válidos: YouTube, Vimeo, DailyMotion, Wistia, Vk
+      </p>
+
       <%= f.input :url, label: 'URL', required: true, wrapper: :field_9 %>
 
       <div class="col-sm-offset-2 col-sm-10">
@@ -28,27 +33,32 @@
         <div class="col-sm-offset-1 col-sm-11">
           <%= check_box_tag(:api_data, 1,{onchange: 'javascript:api_data()'}) %>
           <%= label_tag(:api_data, 'Obtener datos directamente del video', {onchange: 'javascript:api_data()'}) %>
+          <p class="hint text-muted">Al elegir esta opción los datos se obtendrán automáticamente del vídeo</p>
         </div>
       </div>
 
-      <%= f.input :title, label: 'Título', wrapper: :field_8 %>
-      <%= f.input :description, label: 'Descripción', wrapper: :field_8 %>
+      <%= f.input :title, label: 'Título', disabled: true, wrapper: :field_8 %>
+      <%= f.input :description, label: 'Descripción', disabled: true, wrapper: :field_8 %>
     </div>
+
+    <% if is_edit_form? %>
+    <div class="row">
+      <div class="col-sm-offset-1">
+        <%= link_to fa_icon('trash')+' Borrar', video_path(@video), method: :delete,
+          data: {"disable-with": "#{fa_icon('trash').html_safe} Borrando..."}, class: 'btn btn-link' %>
+      </div>
+    </div>
+    <% end %>
 
     <div class="form-actions gap-bottom gap-left">
       <div class="row">
         <div class="col-sm-3 gap-left">
-          <%= f.button :submit, "Aceptar", class: 'btn btn-block btn-primary', data: {"disable-with": "Creando..."} %>
+          <%= f.button :submit, "Aceptar", class: 'btn btn-block btn-primary',
+            data: {"disable-with": "#{data_disable_submit_message}"} %>
         </div>
 
-        <% if is_edit_form? %>
         <div class="col-sm-3">
-          <%= link_to "Borrar", video_path(video), method: :delete, data: {"disable-with": "Borrando..."} ,class: 'btn btn-block btn-default' %>
-        </div>
-        <% end %>
-
-        <div class="col-sm-3">
-          <%= link_to "Volver", :back, class: 'btn btn-block btn-default' %>
+          <%= link_to "Volver", user_videos_path(user_id: @user.id), class: 'btn btn-block btn-default' %>
         </div>
       </div>
     </div>

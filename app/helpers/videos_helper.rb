@@ -1,7 +1,7 @@
 module VideosHelper
   # Indica si es el creador del video
   def is_video_owner? video
-    video.user_id == @user.id
+    video.user_id == current_user.id
   end
 
   def link_to_edit_video video
