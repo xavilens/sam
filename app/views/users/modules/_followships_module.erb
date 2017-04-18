@@ -1,0 +1,44 @@
+
+<% if @user.leaders? %>
+<div class="user-show-container">
+  <div class="leftbar-name">Siguiendo</div>
+
+  <div class="followships-container no-gutter">
+    <% @user.leaders.order(id: :desc).first(12).each do |leader| %>
+    <div class="followships-user no-gutter-sm-2">
+      <%= link_to user_path(leader) do %>
+        <%= image_tag leader.avatar_url(:thumb), alt: leader.name, class: ['img-border','img-responsive'] %>
+      <% end %>
+    </div>
+    <% end %>
+  </div>
+
+  <div class="row">
+    <div class="user-links col-sm-12 gap-top text-left">
+      <%= link_to 'Ver todos', user_followships_path(user_id: @user), class: 'btn btn-sm btn-link' %>
+    </div>
+  </div>
+</div>
+<% end %>
+
+<% if @user.followers? %>
+<div class="user-show-container">
+  <div class="leftbar-name">Seguidores</div>
+
+  <div class="followships-container no-gutter">
+    <% @user.followers.order(id: :desc).first(12).each do |follower| %>
+    <div class="followships-user no-gutter-sm-2">
+      <%= link_to user_path(follower) do %>
+        <%= image_tag follower.avatar_url(:thumb), alt: follower.name, class: ['img-border','img-responsive'] %>
+      <% end %>
+    </div>
+    <% end %>
+  </div>
+
+  <div class="row">
+    <div class="user-links col-sm-12 gap-top text-left">
+      <%= link_to 'Ver todos', user_followships_path(user_id: @user), class: 'btn btn-sm btn-link' %>
+    </div>
+  </div>
+</div>
+<% end %>

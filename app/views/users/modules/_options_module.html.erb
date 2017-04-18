@@ -3,33 +3,31 @@
 <div class="options-container user-show-container">
   <div class="row">
     <%= link_to fa_icon('envelope'), new_message_path(to_user: @user.id),
-      class: 'option-button-icon option-button btn btn-default col-md-2 col-md-offset-1 gap-right has-tooltip',
-      title: "Enviar mensaje" %>
+      class: 'option-button-icon option-button btn btn-default col-md-2 col-md-offset-1 gap-right',
+      title: "Enviar mensaje", data: {toggle: 'tooltip', placement: 'top'} %>
 
     <% if current_user.following? @user %>
-    <button type="button" class="option-button btn btn-default col-md-2 gap-right has-tooltip"
-      title="Deja de seguir a <%= @user.name %>">
-      <span class="option-button-icon"><%= fa_icon 'eye-slash' %></span>
-    </button>
+      <%= link_to fa_icon('eye-slash', id: "followship-icon"), followships_path(user_id: @user.id),
+        method: :delete, class: 'option-button-icon option-button btn btn-default col-md-2 gap-right',
+        data: {toggle: 'tooltip', placement: 'top'}, title: "Dejar de seguir a #{@user.name}", id: "followship" %>
     <% else %>
-    <button type="button" class="option-button btn btn-default col-md-2 gap-right has-tooltip"
-      title="Sigue a <%= @user.name %>">
-      <span class="option-button-icon"><%= fa_icon 'eye' %></span>
-    </button>
+      <%= link_to fa_icon('eye', id: "followship-icon"), followships_path(user_id: @user.id),
+        method: :post, class: 'option-button-icon option-button btn btn-default col-md-2 gap-right',
+        data: {toggle: 'tooltip', placement: 'top'}, title: "Seguir a #{@user.name}", id: "followship" %>
     <% end %>
 
     <% if current_user.band? && @user.musician? %>
       <% if current_user.profile.member? @user.profile %>
 
         <%= link_to fa_icon('user-times'), user_membership_delete_path(user_id: @user.id),
-          class:  'option-button-icon option-button btn btn-default col-md-2 gap-right has-tooltip',
-          title:"Expulsar del grupo", remote: true %>
+          class:  'option-button-icon option-button btn btn-default col-md-2 gap-right',
+          title:"Expulsar del grupo", remote: true, data: {toggle: 'tooltip', placement: 'top', "disable-with": '...'} %>
 
       <% else %>
 
         <%= link_to fa_icon('user-plus'), user_send_membership_path(user_id: @user, from_user: current_user),
-          class:  'option-button-icon option-button btn btn-default col-md-2 gap-right has-tooltip',
-          title:"Invitar al grupo", remote: true %>
+          class:  'option-button-icon option-button btn btn-default col-md-2 gap-right',
+          title:"Invitar al grupo", remote: true, data: {toggle: 'tooltip', placement: 'top', "disable-with": '...'} %>
 
       <% end %>
     <% elsif current_user.musician? && @user.band? %>

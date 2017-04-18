@@ -242,7 +242,7 @@ class User < ActiveRecord::Base
     leaders.include? leader
   end
 
-  # Indica si el usuario sigue al leader
+  # Hace que el usuario siga al líder
   def follow!(leader)
     if leader != self && !following?(leader)
       leaders << leader
@@ -252,6 +252,16 @@ class User < ActiveRecord::Base
   # Indica si el usuario es seguido por el follower
   def followed?(follower)
     followers.include? follower
+  end
+
+  # Indica si el usuario sigue al leader
+  def leaders?
+    leaders.any?
+  end
+
+  # Indica si el usuario es seguido por el follower
+  def followers?
+    followers.any?
   end
 
   private

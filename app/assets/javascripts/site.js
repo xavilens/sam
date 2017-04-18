@@ -13,5 +13,5 @@ function countChar(val) {
 };
 
 $(document).on('ready page:change', function() {
-  $('.has-tooltip').tooltip();
+  $('[data-toggle="tooltip"]').tooltip();
 });

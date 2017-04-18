@@ -26,6 +26,7 @@ Rails.application.routes.draw do
 
     resources :songs, only: [:index]
     resources :videos, only: [:index]
+    resources :followships, only: [:index]
   end
 
   resources :bands, only: :index
@@ -52,4 +53,9 @@ Rails.application.routes.draw do
 
   resources :songs, only: [:new, :create, :edit, :update, :destroy]
   resources :videos, only: [:new, :create, :edit, :update, :destroy]
+
+  namespace :followships do
+    post ":user_id", action: :create
+    delete ":user_id", action: :destroy
+  end
 end

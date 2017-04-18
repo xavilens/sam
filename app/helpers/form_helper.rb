@@ -28,9 +28,11 @@ module FormHelper
 
   # Devuelve el mensaje a mostrar en el botón submit
   def data_disable_submit_message
+    ''
+    
     if is_new_form?
       'Creando...'
-    else
+    elsif is_edit_form?
       'Actualizando...'
     end
   end
