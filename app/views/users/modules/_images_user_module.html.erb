@@ -1,15 +1,15 @@
 
 <% if @user.images? or @user == current_user %>
 <div class="user-show-container">
-  <div class="leftbar-name">Imágenes</div>
+  <div class="leftbar-name">Imágenes <span class="badge"><%= @user.images.size %></span></div>
 
   <div class="images-container">
     <% if @user.images? %>
       <div class="image-user-row">
         <% @user.images.order(id: :desc).first(12).each do |image| %>
         <div class="image-user">
-          <%= link_to user_image_path(user_id: @user.id, id: image.id) do %>
-            <%= image_tag image.image_url(:thumb), alt: image.title, class: ['img-border-black','img-responsive'] %>
+          <%= link_to user_image_path(user_id: @user, id: image) do %>
+            <%= image_tag image.image_url(:thumb), alt: image.title, class: ['img-border','img-responsive'] %>
           <% end %>
         </div>
         <% end %>
@@ -20,9 +20,9 @@
   </div>
 
   <div class="row">
-    <div class="user-links col-sm-12 gap-top text-left">
-      <%= link_to 'Nueva imagen', new_image_path, class: 'btn btn-sm btn-link' if current_user? %>
-      <%= link_to 'Ver todas', user_images_path(user_id: @user), class: 'btn btn-sm btn-link' if @user.images? %>
+    <div class="user-links col-sm-12 text-muted">
+      <%= link_to 'Ver todos', user_images_path(user_id: @user),
+        class: 'btn btn-block btn-sm btn-default gap-top ' %>
     </div>
   </div>
 </div>

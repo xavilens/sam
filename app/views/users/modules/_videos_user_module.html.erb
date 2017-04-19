@@ -2,9 +2,18 @@
 <% if @user.videos? or @user == current_user %>
 <div class="user-show-container">
   <div class="leftbar-name">
-    <%= link_to user_videos_path(user_id: @user.id) do %>
-    Vídeos <small class="small">Ver todos</small>
-    <% end %>
+    Vídeos <span class="badge"><%= @user.videos.size %></span>
+  </div>
+
+  <div class="video-container">
+    <%= render 'videos/video_row', video: @user.videos.last %>
+  </div>
+
+  <div class="row">
+    <div class="user-links col-sm-12 text-muted">
+      <%= link_to 'Ver todos', user_videos_path(user_id: @user.id),
+        class: 'btn btn-block btn-sm btn-default gap-top' %>
+    </div>
   </div>
 </div>
 <% end %>

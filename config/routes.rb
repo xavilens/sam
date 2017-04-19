@@ -12,10 +12,12 @@ Rails.application.routes.draw do
   }
 
   resources :users do
+    # Edit info
     get 'edit/knowledges', action: :edit_knowledges, as: :edit_knowledges
     put :update_knowledges
     patch :update_knowledges
 
+    # Memberships
     get 'membership/send/:from_user', action: :send_request, controller: :members, as: :send_membership
     get 'membership/delete/:member_id', action: :delete_view, controller: :members, as: :band_membership_delete
     get 'membership/delete/', action: :delete_view, controller: :members, as: :membership_delete
@@ -26,7 +28,10 @@ Rails.application.routes.draw do
 
     resources :songs, only: [:index]
     resources :videos, only: [:index]
-    resources :followships, only: [:index]
+
+    # Followships
+    get 'leaders', action: :leaders, controller: :followships
+    get 'followers', action: :followers, controller: :followships
   end
 
   resources :bands, only: :index

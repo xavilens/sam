@@ -21,27 +21,27 @@
 
         <%= link_to fa_icon('user-times'), user_membership_delete_path(user_id: @user.id),
           class:  'option-button-icon option-button btn btn-default col-md-2 gap-right',
-          title:"Expulsar del grupo", remote: true, data: {toggle: 'tooltip', placement: 'top', "disable-with": '...'} %>
+          title:"Expulsar del grupo", remote: true, data: {toggle: 'tooltip', placement: 'top'} %>
 
       <% else %>
 
         <%= link_to fa_icon('user-plus'), user_send_membership_path(user_id: @user, from_user: current_user),
           class:  'option-button-icon option-button btn btn-default col-md-2 gap-right',
-          title:"Invitar al grupo", remote: true, data: {toggle: 'tooltip', placement: 'top', "disable-with": '...'} %>
+          title:"Invitar al grupo", remote: true, data: {toggle: 'tooltip', placement: 'top'} %>
 
       <% end %>
     <% elsif current_user.musician? && @user.band? %>
       <% if current_user.profile.member? @user.profile %>
 
         <%= link_to fa_icon('user-times'), user_membership_delete_path(user_id: @user),
-          class:  'option-button-icon option-button btn btn-default col-md-2 gap-right has-tooltip',
-          title:"Dejar el grupo", remote: true %>
+          class:  'option-button-icon option-button btn btn-default col-md-2 gap-right',
+          title:"Dejar el grupo", remote: true, data: {toggle: 'tooltip', placement: 'top'} %>
 
       <% else %>
 
         <%= link_to fa_icon('user-plus'), user_send_membership_path(user_id: @user, from_user: current_user),
-          class:  'option-button-icon option-button btn btn-default col-md-2 gap-right has-tooltip',
-          title:"Unirte al grupo", remote: true %>
+          class:  'option-button-icon option-button btn btn-default col-md-2 gap-right',
+          title:"Unirte al grupo", remote: true, data: {toggle: 'tooltip', placement: 'top'} %>
 
       <% end %>
     <% end %>

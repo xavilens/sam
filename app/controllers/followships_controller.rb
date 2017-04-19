@@ -1,12 +1,21 @@
 class FollowshipsController < ApplicationController
-  before_action :set_user, only: [:index]
-  before_action :set_users, only: [:create, :destroy]
   respond_to :html, :js
 
-  def index
-    @leaders = @user.leaders
-    @followers = @user.followers
+  before_filter :authenticate_user!
+
+  before_action :set_user, only: [:leaders, :followers]
+  before_action :set_users, only: [:create, :destroy]
+
+  def leaders
+    @leaders = @user.leaders.order(id: :desc).decorate
     @page = "Usarios que sigue #{@user.name}"
+    @title = @page
+  end
+
+  def followers
+    @followers = @user.followers.order(id: :desc).decorate
+    @page = "Usarios que siguen a #{@user.name}"
+    @title = @page
   end
 
   def create
@@ -28,7 +37,7 @@ class FollowshipsController < ApplicationController
         format.js {}
       end
     else
-      raise ActionController::RoutingError.new('Not Found')
+      raise ActionController::RoutingError.new
     end
   end
 

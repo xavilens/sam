@@ -1,12 +1,12 @@
 class ImagesController < ApplicationController
   before_filter :authenticate_user!
 
-  before_action :set_image, only: [:show, :edit, :update, :destroy]
   before_action :set_user, only: [:index, :show]
-  before_action :set_new, only: [:new]
-  before_action :set_edit, only: [:edit]
   before_action :set_current_user, only: [:new, :create, :edit, :update, :destroy]
   before_action :author?, only: [:edit, :update, :destroy]
+  before_action :set_image, only: [:show, :edit, :update, :destroy]
+  before_action :set_new, only: [:new]
+  before_action :set_edit, only: [:edit]
 
 def index
   @images = Image.all
@@ -87,26 +87,28 @@ def destroy
 end
 
 private
-  # Use callbacks to share common setup or constraints between actions.
-  def set_image
-    @image = Image.find(params[:id])
-  end
-
-  # Use callbacks to share common setup or constraints between actions.
+  # Define el usuario a partir de los parámetros
   def set_user
     @user = User.find(params[:user_id]).decorate
   end
 
-  # Use callbacks to share common setup or constraints between actions.
+  # Define el usuario con el usuario actual
   def set_current_user
     @user = current_user.decorate
   end
 
+  # Define la imagen
+  def set_image
+    @image = @image.find(params[:id])
+  end
+
+  # Define el título de la página New
   def set_new
     @page = 'Publicar imágenes'
     @title = @page
   end
 
+  # Define el título de la página Edit
   def set_edit
     @page = 'Editar imagen'
     @title = @page
@@ -122,7 +124,7 @@ private
     end
 
     unless is_author
-      redirect_to :back, alert: 'No tiene permisos para acceder a esa página'
+      raise ActionController::RoutingError.new
     end
   end
 

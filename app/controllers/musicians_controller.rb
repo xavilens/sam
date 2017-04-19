@@ -1,5 +1,7 @@
 class MusiciansController < ApplicationController
   before_filter :authenticate_user!
+
+  before_action :set_current_user, only: [:edit, :update]
   before_action :set_musician, only: [:edit, :update]
   before_action :set_musicians, only: [:index]
 
@@ -8,29 +10,23 @@ class MusiciansController < ApplicationController
     @page = 'Músicos'
   end
 
-  # TODO: BORRAR??
   def edit
-    # Definimos el nombre de la página
-    @page = "Editar cuenta"
   end
 
+  # FIXME: Poner de forma que usar
   def update
-    if params[:add_musician_knowledge]
-      @musician.musician_knowledges.build
+    if update_resource(@musician, update_params)
+      redirect_to @user, notice: 'Tu cuenta ha sido actualizada correctamente.' and return
     else
-      if update_resource(@musician, update_params)
-        redirect_to @user, notice: 'Tu cuenta ha sido actualizada correctamente.' and return
-      end
+      set_edit
+      render :edit
     end
-
-    render action: :edit
   end
-
 
   private
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def musician_params
-      params.fetch(:musician, {})
+    # Definimos el nombre de la página
+    def set_edit
+      @page = "Editar cuenta"
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
@@ -48,10 +44,12 @@ class MusiciansController < ApplicationController
 
     # Define lo necesario para que la vista EditKnowledge funcione correctamente
     def set_musician
-      set_current_user
-
-      @musician = @user.profile
-      @musician.musician_knowledges.build
+      if @user.musician?
+        @musician = @user.profile
+        @musician.musician_knowledges.build
+      else
+        raise ActionController::RoutingError.new
+      end
     end
 
     # Define la variable @users como solo musicos

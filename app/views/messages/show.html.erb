@@ -53,7 +53,7 @@
       <div class="clearfix"></div>
     </li>
     <% end %>
-    <!-- FIN Enviar nuevo mensaje -->
+    <!-- END Enviar nuevo mensaje -->
 
     <% @messages.each do |message| %>
       <% author = message.author %>
@@ -71,22 +71,22 @@
           <div class="message-time pull-right">
             <small><%= time_ago_in_words message.created_at %></small>
           </div>
-          <!-- FIN Cabecera Mensaje zona derecha -->
+          <!-- END Cabecera Mensaje zona derecha -->
 
           <div class="author">
             <strong><%= link_to author.name, user_path(author) %></strong>
           </div>
         </div>
-        <!-- FIN Cabecera Mensaje -->
+        <!-- END Cabecera Mensaje -->
         <div class="clearfix"></div>
         <!-- Cuerpo Mensaje -->
         <div class="message-body">
           <%= message.body%>
         </div>
-        <!-- FIN Cuerpo Mensaje -->
+        <!-- END Cuerpo Mensaje -->
       </li>
-      <!-- FIN Mensaje -->
+      <!-- END Mensaje -->
     <% end %>
   </ul>
-  <!-- FIN Mensajes -->
+  <!-- END Mensajes -->
 </div>

@@ -1,13 +1,10 @@
 class UsersController < ApplicationController
   before_filter :authenticate_user!, only: [:edit, :update]
 
+  before_action :set_user, only: [:show]
+  before_action :set_current_user, only: [:edit, :update, :update_knowledges]
   before_action :set_edit_page, only: [:edit]
-  before_action :set_user_Decorator, only: [:show]
-  before_action :set_current_user, only: [:update, :update_knowledges]
   before_action :set_edit_musician_knowledges, only: [:edit_knowledges]
-  before_action :set_musician, only: [:update_knowledges]
-  before_action :search_params, only: [:index]
-  before_action :update_params, only: [:update]
 
   def index
     # Define el tipo de perfil sacado de los parámetros
@@ -49,6 +46,8 @@ class UsersController < ApplicationController
 
   # Método que actualiza los conocimientos musicales
   def update_knowledges
+    @musician = @user.profile
+
     if params[:add_musician_knowledge]
       @user.profile.musician_knowledges.build
     else
@@ -57,26 +56,30 @@ class UsersController < ApplicationController
       end
     end
 
-    render action: :edit_knowledges
+    render :edit_knowledges
   end
 
   private
     ## SETTERS
+    # Define la variable @user con el usuario pasado por parámetros
+    def set_user
+      @user = User.find(params[:id]).decorate
+    end
+
+    # Define la variable @user con el usuario actual
+    def set_current_user
+      @user = current_user.decorate
+    end
 
     # Define variables para la pagina edit
     def set_edit_page
       # Definimos el nombre de la página
       @page = "Editar cuenta"
-
-      set_current_user
-
       @edit = params[:edit]
     end
 
     # Define variables para la pagina edit knowledge
     def set_edit_musician_knowledges
-      set_current_user
-
       if @user.musician?
         # Definimos el nombre de la página
         @page = "Editar cuenta"
@@ -85,37 +88,11 @@ class UsersController < ApplicationController
 
         @musician.musician_knowledges.build
       else
-        redirect_to @user, alert: 'No tienes acceso a la página.'
+        raise ActionController::RoutingError.new
       end
     end
 
-    # Define la variable @user con el usuario pasado por parámetros
-    def set_user
-      @user = User.find(params[:id])
-    end
-
-    # Define la variable @user con el UserDecorator del usuario actual
-    def set_user_Decorator
-      @user = UserDecorator.new(set_user)
-    end
-
-    # Define la variable @user con el usuario actual
-    def set_current_user
-      @user = current_user
-    end
-
-    # Define la variable @user con el UserDecorator del usuario actual
-    def set_current_user_Decorator
-      @user = UserDecorator.new(current_user)
-    end
-
-    # Define lo necesario para que la vista EditKnowledge funcione correctamente
-    def set_musician
-      @musician = @user.profile
-    end
-
     ## STRONG PARAMETERS
-
     # Parámetros permitidos en el controlador de usuarios
     def user_params
       params.require(:user).permit(:id, :email, :password, :name, :city, :state,

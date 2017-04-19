@@ -7,7 +7,7 @@
       <%= unread_conversations_count %> Mensajes
     <% end %>
   </li>
-  <!-- FIN MENSAJES -->
+  <!-- END MENSAJES -->
 
   <!-- MENÚ USUARIO -->
   <li class="dropdown">
@@ -19,18 +19,21 @@
     <ul class="dropdown-menu">
       <li><%= link_to 'Tu perfil', user_path(current_user.id) %></li>
       <li><%= link_to 'Editar perfil', edit_user_path(current_user.id) %></li>
-      <li><%= link_to 'Nuevo evento', '#' %></li>
-      <!-- <li><%= link_to 'Nueva entrada', '#' %></li>
-      <li><%= link_to 'Nuevo anuncio', '#' %></li> -->
-      <% if current_user.is_admin? %>
-        <li class="header-dropdown-separator">Administración</li>
-        <li><%= link_to 'Perfil administración', '#' %></li>
-        <li><%= link_to 'Publicar entrada', '#' %></li>
-      <% end %>
+      <li role="separator" class="divider"></li>
+      <li class="dropdown-header">Contenidos</li>
+      <li><%= link_to 'Tus eventos', user_events_path(user_id: current_user.id) %></li>
+      <li><%= link_to 'Tus imágenes', user_images_path(user_id: current_user.id) %></li>
+      <li><%= link_to 'Tus vídeos', user_videos_path(user_id: current_user.id) %></li>
+      <li role="separator" class="divider"></li>
+      <li class="dropdown-header">Publicar</li>
+      <li><%= link_to 'Publicar evento', new_event_path %></li>
+      <li><%= link_to 'Publicar imagen', new_image_path %></li>
+      <li><%= link_to 'Publicar video', new_video_path %></li>
+      <li role="separator" class="divider"></li>
       <li><%= link_to 'Salir', destroy_user_session_path, method: 'delete' %></li>
     </ul>
   </li>
-  <!-- FIN MENÚ USUARIO -->
+  <!-- END MENÚ USUARIO -->
 
 <% else %>
   <li><%= link_to fa_icon('user-plus')+' Regístrate', new_user_registration_path %></li>

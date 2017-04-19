@@ -11,7 +11,7 @@
 
   <!-- Buscador de mensajes -->
   <%= render 'search_messages' %>
-  <!-- FIN Buscador de mensajes -->
+  <!-- END Buscador de mensajes -->
 
   <!-- Orden mensajes -->
   <div class="conversations-order pull-right">
@@ -23,7 +23,7 @@
       <%= link_to 'Asunto (des)', messages_path(show: @show, order: 'subject_desc') %>
     </small>
   </div>
-  <!-- FIN Orden mensajes -->
+  <!-- END Orden mensajes -->
 
   <!-- Mensajes totales -->
   <div class="conversations-count">
@@ -31,7 +31,7 @@
       Mensajes totales: <strong><%=  @conversations ? @conversations.size : 0 %></strong>
     </small>
   </div>
-  <!-- FIN Mensajes totales -->
+  <!-- END Mensajes totales -->
 
   <!-- Conversaciones -->
   <% if any_conversation? %>

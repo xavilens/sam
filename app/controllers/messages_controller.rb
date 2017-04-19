@@ -6,6 +6,7 @@ class MessagesController < ApplicationController
   before_action :set_users_new, only: [:new]
   before_action :set_users_create, only: [:create]
 
+  # FIXME
   def index
     # Obtenemos la bandeja de correo
     @show = index_params[:show]
@@ -43,7 +44,7 @@ class MessagesController < ApplicationController
 
     @conversations = @conversations.send(@order) if (@order and @conversations)
 
-    @conversations = ConversationDecorator.wrap(@conversations) if @conversations
+    @conversations = @conversations.decorate if @conversations
 
     @page ||= 'Mensajes'
   end
@@ -79,9 +80,6 @@ class MessagesController < ApplicationController
 
     # Marcamos la conversación como leída
     @conversation.read (@user.id)
-
-    # Breadcrumb
-    add_breadcrumb "#{@conversation.subject}", :message_path
 
     # Damos nombre a la página
     @page = "Mensajes"

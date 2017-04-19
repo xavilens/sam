@@ -1,8 +1,8 @@
 
-<div class="calendar-user-container">
-  <div class="leftbar-name">Calendario</div>
+<div class="user-show-container">
+  <div class="leftbar-name">Calendario <span class="badge"><%= @user.events.size %></span></div>
   <% if @user.events? %>
-  <table class="table table-bordered table-condensed table-hover">
+  <table class="table table-bordered table-condensed table-hover user-events">
     <tbody>
       <% @user.events_in_show(5).each do |event| %>
         <tr class="event">
@@ -37,9 +37,11 @@
   <% end %>
 
   <% if is_current_user? || @user.events? %>
-  <div class="user-links">
-    <%= link_to 'Nuevo evento', new_event_path, class: 'btn btn-sm btn-link' if current_user? %>
-    <%= link_to 'Ver todos', user_events_path(user_id: @user.id), class: 'btn btn-sm btn-link' if @user.events? %>
-  </div>
+    <div class="row">
+      <div class="user-links col-sm-12">
+        <%= link_to 'Ver todos', user_events_path(user_id: @user.id),
+          class: 'btn btn-block btn-sm btn-default gap-top text-muted' %>
+      </div>
+    </div>
   <% end %>
 </div>

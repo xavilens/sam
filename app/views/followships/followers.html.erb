@@ -1,0 +1,52 @@
+<% page_title @page %>
+
+<div class="row">
+  <div class="col-md-9">
+
+    <!-- Page Header -->
+    <%= render 'layouts/page_header' %>
+    <!-- END Page Header -->
+
+    <!-- Followers Container -->
+    <% if @user.followers? %>
+    <div class="followships-index-container">
+      <!-- Followers Headers -->
+      <div class="followships-header">
+        <div class="row">
+          <div class="col-sm-12">
+            <h3 class="col-sm-offset-1">Seguidores <span class="badge"><%= @followers.size %></span></h3>
+          </div>
+        </div>
+      </div>
+      <!-- END Followers Headers -->
+
+      <!-- Followers -->
+      <div class="row">
+        <div class="col-sm-12">
+          <% @followers.each do |follower| %>
+
+            <!-- Follower -->
+            <div class="col-sm-2">
+              <div class="image-index-thumb">
+                <!-- Followers Avatar Thumb -->
+                <%= link_to user_path(follower), title: follower.name, data: {toggle: 'tooltip', placement: 'bottom'} do %>
+                  <%= image_tag follower.avatar_url(:index_2), alt: follower.name, class: 'img-responsive' %>
+                <% end %>
+                <!-- END Followers Avatar Thumb -->
+              </div>
+            </div>
+            <!-- END Follower -->
+
+          <% end %>
+        </div>
+      </div>
+      <!-- END Followers -->
+    </div>
+    <% end %>
+    <!-- END Followers Container -->
+  </div>
+
+  <div class="col-md-3">
+    <%= render 'right' %>
+  </div>
+</div>

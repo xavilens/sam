@@ -1,0 +1,53 @@
+<% page_title @page %>
+
+<div class="row">
+  <div class="col-md-9">
+
+    <!-- Page Header -->
+    <%= render 'layouts/page_header' %>
+    <!-- END Page Header -->
+
+    <!-- Leaders Container -->
+    <% if @user.leaders? %>
+    <div class="followships-index-container">
+      <!-- Leaders Header -->
+      <div class="followships-header">
+        <div class="row">
+          <div class="col-sm-12">
+            <h3 class="col-sm-offset-1">Siguiendo a... <span class="badge"><%= @leaders.size %></span></h3>
+          </div>
+        </div>
+      </div>
+      <!-- END Leaders Header -->
+
+      <!-- Leaders -->
+      <div class="row">
+        <div class="col-sm-12">
+          <% @user.leaders.order(id: :desc).decorate.each do |leader| %>
+
+            <!-- Leader  -->
+            <div class="col-sm-2">
+              <div class="image-index-thumb">
+                <!-- Leader Avatar Thumb -->
+                <%= link_to user_path(leader), title: leader.name, data: {toggle: 'tooltip', placement: 'bottom'} do %>
+                  <%= image_tag leader.avatar_url(:index_2), alt: leader.name, class: 'img-responsive' %>
+                <% end %>
+                <!-- END Leader Avatar Thumb -->
+              </div>
+            </div>
+            <!-- END Leader -->
+
+          <% end %>
+        </div>
+      </div>
+      <!-- END Leaders -->
+    </div>
+    <% end %>
+    <!-- END Leaders Container -->
+
+  </div>
+
+  <div class="col-md-3">
+    <%= render 'right' %>
+  </div>
+</div>
