@@ -25,9 +25,6 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 
 ####### GEMS PFC
-# Generador de usuarios con todas las opciones y vistas más utilizadas
-gem 'devise', '4.0.0'
-
 ## FRONT-END
 # Bootstrap: Frontend framework
 gem 'bootstrap-sass', '3.3.6'
@@ -41,40 +38,39 @@ gem 'simple_form', '3.2.1'
 gem 'kaminari', '0.16.3'
 # Datepicker con tema de bootstrap
 gem 'bootstrap-datepicker-rails', '1.6.4.1'
-#
-gem 'momentjs-rails', '2.17.1'
 #Datepicker para Fechas, Horas y Ambas
 gem 'bootstrap3-datetimepicker-rails', '~> 4.14.30'
 # Formateador numérico FIXME
 gem 'autonumeric-rails', '2.0.0.1'
-
+# Arregla los bindings de jquery con turbolinks
+gem 'jquery-turbolinks', '2.1.0'
+# Cocoon: Nos proporciona una forma sencilla de hacer asociaciones dinámicamente en un formulario
+gem 'cocoon', '1.2.9'
 
 
 # internalizacion
+
+## BACK-END
+# Generador de usuarios con todas las opciones y vistas más utilizadas
+gem 'devise', '4.0.0'
 # gem 'i18n', '0.7.0'
 gem 'rails-i18n', '~> 4.0.0'
 
-## BACK-END
 # Tratar subida de imagenes
 gem 'carrierwave', '0.11.0'
 # gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'
 gem 'mini_magick', '4.5.1'
 # Video-Info: Proporciona información de los videos
 gem 'video_info', '2.7'
-
-# Cocoon: Nos proporciona una forma sencilla de hacer asociaciones dinámicamente en un formulario
-gem 'cocoon', '1.2.9'
 # Soundloud: Nos proporciona métodos para poder contactar con los datos de Soundcloud
 gem 'soundcloud', '0.3.4'
+
 # Draper: Simplifica los decorators
 gem 'draper', '2.1'
-# Reform: Crea objetos tipo Form, para simplificar el uso complejo de formularios
-gem 'reform', '2.2.1'
-# gem "reform-rails", '0.1.7'
-gem 'dry-validation', ' 0.10.3'
 # Interactor: Nos proporciona una interfaz para el uso sencillo de Services Objects
 gem 'interactor', '3.1'
-
+# Whenever: Permite programar tareas
+gem 'whenever', '0.9.7', require: false
 
 ## GEMS PARA CONTEXTOS ESPECÍFICOS
 group :development, :test do

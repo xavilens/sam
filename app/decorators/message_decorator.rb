@@ -1,25 +1,13 @@
-require 'delegate'
-
-class MessageDecorator < SimpleDelegator
-  # Wrapper para colecciones
-  def self.wrap(collection)
-    collection.map do |obj|
-        new obj
-    end
-  end
+class MessageDecorator < Draper::Decorator
+  delegate_all
 
   # Devuelve el autor del mensaje
   def author
-    UserDecorator.new(message.author)
+    message.author.decorate
   end
 
   # Devuelve el cuerpo del mensaje
   def body
     (message.body.gsub(/\n/, '<br/>')).html_safe
-  end
-
-  # Devuelve el objeto del mensaje original
-  def message
-    __getobj__
   end
 end

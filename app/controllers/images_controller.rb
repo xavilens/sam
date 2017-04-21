@@ -99,7 +99,7 @@ private
 
   # Define la imagen
   def set_image
-    @image = @image.find(params[:id])
+    @image = @user.images.find(params[:id])
   end
 
   # Define el título de la página New

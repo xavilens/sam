@@ -1,6 +1,7 @@
 // ELLIPSIS
 
-$(document).on('ready',function() {
+// $(document).on('ready',function() {
+$(document).ready(function() {
   $(".ellipsis").dotdotdot();
 
   // // Función que elimina el div que contiene el controlador de la ellipsis si el texto no llega a ser truncado

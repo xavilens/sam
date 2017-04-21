@@ -1,6 +1,6 @@
 // Si existe el modal lo muestra, si no lo agrega
 if($("#member-modal").length > 0){
-  $("#member-modal").modal();
-}else{
-  $('<%= j render "modal", title: "#{@title}", type: "new", message: "#{@message}" %>').modal();
+  $("#member-modal").remove();
 }
+
+$('<%= j render "modal", title: "#{@title}", type: "new", message: "#{@message}" %>').modal();

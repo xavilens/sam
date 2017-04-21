@@ -45,8 +45,8 @@ class EventSearchForm < Search
     def find_events model
       events = model.order(:date)
       events = events.where("name like ?", "%#{name}%") if name.present?
-      events = events.where("date >= ?", start_date.to_s(:default)) if start_date.present?
-      events = events.where("date <= ?", finish_date.to_s(:default)) if finish_date.present?
+      events = events.where("date >= ?", start_date.to_s(:db)) if start_date.present?
+      events = events.where("date <= ?", finish_date.to_s(:db)) if finish_date.present?
       events = events.where(event_status_id: status) if status.present?
       events = events.where(event_type_id: type) if type.present?
 

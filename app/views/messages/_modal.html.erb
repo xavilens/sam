@@ -1,0 +1,29 @@
+<div id="message-modal" class="modal fade">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Enviar mensaje a <strong><%= @sender.name %></strong></h4>
+      </div>
+
+      <%= simple_form_for @conversation, url: messages_path, method: :post, remote: true do |f| %>
+        <div class="modal-body">
+          <%= f.input :user_1_id, as: :hidden %>
+          <%= f.input :user_2_id, as: :hidden %>
+          <%= f.input :subject, label: 'Título' %>
+          <%= f.simple_fields_for :messages do |m| %>
+            <%= m.input :author_id, input_html: {value: @sender.id},as: :hidden %>
+            <%= m.input :body, label: false, placeholder: 'Escribe aquí tu mensaje...' %>
+          <% end %>
+        </div>
+
+        <div class="modal-footer">
+          <%= f.button :submit, 'Enviar', class: "btn btn-primary btn-md btn-block" %>
+        </div>
+      <% end %>
+
+    </div>
+  </div>
+</div>

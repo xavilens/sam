@@ -14,7 +14,7 @@
   <div class="carousel-inner" role="listbox">
     <% images.each_with_index do |image, i| %>
     <div class="item <%= 'active' if i == 0 %>" >
-      <%= image_tag image.image_url(:gallery_lg), alt: image.title, class: 'img-responsive' %>
+      <%= image_tag image.image_url(:gallery_lg), alt: image.title, class: 'img-responsive center-block' %>
     </div>
     <% end %>
   </div>

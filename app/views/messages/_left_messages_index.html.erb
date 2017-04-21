@@ -1,27 +1,30 @@
+<div class="row">
+  <div class="messages-options">
+    <div class="col-sm-12 btn-group-vertical" role="group">
+      <%= link_to messages_path(show: 'inbox'),
+        class: "btn btn-block btn-default #{active_conversation_box('inbox')}", type: 'button' do %>
+        Mensajes recibidos <%= inbox_unread_count %>
+      <% end %>
 
-<div class="col-sm-12 messages-options btn-group-vertical" role="group">
-  <%= link_to messages_path(show: 'inbox'),
-    class: "btn btn-primary #{active_conversation_box('inbox')}", type: 'button' do %>
-    Mensajes recibidos <%= inbox_unread_count %>
-  <% end %>
+      <%= link_to messages_path(show: 'outbox'),
+        class: "btn btn-block btn-default #{active_conversation_box('outbox')}", type: 'button' do %>
+        Mensajes enviados <%= outbox_unread_count %>
+      <% end %>
 
-  <%= link_to messages_path(show: 'outbox'),
-    class: "btn btn-primary #{active_conversation_box('outbox')}", type: 'button' do %>
-    Mensajes enviados <%= outbox_unread_count %>
-  <% end %>
+      <%= link_to messages_path(show: 'membership'),
+        class: "btn btn-block btn-default #{active_conversation_box('membership')}", type: 'button' do %>
+        Miembros <%= membership_unread_count %>
+      <% end %>
 
-  <%= link_to messages_path(show: 'membership'),
-    class: "btn btn-primary #{active_conversation_box('membership')}", type: 'button' do %>
-    Miembros <%= membership_unread_count %>
-  <% end %>
+      <%= link_to messages_path(show: 'participants'),
+        class: "btn btn-block btn-default #{active_conversation_box('participants')}", type: 'button' do %>
+        Eventos <%= participants_unread_count %>
+      <% end %>
 
-  <%= link_to messages_path(show: 'participants'),
-    class: "btn btn-primary #{active_conversation_box('participants')}", type: 'button' do %>
-    Eventos <%= participants_unread_count %>
-  <% end %>
-
-  <%= link_to messages_path(show: 'search'),
-    class: "btn btn-primary #{active_conversation_box('search')}", type: 'button' do %>
-    Mensajes encontrados
-  <% end %>
+      <%= link_to messages_path(show: 'search'),
+        class: "btn btn-block btn-default #{active_conversation_box('search')}", type: 'button' do %>
+        Mensajes encontrados
+      <% end %>
+    </div>
+  </div>
 </div>

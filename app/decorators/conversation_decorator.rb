@@ -1,9 +1,9 @@
-require 'delegate'
+class ConversationDecorator < Draper::Decorator
+  delegate_all
 
-class ConversationDecorator < SimpleDelegator
   # Devuelve el UserDecorator del destinatario
   def recipent user_id
-    UserDecorator.new(conversation.recipent(user_id))
+    conversation.recipent(user_id).decorate
   end
 
   # Devuelve las conversaciones no leídas
@@ -19,17 +19,5 @@ class ConversationDecorator < SimpleDelegator
   def formatted_time
     time = last_message_time
     "#{time.hour}:#{time.min} #{time.day} de #{time.mon} de #{time.year}"
-  end
-
-  # Wrapper para colecciones
-  def self.wrap(collection)
-    collection.map do |obj|
-        new obj
-    end
-  end
-
-  # Devuelve la conversation original
-  def conversation
-    __getobj__
   end
 end

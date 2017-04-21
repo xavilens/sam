@@ -11,7 +11,7 @@ class EventCalendar
     @search.finish_date ||= @finish_date
 
     set_events user
-    
+
     set_calendar
   end
 

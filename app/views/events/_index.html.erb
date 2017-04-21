@@ -21,7 +21,7 @@
 <table class="table table-bordered table-striped">
   <tbody>
   <%
-    no_data = true
+    no_data = true && @is_user_calendar
     is_search = !@search.empty?
   %>
   <% @start_date.upto(@finish_date).each do |date| %>

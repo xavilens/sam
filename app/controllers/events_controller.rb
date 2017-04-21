@@ -6,13 +6,13 @@ class EventsController < ApplicationController
   before_action :set_current_user, only: [:new, :create, :edit, :update, :destroy_view, :destroy]
 
   before_action :set_event, only: [:show, :edit, :update, :destroy]
-  before_action :set_events, only: [:index, :show]
+  before_action :set_events, only: [:index]
 
   def index
     # Definimos fechas
     if @is_user_calendar
-      @start_date = Date.new 1900, 1
-      @finish_date = Date.new 9999, 12
+      @start_date = @events.first.date
+      @finish_date = @events.last.date
     else
       if params[:date].present? || event_search_params["start_date(2i)"].present?
         date = params[:date].present? ? params[:date] : "01/#{event_search_params['start_date(2i)'].to_i}/#{event_search_params['start_date(1i)'].to_i}"
@@ -27,8 +27,8 @@ class EventsController < ApplicationController
       @finish_date = @start_date.end_of_month
     end
 
+    # Creamos el buscador
     @search = EventSearchForm.new(event_search_params)
-
     @search.start_date = @start_date
     @search.finish_date = @finish_date
 

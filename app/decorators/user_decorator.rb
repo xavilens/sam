@@ -1,13 +1,6 @@
 class UserDecorator < Draper::Decorator
   delegate_all
 
-  # Wrapper de colecciones
-  def self.wrap(collection)
-    collection.map do |obj|
-        new obj
-    end
-  end
-
   # Devuelve la subcabecera para la pantalla Show User
   def sub_header
     if user.musician?
@@ -81,7 +74,7 @@ class UserDecorator < Draper::Decorator
 
   # Devuelve todas las redes sociales
   def social_networks
-    SocialNetworkDecorator.wrap(user.social_networks)
+    SocialNetworkDecorator.decorate_collection(user.social_networks)
   end
 
   # Devuelve los N próximos conciertos en los que participa el usuario

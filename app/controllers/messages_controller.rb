@@ -56,27 +56,31 @@ class MessagesController < ApplicationController
     @conversation = current_user.conversations.build(user_2: to_user)
     @conversation.messages.build(author: current_user)
 
-    # Damos nombre a la página
-    @page = 'Enviar mensaje'
+    set_new_page
   end
 
   def create
     @conversation = Conversation.new(create_params)
 
-    if @conversation.save
-      redirect_to @recipent, notice: 'Mensaje enviado correctamente.'
-    else
-      render action: :new
+    respond_to do |format|
+      if @conversation.save
+        flash.now[:notice] = 'Mensaje enviado correctamente.'
+        format.html { redirect_to @recipent }
+        format.js
+      else
+        set_new_page
+        format.html { render :new }
+        format.js 
+      end
     end
   end
 
   def show
     # Cargamos la conversación
-    @conversation = Conversation.find(show_params[:id])
+    @conversation = Conversation.find(params[:id])
 
     # Cargamos los mensajes
-    @messages = @conversation.messages.desc
-    @messages = MessageDecorator.wrap(@messages)
+    @messages = @conversation.messages.desc.decorate
 
     # Marcamos la conversación como leída
     @conversation.read (@user.id)
@@ -90,21 +94,27 @@ class MessagesController < ApplicationController
     @conversation = Conversation.find(params[:id])
     @message = @conversation.messages.build(new_message_params)
 
-    if @message.save
-      flash[:notice] = 'Mensaje enviado correctamente'
-    else
-      flash[:error] = 'No se ha podido enviar el mensaje'
+    respond_to do |format|
+      if @message.save
+        format.html { flash[:notice] = 'Mensaje enviado correctamente' }
+        format.js { flash.now[:notice] = 'Mensaje enviado correctamente' }
+      else
+        format.html { flash[:error] = 'No se ha podido enviar el mensaje' }
+        format.js { flash.now[:error] = 'No se ha podido enviar el mensaje' }
+      end
+
+      format.html { redirect_to message_path(@conversation) }
+      format.js {  }
     end
 
-    redirect_to message_path(@conversation)
+
   end
 
   private
     ## SETTERS
-
     # Define la variable @user como el usuario actual
     def set_current_user
-      @user = UserDecorator.new(current_user)
+      @user = current_user.decorate
     end
 
     # Definimos usuarios para acción create
@@ -130,11 +140,15 @@ class MessagesController < ApplicationController
 
     # Define la variable @sender
     def set_recipent to_user
-      @recipent = UserDecorator.new(to_user)
+      @recipent = to_user.decorate
+    end
+
+    # Define el nombre de la página New
+    def set_new_page
+      @page = 'Enviar mensaje'
     end
 
     ## ACTIONS
-
     # Realiza la redirección al presionar el botón de cancelar
     def redirect_cancel
       id = create_params[:user_2_id]
@@ -142,7 +156,6 @@ class MessagesController < ApplicationController
     end
 
     ## STRONGS PARAMETERS
-
     # Define los Strong Parameters de index
     def index_params
       params.permit(:show, :order)
@@ -160,25 +173,10 @@ class MessagesController < ApplicationController
 
     # Define los Strong Parameters al crear una nueva conversación
     def create_params
-      allow = [ :user_1_id, :user_2_id, :subject, :commit,
+      allow = [ :user_1_id, :user_2_id, :subject,
         messages_attributes: [:author_id, :body, :conversation_id]]
 
       params.require(:conversation).permit(allow)
-    end
-
-    # Define los Strongs Parametes al crear un nuevo mensaje
-    def create_message_params
-      allow = [:author_id, :body]
-
-      params.require(:conversation).require(:messages_attributes)
-      # params.require(:conversation).require(:messages_attributes).permit(allow)
-    end
-
-    # Define los Strongs Parametes de la vista Show
-    def show_params
-      allow = [:id]
-
-      params.permit(allow)
     end
 
     # Define los Strong Parameters al actualizar una conversación

@@ -1,6 +1,6 @@
-require 'delegate'
+class SocialNetworkDecorator < Draper::Decorator
+  delegate_all
 
-class SocialNetworkDecorator < SimpleDelegator
   # Devuelve el icono de la red social
   def icon
     fa_icon
@@ -18,17 +18,5 @@ class SocialNetworkDecorator < SimpleDelegator
   # Indica si la url presenta una subcadena específica
   def url_include? (string)
     social_network.url.include? string
-  end
-
-  # Devuelve el objeto social_network original
-  def social_network
-    __getobj__
-  end
-
-  # Wrapper para colecciones
-  def self.wrap(collection)
-    collection.map do |obj|
-        new obj
-    end
   end
 end

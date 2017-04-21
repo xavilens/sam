@@ -1,12 +1,11 @@
 
-# TODO: Fix Events (PVP, AddParticipant...)
 # TODO: Messages by AJAX
+# TODO: Fix Events (PVP, AddParticipant...)
 # TODO: Finalize user index and user search
-# TODO: Check control dependencies (controller)
 # TODO: Add Pagination (Kaminari)
-# TODO: Create BandGenres?
 # TODO: Image security
 # TODO: Conversation Type
 # TODO: Image size for gallery
 # TODO: Create services?
+# TODO: Create BandGenres?
 # TODO: Create site pages

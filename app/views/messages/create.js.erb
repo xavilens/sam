@@ -1,0 +1,25 @@
+<% debugger %>
+alert('test');
+<% if @conversation.errors.empty? %>
+  // Elimina el modal
+  $('#message-modal').remove();
+
+  // Elimina las alertas para que no se acumulen
+  if($(".alert").length > 0){
+    $(".alert").remove();
+  }
+
+  $(".main").prepend("<%= j render 'layouts/alerts' %>");
+<% else %>
+alert('test');
+  // show first error
+  alert('<%= @conversation.errors.full_messages %>');
+  <% @conversation.errors.messages.each do |msg_input| %>
+    <% msg_input.last.each do |msg| %>
+      <li><%= msg %></li>
+      alert('test');
+      $('div.conversation_#{msg_input.first.to_s}').class("has-error");
+      $('div.conversation_#{msg_input.first.to_s}').append("<%= j render 'layouts/field_error', msg: msg %>");
+    <% end %>
+  <% end %>
+<% end %>

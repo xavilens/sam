@@ -5,11 +5,15 @@
     <%= render 'events/search_form' %>
   </div>
 
-  <div class="<%= "col-md-#{ @is_user_calendar ? 6 : 7}" %>">
+  <!-- <div class="<%= "col-md-#{ @is_user_calendar ? 6 : 7}" %>"> -->
+  <!-- <div class="<%= "col-md-7" %>"> -->
+  <div class="<%= "col-md-6" %>">
     <%= render 'events/index' %>
   </div>
 
-  <div class="<%= "col-md-#{ @is_user_calendar ? 3 : 2}" %> event-index-right">
+  <!-- <div class="<%= "col-md-#{ @is_user_calendar ? 3 : 2}" %> event-index-right"> -->
+  <!-- <div class="<%= "col-md-2" %> event-index-right"> -->
+  <div class="<%= "col-md-3" %> event-index-right">
     <% if @is_user_calendar %>
       <%= render "events/user_module" %>
     <% else %>

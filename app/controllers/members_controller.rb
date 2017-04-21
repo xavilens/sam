@@ -64,7 +64,7 @@ class MembersController < ApplicationController
   def edit
     # Definimos el miembro y definimos el otro usuario implicado en la definición del miembro
     @member = Member.find(params[:id]).decorate
-    @member_user = UserDecorator.new(@member.user(current_user))
+    @member_user = @member.user(current_user).decorate
 
     # Crea un nuevo member_instrument asociado al miembro
     @member.member_instruments.build

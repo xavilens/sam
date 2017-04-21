@@ -24,7 +24,7 @@ class Member < ActiveRecord::Base
       musician.user
     end
 
-    return UserDecorator.new(user_aux)
+    return user_aux.decorate
   end
 
   def self.get band_id, musician_id
