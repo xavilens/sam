@@ -20,12 +20,10 @@
         <div class="event-index-info event-index-location">
           <%= fa_icon('map-marker', class: 'fa-lg', title: 'Localización')+" #{event.location_city}" %>
         </div>
-
-        <% if @is_user_calendar %>
+        
         <div class="event-index-info event-index-creator">
           <%= fa_icon('user', class: 'fa-lg', title: 'Creador')+" #{event.creator.name}" %>
         </div>
-        <% end %>
 
         <div class="event-index-info event-index-participants">
             <%= fa_icon('users', class: 'fa-lg', title: 'Participantes')+" " %>

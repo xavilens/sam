@@ -2,14 +2,6 @@
 <div class="col-sm-12">
   <div class="alert alert-danger">
     <p><%= form_errors_title %></p>
-
-    <ul>
-      <% object.errors.messages.each do |input, msgs| %>
-        <% msgs.each do |msg| %>
-        <li><%= msg %></li>
-        <% end %>
-      <% end %>
-   </ul>
   </div>
 </div>
 <% end %>

@@ -6,7 +6,7 @@ class EventsController < ApplicationController
   before_action :set_current_user, only: [:new, :create, :edit, :update, :destroy_view, :destroy]
 
   before_action :set_event, only: [:show, :edit, :update, :destroy]
-  before_action :set_events, only: [:index]
+  before_action :set_events, only: [:index, :show]
 
   def index
     # Definimos fechas
@@ -46,11 +46,13 @@ class EventsController < ApplicationController
   end
 
   def new
-    @event = Event.new
-    @page = 'Nuevo evento'
+    @event = if params[:date].present?
+      Event.new(date: params[:date])
+    else
+      Event.new
+    end
 
-    @event.build_address
-    @event.images.build
+    set_new
   end
 
   def show
@@ -161,6 +163,13 @@ class EventsController < ApplicationController
       else
         Event.all.asc.decorate
       end
+    end
+
+    def set_new
+      @event.build_address
+      @event.images.build
+
+      @page = 'Nuevo evento'
     end
 
     # Parámetros de evento permitidos por el controlador

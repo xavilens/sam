@@ -15,7 +15,7 @@
         </div>
       </div>
     </div>
-    <%= f.error_notification %>
+    <%= render 'layouts/errors', object: @event %>
 
     <%= f.input :name, label: 'Nombre', wrapper: :field_9 %>
     <%= f.input :description, label: 'Descripción', wrapper: :field_9 %>

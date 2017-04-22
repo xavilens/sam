@@ -7,7 +7,10 @@
   <div class="event-header">
     <div class="row">
       <div class="col-sm-12">
-        <h3 class="col-sm-offset-1"><%= @title %> <small><%= @event.type %></small></h3>
+        <h3 class="col-sm-offset-1">
+          <%= @title %>
+          <span class="text-xs <%= event_status_class @event.status %>"><%= @event.status %></span>
+        </h3>
       </div>
     </div>
   </div>
@@ -55,7 +58,7 @@
     <div class="row">
       <div class="col-sm-3 event-container event-status-container">
         <div class="event-field-header small">Estado</div>
-        <div class="event-field-text">
+        <div class="event-field-text <%= event_status_class @event.status %>">
           <%= @event.status %>
         </div>
       </div>

@@ -6,6 +6,14 @@ module EventsHelper
   end
 
   ##### SHOW
+  def event_status_class status
+    if status == 'Abierto'
+      'text-success'
+    elsif status == 'Cerrado'
+      'text-danger'
+    end
+  end
+
   # Indica si hay un evento previo
   def prev_event?
     !@prev_event.blank?
@@ -53,8 +61,6 @@ module EventsHelper
 
   # Devuelve la url del evento anterior
   def prev_calendar_url
-    # events_path(params)
-    # events_path(date: (@start_date - 1.month))
     if params[:event_search_form].present?
       events_path(date: (@start_date - 1.month), event_search_form: params[:event_search_form])
     else
@@ -71,4 +77,8 @@ module EventsHelper
     end
   end
 
+  # Devuelve el link para ir al formulario de creación de eventos
+  def link_to_new_event date
+    link_to fa_icon('plus')+" Crear evento", new_event_path(date: date.to_s), class: 'btn btn-sm btn-primary'
+  end
 end

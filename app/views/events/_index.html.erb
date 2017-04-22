@@ -21,11 +21,10 @@
 <table class="table table-bordered table-striped">
   <tbody>
   <%
-    no_data = true && @is_user_calendar
-    is_search = !@search.empty?
+    no_data = true
   %>
   <% @start_date.upto(@finish_date).each do |date| %>
-    <% if @is_user_calendar || is_search %>
+    <% if @is_user_calendar %>
 
       <% if @calendar.any_event?(date) %>
         <% no_data = false %>
@@ -55,8 +54,7 @@
 
         <tr>
           <td>
-            <%= link_to fa_icon('plus')+" Crear evento", new_event_path(date: date.to_s),
-              class: 'btn btn-sm btn-primary' %>
+            <%= link_to_new_event date %>
           </td>
         </tr>
 
@@ -66,8 +64,7 @@
           <td>
             <p>No hay ningún evento para esta fecha</p>
 
-            <%= link_to fa_icon('plus')+" Crear evento", new_event_path(date: date.to_s),
-              class: 'btn btn-sm btn-primary' %>
+            <%= link_to_new_event date %>
             </td>
         </tr>
 
