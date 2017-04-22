@@ -4,8 +4,8 @@
     <p><%= form_errors_title %></p>
 
     <ul>
-      <% object.errors.messages.each do |msg_input| %>
-        <% msg_input.last.each do |msg| %>
+      <% object.errors.messages.each do |input, msgs| %>
+        <% msgs.each do |msg| %>
         <li><%= msg %></li>
         <% end %>
       <% end %>

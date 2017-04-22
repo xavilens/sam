@@ -29,7 +29,7 @@ module FormHelper
   # Devuelve el mensaje a mostrar en el botón submit
   def data_disable_submit_message
     ''
-    
+
     if is_new_form?
       'Creando...'
     elsif is_edit_form?
@@ -38,9 +38,14 @@ module FormHelper
   end
 
   ######### FORM ERRORS
+  # Mensaje por defecto de la sección de errores de un formulario en un modal
+  def form_errors_title_modal
+    "Algo fue mal... Por favor, revise los siguientes problemas"
+  end
+
   # Mensaje por defecto de la sección de errores de un formulario
   def form_errors_title
-    "Algo fue mal... Por favor, revise los siguientes problemas:"
+    form_errors_title_modal + ":"
   end
 
   # Devuelve la sección de error por defecto

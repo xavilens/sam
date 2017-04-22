@@ -10,6 +10,8 @@
 
       <%= simple_form_for @conversation, url: messages_path, method: :post, remote: true do |f| %>
         <div class="modal-body">
+          <%= render 'layouts/errors_modal' %>
+
           <%= f.input :user_1_id, as: :hidden %>
           <%= f.input :user_2_id, as: :hidden %>
           <%= f.input :subject, label: 'Título' %>
@@ -20,7 +22,7 @@
         </div>
 
         <div class="modal-footer">
-          <%= f.button :submit, 'Enviar', class: "btn btn-primary btn-md btn-block" %>
+          <%= f.button :submit, 'Enviar', class: "btn btn-primary btn-md btn-block", data: {"disable-with": "Enviando..."} %>
         </div>
       <% end %>
 

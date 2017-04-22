@@ -1,8 +1,7 @@
-<% debugger %>
-alert('test');
+
 <% if @conversation.errors.empty? %>
   // Elimina el modal
-  $('#message-modal').remove();
+  $('#message-modal').modal('hide');
 
   // Elimina las alertas para que no se acumulen
   if($(".alert").length > 0){
@@ -11,15 +10,25 @@ alert('test');
 
   $(".main").prepend("<%= j render 'layouts/alerts' %>");
 <% else %>
-alert('test');
-  // show first error
-  alert('<%= @conversation.errors.full_messages %>');
-  <% @conversation.errors.messages.each do |msg_input| %>
-    <% msg_input.last.each do |msg| %>
-      <li><%= msg %></li>
-      alert('test');
-      $('div.conversation_#{msg_input.first.to_s}').class("has-error");
-      $('div.conversation_#{msg_input.first.to_s}').append("<%= j render 'layouts/field_error', msg: msg %>");
+  // elimina los errores anteriores
+  object = $(".modal-body").children('.has-error');
+  object.children('span.help-block').remove();
+  object.removeClass('has-error');
+
+  // muestra los errores
+  $('.form-errors').removeClass('hidden');
+
+  <% @conversation.errors.messages.each do |input, msgs| %>
+    <% msgs.each do |msg| %>
+      selector = 'div.conversation_';
+      <% if input.to_s[/(\w*)\.(\w*)/] %>
+        selector = selector + '<%= "#{$1}_#{$2}" %>';
+      <% else %>
+        selector = selector + '<%= "#{input.to_s}" %>';
+      <% end %>
+
+      $(selector).addClass("has-error");
+      $(selector).append(" <%= j render 'layouts/field_error', msg: msg %>");
     <% end %>
   <% end %>
 <% end %>
