@@ -8,6 +8,8 @@
       </div>
     </div>
   </div>
+  
+  <%= render 'layouts/errors', object: @image %>
 
   <!-- Image Form -->
   <%= simple_form_for @image, html: { multipart: true, class: 'form-horizontal'},
@@ -38,7 +40,8 @@
       <!-- Image Links -->
       <div class="row image-edit-links">
         <div class="col-sm-3 image-edit-link">
-          <%= f.button :submit, 'Actualizar', class: "btn btn-primary btn-block" %>
+          <%= f.button :submit, 'Actualizar', class: "btn btn-primary btn-block",
+            data: {"disable-with": "#{data_disable_submit_message}" } %>
         </div>
         <div class="col-sm-3 image-edit-link">
           <%= link_to 'Volver', :back, class: "btn btn-default btn-block" %>

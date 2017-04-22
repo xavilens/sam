@@ -112,9 +112,9 @@
           <% end %>
 
           <% if @event.can_participate? and !is_creator? %>
-            <br>
+            <!-- <br> -->
             <%= link_to fa_icon("plus")+" Participar", participant_request_events_path(event_id: @event.id),
-              remote: true, class: "" %>
+              remote: true, class: "btn btn-sm btn-primary gap-left" %>
           <% end %>
         </div>
       </div>

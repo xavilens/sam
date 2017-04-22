@@ -1,6 +1,10 @@
 class Address < ActiveRecord::Base
   ######## VALIDATIONS
-  # validates :addresseable, presence: true
+  validates :city, presence: true
+  validates :municipality, presence: true
+  validates :province, presence: true
+  validates :region, presence: true
+  validates :country, presence: true
 
   ######## SCOPES
   # Devuelve las direcciones de la localización dada

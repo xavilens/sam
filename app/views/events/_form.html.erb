@@ -8,149 +8,151 @@
       boolean: :horizontal_boolean
     } do |f| %>
 
-    <div class="form-header">
-      <div class="row">
-        <div class="col-sm-12">
-          <h3 class="col-sm-offset-1">Información básica del Evento</h3>
-        </div>
-      </div>
-    </div>
-    <%= render 'layouts/errors', object: @event %>
-
-    <%= f.input :name, label: 'Nombre', wrapper: :field_9 %>
-    <%= f.input :description, label: 'Descripción', wrapper: :field_9 %>
-    <%= f.association :event_type, label: 'Tipo', wrapper: :field_3 %>
-    <%= f.association :event_status, label: 'Estado', wrapper: :field_2 %>
-
-
-    <div class="form-header">
-      <div class="row">
-        <div class="col-sm-12">
-          <h3 class="col-sm-offset-1">Fecha y hora</h3>
-        </div>
-      </div>
-    </div>
-    <!-- <%= f.input :date, label: 'Fecha', input_html: {class: 'datepicker'}, as: :string, wrapper: :field_2 %> -->
-    <%= f.input :date, label: 'Fecha', as: :date_picker, wrapper: :field_3 %>
-    <%= f.input :time, label: 'Hora', as: :time_picker, wrapper: :field_3 %>
-
-    <div class="form-header">
-      <div class="row">
-        <div class="col-sm-12">
-          <h3 class="col-sm-offset-1">Ubicación</h3>
-        </div>
-      </div>
-    </div>
-
-    <!-- Event Address -->
+  <div class="form-header">
     <div class="row">
-      <%= f.input :autocomplete, label: 'Localidad', name: 'autocomplete',
-        placeholder: 'Busca aquí tu localidad y los campos se rellenarán automáticamente...',
-        as: :fake, wrapper: :field_8 %>
-      <div class="row">
-        <%= f.simple_fields_for :address do |ad| %>
-        <div class="address-inputs col-sm-offset-2">
-          <div class="row">
-            <div class="col-sm-12">
-              <%= ad.input :gaddress, as: :hidden %>
-              <%= ad.input :street, label: 'Calle', readonly: true, wrapper: :inline_field_7 %>
-              <%= ad.input :postal_code, label: 'C. Postal', readonly: true, wrapper: :inline_field_2 %>
-            </div>
+      <div class="col-sm-12">
+        <h3 class="col-sm-offset-1">Información básica del Evento</h3>
+      </div>
+    </div>
+  </div>
+
+  <%= render 'layouts/errors', object: @event %>
+
+  <%= f.input :name, label: 'Nombre', wrapper: :field_9 %>
+  <%= f.input :description, label: 'Descripción', rows: 5, wrapper: :field_9 %>
+  <%= f.association :event_type, label: 'Tipo', wrapper: :field_3 %>
+  <%= f.association :event_status, label: 'Estado', wrapper: :field_2 %>
+
+
+  <div class="form-header">
+    <div class="row">
+      <div class="col-sm-12">
+        <h3 class="col-sm-offset-1">Fecha y hora</h3>
+      </div>
+    </div>
+  </div>
+  <!-- <%= f.input :date, label: 'Fecha', input_html: {class: 'datepicker'}, as: :string, wrapper: :field_2 %> -->
+  <%= f.input :date, label: 'Fecha', as: :date_picker, wrapper: :field_3 %>
+  <%= f.input :time, label: 'Hora', as: :time_picker, wrapper: :field_3 %>
+
+  <div class="form-header">
+    <div class="row">
+      <div class="col-sm-12">
+        <h3 class="col-sm-offset-1">Ubicación</h3>
+      </div>
+    </div>
+  </div>
+
+  <!-- Event Address -->
+  <div class="row">
+    <%= f.input :autocomplete, label: 'Localidad', name: 'autocomplete',
+      placeholder: 'Busca aquí tu localidad y los campos se rellenarán automáticamente...',
+      as: :fake, wrapper: :field_8 %>
+    <div class="row">
+      <%= f.simple_fields_for :address do |ad| %>
+      <div class="address-inputs col-sm-offset-2">
+        <div class="row">
+          <div class="col-sm-12">
+            <%= ad.input :gaddress, as: :hidden %>
+            <%= ad.input :street, label: 'Calle', readonly: true, wrapper: :inline_field_7 %>
+            <%= ad.input :postal_code, label: 'C. Postal', readonly: true, wrapper: :inline_field_2 %>
           </div>
-          <div class="row">
-            <div class="col-sm-12">
-              <%= ad.input :city, label: 'Ciudad', readonly: true, required: true,
-                wrapper: :inline_field_4 %>
-              <%= ad.input :municipality, label: 'Municipio', readonly: true, required: true,
-                wrapper: :inline_field_4 %>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-12">
-            <%= ad.input :province, label: 'Provincia', readonly: true, required: true,
-              wrapper: :inline_field_3 %>
-            <%= ad.input :region, label: 'Comunidad autónoma', readonly: true, required: true,
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <%= ad.input :city, label: 'Ciudad', readonly: true, required: true,
               wrapper: :inline_field_4 %>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-12">
-            <%= ad.input :country, label: 'País', readonly: true, required: true,
-              wrapper: :inline_field_2 %>
-            </div>
+            <%= ad.input :municipality, label: 'Municipio', readonly: true, required: true,
+              wrapper: :inline_field_4 %>
           </div>
         </div>
-        <% end %>
-      </div>
-    </div>
-    <!-- END Event Address -->
-
-    <!-- Events Misc -->
-    <div class="form-header">
-      <div class="row">
-        <div class="col-sm-12">
-          <h3 class="col-sm-offset-1">Otros datos</h3>
+        <div class="row">
+          <div class="col-sm-12">
+          <%= ad.input :province, label: 'Provincia', readonly: true, required: true,
+            wrapper: :inline_field_3 %>
+          <%= ad.input :region, label: 'Comunidad autónoma', readonly: true, required: true,
+            wrapper: :inline_field_4 %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+          <%= ad.input :country, label: 'País', readonly: true, required: true,
+            wrapper: :inline_field_2 %>
+          </div>
         </div>
       </div>
-    </div>
-
-    <div class="row gap-bottom">
-      <div class="col-sm-12 col-sm-offset-1">
-        <p class="help-block">Es posible indicar el número máximo de artistas que podrán participar en el evento,
-          así como su precio aproximado.</p>
-      </div>
-    </div>
-
-    <%= f.input :max_participants, label: 'Participantes', input_html: { min: '0', step: 'any' },
-      wrapper: :field_2 %>
-    <%= f.input :pvp, label: 'PVP', as: :currency, wrapper: :field_2 %>
-    <!-- END Events Misc -->
-
-    <!-- Event images -->
-    <div class="form-header">
-      <div class="row">
-        <div class="col-sm-12">
-          <h3 class="col-sm-offset-1">Imágenes</h3>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-sm-10 col-sm-offset-1">
-        <p class="help-block">Las imágenes son opcionales. En caso de subir varias la primera será utilizada
-          como portada del evento.</p>
-      </div>
-    </div>
-
-    <div id="images-form">
-      <%= f.simple_fields_for :images do |i| %>
-        <%= render 'images/nested_image_fields', f: i %>
       <% end %>
     </div>
+  </div>
+  <!-- END Event Address -->
 
-    <div class="row gap-bottom">
-      <div class="col-sm-3 col-sm-offset-1 gap-bottom">
-        <%= link_to_add_association 'Añadir imagen', f, :images, partial: 'images/nested_image_fields',
-          class: 'gap-left btn btn-default btn-block',
-          'data-association-insertion-node': '#images-form',
-          'data-association-insertion-method': 'append' %>
+  <!-- Events Misc -->
+  <div class="form-header">
+    <div class="row">
+      <div class="col-sm-12">
+        <h3 class="col-sm-offset-1">Otros datos</h3>
       </div>
     </div>
-    <!-- END Event images -->
+  </div>
 
-    <div class="form-actions gap-bottom">
-      <div class="row">
-        <div class="col-sm-3">
-          <%= f.button :submit, "Aceptar", class: 'btn btn-block btn-primary col-sm-offset-1' %>
-        </div>
-        <div class="col-sm-3">
-          <%= link_to "Volver", @user, class: 'btn btn-block btn-default' %>
-        </div>
+  <div class="row gap-bottom form-help-block">
+    <div class="col-sm-12 col-sm-offset-1">
+      <p class="text-muted">Es posible indicar el número máximo de artistas que podrán participar en el evento,
+        así como su precio aproximado.</p>
+    </div>
+  </div>
+
+  <%= f.input :max_participants, label: 'Participantes', input_html: { min: '0', step: 'any'},
+    wrapper: :field_2 %>
+  <%= f.input :pvp, label: 'PVP', as: :currency, wrapper: :field_2 %>
+  <!-- END Events Misc -->
+
+  <!-- Event images -->
+  <div class="form-header">
+    <div class="row">
+      <div class="col-sm-12">
+        <h3 class="col-sm-offset-1">Imágenes</h3>
       </div>
     </div>
+  </div>
+
+  <div class="row form-help-block">
+    <div class="col-sm-10 col-sm-offset-1">
+      <p class="text-muted">Las imágenes son opcionales. En caso de subir varias la primera será utilizada
+        como portada del evento.</p>
+    </div>
+  </div>
+
+  <div id="images-form">
+    <%= f.simple_fields_for :images do |i| %>
+      <%= render 'images/nested_image_fields', f: i %>
+    <% end %>
+  </div>
+
+  <div class="row gap-bottom">
+    <div class="col-sm-3 col-sm-offset-1 gap-bottom">
+      <%= link_to_add_association 'Añadir imagen', f, :images, partial: 'images/nested_image_fields',
+        class: 'gap-left btn btn-default btn-block',
+        'data-association-insertion-node': '#images-form',
+        'data-association-insertion-method': 'append' %>
+    </div>
+  </div>
+  <!-- END Event images -->
+
+  <div class="form-actions gap-bottom">
+    <div class="row">
+      <div class="col-sm-3">
+        <%= f.submit "Aceptar", class: 'btn btn-block btn-primary col-sm-offset-1',
+          data: {"disable-with": "#{data_disable_submit_message}"} %>
+      </div>
+      <div class="col-sm-3">
+        <%= link_to "Volver", user_events_path(user_id: current_user), class: 'btn btn-block btn-default' %>
+      </div>
+    </div>
+  </div>
+</div>
   <% end %>
 
   <%= render "scripts/datepicker" %>
   <%= render "scripts/datetimepicker" %>
   <%= render "scripts/street_autocomplete", autocomplete_for: :event %>
-</div>

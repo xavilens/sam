@@ -7,5 +7,6 @@
       initAutocomplete(tipoDirParam, "<%= autocomplete_for %>");
     };
 
-  $(document).on('page:before-render', init( 'cities' ));
+    // $(document).on('page:before-render', init( 'cities' ));
+    $(document).ready(init( 'cities' ));
 </script>

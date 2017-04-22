@@ -11,7 +11,8 @@
   <div class="clearfix gap-top gap-bottom"></div>
 
   <div class="modal-footer">
-    <%= link_to 'Eliminar', @member, method: :delete, class: "btn btn-primary btn-md btn-block" %>
+    <%= link_to 'Eliminar', @member, method: :delete, class: "btn btn-primary btn-md btn-block",
+      data: {"disable-with": "Eliminando..." } %>
     <!-- <%= f.submit 'Eliminar', class: "btn btn-primary btn-md btn-block" %> -->
   </div>
 <!-- <% end %> -->

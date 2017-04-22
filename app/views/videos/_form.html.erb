@@ -33,7 +33,9 @@
         <div class="col-sm-offset-1 col-sm-11">
           <%= check_box_tag(:api_data, 1,{onchange: 'javascript:api_data()'}) %>
           <%= label_tag(:api_data, 'Obtener datos directamente del video', {onchange: 'javascript:api_data()'}) %>
-          <p class="hint text-muted">Al elegir esta opción los datos se obtendrán automáticamente del vídeo</p>
+          <p class="hint text-muted">
+            Al elegir esta opción el título, la descripción, así como otros datos, se obtendrán automáticamente del vídeo
+          </p>
         </div>
       </div>
 

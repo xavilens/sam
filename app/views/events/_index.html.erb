@@ -3,6 +3,18 @@
   <h1><%= @title %></h1>
 </div>
 
+<!-- Events Actions -->
+<div class="row gap-bottom">
+  <div class="col-sm-4">
+    <%= link_to fa_icon('plus')+" Crear evento", new_event_path, class: 'btn btn-block btn-primary' %>
+  </div>
+  <div class="col-sm-4 col-sm-offset-4">
+    <%= link_to "Volver", new_event_path, class: 'btn btn-block btn-default' %>
+  </div>
+</div>
+<!-- END Events Actions -->
+
+<!-- Events Month -->
 <% unless @is_user_calendar %>
   <div class="row calendar-links">
 
@@ -17,13 +29,16 @@
       class: "calendar-link no-gutter-sm-3" %>
   </div>
 <% end %>
+<!-- END Events Month -->
 
+<!-- Calendar -->
 <table class="table table-bordered table-striped">
   <tbody>
-  <%
-    no_data = true
-  %>
+  <% no_data = true %>
+
+  <!-- Calendar Days -->
   <% @start_date.upto(@finish_date).each do |date| %>
+    <!-- User Calendar -->
     <% if @is_user_calendar %>
 
       <% if @calendar.any_event?(date) %>
@@ -33,49 +48,48 @@
             <h4><%= calendar_date_header date %></h4>
           </td>
         </tr>
-
         <% @calendar.day(date).each do |event| %>
           <%= render 'events/event_index_row', event: event %>
         <% end %>
       <% end %>
-
+    <!-- END User Calendar -->
+    
+    <!-- General Calendar -->
     <% else %>
-
       <tr>
         <td class="event-header">
           <h4><%= calendar_date_header date %></h4>
         </td>
       </tr>
-
       <% if @calendar.any_event?(date) %>
         <% @calendar.day(date).each do |event| %>
           <%= render 'events/event_index_row', event: event %>
         <% end %>
-
         <tr>
           <td>
             <%= link_to_new_event date %>
           </td>
         </tr>
-
       <% else %>
-
         <tr>
           <td>
             <p>No hay ningún evento para esta fecha</p>
-
             <%= link_to_new_event date %>
             </td>
         </tr>
-
       <% end %>
     <% end %>
+    <!-- END General Calendar -->
   <% end %>
+  <!-- END Calendar Days -->
   </tbody>
 </table>
+<!-- END Calendar -->
 
+<!-- No data -->
 <% if no_data %>
   <div class="no-data">No hay ningún evento que mostrar.</div>
 <% end %>
+<!-- END No data -->
 
 <%= render 'scripts/dotdotdot' %>

@@ -12,7 +12,7 @@ class ImageUploader < CarrierWave::Uploader::Base
     "/images/default/" + [version_name, "default_avatar.jpg"].compact.join('_')
   end
 
-  process scale: [3500, 99999]
+  process scale: [3500, 9999]
 
   def scale(width, height)
     resize_to_limit(width, height)

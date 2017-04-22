@@ -8,7 +8,6 @@
     file: :horizontal_file_input,
     boolean: :horizontal_boolean
   } do |f| %>
-  <%= f.error_notification %>
 
   <div class="form-inputs">
 
@@ -16,6 +15,8 @@
     <div class="form-header row">
       <h3 class="col-sm-offset-1">Información básica</h3>
     </div>
+
+    <%= render 'layouts/errors', object: @user %>
 
     <% unless active_page 'users' %>
     <!-- Email y Password -->
@@ -162,20 +163,21 @@
     <% end %>
   </div>
   <hr>
-  
+
   <!-- BOTONES -->
   <div class="form-actions">
     <div class="row">
       <div class="col-sm-offset-1">
         <% submit = (active_page 'users') ? 'Actualizar' : 'Registrarse'%>
-        <%= f.button :submit, submit, class: 'btn btn-md btn-primary' %>
+        <%= f.button :submit, submit, class: 'btn btn-md btn-primary',
+          data: {"disable-with": "#{data_disable_submit_message}" } %>
       </div>
     </div>
     <div class="row">
       <div class="col-sm-offset-1">
         <% if active_page 'users' %>
           <br>
-          <%= link_to "Editar datos de registro", edit_user_registration_path, role: 'button', class: 'btn btn-link'  %>
+          <%= link_to "Editar datos de registro", edit_user_registration_path, role: 'button', class: 'btn btn-link' %>
         <% else %>
           <%= render 'shared/links' %>
         <% end %>

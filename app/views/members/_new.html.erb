@@ -15,6 +15,7 @@
   <div class="clearfix gap-top gap-bottom"></div>
 
   <div class="modal-footer">
-    <%= f.submit 'Aceptar', class: "btn btn-primary btn-md btn-block" %>
+    <%= f.submit 'Aceptar', class: "btn btn-primary btn-md btn-block",
+      data: {"disable-with": "#{data_disable_submit_message}" } %>
   </div>
 <% end %>

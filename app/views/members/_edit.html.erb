@@ -38,6 +38,7 @@
   </div>
 
   <div class="modal-footer">
-    <%= f.submit 'Actualizar', class: "btn btn-primary btn-md btn-block" %>
+    <%= f.submit 'Actualizar', class: "btn btn-primary btn-md btn-block",
+      data: {"disable-with": "#{data_disable_submit_message}" } %>
   </div>
 <% end %>

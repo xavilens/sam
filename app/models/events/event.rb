@@ -79,5 +79,4 @@ class Event < ActiveRecord::Base
   def day
     date.day
   end
-
 end

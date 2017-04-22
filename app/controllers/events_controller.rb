@@ -45,16 +45,6 @@ class EventsController < ApplicationController
     end
   end
 
-  def new
-    @event = if params[:date].present?
-      Event.new(date: params[:date])
-    else
-      Event.new
-    end
-
-    set_new
-  end
-
   def show
     # Calculamos el evento anterior y el siguiente
     event_pos = @events.index(@event)
@@ -75,9 +65,14 @@ class EventsController < ApplicationController
     @title = @page
   end
 
-  def edit
-    @page = 'Editar evento'
-    @title = @page
+  def new
+    @event = if params[:date].present?
+      Event.new(date: params[:date])
+    else
+      Event.new
+    end
+
+    set_new
   end
 
   def create
@@ -97,13 +92,21 @@ class EventsController < ApplicationController
     end
   end
 
+  def edit
+    set_edit
+  end
+
   def update
     respond_to do |format|
       if @event.update(event_update_params)
-        format.html { redirect_to user_event_path(user_id: @event.creator_id, id: @event), notice: 'Evento creado satisfactoriamente.' }
+        format.html { redirect_to user_event_path(user_id: @event.creator_id, id: @event),
+          notice: 'Evento actualizado satisfactoriamente.' }
         format.json { render :show, status: :created, location: @event }
       else
-        format.html { render :new }
+        format.html {
+          set_edit
+          render :new
+        }
         format.json { render json: @event.errors, status: :unprocessable_entity }
       end
     end
@@ -165,6 +168,7 @@ class EventsController < ApplicationController
       end
     end
 
+    # Definimos condiciones iniciales de la página New
     def set_new
       @event.build_address
       @event.images.build
@@ -172,6 +176,13 @@ class EventsController < ApplicationController
       @page = 'Nuevo evento'
     end
 
+    # Definimos condiciones iniciales de la página Edit
+    def set_edit
+      @event.images.build
+
+      @page = 'Editar evento'
+      @title = @page
+    end
     # Parámetros de evento permitidos por el controlador
     def event_params
       params.require(:event).permit(:name, :description, :date, :time, :event_status_id, :event_type_id,

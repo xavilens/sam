@@ -65,8 +65,12 @@ SimpleForm.setup do |config|
         wr.use :hint,  wrap_with: { tag: 'p', class: 'help-block' }
       end
 
+      # mdf.wrapper tag: 'div', class: "col-sm-#{12-(2+col)}"
+      mdf.use :error, wrap_with: { tag: 'span', class: "help-block col-sm-10 col-sm-offset-2" }
+
       # grid size: total (12) - etiqueta (2) - input (col) - margen (1) = 12-(col+3)
-      mdf.use :error, wrap_with: { tag: 'span', class: "help-block col-sm-10 col-sm-offset-#{12 - (col + 3) + 2}" }
+      # mdf.use :error, wrap_with: { tag: 'span', class: "help-block col-sm-10 col-sm-offset-#{12 - (col + 3) + 2}" }
+      # mdf.use :error, wrap_with: { tag: 'span', class: "help-block col-sm-10 col-sm-offset-#{(12 - 2 - col) + 2}" }
     end
 
     # Wrapper para input horizontal

@@ -19,6 +19,8 @@
       boolean: :horizontal_boolean
     } do |f| %>
 
+    <%= render 'layouts/errors', object: @user %>
+
     <div id="images-form">
       <!-- http://stackoverflow.com/questions/14884704/how-to-get-rails-build-and-fields-for-to-create-only-a-new-record-and-not-includ -->
       <%= f.simple_fields_for :images, @user.images.build do |image_form| %>
@@ -29,7 +31,8 @@
     <!-- Image Links -->
     <div class="row image-edit-links">
       <div class="col-sm-3 image-new-link">
-        <%= f.button :submit, 'Publicar', class: "btn btn-primary btn-block" %>
+        <%= f.button :submit, 'Publicar', class: "btn btn-primary btn-block",
+          data: {"disable-with": "#{data_disable_submit_message}" } %>
       </div>
       <div class="col-sm-3 image-new-link">
         <%= link_to_add_association 'Añadir imagen', f, :images, partial: 'nested_image_fields',

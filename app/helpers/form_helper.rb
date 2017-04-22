@@ -18,18 +18,16 @@ module FormHelper
   ######### FORM TYPE
   # Indica si se encuentra en el formulario de editar
   def is_edit_form?
-    params[:action] == 'edit'
+    params[:action] == 'edit' || params[:action] == 'update'
   end
 
   # Indica si se encuentra en el formulario de crear
   def is_new_form?
-    params[:action] == 'new'
+    params[:action] == 'new' || params[:action] == 'create'
   end
 
   # Devuelve el mensaje a mostrar en el botón submit
   def data_disable_submit_message
-    ''
-
     if is_new_form?
       'Creando...'
     elsif is_edit_form?

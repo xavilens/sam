@@ -2,7 +2,6 @@
 <script type="text/javascript">
   var init =
     function( tipoDirParam ){
-
       autocomplete = null;
 
       componentForm = {
@@ -16,6 +15,6 @@
       initAutocomplete(tipoDirParam, "<%= autocomplete_for %>");
     };
 
-  // $(document).ready(init( 'address' ));
-  $(document).on('page:before-render', init( 'address' ));
+  $(document).ready(init( 'address' ));
+  // $(document).on('page:before-render', init( 'address' ));
 </script>
