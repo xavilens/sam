@@ -1,10 +1,9 @@
 
-# TODO: Fix Events (AddParticipant...)
 # TODO: Finalize user index and user search
 # TODO: Add Pagination (Kaminari)
 # TODO: Image security
-# TODO: Conversation Type
 # TODO: Image size for gallery
-# TODO: Create services?
+# TODO: Conversation Type
 # TODO: Create BandGenres?
+# TODO: Create services?
 # TODO: Create site pages

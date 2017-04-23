@@ -33,7 +33,7 @@ class Message < ActiveRecord::Base
   self.inheritance_column = :type
 
   def self.types
-    %w(AddMemberMessage, AddParticipantMessage, RemoveParticipantMessage)
+    %w(AddMemberMessage AddParticipantMessage RemoveParticipantMessage)
   end
 
   ######## METHODS

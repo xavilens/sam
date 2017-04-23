@@ -20,10 +20,17 @@
     <!-- END Video Actions -->
 
     <!-- Videos -->
+    <% no_data = true %>
     <% @videos.each do |video| %>
+      <% no_data = false %>
       <%= render 'videos/video_container', video: video %>
     <% end %>
+
+    <% if no_data %>
+      <p class="no-data">El usuario no tiene ningún vídeo</p>
+    <% end %>
     <!-- END Videos -->
+
   </div>
 
   <div class="col-md-3">

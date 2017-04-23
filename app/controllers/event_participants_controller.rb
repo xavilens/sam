@@ -6,8 +6,8 @@ class EventParticipantsController < ApplicationController
 
   def new
     # Obtenemos el evento y el participante a través de los parámetros
-    event = Event.find params[:event_id]
-    participant = User.find params[:participant_id]
+    event = Event.find event_participants_params[:event_id]
+    participant = User.find event_participants_params[:participant_id]
 
     # Definimos el título del modal
     @title = "Incorporar participante"
@@ -26,14 +26,19 @@ class EventParticipantsController < ApplicationController
     # Persistimos el participante en la BD, si no mostramos una alerta
     if @event_participant.save
       # Definimos el creador del evento
-      creator =  @event_participant.creator
+      participant =  @event_participant.participant
 
       # Borramos todos los mensajes de petición de membresía para esta relación
-      Conversation.add_participant_conversation(current_user.id, creator.id).destroy_all
+      Conversation.participant_related_conversations(current_user.id, participant.id).destroy_all
 
-      redirect_to root_path, notice: "Miembro añadido"
+      redirect_to root_path, notice: "#{participant.name} añadido al evento #{participant.event.name}"
     else
-      redirect_to :back, notice: "No se ha podido procesar la petición debido a un error"
+      error_msg = ""
+      @event_participant.errors.full_messages.each do |msg|
+        error_msg = error_msg + "<p>#{msg}</p>"
+      end
+
+      redirect_to :back, alert: "#{error_msg}"
     end
   end
 
@@ -52,7 +57,7 @@ class EventParticipantsController < ApplicationController
     @title = "Eliminar participante"
 
     @message = if creator == current_user
-      "Está a punto de eliminar a #{participant.name} del evento."
+      "Está a punto de eliminar a <strong>#{participant.name}</strong> del evento."
     else
       "Está a punto de dejar de participar en el evento."
     end
@@ -60,11 +65,9 @@ class EventParticipantsController < ApplicationController
   end
 
   def destroy
-    debugger
     @event_participant = EventParticipant.find params[:id]
-    @event_participant.destroy
-
     event = @event_participant.event
+    @event_participant.destroy
 
     unless @event_participant.persisted?
       SendRemoveParticipantMessage.new(@event_participant, current_user).do

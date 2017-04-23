@@ -5,9 +5,11 @@
     Vídeos <span class="badge"><%= @user.videos.size %></span>
   </div>
 
+  <% if @user.videos? %>
   <div class="video-container">
-    <%= render 'videos/video_row', video: @user.videos.last %>
+    <%= render 'videos/video_row', video: @user.videos.last%>
   </div>
+  <% end %>
 
   <div class="row">
     <div class="user-links col-sm-12 text-muted">

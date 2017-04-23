@@ -1,17 +1,14 @@
 class RemoveParticipantMessage < Message
-  attr_accessor :event
+  ######## CALLBACKS
+  before_validation :set_body, on: [:create, :save]
 
-  # Define los atributos para construir el cuerpo del mensaje
-  def set_attr event, is_creator
-    @event = event
-    set_body is_creator
-  end
+  ######## ATTRIBUTES
+  attr_accessor :event, :is_event_creator
 
   private
     # Define el cuerpo del mensaje
-    def set_body is_creator
-      debugger
-      self.body = if is_creator
+    def set_body
+      self.body = if is_event_creator
         "#{author.name} te ha expulsado del evento '#{event.name}'."
       else
         "#{author.name} ha dejado de participar en el evento '#{event.name}'."

@@ -59,7 +59,7 @@
       <div class="col-sm-3 event-container event-status-container">
         <div class="event-field-header small">Estado</div>
         <div class="event-field-text <%= event_status_class @event.status %>">
-          <%= @event.status %>
+          <strong><%= @event.status %></strong>
         </div>
       </div>
       <div class="col-sm-3 event-container event-date-container">
@@ -122,7 +122,7 @@
       <div class="col-sm-4 col-sm-offset-1">
         <% if @event.participants? %>
           <div class="panel panel-default">
-            <div class="panel-heading"><strong>Participantes</strong></div>
+            <div class="panel-heading event-participant-header"><strong>Participantes</strong></div>
             <table class="table table-bordered table-hover table-condensed">
               <tbody>
               <% @event.participants.decorate.each do |participant| %>

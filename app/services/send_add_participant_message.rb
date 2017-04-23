@@ -9,8 +9,7 @@ class SendAddParticipantMessage
   # Ejecuta el servicio
   def do
     # Construye la conversación
-    @conversation = AddParticipantConversation.new(user_1: @participant, user_2: @creator)
-    @conversation.set_conversation event
+    @conversation = AddParticipantConversation.new(user_1: @participant, user_2: @creator, event: event)
 
     # Guarda y devuelve el resultado (éxito o error)
     return conversation.save

@@ -1,21 +1,23 @@
 class RemoveParticipantConversation < Conversation
+  ######## CALBACKS
+  before_validation :set_conversation, on: [:create, :save]
 
-  # Define el mensaje
-  def set_conversation event, is_creator
-    debugger
-    self.subject = conversation_subject event, is_creator
-
-    message = RemoveParticipantMessage.new(author: self.user_1)
-    message.set_attr event, is_creator
-
-    self.messages << message
-  end
+  ######## ATTRIBUTES
+  attr_accessor :event, :is_event_creator
 
   private
+    # Define el mensaje
+    def set_conversation
+      self.subject = conversation_subject
+
+      message = RemoveParticipantMessage.new(author: user_1, event: event, is_event_creator: is_event_creator)
+
+      self.messages << message
+    end
 
     # Devuelve el asunto del mensaje
-    def conversation_subject event, is_creator
-      if is_creator
+    def conversation_subject
+      if is_event_creator
         "Has sido expulsado del evento '#{event.name}'"
       else
         "#{user_1.name} ha dejado de participar en el evento '#{event.name}'"
