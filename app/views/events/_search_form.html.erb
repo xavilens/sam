@@ -36,8 +36,11 @@
     <%= f.input :region, collection: Address.events.regions, label_method: :region,
       value_method: :region, label: 'Comunidad autónoma', include_blank: true, required: false, as: :select %>
 
-    <%= f.button :submit, 'Filtrar', class: 'btn btn-sm btn-primary',
-      data: {"disable-with": "Buscando..." } %>
+    <div class="row">
+      <div class="col-sm-12">
+        <%= f.button :submit, 'Filtrar', class: 'btn btn-block btn-primary', data: {"disable-with": "Buscando..." } %>
+      </div>
+    </div>
   <% end %>
 </div>
 

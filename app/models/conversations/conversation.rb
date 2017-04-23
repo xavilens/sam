@@ -6,12 +6,9 @@ class Conversation < ActiveRecord::Base
 
   ######## SCOPES
   ## BASIC
-  # Devuelve aquellos mensajes sin tipo
-  scope :regular, -> { joins(:messages).where("messages.type is null") }
-
   # Devuelve aquellos mensajes que han sido enviado por el usuario
   scope :author, -> (user_id) {
-    joins(:messages).where("messages.author_id = :author_id",author_id: user_id)
+    joins(:messages).where(messages: {author_id: user_id})
   }
 
   # Devuelve aquellos mensajes que no han sido enviado por el usuario
@@ -31,19 +28,23 @@ class Conversation < ActiveRecord::Base
   # Devuelve las conversaciones que tiene mensajes sin leer por el usuario
   # (aunque el otro usuario haya leído todos sus mensajes)
   # SQL "select count(1) from conversations c, messages m where c.id = m.conversation_id and (c.user_1_id = :user_id or user_2_id = :user_id) and m.author_id = :recipent_id and m.false group by c.id"
+  # scope :unread_conversations, -> (user_id){
+  #   my_conversations(user_id).joins(:messages).where("messages.author_id != :user_id and messages.read = false",
+  #     user_id: user_id).distinct(:id)
+  # }
   scope :unread_conversations, -> (user_id){
-    my_conversations(user_id).joins(:messages).where("messages.author_id != :user_id and messages.read = false", user_id: user_id).distinct(:id)
+    my_conversations(user_id).unread(user_id).distinct(:id)
   }
 
   # Devuelve aquellos mensajes que no han sido enviado por el usuario
   scope :search, -> (user_id, text) {
-    my_conversations(user_id).joins(:messages).where("body like :text or subject like :text", text: "%#{text}%").distinct(:id)
+    my_conversations(user_id).joins(:messages).where("body like :text or subject like :text",
+      text: "%#{text}%").distinct(:id)
   }
 
   # Devuelve aquellas conversaciones entre dos usuarios
   scope :between, -> (user_1_id, user_2_id) {
-    where("user_1_id in (:user_1_id, :user_2_id) and user_2_id in (:user_1_id, :user_2_id)",
-      user_1_id: user_1_id, user_2_id: user_2_id)
+    where("user_1_id in (:users) and user_2_id in (:users)", users: [user_1_id, user_2_id])
   }
 
   ## INBOX
@@ -80,12 +81,11 @@ class Conversation < ActiveRecord::Base
   }
 
   # Devuelve aquellos mensajes que sean peticiones de amistad
-  scope :add_member, -> { joins(:messages).where("messages.type = 'AddMemberMessage'") }
+  # scope :add_member, -> { where(type: "AddMemberConversation") }
 
   # Devuelve aquellos mensajes que no han sido enviado por el usuario
   scope :add_member_conversation, -> (user_1_id, user_2_id) {
-    add_member.where("user_1_id in (:user_1_id, :user_2_id) and user_2_id in (:user_1_id, :user_2_id)",
-      user_1_id: user_1_id, user_2_id: user_2_id)
+    add_member.between(user_1_id, user_2_id)
   }
 
   ## ADD PARTICIPANTS
@@ -100,29 +100,38 @@ class Conversation < ActiveRecord::Base
   }
 
   # Devuelve aquellos mensajes que sean peticiones de participación en eventos
-  scope :participant_related, -> {
-    joins(:messages).where("messages.type in ('AddParticipantMessage','RemoveParticipantMessage')")
-  }
+  # scope :participant_related, -> {
+  #   joins(:messages).where(type: ['AddParticipantConversation','RemoveParticipantConversation'])
+  # }
 
   # Devuelve aquellos mensajes que sean peticiones de participación en evento
-  scope :add_participant, -> { joins(:messages).where("messages.type = 'AddParticipantMessage'") }
+  # scope :add_participant, -> { where(type: "AddParticipantConversation") }
+
+  # Devuelve aquellos mensajes que sean peticiones de participación en evento
+  scope :add_participant_conversation, -> (user_1_id, user_2_id) {
+    add_participant.between(user_1_id, user_2_id)
+  }
 
   # Devuelve aquellos mensajes que sean eliminaciones de participación en evento
-  scope :remove_participant, -> { joins(:messages).where("messages.type = 'RemoveParticipantMessage'") }
+  # scope :remove_participant, -> { where(type: "RemoveParticipantConversation") }
+
+  # Devuelve aquellos mensajes que sean peticiones de participación en evento
+  scope :remove_participant_conversation, -> (user_1_id, user_2_id) {
+    remove_participant.between(user_1_id, user_2_id)
+  }
 
   # Devuelve aquellos mensajes que no han sido enviado por el usuario
   scope :participant_related_conversations, -> (user_1_id, user_2_id) {
-    participant_related.where("user_1_id in (:user_1_id, :user_2_id) and user_2_id in (:user_1_id, :user_2_id)",
-      user_1_id: user_1_id, user_2_id: user_2_id)
+    participant_related.between(user_1_id, user_2_id: user_2_id)
   }
 
   ## TYPES
   # Devolvemos las conversaciones de un tipo determinado
-  # scope :regular, -> { where(type: nil) }
-  # scope :add_member, -> { where(type: 'AddMemberConversation') }
-  # scope :participant_related, -> { where(type: ['AddParticipantConversation', 'RemoveParticipantConversation']) }
-  # scope :add_participant, -> { where(type: 'AddParticipantConversation') }
-  # scope :remove_participant, -> { where(type: 'RemoveParticipantConversation') }
+  scope :regular, -> { where(type: nil) }
+  scope :add_member, -> { where(type: 'AddMemberConversation') }
+  scope :participant_related, -> { where(type: ['AddParticipantConversation', 'RemoveParticipantConversation']) }
+  scope :add_participant, -> { where(type: 'AddParticipantConversation') }
+  scope :remove_participant, -> { where(type: 'RemoveParticipantConversation') }
 
   ######## ORDER
   # Devuelve las conversaciones ordenadas de manera descendiente
@@ -148,11 +157,10 @@ class Conversation < ActiveRecord::Base
   belongs_to :user_1, class_name: 'User', primary_key: 'id', foreign_key: 'user_1_id'
   belongs_to :user_2, class_name: 'User', primary_key: 'id', foreign_key: 'user_2_id'
 
-  # self.inheritance_column = :type
-  #
-  # def self.types
-  #   %w(AddMemberConversation AddParticipantConversation RemoveParticipantConversation)
-  # end
+  self.inheritance_column = :type
+  def self.types
+    %w(AddMemberConversation AddParticipantConversation RemoveParticipantConversation)
+  end
 
   delegate :regular, to: :messages
   delegate :add_member, to: :messages
@@ -215,5 +223,4 @@ class Conversation < ActiveRecord::Base
   def messages_count
     messages.count
   end
-
 end

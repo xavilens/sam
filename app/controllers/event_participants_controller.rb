@@ -51,6 +51,7 @@ class EventParticipantsController < ApplicationController
   end
 
   def create
+    debugger
     @event_participant = EventParticipant.new(event_participants_params)
 
     # Persistimos el participante en la BD, si no mostramos una alerta
@@ -59,10 +60,11 @@ class EventParticipantsController < ApplicationController
       participant =  @event_participant.participant
 
       # Borramos todos los mensajes de petición de membresía para esta relación
-      # Conversation.participant_related_conversations(current_user.id, participant.id).destroy_all
-      @event_participant.event.conversations.add_participant.between(current_user, participant).destroy_all
+      event = @event_participant.event
+      conversations = event.conversations.add_participant_conversation(current_user, participant)
+      conversations.destroy_all
 
-      redirect_to root_path, notice: "#{participant.name} añadido al evento #{participant.event.name}"
+      redirect_to root_path, notice: "#{participant.name} añadido al evento #{event.name}"
     else
       error_msg = ""
       @event_participant.errors.full_messages.each do |msg|

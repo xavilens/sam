@@ -3,17 +3,6 @@
   <h1><%= @title %></h1>
 </div>
 
-<!-- Events Actions -->
-<div class="row gap-bottom">
-  <div class="col-sm-4">
-    <%= link_to fa_icon('plus')+" Crear evento", new_event_path, class: 'btn btn-block btn-primary' %>
-  </div>
-  <div class="col-sm-4 col-sm-offset-4">
-    <%= link_to "Volver", new_event_path, class: 'btn btn-block btn-default' %>
-  </div>
-</div>
-<!-- END Events Actions -->
-
 <!-- Events Month -->
 <% unless @is_user_calendar %>
   <div class="row calendar-links">
@@ -53,7 +42,7 @@
         <% end %>
       <% end %>
     <!-- END User Calendar -->
-    
+
     <!-- General Calendar -->
     <% else %>
       <tr>

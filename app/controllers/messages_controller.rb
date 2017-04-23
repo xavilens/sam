@@ -70,7 +70,7 @@ class MessagesController < ApplicationController
       else
         set_new_page
         format.html { render :new }
-        format.js 
+        format.js
       end
     end
   end
@@ -94,20 +94,13 @@ class MessagesController < ApplicationController
     @conversation = Conversation.find(params[:id])
     @message = @conversation.messages.build(new_message_params)
 
-    respond_to do |format|
-      if @message.save
-        format.html { flash[:notice] = 'Mensaje enviado correctamente' }
-        format.js { flash.now[:notice] = 'Mensaje enviado correctamente' }
-      else
-        format.html { flash[:error] = 'No se ha podido enviar el mensaje' }
-        format.js { flash.now[:error] = 'No se ha podido enviar el mensaje' }
-      end
-
-      format.html { redirect_to message_path(@conversation) }
-      format.js {  }
+    if @message.save
+      flash.now[:notice] = 'Mensaje enviado correctamente'
+    else
+      flash.now[:error] = 'No se ha podido enviar el mensaje'
     end
 
-
+    redirect_to message_path(@conversation)
   end
 
   private
