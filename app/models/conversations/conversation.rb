@@ -4,9 +4,7 @@ class Conversation < ActiveRecord::Base
   validates :user_2, presence: true
   validates :subject, presence: true
 
-
   ######## SCOPES
-
   ## BASIC
   # Devuelve aquellos mensajes sin tipo
   scope :regular, -> { joins(:messages).where("messages.type is null") }
@@ -106,6 +104,14 @@ class Conversation < ActiveRecord::Base
       user_1_id: user_1_id, user_2_id: user_2_id)
   }
 
+  ## TYPES
+  # Devolvemos las conversaciones de un tipo determinado
+  # scope :regular, -> { where(type: nil) }
+  # scope :add_member, -> { where(type: 'AddMemberConversation') }
+  # scope :participant_related, -> { where(type: ['AddParticipantConversation', 'RemoveParticipantConversation']) }
+  # scope :add_participant, -> { where(type: 'AddParticipantConversation') }
+  # scope :remove_participant, -> { where(type: 'RemoveParticipantConversation') }
+
   ######## ORDER
   # Devuelve las conversaciones ordenadas de manera descendiente
   scope :desc, -> { order(id: :desc) }
@@ -126,6 +132,12 @@ class Conversation < ActiveRecord::Base
 
   belongs_to :user_1, class_name: 'User', primary_key: 'id', foreign_key: 'user_1_id'
   belongs_to :user_2, class_name: 'User', primary_key: 'id', foreign_key: 'user_2_id'
+
+  self.inheritance_column = :type
+
+  def self.types
+    %w(AddMemberConversation AddParticipantConversation RemoveParticipantConversation)
+  end
 
   delegate :regular, to: :messages
   delegate :add_member, to: :messages

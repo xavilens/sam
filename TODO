@@ -1,9 +1,9 @@
-
+# TODO: Conversation Type
 # TODO: Finalize user index and user search
 # TODO: Add Pagination (Kaminari)
 # TODO: Image security
+# TODO: Create ConversationRelated
 # TODO: Image size for gallery
-# TODO: Conversation Type
 # TODO: Create BandGenres?
 # TODO: Create services?
 # TODO: Create site pages

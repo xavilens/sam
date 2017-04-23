@@ -1,5 +1,4 @@
 class Message < ActiveRecord::Base
-
   ######## VALIDACIONES
   validates :author_id, presence: true
   validates :body, presence: true

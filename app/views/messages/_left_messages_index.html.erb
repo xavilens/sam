@@ -1,14 +1,15 @@
 <div class="row">
   <div class="messages-options">
     <div class="col-sm-12 btn-group-vertical" role="group">
+      <span class="btn btn-block brn-default btn-group-header" type= "button">Bandejas de mensajes</span>
       <%= link_to messages_path(show: 'inbox'),
         class: "btn btn-block btn-default #{active_conversation_box('inbox')}", type: 'button' do %>
-        Mensajes recibidos <%= inbox_unread_count %>
+        Recibidos <%= inbox_unread_count %>
       <% end %>
 
       <%= link_to messages_path(show: 'outbox'),
         class: "btn btn-block btn-default #{active_conversation_box('outbox')}", type: 'button' do %>
-        Mensajes enviados <%= outbox_unread_count %>
+        Enviados <%= outbox_unread_count %>
       <% end %>
 
       <%= link_to messages_path(show: 'membership'),
@@ -23,7 +24,7 @@
 
       <%= link_to messages_path(show: 'search'),
         class: "btn btn-block btn-default #{active_conversation_box('search')}", type: 'button' do %>
-        Mensajes encontrados
+        Encontrados
       <% end %>
     </div>
   </div>
