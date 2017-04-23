@@ -4,6 +4,36 @@ class EventParticipantsController < ApplicationController
 
   before_action :check_participants_avaliable, only: [:new, :create, :participant_request, :send_request]
 
+  def participant_request
+    # Definimos el creador
+    event = Event.find(params[:event_id])
+    creator = event.creator
+
+    # Definimos el título del modal y el mensaje que mostraremos
+    @title = "Enviar petición de participación"
+
+    @message = "Está a punto de enviar una petición a #{creator.name} para participar en su evento."
+    @message += "<br><br>¿Desea continuar?"
+
+    # Creamos el participante con el evento y el músico para el formulario
+    @event_participant = EventParticipant.new(event: event, participant: current_user)
+  end
+
+  def send_request
+    # Definimos el creador
+    event = Event.find(event_participants_params[:event_id])
+    creator = event.creator
+
+    # Si es válido envía un mensaje al creador pidiendo ser participante
+    send_message = SendAddParticipantMessage.new(event, creator, current_user)
+    if send_message.do
+      send_message.relate_to_event
+      flash.now[:notice] = "Petición enviada a #{creator.name}"
+    else
+      flash.now[:alert] = "No se ha podido enviar la petición a #{creator.name}"
+    end
+  end
+
   def new
     # Obtenemos el evento y el participante a través de los parámetros
     event = Event.find event_participants_params[:event_id]
@@ -29,7 +59,8 @@ class EventParticipantsController < ApplicationController
       participant =  @event_participant.participant
 
       # Borramos todos los mensajes de petición de membresía para esta relación
-      Conversation.participant_related_conversations(current_user.id, participant.id).destroy_all
+      # Conversation.participant_related_conversations(current_user.id, participant.id).destroy_all
+      @event_participant.event.conversations.add_participant.between(current_user, participant).destroy_all
 
       redirect_to root_path, notice: "#{participant.name} añadido al evento #{participant.event.name}"
     else
@@ -69,40 +100,12 @@ class EventParticipantsController < ApplicationController
     event = @event_participant.event
     @event_participant.destroy
 
-    unless @event_participant.persisted?
-      SendRemoveParticipantMessage.new(@event_participant, current_user).do
-
+    send_message = SendRemoveParticipantMessage.new(@event_participant, current_user)
+    if send_message.do
+      send_message.relate_to_event
       redirect_to event_path(user_id: event.creator_id, id: event.id), notice: "Eliminada la participación del evento"
     else
       redirect_to :back, alert: 'No se ha podido procesar la petición debido a un error'
-    end
-  end
-
-  def participant_request
-    # Definimos el creador
-    event = Event.find(params[:event_id])
-    creator = event.creator
-
-    # Definimos el título del modal y el mensaje que mostraremos
-    @title = "Enviar petición de participación"
-
-    @message = "Está a punto de enviar una petición a #{creator.name} para participar en su evento."
-    @message += "<br><br>¿Desea continuar?"
-
-    # Creamos el participante con el evento y el músico para el formulario
-    @event_participant = EventParticipant.new(event: event, participant: current_user)
-  end
-
-  def send_request
-    # Definimos el creador
-    event = Event.find(event_participants_params[:event_id])
-    creator = event.creator
-
-    # Si es válido envía un mensaje al creador pidiendo ser participante
-    if SendAddParticipantMessage.new(event, creator, current_user).do
-      flash.now[:notice] = "Petición enviada a #{creator.name}"
-    else
-      flash.now[:alert] = "No se ha podido enviar la petición a #{creator.name}"
     end
   end
 

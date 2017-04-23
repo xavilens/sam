@@ -38,6 +38,9 @@ class Event < ActiveRecord::Base
   accepts_nested_attributes_for :images, allow_destroy: true,
     reject_if: proc { |att| att['title'].blank? || att['image'].blank? }
 
+  has_many :conversation_relateds, as: :conversationable
+  has_many :conversations, through: :conversation_relateds
+
   ######## METHODS
 
   # Devuelve el tipo del evento

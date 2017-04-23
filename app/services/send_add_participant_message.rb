@@ -15,6 +15,10 @@ class SendAddParticipantMessage
     return conversation.save
   end
 
+  def relate_to_event
+    ConversationRelated.create(conversation: conversation, conversationable: event)
+  end
+
   private
     attr_accessor :creator, :participant, :event, :conversation
 end

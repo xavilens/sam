@@ -79,20 +79,7 @@ class UserDecorator < Draper::Decorator
 
   # Devuelve los N próximos conciertos en los que participa el usuario
   def events_in_show n
-    # Obtenemos todos los eventos y los ordenamos
-    show_events = events.sort_by!{|event| event.date}
-
-    # Elimina aquellos eventos que están repetidos
-    events_ids = []
-    show_events.each do |event|
-      if events_ids.include? event.id
-        show_events.delete event
-      else
-        events_ids << event.id
-      end
-    end
-
-    return show_events.first(n)
+    events.first(n)
   end
 
   # Indica si posee imagenes

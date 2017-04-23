@@ -40,6 +40,12 @@ class Conversation < ActiveRecord::Base
     my_conversations(user_id).joins(:messages).where("body like :text or subject like :text", text: "%#{text}%").distinct(:id)
   }
 
+  # Devuelve aquellas conversaciones entre dos usuarios
+  scope :between, -> (user_1_id, user_2_id) {
+    where("user_1_id in (:user_1_id, :user_2_id) and user_2_id in (:user_1_id, :user_2_id)",
+      user_1_id: user_1_id, user_2_id: user_2_id)
+  }
+
   ## INBOX
   # Devuelve aquellas conversaciones con mensajes recibidos por el usuario (no los únicamente enviados)
   scope :inbox, -> (user_id) {
@@ -62,7 +68,7 @@ class Conversation < ActiveRecord::Base
     outbox(user_id).unread(user_id).size
   }
 
-  ## MEMBERSHIPS
+  ## ADD MEMBER
   # Devuelve aquellas conversaionces con mensajes enviados por el usuario aun sin tener respuesta
   scope :membership, -> (user_id) {
     my_conversations(user_id).add_member.not_author(user_id).distinct(:id)
@@ -82,7 +88,7 @@ class Conversation < ActiveRecord::Base
       user_1_id: user_1_id, user_2_id: user_2_id)
   }
 
-  ## PARTICIPANTS
+  ## ADD PARTICIPANTS
   # Devuelve aquellas conversaciones referentes a peticiones de participación en eventos
   scope :participants, -> (user_id) {
     my_conversations(user_id).participant_related.not_author(user_id).distinct(:id)
@@ -97,6 +103,12 @@ class Conversation < ActiveRecord::Base
   scope :participant_related, -> {
     joins(:messages).where("messages.type in ('AddParticipantMessage','RemoveParticipantMessage')")
   }
+
+  # Devuelve aquellos mensajes que sean peticiones de participación en evento
+  scope :add_participant, -> { joins(:messages).where("messages.type = 'AddParticipantMessage'") }
+
+  # Devuelve aquellos mensajes que sean eliminaciones de participación en evento
+  scope :remove_participant, -> { joins(:messages).where("messages.type = 'RemoveParticipantMessage'") }
 
   # Devuelve aquellos mensajes que no han sido enviado por el usuario
   scope :participant_related_conversations, -> (user_1_id, user_2_id) {
@@ -130,14 +142,17 @@ class Conversation < ActiveRecord::Base
   has_many :messages, dependent: :destroy
   accepts_nested_attributes_for :messages
 
+  has_one :conversation_related, dependent: :destroy
+  has_one :event_related, through: :conversation_related, source: :conversationable, source_type: "Event"
+
   belongs_to :user_1, class_name: 'User', primary_key: 'id', foreign_key: 'user_1_id'
   belongs_to :user_2, class_name: 'User', primary_key: 'id', foreign_key: 'user_2_id'
 
-  self.inheritance_column = :type
-
-  def self.types
-    %w(AddMemberConversation AddParticipantConversation RemoveParticipantConversation)
-  end
+  # self.inheritance_column = :type
+  #
+  # def self.types
+  #   %w(AddMemberConversation AddParticipantConversation RemoveParticipantConversation)
+  # end
 
   delegate :regular, to: :messages
   delegate :add_member, to: :messages

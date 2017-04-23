@@ -22,6 +22,10 @@ class SendRemoveParticipantMessage
     return conversation.save
   end
 
+  def relate_to_event
+    ConversationRelated.create(conversation: conversation, conversationable: event)
+  end
+
   private
     attr_accessor :current_user, :event_participant, :conversation, :participant, :event, :event_creator, :is_event_creator
     attr_reader :user_1, :user_2

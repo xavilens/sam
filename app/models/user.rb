@@ -213,7 +213,7 @@ class User < ActiveRecord::Base
     every_events += member_events.asc.decorate if musician?
 
     # Ordenamos los eventos
-    return every_events.sort_by! { |event| event.date }
+    every_events.uniq.sort_by! { |event| event.date }
   end
 
   ## MEDIA

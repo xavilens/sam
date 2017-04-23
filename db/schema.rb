@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170423122506) do
+ActiveRecord::Schema.define(version: 20170423142612) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "addresseable_id",   limit: 255, null: false
@@ -47,13 +47,23 @@ ActiveRecord::Schema.define(version: 20170423122506) do
   add_index "bands", ["genre_2_id"], name: "index_bands_on_genre_2_id", using: :btree
   add_index "bands", ["genre_3_id"], name: "index_bands_on_genre_3_id", using: :btree
 
+  create_table "conversation_relateds", force: :cascade do |t|
+    t.integer  "conversation_id",       limit: 4,   null: false
+    t.integer  "conversationable_id",   limit: 4,   null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.string   "conversationable_type", limit: 255, null: false
+  end
+
+  add_index "conversation_relateds", ["conversation_id"], name: "index_conversation_relateds_on_conversation_id", using: :btree
+  add_index "conversation_relateds", ["conversationable_id"], name: "index_conversation_relateds_on_conversationable_id", using: :btree
+
   create_table "conversations", force: :cascade do |t|
     t.integer  "user_1_id",  limit: 4,   null: false
     t.integer  "user_2_id",  limit: 4,   null: false
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.string   "subject",    limit: 255, null: false
-    t.string   "type",       limit: 255
   end
 
   add_index "conversations", ["user_1_id"], name: "index_conversations_on_user_1_id", using: :btree
@@ -269,6 +279,7 @@ ActiveRecord::Schema.define(version: 20170423122506) do
   add_foreign_key "bands", "genres", column: "genre_1_id"
   add_foreign_key "bands", "genres", column: "genre_2_id"
   add_foreign_key "bands", "genres", column: "genre_3_id"
+  add_foreign_key "conversation_relateds", "conversations"
   add_foreign_key "conversations", "users", column: "user_1_id"
   add_foreign_key "conversations", "users", column: "user_2_id"
   add_foreign_key "event_participants", "events"
