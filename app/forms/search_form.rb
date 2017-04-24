@@ -1,4 +1,4 @@
-class Search
+class SearchForm
   include ActiveModel::Model
 
   def initialize fields = {}

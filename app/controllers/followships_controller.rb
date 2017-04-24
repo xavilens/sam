@@ -22,7 +22,7 @@ class FollowshipsController < ApplicationController
     @user.follow! @leader
 
     respond_to do |format|
-      format.html { redirect_to @leader }
+      format.html { redirect_to :back, notice: "Estás siguiendo a #{@leader.name}" }
       format.js {}
     end
   end
@@ -33,7 +33,7 @@ class FollowshipsController < ApplicationController
       followship.destroy
 
       respond_to do |format|
-        format.html { redirect_to @leader }
+        format.html { redirect_to :back, alert: "Has dejado de seguir a #{@leader.name}" }
         format.js {}
       end
     else

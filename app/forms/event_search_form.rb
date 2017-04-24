@@ -1,4 +1,4 @@
-class EventSearchForm < Search
+class EventSearchForm < SearchForm
 
   attr_accessor :name, :start_date, :finish_date, :type, :status, :location_type, :city, :province, :region
   attr_reader :events

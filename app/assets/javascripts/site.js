@@ -1,5 +1,6 @@
 // SITE
 
+/////////////// FORMS
 // Cuenta los caracteres introducidos y devuelve los restantes hasta el máximo permitido
 // ref: http://stackoverflow.com/questions/5371089/count-characters-in-textarea
 function countChar(val) {
@@ -12,6 +13,11 @@ function countChar(val) {
   }
 };
 
-$(document).on('ready page:change', function() {
+/////////////// TOOLTIP
+// $(document).on('ready page:change', function() {
+//   $('[data-toggle="tooltip"]').tooltip();
+// });
+
+$(document).ready(function() {
   $('[data-toggle="tooltip"]').tooltip();
 });

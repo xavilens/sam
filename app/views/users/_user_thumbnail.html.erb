@@ -1,0 +1,20 @@
+<div class="col-sm-3">
+  <div class="thumbnail user-thumbnail">
+    <%= link_to user_path(user.id) do %>
+      <%= image_tag user.avatar, alt: user.name,
+        class: ['image-responsive', 'box-shadow'] %>
+    <% end %>
+    <div class="caption">
+      <h4 class="user-thumbnail-header">
+        <%= link_to user.name, user_path(user) %>
+        <%= fa_icon('map-marker', title: "#{user.location :city}", data: {toggle: 'tooltip', placement: 'bottom'}) %>
+      </h4>
+      <div class="user-thumbnail-bio ellipsis small"><%= user.bio %></div>
+      <div class="user-index-actions">
+        <%= link_to_send_message_to_user user, true %>
+        <%= link_to_follow_user user, true %>
+        <%= link_to_user_member user, true %>
+      </div>
+    </div>
+  </div>
+</div>

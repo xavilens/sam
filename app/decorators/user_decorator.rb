@@ -66,10 +66,18 @@ class UserDecorator < Draper::Decorator
   end
 
   # Devuelve la localización formateada
-  def location
+  def location type = :province
     address = user.address
 
-    "#{address.city} (#{address.province}), #{address.region}"
+    case type
+    when :city
+      "#{address.city}, #{address.region}"
+    when :province
+      "#{address.city} (#{address.province}), #{address.region}"
+    end
+    
+    # TODO: descomentar
+    # "#{address.city} (#{address.province}), #{address.region}"
   end
 
   # Devuelve todas las redes sociales

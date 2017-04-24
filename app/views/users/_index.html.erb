@@ -3,26 +3,7 @@
 
 <% unless @users.blank?  %>
   <% @users.each do |user| %>
-    <div class="clearfix">
-      <%= link_to user_path(user.id) do %>
-      <%= image_tag user.index_avatar, alt: user.name,
-        class: ['pull-left', 'gap-right', 'gap-bottom', 'image-responsive', 'img-circle', 'box-shadow'] %>
-      <% end %>
-
-      <h3><%= link_to user.name, user_path(user.id) %> <small><%= user.type %></small></h3>
-      <p class="location text-muted"><%= user.location %></p>
-
-      <% unless user.bio.blank? %>
-      <div class="index-bio">
-        <div class="pull-left ellipsis"><%= user.bio %></div>
-        <!-- <p class="pull-left clearfix">&#8230"</p> -->
-      </div>
-
-      <% end %>
-    </div>
-    <% if user != @users.last %>
-      <hr>
-    <% end %>
+    <%= render 'users/user_thumbnail', user: user %>
   <% end %>
 <% else %>
   <p class="no-data">Ningún usuario cumple los criterios</p>

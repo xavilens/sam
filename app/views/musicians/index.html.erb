@@ -1,1 +1,14 @@
-<%= render 'users/index' %>
+
+<% page_title @page %>
+
+<div class="row">
+  <div class="col-md-3">
+    <%= render 'users/user_search' %>
+  </div>
+
+  <div class="col-md-9">
+    <%= render 'users/index' %>
+  </div>
+</div>
+
+<%= render 'scripts/dotdotdot' %>

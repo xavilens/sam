@@ -2,8 +2,8 @@ class BandsController < ApplicationController
   before_filter :authenticate_user!
 
   def index
+    @user = current_user
+    @users = User.bands.decorate
     @page = 'Grupos'
-    @users = User.where(profileable_type: 'Band').decorate
   end
-
 end

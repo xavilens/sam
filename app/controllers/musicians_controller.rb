@@ -3,9 +3,10 @@ class MusiciansController < ApplicationController
 
   before_action :set_current_user, only: [:edit, :update]
   before_action :set_musician, only: [:edit, :update]
-  before_action :set_musicians, only: [:index]
 
   def index
+    @user = current_user
+    @users = User.musicians.decorate
     # Definimos el nombre de la página
     @page = 'Músicos'
   end
@@ -50,10 +51,5 @@ class MusiciansController < ApplicationController
       else
         raise ActionController::RoutingError.new
       end
-    end
-
-    # Define la variable @users como solo musicos
-    def set_musicians
-      @users = User.where(profileable_type: 'Musician').decorate
     end
 end

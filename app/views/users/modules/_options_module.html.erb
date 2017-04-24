@@ -2,49 +2,9 @@
 <% unless is_current_user? %>
 <div class="options-container user-show-container">
   <div class="row">
-    <%= link_to fa_icon('envelope'), new_message_path(to_user: @user.id), remote: true,
-      class: 'option-button-icon option-button btn btn-default col-md-2 col-md-offset-1 gap-right',
-      title: "Enviar mensaje", data: {toggle: 'tooltip', placement: 'top'} %>
-
-    <% if current_user.following? @user %>
-      <%= link_to fa_icon('eye-slash', id: "followship-icon"), followships_path(user_id: @user.id),
-        method: :delete, class: 'option-button-icon option-button btn btn-default col-md-2 gap-right',
-        data: {toggle: 'tooltip', placement: 'top'}, title: "Dejar de seguir a #{@user.name}", id: "followship" %>
-    <% else %>
-      <%= link_to fa_icon('eye', id: "followship-icon"), followships_path(user_id: @user.id),
-        method: :post, class: 'option-button-icon option-button btn btn-default col-md-2 gap-right',
-        data: {toggle: 'tooltip', placement: 'top'}, title: "Seguir a #{@user.name}", id: "followship" %>
-    <% end %>
-
-    <% if current_user.band? && @user.musician? %>
-      <% if current_user.profile.member? @user.profile %>
-
-        <%= link_to fa_icon('user-times'), user_membership_delete_path(user_id: @user.id),
-          class:  'option-button-icon option-button btn btn-default col-md-2 gap-right',
-          title:"Expulsar del grupo", remote: true, data: {toggle: 'tooltip', placement: 'top'} %>
-
-      <% else %>
-
-        <%= link_to fa_icon('user-plus'), user_send_membership_path(user_id: @user, from_user: current_user),
-          class:  'option-button-icon option-button btn btn-default col-md-2 gap-right',
-          title:"Invitar al grupo", remote: true, data: {toggle: 'tooltip', placement: 'top'} %>
-
-      <% end %>
-    <% elsif current_user.musician? && @user.band? %>
-      <% if current_user.profile.member? @user.profile %>
-
-        <%= link_to fa_icon('user-times'), user_membership_delete_path(user_id: @user),
-          class:  'option-button-icon option-button btn btn-default col-md-2 gap-right',
-          title:"Dejar el grupo", remote: true, data: {toggle: 'tooltip', placement: 'top'} %>
-
-      <% else %>
-
-        <%= link_to fa_icon('user-plus'), user_send_membership_path(user_id: @user, from_user: current_user),
-          class:  'option-button-icon option-button btn btn-default col-md-2 gap-right',
-          title:"Unirte al grupo", remote: true, data: {toggle: 'tooltip', placement: 'top'} %>
-
-      <% end %>
-    <% end %>
+    <%= link_to_send_message_to_user @user %>
+    <%= link_to_follow_user @user %>
+    <%= link_to_user_member @user %>
   </div>
 </div>
 <% end %>

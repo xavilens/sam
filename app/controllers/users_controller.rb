@@ -10,11 +10,15 @@ class UsersController < ApplicationController
     # Define el tipo de perfil sacado de los parámetros
     profileable_type = search_params[:profileable_type] unless search_params.blank?
 
+    # Creamos el objeto SearchForm
+    @search = UserSearchForm.new(search_params)
+
     # Definimos el nombre de la pantalla
     @page = profileable_type.blank? ? User.to_s.pluralize : profileable_type.pluralize
 
     # Obtenemos los usuarios a través del servicio de búsqueda de usuarios
-    @users = SearchUsers.new(search_params).users
+    @users = @search.users.decorate
+    # @users = SearchUsers.new(search_params).users
   end
 
   def show
@@ -132,17 +136,13 @@ class UsersController < ApplicationController
       return mk_params
     end
 
-    # Parámetros permitidos en la búsqueda de usuarios
+    # Parámetros de búsqueda de usuarios permitidos por el controlador
     def search_params
-      begin
-        allow = [:name, :location, :country, :profileable_type, :role_id]
-
-        search_params = params[:search]
-        search_params.delete_if { |k, v| v.blank? }
-
-        search_params.permit(allow)
-      rescue # StandardError
-        nil
+      if params[:user_search_form].present?
+        params.require(:user_search_form).permit(:name, :location_type,
+          :city, :province, :region, type: [])
+      else
+        {}
       end
     end
 end
