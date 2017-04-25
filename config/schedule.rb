@@ -9,5 +9,5 @@ set :output, {:error => "log/cron_error_log.log", :standard => "log/cron_log.log
 set :chronic_options, hours24: true
 
 every 1.days, at: '0:00' do
-  runner "EventJobs.close_passed_events"
+  runner "EventJobs.close_expired_events"
 end

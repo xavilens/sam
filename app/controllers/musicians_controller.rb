@@ -6,7 +6,9 @@ class MusiciansController < ApplicationController
 
   def index
     @user = current_user
-    @users = User.musicians.decorate
+    @search = MusicianSearchForm.new(search_params)
+    @users = @search.users.decorate
+
     # Definimos el nombre de la página
     @page = 'Músicos'
   end
@@ -14,7 +16,7 @@ class MusiciansController < ApplicationController
   def edit
   end
 
-  # FIXME: Poner de forma que usar
+  # FIXME: Utilizar este y Edit para crear instrumentos
   def update
     if update_resource(@musician, update_params)
       redirect_to @user, notice: 'Tu cuenta ha sido actualizada correctamente.' and return
@@ -50,6 +52,16 @@ class MusiciansController < ApplicationController
         @musician.musician_knowledges.build
       else
         raise ActionController::RoutingError.new
+      end
+    end
+
+    # Parámetros de búsqueda de usuarios permitidos por el controlador
+    def search_params
+      if params[:musician_search_form].present?
+        params.require(:musician_search_form).permit(:name, :location_type, :city, :province,
+        :region, instrument: [], status: [])
+      else
+        {}
       end
     end
 end

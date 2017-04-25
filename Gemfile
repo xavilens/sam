@@ -41,7 +41,7 @@ gem 'bootstrap-datepicker-rails', '1.6.4.1'
 #Datepicker para Fechas, Horas y Ambas
 gem 'momentjs-rails', '2.17.1'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.14.30'
-# Formateador numérico FIXME
+# Formateador numérico
 gem 'autonumeric-rails', '2.0.0.1'
 # Arregla los bindings de jquery con turbolinks
 gem 'jquery-turbolinks', '2.1.0'

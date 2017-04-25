@@ -1,28 +1,31 @@
 <div class="well search-form event-search-form">
   <h4 class="well-header">Buscador</h4>
 
-  <%= simple_form_for @search, {url: users_path, method: 'get'} do |f| %>
+  <%= simple_form_for @search, {url: musicians_path, method: 'get'} do |f| %>
     <%= f.input :name, label: 'Nombre', required: false, placeholder: 'Filtrar por nombre...'  %>
-
-    <%= f.input :type, collection: [["Musician", "Músico"], ["Band", "Grupo"]],
-      value_method: :first, label_method: :last, required: false, label: 'Tipo', as: :check_boxes %>
 
     <%= f.input :location_type, collection: [['city', 'Ciudad'], ['province', 'Provincia'], ['region', 'Comunidad autónoma']],
       value_method: :first, label_method: :last, label: 'Buscar por', required: false, as: :radio_buttons %>
 
-    <%= f.input :city, collection: Address.users.cities, label_method: :city,
+    <%= f.input :city, collection: Address.musicians.cities, label_method: :city,
       value_method: :city, label: 'Localidad', include_blank: true, required: false, as: :select,
       wrapper_class: (@search.location_type != "city" ? 'hidden' : nil) %>
 
-    <%= f.input :province, collection: Address.users.provinces, label_method: :province,
+    <%= f.input :province, collection: Address.musicians.provinces, label_method: :province,
       value_method: :province, label: 'Provincia', include_blank: true, required: false, as: :select,
       wrapper_class: (@search.location_type != "province" ? 'hidden' : nil) %>
 
-    <%= f.input :region, collection: Address.users.regions, label_method: :region,
+    <%= f.input :region, collection: Address.musicians.regions, label_method: :region,
       value_method: :region, label: 'Comunidad autónoma', include_blank: true, required: false, as: :select,
       wrapper_class: (@search.location_type != "region" ? 'hidden' : nil) %>
 
     <div class="form-group"></div>
+
+    <%= f.input :instrument, collection: Instrument.order(:name), label_method: :name, value_method: :id,
+      label: 'Instrumentos', required: false, as: :check_boxes %>
+
+    <%= f.input :status, collection: MusicianStatus.order(:name), label_method: :name, value_method: :id,
+      label: 'Estado', required: false, as: :check_boxes %>
 
     <div class="row">
       <div class="col-sm-12">

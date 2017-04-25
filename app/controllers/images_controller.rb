@@ -8,6 +8,7 @@ class ImagesController < ApplicationController
   before_action :set_new, only: [:new]
   before_action :set_edit, only: [:edit]
 
+# TODO: ¿Imágenes de todos los usuarios?
 def index
   @images = Image.all
 

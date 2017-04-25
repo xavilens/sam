@@ -75,9 +75,6 @@ class UserDecorator < Draper::Decorator
     when :province
       "#{address.city} (#{address.province}), #{address.region}"
     end
-    
-    # TODO: descomentar
-    # "#{address.city} (#{address.province}), #{address.region}"
   end
 
   # Devuelve todas las redes sociales

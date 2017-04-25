@@ -1,11 +1,8 @@
 <div class="well search-form event-search-form">
   <h4 class="well-header">Buscador</h4>
 
-  <%= simple_form_for @search, {url: users_path, method: 'get'} do |f| %>
+  <%= simple_form_for @search, {url: bands_path, method: 'get'} do |f| %>
     <%= f.input :name, label: 'Nombre', required: false, placeholder: 'Filtrar por nombre...'  %>
-
-    <%= f.input :type, collection: [["Musician", "Músico"], ["Band", "Grupo"]],
-      value_method: :first, label_method: :last, required: false, label: 'Tipo', as: :check_boxes %>
 
     <%= f.input :location_type, collection: [['city', 'Ciudad'], ['province', 'Provincia'], ['region', 'Comunidad autónoma']],
       value_method: :first, label_method: :last, label: 'Buscar por', required: false, as: :radio_buttons %>
@@ -23,6 +20,12 @@
       wrapper_class: (@search.location_type != "region" ? 'hidden' : nil) %>
 
     <div class="form-group"></div>
+
+    <%= f.input :genre, collection: Genre.order(:name), label_method: :name, value_method: :id,
+      label: 'Instrumentos', required: false, as: :check_boxes %>
+
+    <%= f.input :status, collection: BandStatus.order(:name), label_method: :name, value_method: :id,
+      label: 'Estado', required: false, as: :check_boxes %>
 
     <div class="row">
       <div class="col-sm-12">

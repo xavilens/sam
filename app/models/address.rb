@@ -23,6 +23,21 @@ class Address < ActiveRecord::Base
     where(addresseable_type: "User")
   }
 
+  # Devuelve las direcciones de los usuarios
+  scope :users_profile, -> (profile) {
+    users.joins("INNER JOIN users ON addresseable_id = users.id").where(users: {profileable_type: profile})
+  }
+
+  # Devuelve las direcciones de los usuarios
+  scope :musicians, -> {
+    users_profile('Musician')
+  }
+
+  # Devuelve las direcciones de los usuarios
+  scope :bands, -> {
+    users_profile('Band')
+  }
+
   # Devuelve las direcciones de los eventos
   scope :cities, -> {
     group(:city)

@@ -19,17 +19,40 @@ class User < ActiveRecord::Base
 
   ######## SCOPES
   # Devuelve los usuarios con perfil de Grupo (Band)
-  scope :bands, -> { where(profileable_type: "Band") }
+  scope :bands, -> {
+    where(profileable_type: "Band").joins("INNER JOIN bands ON profileable_id = bands.id")
+  }
+
+  # Devuelve los usuarios grupos que tienen asociado alguno de los géneros pasados
+  scope :genres, -> (genres) {
+    where("bands.genre_1_id in (:genres) OR bands.genre_2_id in (:genres) OR bands.genre_3_id in (:genres)",
+        genres: genres)
+  }
+
+  # Devuelve los usuarios grupos que tienen asociado alguno de los estados pasados
+  scope :band_status, -> (statuses) {
+    where("bands.band_status_id in (:statuses)", statuses: statuses)
+  }
 
   # Devuelve los usuarios con perfil de Músico (Musician)
-  scope :musicians, -> { where(profileable_type: "Musician") }
+  scope :musicians, -> {
+    where(profileable_type: "Musician").joins("INNER JOIN musicians ON profileable_id = musicians.id")
+  }
+
+  # Devuelve los usuarios músicos que tienen asociado alguno de los instrumentos pasados
+  scope :instruments, -> (instruments) {
+    joins("INNER JOIN musician_knowledges ON musician_knowledges.musician_id = musicians.id")
+      .where("musician_knowledges.instrument_id in (:instruments)", instruments: instruments)
+  }
+
+  # Devuelve los usuarios músicos que tienen asociado alguno de los instrumentos pasados
+  scope :musician_status, -> (statuses) {
+    where("musicians.musician_status_id in (:statuses)", statuses: statuses)
+  }
 
   # Muestra si el usuario está online
   # ref: http://stackoverflow.com/questions/5504130/whos-online-using-devise-in-rails
   scope :online, lambda{ where("updated_at > ?", 10.minutes.ago) }
-
-  # Busca los usuarios con nombre parecido
-  scope :name_like, -> (name){ where("name like :name", name: "%#{name}%") }
 
   ######## UPLOADERS
   mount_uploader :avatar, AvatarUploader

@@ -6,7 +6,6 @@ class MessagesController < ApplicationController
   before_action :set_users_new, only: [:new]
   before_action :set_users_create, only: [:create]
 
-  # FIXME
   def index
     # Obtenemos la bandeja de correo
     @show = index_params[:show]

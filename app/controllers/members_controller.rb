@@ -1,8 +1,8 @@
 class MembersController < ApplicationController
   before_filter :authenticate_user!
-  # TODO: set_users
+  # TODO: crear set_users?
 
-  # TODO: INDEX
+  # TODO: ¿Crear un índice de Members?
   def index
     @members = Member.all
 

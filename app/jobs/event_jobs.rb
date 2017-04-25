@@ -1,7 +1,7 @@
 # Módulo en el que definimos las distintas tareas (Jobs) para la clase Event
 module EventJobs
   # Cierra aquellos eventos abiertos cuya fecha haya pasado
-  def self.close_passed_events
+  def self.close_expired_events
     opened = EventStatus.find_by_name('Abierto')
     closed = EventStatus.find_by_name('Cerrado')
     yesterday = Date.yesterday
