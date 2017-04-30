@@ -30,8 +30,8 @@
       <% end %>
 
       <div class="row links gap-left">
-        <%= link_to_add_association 'Añadir instrumentos', f, :member_instruments,
-          partial: 'edit_member_instruments_fields' %>
+        <%= link_to_add_association fa_icon('plus')+' Añadir instrumentos', f, :member_instruments,
+          partial: 'edit_member_instruments_fields', class: 'btn btn-link' %>
       </div>
     </div>
 

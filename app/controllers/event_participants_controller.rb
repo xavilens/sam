@@ -1,9 +1,14 @@
 class EventParticipantsController < ApplicationController
-  before_filter :authenticate_user!
+  ######### RESPOND
   respond_to :js
 
+  ######### FILTERS
+  before_filter :authenticate_user!
+
+  ######### CALLBACKS
   before_action :check_participants_avaliable, only: [:new, :create, :participant_request, :send_request]
 
+  ######### ACTIONS
   def participant_request
     # Definimos el creador
     event = Event.find(params[:event_id])

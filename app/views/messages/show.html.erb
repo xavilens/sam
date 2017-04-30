@@ -55,7 +55,8 @@
     <% end %>
     <!-- END Enviar nuevo mensaje -->
 
-    <% @messages.each do |message| %>
+    <div class="small"><%= page_entries_info @messages %> mensajes</div>
+    <% messages.each do |message| %>
       <% author = message.author %>
       <!-- Mensaje -->
       <li class="message">
@@ -88,5 +89,9 @@
       <!-- END Mensaje -->
     <% end %>
   </ul>
+
+  <div class="pagination-container pull-right">
+    <div><%= paginate @messages %></div>
+  </div>
   <!-- END Mensajes -->
 </div>

@@ -66,9 +66,6 @@ class MembersController < ApplicationController
     @member = Member.find(params[:id]).decorate
     @member_user = @member.user(current_user).decorate
 
-    # Crea un nuevo member_instrument asociado al miembro
-    @member.member_instruments.build
-
     # Definimos el título y el mensaje para el modal
     @title = "Actualizar miembro"
     @message = "¿Qué instrumentos toca <b>#{@member_user.name}</b>?"

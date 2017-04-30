@@ -1,11 +1,17 @@
 class MessagesController < ApplicationController
+  ######### FILTERS
   before_filter :authenticate_user!
   before_filter :redirect_cancel, only: [:create]
 
+  ######### CALLBACKS
   before_action :set_current_user
   before_action :set_users_new, only: [:new]
   before_action :set_users_create, only: [:create]
 
+  ######### DECORATORS
+  decorates_assigned :conversations, :conversation, :messages
+
+  ######### ACTIONS
   def index
     # Obtenemos la bandeja de correo
     @show = index_params[:show]
@@ -43,7 +49,8 @@ class MessagesController < ApplicationController
 
     @conversations = @conversations.send(@order) if (@order and @conversations)
 
-    @conversations = @conversations.decorate if @conversations
+    @conversations = @conversations.page(params[:page]).per(15) if @conversations
+    # @conversations = @conversations.page(params[:page]).per(15).decorate if @conversations
 
     @page ||= 'Mensajes'
   end
@@ -79,7 +86,8 @@ class MessagesController < ApplicationController
     @conversation = Conversation.find(params[:id])
 
     # Cargamos los mensajes
-    @messages = @conversation.messages.desc.decorate
+    @messages = @conversation.messages.desc.page(params[:page]).per(10)
+    # @messages = @conversation.messages.desc.decorate
 
     # Marcamos la conversación como leída
     @conversation.read (@user.id)
@@ -91,9 +99,12 @@ class MessagesController < ApplicationController
   # Al actualizar una conversación realmente lo que hacemos es mandar un mensaje
   def update
     @conversation = Conversation.find(params[:id])
-    @message = @conversation.messages.build(new_message_params)
+    # @message = @conversation.messages.build(new_message_params)
+    @conversation.messages.build(new_message_params)
+    @conversation.updated_at = Time.now
 
-    if @message.save
+    # if @message.save
+    if @conversation.save
       flash.now[:notice] = 'Mensaje enviado correctamente'
     else
       flash.now[:error] = 'No se ha podido enviar el mensaje'

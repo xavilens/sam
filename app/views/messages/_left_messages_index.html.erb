@@ -1,7 +1,7 @@
 <div class="row">
   <div class="messages-options">
     <div class="col-sm-12 btn-group-vertical" role="group">
-      <span class="btn btn-block brn-default btn-group-header" type= "button">Bandejas de mensajes</span>
+      <div class="btn btn-block brn-default btn-group-header" type= "button">Bandejas de mensajes</div>
       <%= link_to messages_path(show: 'inbox'),
         class: "btn btn-block btn-default #{active_conversation_box('inbox')}", type: 'button' do %>
         Recibidos <%= inbox_unread_count %>

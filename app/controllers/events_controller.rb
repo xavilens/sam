@@ -1,6 +1,8 @@
 class EventsController < ApplicationController
+  ######### FILTERS
   before_filter :authenticate_user!
 
+  ######### CALLBACKS
   before_action :is_user_calendar?, only: [:index]
   before_action :set_user, only: [:show, :index]
   before_action :set_current_user, only: [:new, :create, :edit, :update, :destroy_view, :destroy]
@@ -8,6 +10,10 @@ class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
   before_action :set_events, only: [:index, :show]
 
+  ######### PAGINATION
+  paginates_per 25
+
+  ######### ACTIONS
   def index
     # Definimos fechas
     if @is_user_calendar

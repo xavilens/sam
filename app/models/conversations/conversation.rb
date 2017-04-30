@@ -135,10 +135,12 @@ class Conversation < ActiveRecord::Base
 
   ######## ORDER
   # Devuelve las conversaciones ordenadas de manera descendiente
-  scope :desc, -> { order(id: :desc) }
+  # scope :desc, -> { order(id: :desc) }
+  scope :desc, -> { order(updated_at: :desc) }
 
   # Devuelve las conversaciones ordenadas de manera descendiente
-  scope :asc, -> { order(id: :asc) }
+  # scope :asc, -> { order(id: :asc) }
+  scope :asc, -> { order(updated_at: :asc) }
 
   # Devuelve las conversaciones ordenadas de manera descendiente
   scope :subject_desc, -> { order(subject: :desc) }

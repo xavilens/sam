@@ -36,7 +36,7 @@
           </small>
 
           <small>
-            <%= link_to "Eliminar", user_band_membership_delete_path(user_id: @user, member_id: member.id),
+            <%= link_to "Eliminar", band_delete_user_membership_path(user_id: @user, member_id: member.id),
               class: 'btn btn-sm btn-link',remote: true %>
           </small>
         </div>

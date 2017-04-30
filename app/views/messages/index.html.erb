@@ -27,9 +27,10 @@
 
   <!-- Mensajes totales -->
   <div class="conversations-count">
-    <small>
-      Mensajes totales: <strong><%=  @conversations ? @conversations.size : 0 %></strong>
-    </small>
+    <!-- <small>
+      Mensajes totales: <strong><%=  @conversations ? @conversations.total_count : 0 %></strong>
+    </small> -->
+    <div class="small page-info"><%= page_entries_info @conversations %> mensajes</div>
   </div>
   <!-- END Mensajes totales -->
 
@@ -37,7 +38,7 @@
   <% if any_conversation? %>
     <ul class="conversations-container list-unstyled">
 
-      <% @conversations.each do |conversation| %>
+      <% conversations.each do |conversation| %>
         <!-- Conversación -->
         <%= render "conversation", conversation: conversation %>
         <!-- Fin Conversación -->
@@ -46,5 +47,9 @@
   <% else %>
     <p class="no-data text-center" style="width: 100%;">No tienes ningún mensaje</p>
   <% end %>
+
+  <div class="pagination-container pull-right">
+    <div class="paginator"><%= paginate @conversations %></div>
+  </div>
 </div>
 <!-- Fin Conversaciones -->

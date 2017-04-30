@@ -216,3 +216,19 @@ es:
       short: "%d de %b %H:%M"
       hour: "%H:%M"
     pm: pm
+  views:
+    pagination:
+      first: "&laquo; Primero"
+      last: "Último &raquo;"
+      previous: "&lsaquo; Anterior"
+      next: "Siguiente &rsaquo;"
+      truncate: "&hellip;"
+  helpers:
+    page_entries_info:
+      one_page:
+        display_entries:
+          zero: "No hay ninguno"
+          one: "Mostrando <b>1</b>"
+          other: "Mostrando <b>todos</b>"
+      more_pages:
+        display_entries: "Mostrando <b>%{first}&nbsp;-&nbsp;%{last}</b> de <b>%{total}</b>"

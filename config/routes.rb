@@ -1,5 +1,13 @@
 Rails.application.routes.draw do
+  ######### CONCERNS
+  concern :paginatable do
+    get '(page/:page)', action: :index, on: :collection, as: ''
+  end
+  concern :pageable do
+    get '(page/:page)', on: :collection, as: ''
+  end
 
+  ######### ROUTES
   root 'site#index'
 
   devise_for :users, controllers: {
@@ -11,40 +19,50 @@ Rails.application.routes.draw do
     unlocks: 'users/unlocks'
   }
 
-  resources :users do
-    # Edit info
+  ## USERS
+  resources :users, concerns: :paginatable do
+    ## USER EDIT INFO
     get 'edit/knowledges', action: :edit_knowledges, as: :edit_knowledges
     put :update_knowledges
     patch :update_knowledges
 
-    # Memberships
-    get 'membership/send/:from_user', action: :send_request, controller: :members, as: :send_membership
-    get 'membership/delete/:member_id', action: :delete_view, controller: :members, as: :band_membership_delete
-    get 'membership/delete/', action: :delete_view, controller: :members, as: :membership_delete
+    ## USER MEMBERSHIPS
+    resource :membership, only:[], controller: :members do
+      get 'send/:from_user', action: :send_request, controller: :members, as: :send
+      get 'delete/:member_id', action: :delete_view, controller: :members, as: :band_delete
+      get 'delete/', action: :delete_view, controller: :members
+    end
+    # get 'membership/send/:from_user', action: :send_request, controller: :members, as: :send
+    # get 'membership/delete/:member_id', action: :delete_view, controller: :members, as: :band_delete
+    # get 'membership/delete/', action: :delete_view, controller: :members
 
     resources :members, only: [:edit, :index]
-    resources :images, only: [:show, :index]
-    resources :events, only: [:show, :index]
 
-    resources :songs, only: [:index]
-    resources :videos, only: [:index]
+    ## USER EVENTS
+    resources :events, only: [:show, :index], concerns: :paginatable
 
-    # Followships
-    get 'leaders', action: :leaders, controller: :followships
-    get 'followers', action: :followers, controller: :followships
+    ## USER MEDIA
+    resources :songs, only: [:index], concerns: :paginatable
+    resources :videos, only: [:index], concerns: :paginatable
+    resources :images, only: [:show, :index], concerns: :paginatable
+
+    ## USER FOLLOWSHIPS
+    get 'leaders(/page/:page)', action: :leaders, controller: :followships, as: :leaders
+    get 'followers(/page/:page)', action: :followers, controller: :followships, as: :followers
   end
 
-  resources :bands, only: :index
-  resources :musicians, only: :index
-  resources :messages
+  ## BANDS, MUSICIANS, MESSAGES
+  resources :bands, only: :index, concerns: :paginatable
+  resources :musicians, only: :index, concerns: :paginatable
+  resources :messages, concerns: :paginatable
 
-  resources :members, only: [:create, :new, :edit, :update, :destroy]
-  post '/members/send', action: :send_request_message, controller: :members
-  post '/members/new', action: :new, controller: :members
-  patch '/members/delete/', action: :delete_member, controller: :members, as: :members_delete
+  ## MEMBERS
+  resources :members, only: [:create, :edit, :update, :destroy] do
+    post 'send', action: :send_request_message, controller: :members
+    post 'new', action: :new, controller: :member
+  end
 
-  resources :images, only: [:new, :create, :edit, :update, :destroy]
-
+  ## EVENTS
   resources :events do
     get :delete, action: :destroy_view, controller: :events
     get "participants/:id/delete", action: :destroy_view, controller: :event_participants, as: :participant_destroy
@@ -54,11 +72,15 @@ Rails.application.routes.draw do
     end
   end
 
+  ## EVENT PARTICIPANTS
   resources :participants, only: [:new, :create, :destroy], controller: :event_participants
 
+  ## MEDIAS
+  resources :images, only: [:new, :create, :edit, :update, :destroy]
   resources :songs, only: [:new, :create, :edit, :update, :destroy]
   resources :videos, only: [:new, :create, :edit, :update, :destroy]
 
+  ## FOLLOWSHIPS
   namespace :followships do
     post ":user_id", action: :create
     delete ":user_id", action: :destroy

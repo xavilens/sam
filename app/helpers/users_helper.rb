@@ -67,7 +67,7 @@ module UsersHelper
 
     is_member = current_user.profile.member? user.profile
     icon = is_member ? 'user-times' : 'user-plus'
-    url = is_member ? user_membership_delete_path(user_id: user) : user_send_membership_path(user_id: user, from_user: current_user)
+    url = is_member ? delete_user_membership_path(user_id: user) : send_user_membership_path(user_id: user, from_user: current_user)
 
     is_band_musician = current_user.band? && user.musician?
     is_musician_band = current_user.musician? && user.band?
