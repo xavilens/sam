@@ -55,7 +55,7 @@
     <% end %>
     <!-- END Enviar nuevo mensaje -->
 
-    <div class="small"><%= page_entries_info @messages %> mensajes</div>
+    <div class="small"><%= page_entries_info @messages %> <%= @messages.total_count > 1 ? 'mensajes' : 'mensaje' %></div>
     <% messages.each do |message| %>
       <% author = message.author %>
       <!-- Mensaje -->

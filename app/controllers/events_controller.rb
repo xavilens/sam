@@ -11,7 +11,10 @@ class EventsController < ApplicationController
   before_action :set_events, only: [:index, :show]
 
   ######### PAGINATION
-  paginates_per 25
+  # paginates_per 25
+
+  ######### DECORATORS
+  decorates_assigned :events, :event
 
   ######### ACTIONS
   def index
@@ -159,9 +162,11 @@ class EventsController < ApplicationController
     # Seteamos la variable @event con el evento cuyo id obtenemos de los parametros
     def set_event
       @event = if @is_user_calendar
-        @user.created_events.find(params[:id]).decorate
+        @user.created_events.find(params[:id])
+        # @user.created_events.find(params[:id]).decorate
       else
-        Event.find(params[:id]).decorate
+        Event.find(params[:id])
+        # Event.find(params[:id]).decorate
       end
     end
 
@@ -170,7 +175,8 @@ class EventsController < ApplicationController
       @events = if @is_user_calendar
         @user.events
       else
-        Event.all.asc.decorate
+        Event.all.asc
+        # Event.all.asc.decorate
       end
     end
 

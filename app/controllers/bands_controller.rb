@@ -3,7 +3,7 @@ class BandsController < ApplicationController
   before_filter :authenticate_user!
 
   ######### PAGINATION
-  paginates_per 32
+  # paginates_per 32
 
   def index
     @user = current_user

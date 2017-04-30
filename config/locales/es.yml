@@ -227,7 +227,7 @@ es:
     page_entries_info:
       one_page:
         display_entries:
-          zero: "No hay ninguno"
+          zero: "No hay <b>ningún</b>"
           one: "Mostrando <b>1</b>"
           other: "Mostrando <b>todos</b>"
       more_pages:

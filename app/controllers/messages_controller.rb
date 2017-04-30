@@ -42,14 +42,15 @@ class MessagesController < ApplicationController
         @conversations = Conversation.participants(current_user.id)
         @page = 'Mensajes de eventos'
       elsif @show == 'search'
-        @conversations = nil
+        @conversations = Conversation.none
         @page = 'Mensajes encontrados'
       end
     end
 
     @conversations = @conversations.send(@order) if (@order and @conversations)
 
-    @conversations = @conversations.page(params[:page]).per(15) if @conversations
+    @conversations = @conversations.page(params[:page]).per(15)
+    # @conversations = @conversations.page(params[:page]).per(15) if @conversations
     # @conversations = @conversations.page(params[:page]).per(15).decorate if @conversations
 
     @page ||= 'Mensajes'

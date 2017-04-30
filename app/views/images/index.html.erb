@@ -19,10 +19,18 @@
       </div>
       <!-- END Image Header -->
 
+      <!-- Imágenes totales -->
+      <div class="images-count col-sm-12">
+        <div class="small page-info text-right">
+          <%= page_entries_info @images %> <%= @images.total_count > 1 ? 'imágenes' : 'imagen' %>
+        </div>
+      </div>
+      <!-- END Imágenes totales -->
+
       <!-- Image Thumbnail -->
       <div class="row">
         <div class="images-index-container">
-          <% @user.images.order(id: :desc).decorate.each do |image| %>
+          <% @images.order(id: :desc).decorate.each do |image| %>
           <div class="col-sm-2">
             <div class="image-index-thumb">
               <%= link_to user_image_path(user_id: @user.id, id: image.id), title: image.title do %>
@@ -32,7 +40,7 @@
               <div class="image-index-title">
                 <div class="row">
                   <div class="col-sm-12 text-center text-ellipsis">
-                    <%= link_to image.title, user_image_path(user_id: @user.id, id: image.id), class: 'text-muted' %>
+                    <%= link_to image.title, user_image_path(user_id: @user.id, id: image.id), class: 'link-black' %>
                   </div>
                 </div>
               </div>
@@ -60,9 +68,13 @@
     </div>
     <!-- END image-show-container -->
     <div class="image-index-actions col-sm-12">
-      <%= link_to fa_icon('plus')+" Nueva Imagen", new_image_path, class: 'btn btn-md btn-primary image-index-action' %>
-
+      <%= link_to fa_icon('plus')+" Nueva Imagen", new_image_path,
+        class: 'btn btn-md btn-primary image-index-action' if is_current_user? %>
       <%= link_to "Volver", user_path(@user), class: 'btn btn-md btn-default image-index-action' %>
+
+      <div class="pagination-container pull-right">
+        <div class="paginator"><%= paginate @images %></div>
+      </div>
     </div>
   </div>
 </div>
