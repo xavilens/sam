@@ -20,6 +20,7 @@ class ImagesController < ApplicationController
       @images = Image.all
       @page = "Imágenes"
     end
+    
     @images = @images.page(params[:page]).per(42)
     @title = @page
   end
@@ -29,17 +30,8 @@ class ImagesController < ApplicationController
     images = @user.images.select(:id).order(id: :desc)
     image_pos = images.index(@image)
 
-    @prev_image = if image_pos - 1 < 0
-      nil
-    else
-      images.at(image_pos - 1)
-    end
-
-    @next_image = if image_pos + 1 >= images.size
-      nil
-    else
-      images.at(image_pos + 1)
-    end
+    @prev_image = image_pos - 1 < 0 ? nil : images.at(image_pos - 1)
+    @next_image =  image_pos + 1 >= images.size ? nil : images.at(image_pos + 1)
 
     # Definimos el título y el nombre de la página
     @page = "Imágenes de #{@user.name}"
@@ -100,12 +92,7 @@ class ImagesController < ApplicationController
     # Define el usuario a partir de los parámetros
     def set_user
       @is_user_images = params[:user_id].present?
-
-      @user = if @is_user_images
-        User.find(params[:user_id]).decorate
-      else
-        set_current_user
-      end
+      @user = @is_user_images ? User.find(params[:user_id]).decorate : set_current_user
     end
 
     # Define el usuario con el usuario actual

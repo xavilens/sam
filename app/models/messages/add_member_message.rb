@@ -34,11 +34,7 @@ class AddMemberMessage < Message
 
   # Devuelve el formulario que irá incrustado en el cuerpo del mensaje
   def body_form from_user
-    submit_value = if from_user.musician?
-      "Añadir a #{from_user.name}"
-    else
-      "Unirte a #{from_user.name}"
-    end
+    submit_value = from_user.musician? ? "Añadir a #{from_user.name}" : "Unirte a #{from_user.name}"
 
     return "<form action='/members/new' data-remote='true' method='post'>" +
       "<input name='authenticity_token' value='<%= form_authenticity_token %>' type='hidden'>" +

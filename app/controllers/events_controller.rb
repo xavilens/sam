@@ -44,30 +44,19 @@ class EventsController < ApplicationController
     # Creamos calendario
     @calendar = EventCalendar.new @start_date, @finish_date, @search, (@is_user_calendar ? @user : nil)
 
+    debugger
+    @calendar.events = Kaminari.paginate_array(@calendar.events).page(params[:page]).per(1)
+
     # Datos página
     @page = 'Calendario de eventos'
-
-    @title = if @is_user_calendar
-      "Eventos de #{@user.name}"
-    else
-      @page
-    end
+    @title = @is_user_calendar ? "Eventos de #{@user.name}" : @page
   end
 
   def show
     # Calculamos el evento anterior y el siguiente
     event_pos = @events.index(@event)
-    @prev_event = if event_pos - 1 < 0
-      nil
-    else
-      @events.at(event_pos - 1)
-    end
-
-    @next_event = if event_pos + 1 >= @events.size
-      nil
-    else
-      @events.at(event_pos + 1)
-    end
+    @prev_event = event_pos - 1 < 0 ? nil : @events.at(event_pos - 1)
+    @next_event = event_pos + 1 >= @events.size ? nil : @events.at(event_pos + 1)
 
     # Definimos el título y el nombre de la página
     @page = @event.name
@@ -75,12 +64,7 @@ class EventsController < ApplicationController
   end
 
   def new
-    @event = if params[:date].present?
-      Event.new(date: params[:date])
-    else
-      Event.new
-    end
-
+    @event = params[:date].present? ? Event.new(date: params[:date]) : Event.new
     set_new
   end
 
@@ -147,11 +131,7 @@ class EventsController < ApplicationController
 
     # Seteamos la variable @event con el evento cuyo id obtenemos de los parametros
     def set_user
-      @user = if params[:user_id].present?
-        User.find(params[:user_id]).decorate
-      else
-        set_current_user
-      end
+      @user = params[:user_id].present? ? User.find(params[:user_id]).decorate : set_current_user
     end
 
     # Seteamos la variable @event con el presentador del evento cuyo id obtenemos de los parametros
@@ -161,23 +141,12 @@ class EventsController < ApplicationController
 
     # Seteamos la variable @event con el evento cuyo id obtenemos de los parametros
     def set_event
-      @event = if @is_user_calendar
-        @user.created_events.find(params[:id])
-        # @user.created_events.find(params[:id]).decorate
-      else
-        Event.find(params[:id])
-        # Event.find(params[:id]).decorate
-      end
+      @event = @is_user_calendar ? @user.created_events.find(params[:id]) : Event.find(params[:id])
     end
 
     # Seteamos la variable @events con los eventos del usuario o con todos los existentes
     def set_events
-      @events = if @is_user_calendar
-        @user.events
-      else
-        Event.all.asc
-        # Event.all.asc.decorate
-      end
+      @events = @is_user_calendar ? @user.events : Event.all.asc
     end
 
     # Definimos condiciones iniciales de la página New

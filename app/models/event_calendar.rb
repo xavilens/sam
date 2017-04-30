@@ -1,5 +1,6 @@
 class EventCalendar
   attr_reader :calendar, :start_date, :finish_date
+  attr_accessor :events, :search
 
   def initialize start_date, finish_date, search, user = nil
     # Definimos los atributos
@@ -37,14 +38,13 @@ class EventCalendar
   end
 
   private
-    attr_accessor :events, :search
-
     # Define el calendario como un hash de fechas asociadas a un array de eventos celebrados en dicha fecha
     def set_calendar
       @calendar = Hash.new {|h, date| h[date] = Array.new}
 
       # Itera sobre cada evento y lo añade en la fecha en que se celebra si es que no está ya metido
-      EventDecorator.decorate_collection(events).each do |event|
+      # EventDecorator.decorate_collection(events).each do |event|
+      events.each do |event|
         unless @calendar[event.date].include? event
           @calendar[event.date] << event
         end

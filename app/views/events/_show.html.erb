@@ -59,32 +59,32 @@
       <div class="col-sm-3 event-container event-status-container">
         <div class="event-field-header small">Estado</div>
         <div class="event-field-text <%= event_status_class @event.status %>">
-          <strong><%= @event.status %></strong>
+          <strong><%= event.status %></strong>
         </div>
       </div>
       <div class="col-sm-3 event-container event-date-container">
         <div class="event-field-header small">Fecha</div>
         <div class="event-field-text">
-          <%= @event.date %>
+          <%= event.date %>
         </div>
       </div>
       <div class="col-sm-3 event-container event-time-container">
         <div class="event-field-header small">Hora</div>
         <div class="event-field-text">
-          <% if @event.time_define? %>
-            <%= @event.time %>
+          <% if event.time_define? %>
+            <%= event.time %>
           <% else %>
-            <%= @event.no_time %>
+            <%= event.no_time %>
           <% end %>
         </div>
       </div>
       <div class="col-sm-3 event-container event-prize-container">
         <div class="event-field-header small">Precio</div>
         <div class="event-field-text">
-          <% if @event.pvp_define? %>
-            <%= @event.pvp %> €
+          <% if event.pvp_define? %>
+            <%= event.pvp %> €
           <% else %>
-            <%= @event.no_pvp %>
+            <%= event.no_pvp %>
           <% end %>
         </div>
       </div>
@@ -95,7 +95,7 @@
         <div class="col-sm-12">
           <div class="event-field-header small">Dirección</div>
           <div class="event-field-text event-location-text">
-            <address><%= @event.complete_location %></address>
+            <address><%= event.complete_location %></address>
           </div>
         </div>
       </div>
@@ -105,13 +105,13 @@
       <div class="col-sm-6">
         <div class="event-field-header small">Participantes</div>
         <div class="event-field-text">
-          <% if @event.max_participants_define? %>
-            <%= @event.participants_count %>
+          <% if event.max_participants_define? %>
+            <%= event.participants_count %>
           <% else %>
-            <%= @event.unlimited_participants %>
+            <%= event.unlimited_participants %>
           <% end %>
 
-          <% if @event.can_participate? and !is_creator? %>
+          <% if event.can_participate? and !is_creator? %>
             <!-- <br> -->
             <%= link_to fa_icon("plus")+" Participar", participant_request_events_path(event_id: @event.id),
               remote: true, class: "btn btn-sm btn-primary gap-left" %>

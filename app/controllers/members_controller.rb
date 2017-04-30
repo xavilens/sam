@@ -27,11 +27,7 @@ class MembersController < ApplicationController
     from_user = current_user.band? ? musician.user : band.user
 
     # Definimos el título del modal
-    @title = if from_user.band?
-      "Incorporarse al grupo #{from_user.name}"
-    else
-      "Incorporar a #{from_user.name} al grupo"
-    end
+    @title = from_user.band? ? "Incorporarse al grupo #{from_user.name}" : "Incorporar a #{from_user.name} al grupo"
 
     # Definimos el mensaje del modal
     @message = "Está a punto de aceptar la petición de <b>#{from_user.name}</b> para unirse a su grupo."
@@ -117,17 +113,9 @@ class MembersController < ApplicationController
     end
 
     # Definimos el título del modal y el mensaje que mostraremos
-    @title = if current_user.band?
-      "¿Deseas que #{to_user.name} forme parte del grupo?"
-    else
-      "¿Deseas formar parte de #{to_user.name}?"
-    end
+    @title = current_user.band? ? "¿Deseas que #{to_user.name} forme parte del grupo?" : "¿Deseas formar parte de #{to_user.name}?"
 
-    @message = if from_user.band?
-      "Está a punto de enviar una petición a #{to_user.name} para que se una a su grupo.<br><br>¿Desea continuar?"
-    else
-      "Está a punto de enviar una petición a #{to_user.name} para unirse a su grupo.<br><br>¿Desea continuar?"
-    end
+    @message = from_user.band? ? "Está a punto de enviar una petición a #{to_user.name} para que se una a su grupo.<br><br>¿Desea continuar?" : "Está a punto de enviar una petición a #{to_user.name} para unirse a su grupo.<br><br>¿Desea continuar?"
 
     # Creamos el miembro con el grupo y el músico para el formulario
     @member = Member.new(band: band, musician: musician)
@@ -166,11 +154,7 @@ class MembersController < ApplicationController
       user = User.find(params[:user_id])
 
       # Definimos el miembro a partir de los usuarios
-      @member = if current_user.band?
-        Member.get(current_user.profile, user.profile)
-      else
-        Member.get(user.profile, current_user.profile)
-      end
+      @member = current_user.band? ? Member.get(current_user.profile, user.profile) : Member.get(user.profile, current_user.profile)
 
       # Definimos el título y el mensaje
       @title = "Expulsar a #{user.name}"

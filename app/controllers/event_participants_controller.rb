@@ -124,12 +124,7 @@ class EventParticipantsController < ApplicationController
 
     # Indica si se puede participar
     def can_participate?
-      event = if params[:event_id]
-        Event.find params[:event_id]
-      else
-        Event.find event_participants_params[:event_id]
-      end
-
+      event = params[:event_id] ? Event.find params[:event_id] : Event.find event_participants_params[:event_id]
       return event.max_participants > event.participants.size
     end
 

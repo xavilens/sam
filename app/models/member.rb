@@ -18,12 +18,8 @@ class Member < ActiveRecord::Base
   ######## METHODS
   # Devuelve el usuario cuyo perfil sea el contrario al actual
   def user current_user
-    user_aux = if current_user.musician?
-      band.user
-    else
-      musician.user
-    end
-
+    user_aux = current_user.musician? ? band.user : musician.user
+    
     return user_aux.decorate
   end
 

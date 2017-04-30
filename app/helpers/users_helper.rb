@@ -21,11 +21,7 @@ module UsersHelper
   # Devuelve el link para enviar un mensaje al usuario
   def link_to_send_message_to_user user, is_index = false
     # Definimos variables
-    link_class = if is_index
-      ""
-    else
-      "option-button-icon option-button col-md-2 col-md-offset-1 gap-right"
-    end
+    link_class = is_index ? "" : "option-button-icon option-button col-md-2 col-md-offset-1 gap-right"
     link_class = current_user == user ? link_class+" disabled" : link_class
 
     # Creamos el link
@@ -42,11 +38,8 @@ module UsersHelper
     icon = is_following ? 'eye-slash' : 'eye'
     method = is_following ? :delete : :post
     title = is_following ? "Dejar de seguir a #{user.name}" : "Seguir a #{user.name}"
-    link_class = if is_index
-      ""
-    else
-      "option-button-icon option-button col-md-2 gap-right"
-    end
+
+    link_class = is_index ? "" : "option-button-icon option-button col-md-2 gap-right"
     link_class = current_user == user ? link_class+" disabled" : link_class
 
     # Creamos el link
@@ -58,11 +51,7 @@ module UsersHelper
   # Devuelve el link para pedir ser miembro o para dejarlo
   def link_to_user_member user, is_index = false
     # Definimos variables
-    link_class = if is_index
-      ""
-    else
-      "option-button-icon option-button col-md-2 gap-right"
-    end
+    link_class = is_index ? "" : "option-button-icon option-button col-md-2 gap-right"
     link_class = current_user == user ? link_class+" disabled" : link_class
 
     is_member = current_user.profile.member? user.profile
@@ -71,6 +60,7 @@ module UsersHelper
 
     is_band_musician = current_user.band? && user.musician?
     is_musician_band = current_user.musician? && user.band?
+
     title = if is_band_musician
       if is_member
         "Expulsar del grupo"
@@ -91,19 +81,4 @@ module UsersHelper
         title: title, remote: true, data: {toggle: 'tooltip', placement: 'top'}
     end
   end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 end

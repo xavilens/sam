@@ -38,7 +38,7 @@
           </td>
         </tr>
         <% @calendar.day(date).each do |event| %>
-          <%= render 'events/event_index_row', event: event %>
+          <%= render 'events/event_index_row', event: event.decorate %>
         <% end %>
       <% end %>
     <!-- END User Calendar -->
@@ -75,6 +75,10 @@
   </tbody>
 </table>
 <!-- END Calendar -->
+
+<div class="pagination-container pull-right">
+  <div class="paginator"><%= paginate @calendar.events %></div>
+</div>
 
 <!-- No data -->
 <% if no_data %>
