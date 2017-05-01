@@ -1,6 +1,0 @@
-// Si existe el modal lo muestra, si no lo agrega
-if($("#member-modal").length > 0){
-  $("#member-modal").modal();
-}else{
-  $('<%= j render "modal", type: "index", title: "#{title}", message: "#{@message}" %>').modal();
-}

@@ -11,7 +11,7 @@ class EventsController < ApplicationController
   before_action :set_events, only: [:index, :show]
 
   ######### DECORATORS
-  decorates_assigned :events, :event
+  decorates_assigned :events, :event, :user
 
   ######### ACTIONS
   def index
@@ -41,7 +41,6 @@ class EventsController < ApplicationController
     # Creamos calendario
     @calendar = EventCalendar.new @start_date, @finish_date, @search, (@is_user_calendar ? @user : nil)
 
-    debugger
     @calendar.events = Kaminari.paginate_array(@calendar.events).page(params[:page]).per(1)
 
     # Datos página

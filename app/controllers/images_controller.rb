@@ -9,7 +9,7 @@ class ImagesController < ApplicationController
   before_action :set_image, only: [:show, :edit, :update, :destroy]
 
   ######### DECORATORS
-  decorates_assigned :images, :image
+  decorates_assigned :images, :image, :user
 
   ######### ACTIONS
   def index
@@ -97,7 +97,7 @@ class ImagesController < ApplicationController
 
     # Define el usuario con el usuario actual
     def set_current_user
-      @user = current_user.decorate
+      @user = current_user
     end
 
     # Define la imagen

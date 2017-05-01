@@ -10,17 +10,17 @@ class FollowshipsController < ApplicationController
   before_action :set_users, only: [:create, :destroy]
 
   ######### DECORATORS
-  decorates_assigned :leaders, :followers
+  decorates_assigned :leaders, :followers, :user
 
   ######### ACTIONS
   def leaders
-    @leaders = @user.leaders.order(id: :desc).page(params[:page]).per(42)
+    @leaders = @user.leaders.page(params[:page]).per(42)
     @page = "Usarios que sigue #{@user.name}"
     @title = @page
   end
 
   def followers
-    @followers = @user.followers.order(id: :desc).page(params[:page]).per(42)
+    @followers = @user.followers.page(params[:page]).per(42)
     @page = "Usarios que siguen a #{@user.name}"
     @title = @page
   end
@@ -40,7 +40,7 @@ class FollowshipsController < ApplicationController
       followship.destroy
 
       respond_to do |format|
-        format.html { redirect_to :back, alert: "Has dejado de seguir a #{@leader.name}" }
+        format.html { redirect_to :back, notice: "Has dejado de seguir a #{@leader.name}" }
         format.js {}
       end
     else

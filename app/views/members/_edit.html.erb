@@ -10,11 +10,11 @@
   <div class="modal-body">
     <div class="row">
       <div class="col-sm-2  col-sm-offset-1">
-        <%= image_tag @member_user.index_avatar, alt: @member_user.name, class: 'img-responsive' %>
+        <%= image_tag member_user.index_avatar, alt: @member_user.name, class: 'img-responsive' %>
       </div>
       <div class="col-sm-8">
         <row><h2><%= link_to @member_user.name, @member_user %></h2></row>
-        <row><%= @member.instruments_names %></row>
+        <row><%= member.instruments_names %></row>
       </div>
     </div>
     <hr>

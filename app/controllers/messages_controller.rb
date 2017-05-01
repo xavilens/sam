@@ -9,7 +9,7 @@ class MessagesController < ApplicationController
   before_action :set_users_create, only: [:create]
 
   ######### DECORATORS
-  decorates_assigned :conversations, :conversation, :messages
+  decorates_assigned :conversations, :conversation, :messages, :user, :sender, :recipent
 
   ######### ACTIONS
   def index
@@ -118,7 +118,7 @@ class MessagesController < ApplicationController
     ## SETTERS
     # Define la variable @user como el usuario actual
     def set_current_user
-      @user = current_user.decorate
+      @user = current_user
     end
 
     # Definimos usuarios para acción create
@@ -144,7 +144,7 @@ class MessagesController < ApplicationController
 
     # Define la variable @sender
     def set_recipent to_user
-      @recipent = to_user.decorate
+      @recipent = to_user
     end
 
     # Define el nombre de la página New

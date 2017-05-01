@@ -8,6 +8,9 @@ class EventParticipantsController < ApplicationController
   ######### CALLBACKS
   before_action :check_participants_avaliable, only: [:new, :create, :participant_request, :send_request]
 
+  ######### DECORATORS
+  decorates_assigned :event_participants, :event_participant, :user
+
   ######### ACTIONS
   def participant_request
     # Definimos el creador
@@ -56,7 +59,6 @@ class EventParticipantsController < ApplicationController
   end
 
   def create
-    debugger
     @event_participant = EventParticipant.new(event_participants_params)
 
     # Persistimos el participante en la BD, si no mostramos una alerta

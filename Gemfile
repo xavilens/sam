@@ -30,8 +30,6 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'bootstrap-sass', '3.3.6'
 # Font awesome: fonts de iconos
 gem 'font-awesome-rails', '4.7.0.1'
-# Breadcrumbs
-gem 'breadcrumbs_on_rails', '2.3.1'
 # Formularios más sencillos
 gem 'simple_form', '3.2.1'
 # Paginacion

@@ -53,7 +53,7 @@
       </tr>
       <% if @calendar.any_event?(date) %>
         <% @calendar.day(date).each do |event| %>
-          <%= render 'events/event_index_row', event: event %>
+          <%= render 'events/event_index_row', event: event.decorate %>
         <% end %>
         <tr>
           <td>

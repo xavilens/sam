@@ -2,13 +2,16 @@ class BandsController < ApplicationController
   ######### FILTERS
   before_filter :authenticate_user!
 
-  ######### PAGINATION
-  # paginates_per 32
+  ######### DECORATORS
+  decorates_assigned :users
 
+  ######### ACTIONS
   def index
     @user = current_user
     @search = BandSearchForm.new(search_params)
-    @users = @search.users.decorate
+    @users = @search.users.page(params[:page])
+
+    # Definimos el nombre de la página
     @page = 'Grupos'
   end
 

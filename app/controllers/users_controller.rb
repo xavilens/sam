@@ -1,11 +1,15 @@
 class UsersController < ApplicationController
+  ######### FILTERS
   before_filter :authenticate_user!, only: [:edit, :update]
 
+  ######### CALLBACKS
   before_action :set_user, only: [:show]
   before_action :set_current_user, only: [:edit, :update, :update_knowledges]
-  before_action :set_edit_page, only: [:edit]
-  before_action :set_edit_musician_knowledges, only: [:edit_knowledges]
 
+  ######### DECORATORS
+  decorates_assigned :users, :user
+
+  ######### ACTIONS
   def index
     # Define el tipo de perfil sacado de los parámetros
     profileable_type = search_params[:profileable_type] unless search_params.blank?
@@ -17,22 +21,19 @@ class UsersController < ApplicationController
     @page = profileable_type.blank? ? User.to_s.pluralize : profileable_type.pluralize
 
     # Obtenemos los usuarios a través del servicio de búsqueda de usuarios
-    @users = @search.users.decorate
-    # @users = SearchUsers.new(search_params).users
+    @users = @search.users.page(params[:page])
   end
 
   def show
     # Redirige a inicio y muestra mensaje de error si no existe el usuario
     redirect_to root_path, alert: "No existe el usuario" if @user.blank?
 
-    # Breadcrumb genérico para músicos y grupos
-    add_breadcrumb "#{@user.type.pluralize}", ("#{@user.profileable_type.downcase.pluralize}_path").to_sym
-
     # Definimos el nombre de la página
     @page = @user.name
   end
 
   def edit
+    set_edit_page
   end
 
   def update
@@ -46,6 +47,7 @@ class UsersController < ApplicationController
   # Dirige a la página donde poder gestionar los conocimientos musicales
   def edit_knowledges
     @musician.musician_knowledges.build
+    set_edit_musician_knowledges
   end
 
   # Método que actualiza los conocimientos musicales
@@ -67,12 +69,12 @@ class UsersController < ApplicationController
     ## SETTERS
     # Define la variable @user con el usuario pasado por parámetros
     def set_user
-      @user = User.find(params[:id]).decorate
+      @user = User.find(params[:id])
     end
 
     # Define la variable @user con el usuario actual
     def set_current_user
-      @user = current_user.decorate
+      @user = current_user
     end
 
     # Define variables para la pagina edit

@@ -10,7 +10,7 @@ class VideosController < ApplicationController
   before_action :set_edit_title, only: [:edit, :update]
 
   ######### DECORATORS
-  decorates_assigned :videos, :video
+  decorates_assigned :videos, :video, :user
 
   ######### ACTIONS
   def index

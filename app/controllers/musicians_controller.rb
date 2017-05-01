@@ -1,19 +1,25 @@
 class MusiciansController < ApplicationController
+  ######### FILTERS
   before_filter :authenticate_user!
 
-  before_action :set_current_user, only: [:edit, :update]
+  ######### CALLBACKS
+  before_action :set_current_user, only: [:index, :edit, :update]
   before_action :set_musician, only: [:edit, :update]
 
+  ######### DECORATORS
+  decorates_assigned :users
+
+  ######### ACTIONS
   def index
-    @user = current_user
     @search = MusicianSearchForm.new(search_params)
-    @users = @search.users.decorate
+    @users = @search.users.page(params[:page])
 
     # Definimos el nombre de la página
     @page = 'Músicos'
   end
 
   def edit
+    set_edit
   end
 
   # FIXME: Utilizar este y Edit para crear instrumentos

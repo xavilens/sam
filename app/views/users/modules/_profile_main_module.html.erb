@@ -1,12 +1,12 @@
 <div class="profile-container">
   <div class="avatar-container">
     <%= link_to @user do %>
-      <%= image_tag @user.avatar, alt: @user.name, class: ['img-responsive'] %>
+      <%= image_tag user.avatar, alt: @user.name, class: ['img-responsive'] %>
     <% end %>
   </div>
   <div class="leftbar-name">
     <%= @user.name %> <small><%= @user.type %></small>
   </div>
-  <div class="location-container"><%= @user.location %></div>
+  <div class="location-container"><%= user.location %></div>
   <hr>
 </div>

@@ -21,11 +21,11 @@
 
     <div class="form-group"></div>
 
-    <%= f.input :instrument, collection: Instrument.order(:name), label_method: :name, value_method: :id,
-      label: 'Instrumentos', required: false, as: :check_boxes %>
-
     <%= f.input :status, collection: MusicianStatus.order(:name), label_method: :name, value_method: :id,
       label: 'Estado', required: false, as: :check_boxes %>
+
+    <%= f.input :instrument, collection: Instrument.order(:name), label_method: :name, value_method: :id,
+      label: 'Instrumentos', required: false, as: :check_boxes %>
 
     <div class="row">
       <div class="col-sm-12">

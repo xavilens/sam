@@ -103,8 +103,10 @@ class User < ActiveRecord::Base
   has_many :videos
   has_many :profile_videos,-> {where(in_user_page: true)}, class_name: 'Video'
 
-  ######## METHODS
+  ######## PAGINATION
+  paginates_per 48
 
+  ######## METHODS
   ## USER DATA
   # Indica si el perfil es de Musician
   def musician?
@@ -240,6 +242,13 @@ class User < ActiveRecord::Base
   end
 
   ## MEDIA
+  # Indica si el usuario tiene canciones
+
+  ## MEDIA
+  # Indica si el usuario tiene canciones
+  def images?
+    images.any?
+  end
   # Indica si el usuario tiene canciones
   def songs?
     songs.any?

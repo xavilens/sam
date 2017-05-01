@@ -3,12 +3,12 @@
 <div class="member-container user-show-container">
   <!-- Member Header -->
   <div class="member-header leftbar-name">
-    <%= @user.member_header %>
+    <%= user.member_header %>
   </div>
   <!-- END Member Header -->
 
   <!-- Members -->
-  <% @user.members.each do |member| %>
+  <% user.members.each do |member| %>
     <% member_user = member.user @user %>
     <div class="media member-user-show">
 

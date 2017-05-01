@@ -1,5 +1,5 @@
 
-<% if @user.images? or @user == current_user %>
+<% if @user.images? or is_current_user? %>
 <div class="user-show-container">
   <div class="leftbar-name">Imágenes <span class="badge"><%= @user.images.size %></span></div>
 

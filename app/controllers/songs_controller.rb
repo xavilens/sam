@@ -1,8 +1,16 @@
 class SongsController < ApplicationController
+  ######### FILTERS
+  before_filter :authenticate_user!
+
+  ######### CALLBACKS
   before_action :set_user, only: [:index]
   before_action :set_current_user, only: [:new, :create, :edit, :update, :destroy]
   before_action :set_song, only: [:edit, :update, :destroy]
 
+  ######### DECORATORS
+  decorates_assigned :songs, :song, :user
+
+  ######### ACTIONS
   def index
     @songs = @user.songs
   end

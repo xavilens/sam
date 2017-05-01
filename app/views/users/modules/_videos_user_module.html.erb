@@ -1,5 +1,5 @@
 
-<% if @user.videos? or @user == current_user %>
+<% if @user.videos? or is_current_user? %>
 <div class="user-show-container">
   <div class="leftbar-name">
     Vídeos <span class="badge"><%= @user.videos.size %></span>

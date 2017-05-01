@@ -1,10 +1,26 @@
 
 <%= render 'layouts/page_header' %>
 
+<!-- Total Users -->
+<div class="users-count col-sm-12">
+  <div class="small page-info text-right">
+    <%= page_entries_info @users, entry_name: (@users.total_count > 1 ? 'usuarios' : 'usuarios') %>
+  </div>
+</div>
+<!-- END Total Users -->
+
 <% unless @users.blank?  %>
-  <% @users.each do |user| %>
+  <% users.each do |user| %>
     <%= render 'users/user_thumbnail', user: user %>
   <% end %>
 <% else %>
   <p class="no-data">Ningún usuario cumple los criterios</p>
 <% end %>
+
+<!-- Users Actions -->
+<div class="users-index-actions col-sm-12">
+  <div class="pagination-container pull-right">
+    <div class="paginator"><%= paginate @users %></div>
+  </div>
+</div>
+<!-- END Users Actions -->

@@ -1,14 +1,14 @@
 class MembersController < ApplicationController
+  ######### FILTERS
   before_filter :authenticate_user!
+
+  ######### CALLBACKS
   # TODO: crear set_users?
 
-  # TODO: ¿Crear un índice de Members?
-  def index
-    @members = Member.all
+  ######### DECORATORS
+  decorates_assigned :member, :member_user, :user
 
-    @page = 'Miembros'
-  end
-
+  ######### ACTIONS
   def show
     @member = Member.find(params[:id])
 
@@ -59,8 +59,8 @@ class MembersController < ApplicationController
 
   def edit
     # Definimos el miembro y definimos el otro usuario implicado en la definición del miembro
-    @member = Member.find(params[:id]).decorate
-    @member_user = @member.user(current_user).decorate
+    @member = Member.find(params[:id])
+    @member_user = @member.user(current_user)
 
     # Definimos el título y el mensaje para el modal
     @title = "Actualizar miembro"
