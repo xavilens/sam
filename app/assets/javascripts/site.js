@@ -14,10 +14,7 @@ function countChar(val) {
 };
 
 /////////////// TOOLTIP
-// $(document).on('ready page:change', function() {
-//   $('[data-toggle="tooltip"]').tooltip();
-// });
-
 $(document).ready(function() {
+  $("[data-toggle='tooltip']").tooltip();
   $('[data-toggle="tooltip"]').tooltip();
 });

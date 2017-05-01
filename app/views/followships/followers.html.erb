@@ -20,6 +20,14 @@
       </div>
       <!-- END Followers Headers -->
 
+      <!-- Total Followers -->
+      <div class="followships-count col-sm-12 gep-top">
+        <div class="small page-info text-right">
+          <%= page_entries_info @followers, entry_name: (@followers.total_count > 1 ? 'usuarios' : 'usuarios') %>
+        </div>
+      </div>
+      <!-- END Total Followers -->
+
       <!-- Followers -->
       <div class="row">
         <div class="col-sm-12">
@@ -44,6 +52,16 @@
     </div>
     <% end %>
     <!-- END Followers Container -->
+
+    <!-- FOllowships Actions -->
+    <div class="image-index-actions col-sm-12">
+      <%= link_to "Volver", user_path(@user), class: 'btn btn-md btn-default image-index-action' %>
+
+      <div class="pagination-container pull-right">
+        <div class="paginator"><%= paginate @followers %></div>
+      </div>
+    </div>
+    <!-- END FOllowships Actions -->
   </div>
 
   <div class="col-md-3">

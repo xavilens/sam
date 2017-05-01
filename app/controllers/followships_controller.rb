@@ -9,18 +9,18 @@ class FollowshipsController < ApplicationController
   before_action :set_user, only: [:leaders, :followers]
   before_action :set_users, only: [:create, :destroy]
 
-  ######### PAGINATION
-  # paginates_per 25
+  ######### DECORATORS
+  decorates_assigned :leaders, :followers
 
   ######### ACTIONS
   def leaders
-    @leaders = @user.leaders.order(id: :desc).page(params[:page])
+    @leaders = @user.leaders.order(id: :desc).page(params[:page]).per(42)
     @page = "Usarios que sigue #{@user.name}"
     @title = @page
   end
 
   def followers
-    @followers = @user.followers.order(id: :desc).page(params[:page]).decorate
+    @followers = @user.followers.order(id: :desc).page(params[:page]).per(42)
     @page = "Usarios que siguen a #{@user.name}"
     @title = @page
   end

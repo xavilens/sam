@@ -39,6 +39,8 @@
 
     </div>
     <!-- END image-show-container -->
+
+    <!-- Images Actions -->
     <div class="image-index-actions col-sm-12">
       <%= link_to fa_icon('plus')+" Nueva Imagen", new_image_path,
         class: 'btn btn-md btn-primary image-index-action' if is_current_user? %>
@@ -48,6 +50,7 @@
         <div class="paginator"><%= paginate @images %></div>
       </div>
     </div>
+    <!-- END Images Actions -->
   </div>
 </div>
 

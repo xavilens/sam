@@ -5,7 +5,7 @@
 
     <div class="followships-container">
       <div class="no-gutter">
-        <% @user.leaders.order(id: :desc).first(12).each do |leader| %>
+        <% @user.leaders.first(12).each do |leader| %>
           <div class="followships-user no-gutter-sm-3">
             <%= link_to user_path(leader), title: leader.name do %>
               <%= image_tag leader.avatar_url(:thumb), alt: leader.name, class: ['img-border','img-responsive'] %>
@@ -29,7 +29,7 @@
     <div class="leftbar-name">Seguidores <span class="badge"><%= @user.followers.size %></span></div>
 
     <div class="followships-container no-gutter">
-      <% @user.followers.order(id: :desc).first(12).each do |follower| %>
+      <% @user.followers.first(12).each do |follower| %>
       <div class="followships-user no-gutter-sm-3">
         <%= link_to user_path(follower), title: follower.name do %>
           <%= image_tag follower.avatar_url(:thumb), alt: follower.name, class: ['img-border','img-responsive'] %>

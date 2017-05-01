@@ -91,9 +91,9 @@ class User < ActiveRecord::Base
   has_many :participated_events, through: :event_participants, source: :event
 
   # FOLLOWSHIPS RELATED
-  has_many :followships, foreign_key: 'follower_id'
+  has_many :followships, -> {order(id: :desc)}, foreign_key: 'follower_id'
   has_many :leaders, through: :followships
-  has_many :reverse_followships, foreign_key: :leader_id, class_name: 'Followship'
+  has_many :reverse_followships, -> {order(id: :desc)}, foreign_key: :leader_id, class_name: 'Followship'
   has_many :followers, through: :reverse_followships
 
   # MEDIA RELATED
