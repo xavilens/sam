@@ -22,7 +22,7 @@
       <!-- Imágenes totales -->
       <div class="images-count col-sm-12">
         <div class="small page-info text-right">
-          <%= page_entries_info @images %> <%= @images.total_count > 1 ? 'imágenes' : 'imagen' %>
+          <%= page_entries_info @images, entry_name: (@images.total_count > 1 ? 'imágenes' : 'imagen') %>
         </div>
       </div>
       <!-- END Imágenes totales -->
@@ -31,35 +31,7 @@
       <div class="row">
         <div class="images-index-container">
           <% @images.order(id: :desc).decorate.each do |image| %>
-          <div class="col-sm-2">
-            <div class="image-index-thumb">
-              <%= link_to user_image_path(user_id: @user.id, id: image.id), title: image.title do %>
-                <%= image_tag image.image_url(:thumb_lg), alt: image.title, class: 'img-responsive' %>
-              <% end %>
-
-              <div class="image-index-title">
-                <div class="row">
-                  <div class="col-sm-12 text-center text-ellipsis">
-                    <%= link_to image.title, user_image_path(user_id: @user.id, id: image.id), class: 'link-black' %>
-                  </div>
-                </div>
-              </div>
-
-              <% if current_user? %>
-                <div class="image-index-links">
-                  <div class="no-gutter">
-                    <div class="no-gutter-sm-6 text-center">
-                      <%= link_to fa_icon('pencil'), edit_image_path(image), class: 'btn btn-link btn-sm' %>
-                    </div>
-                    <div class="no-gutter-sm-6 text-center">
-                      <%= link_to fa_icon('trash'), user_image_path(user_id: @user, id: image.id),
-                        class: 'image-delete btn btn-link btn-sm', remote: true %>
-                    </div>
-                  </div>
-                </div>
-              <% end %>
-            </div>
-          </div>
+            <%= render 'images/image_thumb', image: image %>
           <% end %>
         </div>
       </div>
@@ -78,3 +50,5 @@
     </div>
   </div>
 </div>
+
+<%= render 'scripts/dotdotdot' %>

@@ -41,6 +41,9 @@ class Event < ActiveRecord::Base
   has_many :conversation_relateds, as: :conversationable, dependent: :destroy
   has_many :conversations, through: :conversation_relateds
 
+  ######### PAGINATION
+  paginates_per 20
+
   ######## METHODS
 
   # Devuelve el tipo del evento

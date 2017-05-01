@@ -8,16 +8,13 @@
     </div>
     <!-- END Video Header -->
 
-    <!-- Video Actions -->
-    <div class="row gap-bottom">
-      <div class="col-sm-4">
-        <%= link_to fa_icon('plus')+" Crear video", new_video_path, class: 'btn btn-block btn-primary' %>
-      </div>
-      <div class="col-sm-4 col-sm-offset-4">
-        <%= link_to "Volver", user_path(@user), class: 'btn btn-block btn-default' %>
+    <!-- Videos count -->
+    <div class="videos-count">
+      <div class="small page-info text-right">
+        <%= page_entries_info @videos, entry_name: (@videos.total_count > 1 ? 'vídeos' : 'vídeo') %>
       </div>
     </div>
-    <!-- END Video Actions -->
+    <!-- END Videos count -->
 
     <!-- Videos -->
     <% no_data = true %>
@@ -31,6 +28,19 @@
     <% end %>
     <!-- END Videos -->
 
+    <!-- Video Actions -->
+    <div class="row gap-bottom">
+      <div class="col-sm-6">
+        <%= link_to fa_icon('plus')+" Crear video", new_video_path, class: 'btn btn-md btn-primary' if is_current_user? %>
+        <%= link_to "Volver", :back, class: 'btn btn-md btn-default gap-left' %>
+      </div>
+      <div class="col-sm-6">
+        <div class="pagination-container pull-right">
+          <div class="paginator"><%= paginate @videos %></div>
+        </div>
+      </div>
+    </div>
+    <!-- END Video Actions -->
   </div>
 
   <div class="col-md-3">

@@ -227,8 +227,8 @@ es:
     page_entries_info:
       one_page:
         display_entries:
-          zero: "No hay <b>ningún</b>"
-          one: "Mostrando <b>1</b>"
-          other: "Mostrando <b>todos</b>"
+          zero: "No hay %{entry_name}"
+          one: "Mostrando <b>1</b> %{entry_name}"
+          other: "Mostrando <b>todo</b>"
       more_pages:
-        display_entries: "Mostrando <b>%{first}&nbsp;-&nbsp;%{last}</b> de <b>%{total}</b>"
+        display_entries: "Mostrando <b>%{first}&nbsp;-&nbsp;%{last}</b> de <b>%{total}</b> %{entry_name}"

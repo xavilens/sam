@@ -8,5 +8,9 @@ class Image < ActiveRecord::Base
   ######## RELATIONSHIPS
   belongs_to :imageable, polymorphic: true
 
+  ######## PAGINATION
+  paginates_per 42
+
+  ######## UPLOADER
   mount_uploader :image, ImageUploader
 end

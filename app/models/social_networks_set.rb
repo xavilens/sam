@@ -96,28 +96,7 @@ class SocialNetworksSet < ActiveRecord::Base
     # en el array final
     social_networks = []
     SOCIAL_NETWORKS.each do |sn|
-
-      social_network = case sn
-      when 'facebook'
-        facebook
-      when 'twitter'
-        twitter
-      when 'youtube'
-        youtube
-      when 'soundcloud'
-        soundcloud
-      when 'website'
-        website
-      when 'instagram'
-        instagram
-      when 'gplus'
-        gplus
-      when 'vimeo'
-        vimeo
-      when 'bandcamp'
-        bandcamp
-      end
-
+      social_network = send(sn)
       social_networks << social_network if social_network.valid?
     end
 

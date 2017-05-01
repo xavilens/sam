@@ -20,8 +20,8 @@ class ImagesController < ApplicationController
       @images = Image.all
       @page = "Imágenes"
     end
-    
-    @images = @images.page(params[:page]).per(42)
+
+    @images = @images.page(params[:page])
     @title = @page
   end
 

@@ -1,4 +1,5 @@
 class Video < ActiveRecord::Base
+  ######### ATTRIBUTES
   attr_accessor :api_data
 
   ######## CALLBACKS
@@ -10,6 +11,9 @@ class Video < ActiveRecord::Base
 
   ######## RELATIONSHIPS
   belongs_to :user
+
+  ######### PAGINATION
+  paginates_per 4
 
   ######## METHODS
   # Indica si tiene descripción

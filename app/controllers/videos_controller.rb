@@ -1,12 +1,20 @@
 class VideosController < ApplicationController
+  ######### FILTERS
+  before_filter :authenticate_user!
+
+  ######### CALLBACKS
   before_action :set_user, only: [:index]
   before_action :set_current_user, only: [:new, :create, :edit, :update, :destroy]
   before_action :set_video, only: [:edit, :update, :destroy]
   before_action :set_new_title, only: [:new, :create]
   before_action :set_edit_title, only: [:edit, :update]
 
+  ######### DECORATORS
+  decorates_assigned :videos, :video
+
+  ######### ACTIONS
   def index
-    @videos = @user.videos
+    @videos = @user.videos.page(params[:page])
 
     @page = "Vídeos"
     @title = "Vídeos de #{@user.name}"

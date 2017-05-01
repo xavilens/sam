@@ -28,7 +28,7 @@
   <!-- Mensajes totales -->
   <div class="conversations-count">
     <div class="small page-info">
-      <%= page_entries_info @conversations %> <%= @conversations.total_count > 1 ? 'mensajes' : 'mensaje' %>
+      <%= page_entries_info @conversations, entry_name: (@conversations.total_count > 1 ? 'mensajes' : 'mensaje') %>
     </div>
   </div>
   <!-- END Mensajes totales -->
