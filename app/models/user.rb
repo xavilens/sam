@@ -243,9 +243,6 @@ class User < ActiveRecord::Base
 
   ## MEDIA
   # Indica si el usuario tiene canciones
-
-  ## MEDIA
-  # Indica si el usuario tiene canciones
   def images?
     images.any?
   end

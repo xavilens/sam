@@ -1,6 +1,6 @@
 class EventCalendar
-  attr_reader :calendar, :start_date, :finish_date
-  attr_accessor :events, :search
+  attr_reader :start_date, :finish_date
+  attr_accessor :events, :search, :calendar
 
   def initialize start_date, finish_date, search, user = nil
     # Definimos los atributos
@@ -26,7 +26,7 @@ class EventCalendar
   # Devuelve los eventos de la fecha pasada si existen, o un array vacío si no
   def day date
     if any_event? date
-      calendar[date]
+      calendar[date] & events
     else
       []
     end
@@ -34,7 +34,26 @@ class EventCalendar
 
   # Indica si hay algún evento en la fecha pasada
   def any_event? date
-    calendar[date].present?
+    events.each do |event|
+      return true if event.date == date
+    end
+
+    false
+  end
+
+  # Indica si tiene eventos
+  def blank?
+    events.none?
+  end
+
+  # Devuelve la fecha del primer evento
+  def first_event_date
+    events.blank? ? start_date : events.first.date
+  end
+
+  # Devuelve la fecha del último evento
+  def last_event_date
+    events.blank? ? finish_date : events.last.date
   end
 
   private
@@ -72,13 +91,14 @@ class EventCalendar
     def set_events user
       # Si está definido el usuario obtiene de él los eventos en las fechas dadas,
       # si no los saca de todos los eventos creados
-      @events = if user.present?
-        search.events(user.created_events) +
-        search.events(user.participated_events) +
-        search.events(user.member_events)
-        # search.events user.member_events.date(start_date, finish_date)
+      if user.present?
+        @events = search.events(user.created_events)
+        @events = @events + search.events(user.participated_events)
+        @events = @events + search.events(user.member_events)
       else
-        search.events Event
+        @events = search.events Event
       end
+
+      @events = @events.uniq
     end
 end

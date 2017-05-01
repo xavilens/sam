@@ -27,24 +27,32 @@
 
   <!-- Calendar Days -->
   <% @start_date.upto(@finish_date).each do |date| %>
-    <!-- User Calendar -->
     <% if @is_user_calendar %>
+      <!-- User Calendar -->
+      <% unless @calendar.blank? %>
+        <%
+          no_data = false
+          prev_date = nil
+        %>
 
-      <% if @calendar.any_event?(date) %>
-        <% no_data = false %>
-        <tr>
-          <td class="event-header">
-            <h4><%= calendar_date_header date %></h4>
-          </td>
-        </tr>
-        <% @calendar.day(date).each do |event| %>
-          <%= render 'events/event_index_row', event: event.decorate %>
+        <% @calendar.events.each do |event| %>
+          <% if event.date == date %>
+            <% if date != prev_date %>
+              <% prev_date = date %>
+              <tr>
+                <td class="event-header">
+                  <h4><%= calendar_date_header date %></h4>
+                </td>
+              </tr>
+            <% end %>
+
+            <%= render 'events/event_index_row', event: event.decorate %>
+          <% end %>
         <% end %>
       <% end %>
-    <!-- END User Calendar -->
-
-    <!-- General Calendar -->
+      <!-- END User Calendar -->
     <% else %>
+      <!-- General Calendar -->
       <% no_data = false %>
       <tr>
         <td class="event-header">
@@ -68,22 +76,25 @@
             </td>
         </tr>
       <% end %>
+      <!-- END General Calendar -->
     <% end %>
-    <!-- END General Calendar -->
   <% end %>
   <!-- END Calendar Days -->
   </tbody>
 </table>
 <!-- END Calendar -->
 
-<div class="pagination-container pull-right">
-  <div class="paginator"><%= paginate @calendar.events %></div>
-</div>
 
 <!-- No data -->
 <% if no_data %>
   <div class="no-data">No hay ningún evento que mostrar.</div>
 <% end %>
 <!-- END No data -->
+
+<div class="pagination-container pull-right">
+  <div class="paginator">
+    <%= paginate @calendar.events %>
+  </div>
+</div>
 
 <%= render 'scripts/dotdotdot' %>

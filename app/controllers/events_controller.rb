@@ -14,6 +14,8 @@ class EventsController < ApplicationController
   decorates_assigned :events, :event, :user
 
   ######### ACTIONS
+  # TODO: Servicios para calendario general y de usuarios
+  # TODO: Calendario general será cuadrícula y al pulsar una cuadrícula aparecerá un modal con los eventos organizados ese día
   def index
     # Definimos fechas
     if @is_user_calendar
@@ -41,7 +43,18 @@ class EventsController < ApplicationController
     # Creamos calendario
     @calendar = EventCalendar.new @start_date, @finish_date, @search, (@is_user_calendar ? @user : nil)
 
+    # Creamos la paginación
     @calendar.events = Kaminari.paginate_array(@calendar.events).page(params[:page]).per(1)
+
+    # Redefinimos las fechas según calendario y eventos paginados
+    if (@is_user_calendar || !(first_page || last_page)) && !uniq_page
+      @start_date = @calendar.first_event_date
+      @finish_date = @calendar.last_event_date
+    elsif first_page && !uniq_page
+      @finish_date = @calendar.last_event_date
+    elsif last_page && !uniq_page
+      @start_date = @calendar.first_event_date
+    end
 
     # Datos página
     @page = 'Calendario de eventos'
@@ -160,6 +173,22 @@ class EventsController < ApplicationController
       @page = 'Editar evento'
       @title = @page
     end
+
+    # Indica si es la primera página
+    def first_page
+      !uniq_page && (params[:page].blank? || params[:page] == 1)
+    end
+
+    # Indica si es la última página
+    def last_page
+      !uniq_page && (params[:page] != @calendar.events.num_pages)
+    end
+
+    # Indica si es la última página
+    def uniq_page
+      @calendar.events.num_pages == 1
+    end
+
     # Parámetros de evento permitidos por el controlador
     def event_params
       params.require(:event).permit(:name, :description, :date, :time, :event_status_id, :event_type_id,
