@@ -114,7 +114,7 @@ class UsersController < ApplicationController
         profileable_attributes: [:id, :musician_status_id, :genre_1_id, :genre_2_id, :genre_3_id, :band_status_id],
         address_attributes: [:id, :gaddress, :city, :municipality, :province, :region, :country],
         social_networks_set_attributes: [:id, :facebook_url, :youtube_url, :twitter_url, :gplus_url, :soundcloud_url,
-        :instagram_url, :website_url]]
+        :instagram_url, :website_url, :vimeo_url, :bandcamp_url]]
 
       params.require(:user).permit(allow)
     end

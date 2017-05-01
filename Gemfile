@@ -29,7 +29,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Bootstrap: Frontend framework
 gem 'bootstrap-sass', '3.3.6'
 # Font awesome: fonts de iconos
-gem 'font-awesome-rails', '4.6.3.1'
+gem 'font-awesome-rails', '4.7.0.1'
 # Breadcrumbs
 gem 'breadcrumbs_on_rails', '2.3.1'
 # Formularios más sencillos

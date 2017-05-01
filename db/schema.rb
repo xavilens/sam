@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170423145255) do
+ActiveRecord::Schema.define(version: 20170501102611) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "addresseable_id",   limit: 255, null: false
@@ -214,12 +214,13 @@ ActiveRecord::Schema.define(version: 20170423145255) do
     t.string   "website_url",    limit: 255
     t.string   "gplus_url",      limit: 255
     t.string   "instagram_url",  limit: 255
-    t.string   "bandcamp",       limit: 255
+    t.string   "bandcamp_url",   limit: 255
     t.string   "soundcloud_url", limit: 255
     t.string   "twitter_url",    limit: 255
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.string   "youtube_url",    limit: 255
+    t.string   "vimeo_url",      limit: 255
   end
 
   create_table "songs", force: :cascade do |t|

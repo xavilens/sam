@@ -1,8 +1,12 @@
 class SocialNetworksSet < ActiveRecord::Base
-  ######## VALIDATE
-  ['facebook', 'twitter', 'youtube', 'soundcloud', 'website', 'instagram', 'gplus'].each do |sn|
+  ######## CONSTANTS
+  SOCIAL_NETWORKS = ['facebook', 'twitter', 'youtube', 'soundcloud', 'website',
+    'instagram', 'gplus', 'vimeo', 'bandcamp']
 
-    if sn != 'website' && sn != 'gplus'
+  ######## VALIDATE
+  SOCIAL_NETWORKS.each do |sn|
+
+    if sn != 'website' && sn != 'gplus' && sn != 'bandcamp'
       url_format =  /((http|https):\/\/)?(www\.)?#{sn}\.[a-z]{2,5}(\/.*)?/i
     else
 
@@ -13,6 +17,8 @@ class SocialNetworksSet < ActiveRecord::Base
         url_format = /((http|https):\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(\/.*)?/i
       when 'gplus'
         url_format = /((http|https):\/\/)?plus.google.com(\/.*)?/i
+      when 'bandcamp'
+        url_format = /((http|https):\/\/)?[a-z0-9]+\.#{sn}\.[a-z]{2,5}(\/.*)?/i
       end
 
     end
@@ -28,72 +34,88 @@ class SocialNetworksSet < ActiveRecord::Base
     return SocialNetwork.new(name, facebook_url, icono)
   end
 
-  # Devuelve un objeto SocialNetwork con los datos de Facebook
+  # Devuelve un objeto SocialNetwork con los datos de Twitter
   def twitter
     name = 'Twitter'
     icono = 'twitter'
     return SocialNetwork.new(name, twitter_url, icono)
   end
 
-  # Devuelve un objeto SocialNetwork con los datos de Facebook
+  # Devuelve un objeto SocialNetwork con los datos de YouTube
   def youtube
     name = 'YouTube'
     icono = 'youtube'
     return SocialNetwork.new(name, youtube_url, icono)
   end
 
-  # Devuelve un objeto SocialNetwork con los datos de Facebook
+  # Devuelve un objeto SocialNetwork con los datos de Soundcloud
   def soundcloud
     name = 'Soundcloud'
     icono = 'soundcloud'
     return SocialNetwork.new(name, soundcloud_url, icono)
   end
 
-  # Devuelve un objeto SocialNetwork con los datos de Facebook
+  # Devuelve un objeto SocialNetwork con los datos de su Website
   def website
     name = 'Website'
     icono = 'globe'
     return SocialNetwork.new(name, website_url, icono)
   end
 
-  # Devuelve un objeto SocialNetwork con los datos de Facebook
+  # Devuelve un objeto SocialNetwork con los datos de Instagram
   def instagram
     name = 'Instagram'
     icono = 'instagram'
     return SocialNetwork.new(name, instagram_url, icono)
   end
 
-  # Devuelve un objeto SocialNetwork con los datos de Facebook
+  # Devuelve un objeto SocialNetwork con los datos de Google Plus
   def gplus
+    name = 'Google+'
     icono = 'google-plus'
-    return SocialNetwork.new('Google+', gplus_url, icono)
+    return SocialNetwork.new(name, gplus_url, icono)
+  end
+
+  # Devuelve un objeto SocialNetwork con los datos de Bandcamp
+  def bandcamp
+    name = 'Bandcamp'
+    icono = 'bandcamp'
+    return SocialNetwork.new(name, bandcamp_url, icono)
+  end
+
+  # Devuelve un objeto SocialNetwork con los datos de Vimeo
+  def vimeo
+    name = 'Vimeo'
+    icono = 'vimeo'
+    return SocialNetwork.new(name, vimeo_url, icono)
   end
 
   # Devuelve un array de objetos SocialNetwork con los datos de las redes sociales definidas
   def avaliables
-    social_networks_avaliable = ['facebook', 'twitter', 'youtube', 'soundcloud',
-      'website', 'instagram', 'gplus']
-
     # Comprobamos cada red social por si es valida y si así es lo incluimos
     # en el array final
     social_networks = []
-    social_networks_avaliable.each do |sn|
+    SOCIAL_NETWORKS.each do |sn|
 
-      case sn
+      social_network = case sn
       when 'facebook'
-        social_network = facebook
+        facebook
       when 'twitter'
-        social_network = twitter
+        twitter
       when 'youtube'
-        social_network = youtube
+        youtube
       when 'soundcloud'
-        social_network = soundcloud
+        soundcloud
       when 'website'
-        social_network = website
+        website
       when 'instagram'
-        social_network = instagram
+        instagram
       when 'gplus'
-        social_network = gplus
+        gplus
+      when 'vimeo'
+        vimeo
+      when 'bandcamp'
+        bandcamp
       end
 
       social_networks << social_network if social_network.valid?
@@ -107,7 +129,7 @@ class SocialNetworksSet < ActiveRecord::Base
     res = true
 
     # Comprueba cada campo para saver si está creado
-    ['facebook', 'twitter', 'youtube', 'soundcloud', 'website', 'instagram', 'gplus'].each do |sn|
+    SOCIAL_NETWORKS.each do |sn|
       res = res && ("#{sn}_url".to_sym).blank?
     end
 
