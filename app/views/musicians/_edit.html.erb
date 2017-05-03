@@ -1,0 +1,41 @@
+<div class="user-form-container">
+  <%= simple_form_for @musician, url: musician_path(@musician), html: { multipart: true, class: 'form-horizontal'},
+    wrapper: 'horizontal_form',
+    wrapper_mappings: {
+      check_boxes: :horizontal_radio_and_checkboxes,
+      radio_buttons: :horizontal_radio_and_checkboxes,
+      file: :horizontal_file_input,
+      boolean: :horizontal_boolean
+    } do |f| %>
+
+    <div class="form-header">
+      <div class="row">
+        <div class="col-sm-12">
+          <h3 class="col-sm-offset-1">Instrumentos</h3>
+        </div>
+      </div>
+    </div>
+
+    <%= render 'layouts/errors', object: @musician %>
+
+    <div id="knowledges">
+      <%= f.simple_fields_for :musician_knowledges do |mk| %>
+        <%= render "musicians/musician_knowledges_field", f: mk %>
+      <% end %>
+    </div>
+
+    <div class="form-actions">
+      <div class="row gap-left gap-bottom gap-top">
+        <div class="col-sm-3">
+          <%= f.submit 'Aceptar', class: 'btn btn-block btn-primary', data: {"disable-with": "Actualizando..." } %>
+        </div>
+        <div class="col-sm-3">
+          <%= link_to_add_association fa_icon('plus')+' Añadir instrumento', f, :musician_knowledges,
+            partial: 'musician_knowledges_field', class: 'btn btn-default btn-block',
+            'data-association-insertion-node': '#knowledges',
+            'data-association-insertion-method': 'append' %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -4,7 +4,7 @@ class UsersController < ApplicationController
 
   ######### CALLBACKS
   before_action :set_user, only: [:show]
-  before_action :set_current_user, only: [:edit, :update, :update_knowledges]
+  before_action :set_current_user, only: [:index, :edit, :update]
 
   ######### DECORATORS
   decorates_assigned :users, :user
@@ -44,27 +44,6 @@ class UsersController < ApplicationController
     end
   end
 
-  # Dirige a la página donde poder gestionar los conocimientos musicales
-  def edit_knowledges
-    @musician.musician_knowledges.build
-    set_edit_musician_knowledges
-  end
-
-  # Método que actualiza los conocimientos musicales
-  def update_knowledges
-    @musician = @user.profile
-
-    if params[:add_musician_knowledge]
-      @user.profile.musician_knowledges.build
-    else
-      if @musician.update(update_musician_params)
-        flash[:notice] = 'Tu cuenta ha sido actualizada correctamente.'
-      end
-    end
-
-    render :edit_knowledges
-  end
-
   private
     ## SETTERS
     # Define la variable @user con el usuario pasado por parámetros
@@ -82,20 +61,6 @@ class UsersController < ApplicationController
       # Definimos el nombre de la página
       @page = "Editar cuenta"
       @edit = params[:edit]
-    end
-
-    # Define variables para la pagina edit knowledge
-    def set_edit_musician_knowledges
-      if @user.musician?
-        # Definimos el nombre de la página
-        @page = "Editar cuenta"
-
-        set_musician
-
-        @musician.musician_knowledges.build
-      else
-        raise ActionController::RoutingError.new
-      end
     end
 
     ## STRONG PARAMETERS

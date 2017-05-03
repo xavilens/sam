@@ -1,0 +1,15 @@
+
+<div class="nested-fields">
+  <div class="musician-knowledge-fields">
+    <div class="row">
+      <div class="col-sm-12">
+        <%= f.association :instrument, label: 'Instrumento', wrapper: :inline_field_4 %>
+        <%= f.association :level, label: 'Nivel', wrapper: :inline_field_3, class: 'col-sm-offset-4' %>
+
+        <div class="musician-knowledge-remove">
+          <%= link_to_remove_association fa_icon('times')+' Eliminar', f %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

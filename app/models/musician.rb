@@ -17,7 +17,7 @@ class Musician < ActiveRecord::Base
   has_many :events, through: :bands, source: :events
 
   has_many :musician_knowledges, dependent: :destroy
-  accepts_nested_attributes_for :musician_knowledges, allow_destroy: true
+  accepts_nested_attributes_for :musician_knowledges, allow_destroy: true, reject_if: :all_blank
   has_many :instruments, through: :musician_knowledges
 
   belongs_to :musician_status

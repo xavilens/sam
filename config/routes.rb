@@ -22,9 +22,7 @@ Rails.application.routes.draw do
   ## USERS
   resources :users, concerns: :paginatable do
     ## USER EDIT INFO
-    get 'edit/knowledges', action: :edit_knowledges, as: :edit_knowledges
-    put :update_knowledges
-    patch :update_knowledges
+    get 'edit/knowledges', action: :edit, controller: :musicians, as: :edit_knowledges
 
     ## USER MEMBERSHIPS
     resource :membership, only:[], controller: :members do
@@ -53,7 +51,7 @@ Rails.application.routes.draw do
 
   ## BANDS, MUSICIANS, MESSAGES
   resources :bands, only: :index, concerns: :paginatable
-  resources :musicians, only: :index, concerns: :paginatable
+  resources :musicians, only: [:index, :update], concerns: :paginatable
   resources :messages, concerns: :paginatable
 
   ## MEMBERS
