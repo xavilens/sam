@@ -2,7 +2,7 @@
   margin-top: -10px
   margin-bottom: 10px
 
-////////////////// CENTER
+////////////////// SHOW
 .center-name
   font-size: 28px
   margin-bottom: 5px
@@ -24,8 +24,6 @@
 
 .user-bio
   word-wrap: break-word
-
-///////// LEFT
 
 // DATOS DEL USUARIO
 .leftbar-name
@@ -79,3 +77,22 @@
 
 .users-count
   margin-top: -10px
+
+////////////////// FORM
+.user-form-container
+  margin: 0 10px
+  background-color: lighten($gray-lighter, 2%)
+  border: 1px solid darken($gray-lighter, 10%)
+
+.edit-options
+  @include border-bottom-radius(0)
+  @include border-top-radius(0)
+  .btn-group-vertical
+    @include border-bottom-radius(0)
+    @include border-top-radius(0)
+    .btn:last-child:not(:first-child)
+      @include border-bottom-radius(0)
+      @include border-top-radius(0)
+    .btn:first-child:not(:last-child)
+      @include border-bottom-radius(0)
+      @include border-top-radius(0)

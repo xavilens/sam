@@ -1,32 +1,72 @@
 
 <% page_title @page %>
 
-<%= render 'layouts/page_header' %>
-
-<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-
-  <div class="form-inputs">
-    <%= f.input :email, required: true, autofocus: true %>
-
-    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-      <p>Esperando confirmación de: <%= resource.unconfirmed_email %></p>
-    <% end %>
-
-    <%= f.input :password, autocomplete: "off", hint: "Deja vacío el campo si no quieres cambiar la contraseña",
-      required: false %>
-    <%= f.input :password_confirmation, required: false, label: 'Confirma tu contraseña' %>
-    <%= f.input :current_password, hint: "Necesitamos tu contraseña actual para realizar cambios", required: true,
-      label: 'Contraseña actual' %>
+<div class="row">
+  <div class="col-sm-3">
+    <%= render 'users/edit_left' %>
   </div>
+  <div class="col-sm-9">
+    <div class="user-form-container">
+      <%= simple_form_for resource, as: resource_name, url: registration_path(resource_name),
+        html: { method: :put, class: 'form-horizontal'},
+        wrapper: 'horizontal_form',
+        wrapper_mappings: {
+          check_boxes: :horizontal_radio_and_checkboxes,
+          radio_buttons: :horizontal_radio_and_checkboxes,
+          file: :horizontal_file_input,
+          boolean: :horizontal_boolean
+        } do |f| %>
 
-  <div class="form-actions">
-    <%= f.button :submit, "Actualizar", class: 'btn btn-md btn-primary',
-      data: {"disable-with": "#{data_disable_submit_message}" } %>
+        <div class="form-inputs">
+          <div class="col-sm-12">
+            <div class="form-header row">
+              <h3 class="col-sm-offset-1"><%= @page %></h3>
+            </div>
+          </div>
+
+          <%= f.input :email, required: true, autofocus: true, wrapper: :field_6_label_3 %>
+
+          <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+            <p>Esperando confirmación de: <%= resource.unconfirmed_email %></p>
+          <% end %>
+
+          <%= f.input :password, autocomplete: "off", hint: "Deja vacío el campo si no quieres cambiar la contraseña",
+            required: false, wrapper: :field_6_label_3 %>
+          <%= f.input :password_confirmation, required: false,
+            label: 'Confirma tu contraseña', wrapper: :field_6_label_3 %>
+          <%= f.input :current_password, hint: "Necesitamos tu contraseña actual para realizar cambios", required: true,
+            label: 'Contraseña actual', wrapper: :field_6_label_3 %>
+        </div>
+
+        <div class="form-actions gap-bottom">
+          <div class="row">
+            <div class="col-sm-2 col-sm-offset-1">
+              <%= f.button :submit, "Actualizar", class: 'btn btn-block btn-primary',
+                data: {"disable-with": "#{data_disable_submit_message}" } %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <div class="col-sm-12 gap-top">
+        <div class="form-header row">
+          <h3 class="col-sm-offset-1">Cancelar mi cuenta</h3>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="cancel-registration gap-left gap-bottom">
+            <p class="gap-left">
+              <strong>¿Descontento? <%= fa_icon("frown-o", class: 'fa-lg') %></strong>
+              <span class="text-muted">Si deseas puedes eliminar tu cuenta ahora, pero es una operación irreversible.</span>
+            </p>
+            <%= link_to fa_icon('times', class: 'fa-lg')+" Sí, deseo cancelar mi cuenta",
+              registration_path(resource_name), class: 'btn btn-default col-sm-offset-1',
+              data: { confirm: "¿Estás seguro?", "disable-with": "Eliminando..." }, method: :delete %>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-<% end %>
-
-<h3>Cancelar mi cuenta</h3>
-
-<p>¿Descontento? <%= link_to "Cancelar mi cuenta", registration_path(resource_name), data: { confirm: "¿Estás seguro?" }, method: :delete %></p>
-
-<%= link_to "Atrás", :back %>
+</div>

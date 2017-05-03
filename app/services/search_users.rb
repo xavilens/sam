@@ -1,4 +1,5 @@
 # Servicio encargado de buscar usuarios
+# TODO: BORRAR
 class SearchUsers
   def initialize (params)
     @params = params

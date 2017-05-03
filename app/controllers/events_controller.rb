@@ -5,7 +5,7 @@ class EventsController < ApplicationController
   ######### CALLBACKS
   before_action :is_user_calendar?, only: [:index]
   before_action :set_user, only: [:show, :index]
-  before_action :set_current_user, only: [:new, :create, :edit, :update, :destroy_view, :destroy]
+  before_action :set_current_user, except: [:show, :index]
 
   before_action :set_event, only: [:show, :edit, :update, :destroy]
   before_action :set_events, only: [:index, :show]
@@ -17,42 +17,23 @@ class EventsController < ApplicationController
   # TODO: Servicios para calendario general y de usuarios
   # TODO: Calendario general será cuadrícula y al pulsar una cuadrícula aparecerá un modal con los eventos organizados ese día
   def index
-    # Definimos fechas
     if @is_user_calendar
-      @start_date = @events.first.date
-      @finish_date = @events.last.date
+      event_calendar = CreateUserEventCalendar.new(@user, event_search_params, params[:page])
     else
-      if params[:date].present? || event_search_params["start_date(2i)"].present?
-        date = params[:date].present? ? params[:date] : "01/#{event_search_params['start_date(2i)'].to_i}/#{event_search_params['start_date(1i)'].to_i}"
-
-        @start_date = Date.parse(date)
-        @start_date = @start_date.beginning_of_month
-      else
-        today = Date.today
-        @start_date = Date.new today.year, today.month
-      end
-
-      @finish_date = @start_date.end_of_month
+      event_calendar = CreateEventCalendar.new(event_search_params, params[:date], params[:page])
     end
 
-    # Creamos el buscador
-    @search = EventSearchForm.new(event_search_params)
-    @search.start_date = @start_date
-    @search.finish_date = @finish_date
+    @start_date = event_calendar.start_date
+    @finish_date = event_calendar.finish_date
+    @calendar = event_calendar.calendar
+    @search = event_calendar.search
 
-    # Creamos calendario
-    @calendar = EventCalendar.new @start_date, @finish_date, @search, (@is_user_calendar ? @user : nil)
-
-    # Creamos la paginación
-    @calendar.events = Kaminari.paginate_array(@calendar.events).page(params[:page]).per(1)
-
-    # Redefinimos las fechas según calendario y eventos paginados
-    if (@is_user_calendar || !(first_page || last_page)) && !uniq_page
+    if (@is_user_calendar || !first_page && !last_page) && !uniq_page
       @start_date = @calendar.first_event_date
       @finish_date = @calendar.last_event_date
-    elsif first_page && !uniq_page
+    elsif first_page
       @finish_date = @calendar.last_event_date
-    elsif last_page && !uniq_page
+    elsif last_page
       @start_date = @calendar.first_event_date
     end
 

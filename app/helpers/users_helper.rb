@@ -10,12 +10,17 @@ module UsersHelper
   end
 
   # Devuelve la url necesaria para tratar el formulario (edit/new registration)
-  def url_form_action
+  def profile_form_url
     if (page? 'users', 'edit') || (page? 'users', 'update')
       user_path(@user)
     else
       registration_path(@user)
     end
+  end
+
+  # Devuelve el título del botón submit (edit/new registration)
+  def profile_form_submit
+    (active_page 'users') ? 'Actualizar' : 'Registrarse'
   end
 
   # Devuelve el link para enviar un mensaje al usuario

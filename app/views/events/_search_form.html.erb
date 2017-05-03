@@ -1,7 +1,7 @@
 <div class="well search-form event-search-form">
   <h4 class="well-header">Buscador</h4>
 
-  <%= simple_form_for @search, {url: events_path, method: 'get'} do |f| %>
+  <%= simple_form_for @search, {url: events_search_path, method: 'get'} do |f| %>
     <%= f.input :name, label: 'Nombre', required: false, placeholder: 'Filtrar por nombre...'  %>
 
     <% if @is_user_calendar %>
@@ -28,13 +28,18 @@
       value_method: :first, label_method: :last, label: 'Buscar por', required: false, as: :radio_buttons %>
 
     <%= f.input :city, collection: Address.events.cities, label_method: :city,
-      value_method: :city, label: 'Localidad', include_blank: true, required: false, as: :select %>
+      value_method: :city, label: 'Localidad', include_blank: true, required: false, as: :select,
+      wrapper_class: (@search.location_type != "city" ? 'hidden' : nil)  %>
 
     <%= f.input :province, collection: Address.events.provinces, label_method: :province,
-      value_method: :province, label: 'Provincia', include_blank: true, required: false, as: :select %>
+      value_method: :province, label: 'Provincia', include_blank: true, required: false, as: :select,
+      wrapper_class: (@search.location_type != "province" ? 'hidden' : nil)  %>
 
     <%= f.input :region, collection: Address.events.regions, label_method: :region,
-      value_method: :region, label: 'Comunidad autónoma', include_blank: true, required: false, as: :select %>
+      value_method: :region, label: 'Comunidad autónoma', include_blank: true, required: false, as: :select,
+      wrapper_class: (@search.location_type != "region" ? 'hidden' : nil)  %>
+
+    <div class="form-group"></div>
 
     <div class="row">
       <div class="col-sm-12">

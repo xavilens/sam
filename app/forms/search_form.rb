@@ -11,4 +11,8 @@ class SearchForm
     public_send("#{field}=",value)
   end
 
+  # def field?(field)
+  #   field.to_sym.present?
+  # end
+
 end

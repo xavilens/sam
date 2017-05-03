@@ -1,1 +1,1 @@
-# TODO: Pasar de conversation#index aquí
+# TODO: Borrar

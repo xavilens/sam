@@ -1,8 +1,16 @@
+<div class="row">
+  <div class="edit-options">
+    <div class="col-sm-12 btn-group-vertical" role="group">
+      <div class="btn btn-block brn-default btn-group-header" type= "button">Opciones a Editar</div>
+      <%= link_to "Editar perfil", edit_user_path(@user),
+        class: "btn btn-block btn-default #{active_page('users','edit')}", type: 'button' %>
+      <%= link_to "Editar datos de acceso", edit_user_registration_path,
+        class: "btn btn-block btn-default #{active_page('users/registrations','edit')}", type: 'button' %>
 
-<div class="edit-options btn-group-vertical" role="group">
-  <%= link_to "Editar perfil", edit_user_path(@user), class: "btn btn-primary #{active_page('users','edit')}", type: 'button' %>
-
-  <% if @user.musician? %>
-  <%= link_to "Editar instrumentos", user_edit_knowledges_path(@user), class: "btn btn-primary #{active_page('users','edit_knowledges')}", type: 'button' %>
-  <% end %>
+      <% if @user.musician? %>
+      <%= link_to "Editar instrumentos", user_edit_knowledges_path(@user),
+        class: "btn btn-block btn-default #{active_page('users','edit_knowledges')}", type: 'button' %>
+      <% end %>
+    </div>
+  </div>
 </div>

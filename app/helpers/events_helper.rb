@@ -81,4 +81,9 @@ module EventsHelper
   def link_to_new_event date
     link_to fa_icon('plus')+" Crear evento", new_event_path(date: date.to_s), class: 'btn btn-sm btn-primary'
   end
+
+  # Devuelve la ruta para la búsqueda de eventos
+  def events_search_path
+    @is_user_calendar ? user_events_path(user_id: @user.id) : events_path
+  end
 end

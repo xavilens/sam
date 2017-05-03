@@ -1,6 +1,6 @@
 namespace :events do
   desc "Cierra aquellos eventos activos para los que se ha pasado la fecha"
-  task close_passed_events: :environment do
+  task close_expired_events: :environment do
     opened = EventStatus.find_by_name('Abierto')
     closed = EventStatus.find_by_name('Cerrado')
     yesterday = Date.yesterday
