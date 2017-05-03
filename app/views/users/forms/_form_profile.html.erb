@@ -22,32 +22,32 @@
       <% unless active_page 'users' %>
       <!-- Email y Password -->
       <%= f.input :email, required: true, autofocus: true, placeholder: 'Introduce tu email',
-        wrapper: :field_4 %>
-      <%= f.input :password, label: 'Contraseña', required: true, wrapper: :field_3,
+        wrapper: :field_4_label_3 %>
+      <%= f.input :password, label: 'Contraseña', required: true, wrapper: :field_3_label_3,
         placeholder: ("#{@minimum_password_length} caracteres mínimos" if @minimum_password_length), hint: false %>
       <%= f.input :password_confirmation, label: 'Confirma tu contraseña', required: true,
-        wrapper: :field_3 %>
+        wrapper: :field_3_label_3 %>
       <% end %>
 
       <!-- Nombre de usuario -->
-      <%= f.input :name, label: 'Nombre del artista', wrapper: :field_4 %>
+      <%= f.input :name, label: 'Nombre del artista', wrapper: :field_4_label_3 %>
 
       <% if active_page 'users' %>
       <!-- Avatar -->
       <div class="form-group optional string">
-        <%= f.label 'Imagen de perfil', class: 'col-sm-2 control-label' %>
+        <%= f.label 'Imagen de perfil', class: 'col-sm-3 control-label' %>
         <%= image_tag(@user.avatar_url(:index_2), class: 'col-sm-2 box-shadow') if @user.avatar? %>
       </div>
       <% end %>
 
       <!-- Nuevo Avatar -->
       <% avatar_label = active_page 'users' ? 'Cambiar imagen de perfil' : 'Imágen de perfil' %>
-      <%= f.input :avatar, label: avatar_label, as: :file %>
+      <%= f.input :avatar, label: avatar_label, as: :file, label_html: {class: 'col-sm-offset-1'} %>
 
       <% unless active_page 'users' %>
         <!-- Tipo de perfil -->
         <div class="form-group required profileable_type">
-          <%= f.label :profileable_type, 'Tipo de usuario', required: true, class: 'col-sm-2 radio required control-label' %>
+          <%= f.label :profileable_type, 'Tipo de usuario', required: true, class: 'col-sm-3 radio required control-label' %>
 
           <div class="btn-group col-sm-2" data-toggle="buttons">
             <label for="user_profileable_type_musician" class="btn btn-default active">
@@ -73,15 +73,15 @@
       </div>
 
         <%= f.simple_fields_for :social_networks_set do |sn| %>
-          <%= sn.input :website_url, label: (fa_icon 'globe')+" Website", as: :url, wrapper: :field_3 %>
-          <%= sn.input :facebook_url, label: (fa_icon 'facebook')+" Facebook", as: :url, wrapper: :field_3 %>
-          <%= sn.input :youtube_url, label: (fa_icon 'youtube')+" Youtube", as: :url, wrapper: :field_3 %>
-          <%= sn.input :soundcloud_url, label: (fa_icon 'soundcloud')+" Soundcloud", as: :url, wrapper: :field_3 %>
-          <%= sn.input :twitter_url, label: (fa_icon 'twitter')+" Twitter", as: :url, wrapper: :field_3 %>
-          <%= sn.input :instagram_url, label: (fa_icon 'instagram')+" Instagram", as: :url, wrapper: :field_3 %>
-          <%= sn.input :gplus_url, label: (fa_icon 'google-plus')+" Google Plus", as: :url, pattern: :url, wrapper: :field_3 %>
-          <%= sn.input :bandcamp_url, label: (fa_icon 'bandcamp')+" Bandcamp", as: :url, pattern: :url, wrapper: :field_3 %>
-          <%= sn.input :vimeo_url, label: (fa_icon 'vimeo')+" Vimeo", as: :url, pattern: :url, wrapper: :field_3 %>
+          <%= sn.input :website_url, label: (fa_icon 'globe')+" Website", as: :url, wrapper: :field_3_label_3 %>
+          <%= sn.input :facebook_url, label: (fa_icon 'facebook')+" Facebook", as: :url, wrapper: :field_3_label_3 %>
+          <%= sn.input :youtube_url, label: (fa_icon 'youtube')+" Youtube", as: :url, wrapper: :field_3_label_3 %>
+          <%= sn.input :soundcloud_url, label: (fa_icon 'soundcloud')+" Soundcloud", as: :url, wrapper: :field_3_label_3 %>
+          <%= sn.input :twitter_url, label: (fa_icon 'twitter')+" Twitter", as: :url, wrapper: :field_3_label_3 %>
+          <%= sn.input :instagram_url, label: (fa_icon 'instagram')+" Instagram", as: :url, wrapper: :field_3_label_3 %>
+          <%= sn.input :gplus_url, label: (fa_icon 'google-plus')+" Google Plus", as: :url, pattern: :url, wrapper: :field_3_label_3 %>
+          <%= sn.input :bandcamp_url, label: (fa_icon 'bandcamp')+" Bandcamp", as: :url, pattern: :url, wrapper: :field_3_label_3 %>
+          <%= sn.input :vimeo_url, label: (fa_icon 'vimeo')+" Vimeo", as: :url, pattern: :url, wrapper: :field_3_label_3 %>
         <% end %>
       <!-- END REDES SOCIALES -->
       <% end %>
@@ -96,12 +96,12 @@
       <div class="row">
         <%= f.input :autocomplete, label: 'Localidad', name: 'autocomplete',
           placeholder: 'Busca aquí tu localidad y los campos se rellenarán automáticamente...',
-          as: :fake, wrapper: :field_7 %>
+          as: :fake, wrapper: :field_7_label_3 %>
         <div class="row">
           <%= f.simple_fields_for :address do |ad| %>
           <div class="address-inputs col-sm-offset-2">
             <div class="row">
-              <div class="col-sm-12">
+              <div class="col-sm-11 col-sm-offset-1">
                 <%= ad.input :gaddress, as: :hidden %>
                 <%= ad.input :city, label: 'Ciudad', readonly: true, required: true,
                   wrapper: :inline_field_4 %>
@@ -110,7 +110,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-sm-12">
+              <div class="col-sm-11 col-sm-offset-1">
             <%= ad.input :province, label: 'Provincia', readonly: true, required: true,
               wrapper: :inline_field_3 %>
               <%= ad.input :region, label: 'Comunidad autónoma', readonly: true, required: true,
@@ -118,7 +118,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-sm-12">
+              <div class="col-sm-11 col-sm-offset-1">
               <%= ad.input :country, label: 'País', readonly: true, required: true,
                 wrapper: :inline_field_2 %>
               </div>
@@ -142,20 +142,20 @@
         <% if @user.musician? %>
           <%= f.simple_fields_for :profileable do |p| %>
             <%= p.input :musician_status_id, collection: MusicianStatus.all, as: :select,
-              label: 'Estado del músico', include_blank: false, wrapper: :field_3 %>
+              label: 'Estado del músico', include_blank: false, wrapper: :field_3_label_3 %>
           <% end %>
         <!-- PERFIL GRUPO -->
         <% elsif @user.band? %>
           <%= f.simple_fields_for :profileable do |p| %>
             <%= p.input :genre_1_id, collection: Genre.all, label_method: :name, group_value: :id,
-              as: :select, label: 'Género 1', wrapper: :field_3 %>
+              as: :select, label: 'Género 1', wrapper: :field_3_label_3 %>
             <%= p.input :genre_2_id, collection: Genre.all, label_method: :name, group_value: :id,
-              as: :select, label: 'Género 2', wrapper: :field_3 %>
+              as: :select, label: 'Género 2', wrapper: :field_3_label_3 %>
             <%= p.input :genre_3_id, collection: Genre.all, label_method: :name, group_value: :id,
-              as: :select, label: 'Género 3', wrapper: :field_3 %>
+              as: :select, label: 'Género 3', wrapper: :field_3_label_3 %>
 
             <%= p.input :band_status_id, collection: BandStatus.all, as: :select,
-              label: 'Estado del grupo', include_blank: false, wrapper: :field_3 %>
+              label: 'Estado del grupo', include_blank: false, wrapper: :field_3_label_3 %>
           <% end %>
         <% end %>
 
@@ -166,27 +166,25 @@
           <small id="charNum" class="char-left"><%= 2500 - @user.bio_size %> caracteres restantes</small>
         </div>
       </div>
-      <%= f.input :bio, label: 'Biografía', maxlength: 2500, input_html:{rows: 5, onkeyup: 'countChar(this)'},
-        wrapper: :field_9 %>
+      <%= f.input :bio, label: 'Biografía', maxlength: 2500, input_html:{rows: 7, onkeyup: 'countChar(this)'},
+        wrapper: :field_8_label_3 %>
       <!-- END INFORMACIÓN DEL PERFIL -->
       <% end %>
     </div>
 
+    <div class="form-group"></div>
+
     <!-- BOTONES -->
     <div class="form-actions gap-bottom gap-left">
-      <!-- <div class="row gap-bottom"> -->
-        <!-- <div class="col-sm-2 gap-left"> -->
-          <%= f.button :submit, profile_form_submit, class: 'btn btn-md btn-primary',
+      <div class="row">
+        <div class="col-sm-3">
+          <%= f.button :submit, profile_form_submit, class: 'btn btn-block btn-primary',
             data: {"disable-with": "#{data_disable_submit_message}" } %>
-            <!-- </div> -->
-        <!-- <div class="col-sm-2"> -->
-          <% if active_page 'users' %>
-            <%= link_to "Editar datos de registro", edit_user_registration_path, role: 'button', class: 'btn btn-link' %>
-          <% else %>
-            <%= render 'shared/links' %>
-          <% end %>
-        <!-- </div> -->
-      <!-- </div> -->
+        </div>
+        <% if active_page 'users/registration' %>
+          <%= render 'shared/links' %>
+        <% end %>
+      </div>
     </div>
     <!-- END BOTONES -->
 

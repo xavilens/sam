@@ -58,11 +58,14 @@
         <div class="col-sm-12">
           <div class="cancel-registration gap-left gap-bottom">
             <p class="gap-left">
-              <strong>¿Descontento? <%= fa_icon("frown-o", class: 'fa-lg') %></strong>
-              <span class="text-muted">Si deseas puedes eliminar tu cuenta ahora, pero es una operación irreversible.</span>
+              <strong>¿Descontento?</strong>
+              <span class="text-muted">
+                Si deseas puedes eliminar tu cuenta ahora, pero te echaremos de menos <%= fa_icon("frown-o", class: 'fa-lg') %>
+              </span>
             </p>
+            <div class="form-group"></div>
             <%= link_to fa_icon('times', class: 'fa-lg')+" Sí, deseo cancelar mi cuenta",
-              registration_path(resource_name), class: 'btn btn-default col-sm-offset-1',
+              registration_path(resource_name), class: 'btn btn-default gap-bottom gap-left',
               data: { confirm: "¿Estás seguro?", "disable-with": "Eliminando..." }, method: :delete %>
           </div>
         </div>
