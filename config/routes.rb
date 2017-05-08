@@ -52,7 +52,15 @@ Rails.application.routes.draw do
   ## BANDS, MUSICIANS, MESSAGES
   resources :bands, only: :index, concerns: :paginatable
   resources :musicians, only: [:index, :update], concerns: :paginatable
-  resources :messages, concerns: :paginatable
+  resources :messages, concerns: :paginatable do
+    collection do
+      get "inbox(/page/:page)", action: :inbox, as: :inbox
+      get "outbox(/page/:page)", action: :outbox, as: :outbox
+      get "memberships(/page/:page)", action: :memberships, as: :memberships
+      get "participants(/page/:page)", action: :participants, as: :participants
+      get "search(/page/:page)", action: :search, as: :search
+    end
+  end
 
   ## MEMBERS
   resources :members, only: [:create, :edit, :update, :destroy] do

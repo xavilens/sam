@@ -14,7 +14,6 @@ class EventsController < ApplicationController
   decorates_assigned :events, :event, :user
 
   ######### ACTIONS
-  # TODO: Servicios para calendario general y de usuarios
   # TODO: Calendario general será cuadrícula y al pulsar una cuadrícula aparecerá un modal con los eventos organizados ese día
   def index
     if @is_user_calendar

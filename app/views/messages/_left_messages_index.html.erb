@@ -2,27 +2,28 @@
   <div class="messages-options">
     <div class="col-sm-12 btn-group-vertical" role="group">
       <div class="btn btn-block brn-default btn-group-header" type= "button">Bandejas de mensajes</div>
-      <%= link_to messages_path(show: 'inbox'),
-        class: "btn btn-block btn-default #{active_conversation_box('inbox')}", type: 'button' do %>
+      <%= link_to inbox_messages_path,
+        class: "btn btn-block btn-default #{active_conversation_box('inbox')} #{active_conversation_box('index')}",
+        type: 'button' do %>
         Recibidos <%= inbox_unread_count %>
       <% end %>
 
-      <%= link_to messages_path(show: 'outbox'),
+      <%= link_to outbox_messages_path,
         class: "btn btn-block btn-default #{active_conversation_box('outbox')}", type: 'button' do %>
         Enviados <%= outbox_unread_count %>
       <% end %>
 
-      <%= link_to messages_path(show: 'membership'),
-        class: "btn btn-block btn-default #{active_conversation_box('membership')}", type: 'button' do %>
+      <%= link_to memberships_messages_path,
+        class: "btn btn-block btn-default #{active_conversation_box('memberships')}", type: 'button' do %>
         Miembros <%= membership_unread_count %>
       <% end %>
 
-      <%= link_to messages_path(show: 'participants'),
+      <%= link_to participants_messages_path,
         class: "btn btn-block btn-default #{active_conversation_box('participants')}", type: 'button' do %>
         Eventos <%= participants_unread_count %>
       <% end %>
 
-      <%= link_to messages_path(show: 'search'),
+      <%= link_to search_messages_path,
         class: "btn btn-block btn-default #{active_conversation_box('search')}", type: 'button' do %>
         Encontrados
       <% end %>

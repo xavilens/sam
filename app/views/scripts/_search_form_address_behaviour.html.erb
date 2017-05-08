@@ -1,0 +1,27 @@
+<script type="text/javascript">
+  $("input[name='<%= model %>[location_type]']").change(function(){
+    location_type = $(this).val();
+
+    switch (location_type) {
+      case "city":
+        $("#<%= model %>_city").val("");
+        $(".<%= model %>_city").removeClass("hidden");
+        $(".<%= model %>_province").addClass("hidden");
+        $(".<%= model %>_region").addClass("hidden");
+        break;
+      case "province":
+        $("#<%= model %>_province").val("");
+        $(".<%= model %>_province").removeClass("hidden");
+        $(".<%= model %>_city").addClass("hidden");
+        $(".<%= model %>_region").addClass("hidden");
+        break;
+      case "region":
+        $("#<%= model %>_region").val("");
+        $(".<%= model %>_region").removeClass("hidden");
+        $(".<%= model %>_city").addClass("hidden");
+        $(".<%= model %>_province").addClass("hidden");
+        break;
+
+    }
+  });
+</script>

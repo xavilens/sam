@@ -1,10 +1,7 @@
 class MembersController < ApplicationController
   ######### FILTERS
   before_filter :authenticate_user!
-
-  ######### CALLBACKS
-  # TODO: crear set_users?
-
+  
   ######### DECORATORS
   decorates_assigned :member, :member_user, :user
 

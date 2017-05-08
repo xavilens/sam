@@ -37,9 +37,14 @@ class Conversation < ActiveRecord::Base
   }
 
   # Devuelve aquellos mensajes que no han sido enviado por el usuario
-  scope :search, -> (user_id, text) {
+  scope :global_search, -> (user_id, text) {
     my_conversations(user_id).joins(:messages).where("body like :text or subject like :text",
       text: "%#{text}%").distinct(:id)
+  }
+
+  # Devuelve aquellos mensajes que no han sido enviado por el usuario
+  scope :search, -> (text) {
+    joins(:messages).where("body like :text or subject like :text", text: "%#{text}%").distinct(:id)
   }
 
   # Devuelve aquellas conversaciones entre dos usuarios

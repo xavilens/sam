@@ -10,17 +10,17 @@
 <div class="col-md-9">
 
   <!-- Buscador de mensajes -->
-  <%= render 'search_messages' %>
+  <%= render 'messages/search_messages' %>
   <!-- END Buscador de mensajes -->
 
   <!-- Orden mensajes -->
   <div class="conversations-order pull-right">
     <small>
       Ordernar por:
-      <%= link_to "Nuevos", messages_path(show: @show, order: 'desc') %>,
-      <%= link_to 'Antiguos', messages_path(show: @show, order: 'asc') %>,
-      <%= link_to 'Asunto (asc)', messages_path(show: @show, order: 'subject_asc') %>,
-      <%= link_to 'Asunto (des)', messages_path(show: @show, order: 'subject_desc') %>
+      <%= link_to "Nuevos", messages_box_path(show: @show, order: 'desc') %>,
+      <%= link_to 'Antiguos', messages_box_path(show: @show, order: 'asc') %>,
+      <%= link_to 'Asunto (asc)', messages_box_path(show: @show, order: 'subject_asc') %>,
+      <%= link_to 'Asunto (des)', messages_box_path(show: @show, order: 'subject_desc') %>
     </small>
   </div>
   <!-- END Orden mensajes -->

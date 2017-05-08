@@ -1,7 +1,6 @@
 class MessagesController < ApplicationController
   ######### FILTERS
   before_filter :authenticate_user!
-  before_filter :redirect_cancel, only: [:create]
 
   ######### CALLBACKS
   before_action :set_current_user
@@ -25,7 +24,7 @@ class MessagesController < ApplicationController
     # Si hay busqueda cargamos las conversaciones de la búsqueda, si no cargamos dependiendo la bandeja
     if @search
       # @conversations = Conversation.my_conversations(current_user.id).joins(:messages).where("messages.body like :text", text: "%#{@search}%").distinct(:id)
-      @conversations = Conversation.search(current_user.id, @search)
+      @conversations = Conversation.inbox(current_user.id).search(@search)
       @page = 'Mensajes encontrados'
     else
       # Dependiendo de la bandeja de correo pasada por parámetros mostramos unos correos u otros
@@ -54,6 +53,87 @@ class MessagesController < ApplicationController
     # @conversations = @conversations.page(params[:page]).per(15).decorate if @conversations
 
     @page ||= 'Mensajes'
+  end
+
+  def inbox
+    # Obtenemos la bandeja de correo
+    @show = index_params[:show]
+    @order = index_params[:order] || 'desc'
+
+    @search = params[:messages].present? ? search_params[:body] : ""
+
+    @conversations = Conversation.inbox(current_user.id).search(@search)
+    @page = 'Mensajes recibidos'
+
+    @conversations = @conversations.send(@order) unless @conversations.blank?
+    @conversations = @conversations.page(params[:page]).per(15)
+
+    render :index
+  end
+
+  def outbox
+    # Obtenemos la bandeja de correo
+    @show = index_params[:show]
+    @order = index_params[:order] || 'desc'
+
+    @search = params[:messages].present? ? search_params[:body] : ""
+
+    @conversations = Conversation.outbox(current_user.id).search(@search)
+    @page = 'Mensajes enviados'
+
+    @conversations = @conversations.send(@order) unless @conversations.blank?
+    @conversations = @conversations.page(params[:page]).per(15)
+
+    render :index
+  end
+
+  def memberships
+    # Obtenemos la bandeja de correo
+    @show = index_params[:show]
+    @order = index_params[:order] || 'desc'
+
+    @search = params[:messages].present? ? search_params[:body] : ""
+
+    @conversations = Conversation.membership(current_user.id).search(@search)
+    @page = 'Mensajes de miembros'
+
+    @conversations = @conversations.send(@order) unless @conversations.blank?
+    @conversations = @conversations.page(params[:page]).per(15)
+
+    render :index
+  end
+
+  def participants
+    # Obtenemos la bandeja de correo
+    @show = index_params[:show]
+    @order = index_params[:order] || 'desc'
+
+    @search = params[:messages].present? ? search_params[:body] : ""
+
+    @conversations = Conversation.participants(current_user.id).search(@search)
+    @page = 'Mensajes de eventos'
+
+    @conversations = @conversations.send(@order) unless @conversations.blank?
+    @conversations = @conversations.page(params[:page]).per(15)
+
+    render :index
+  end
+
+  def search
+    # Obtenemos la bandeja de correo
+    @show = index_params[:show]
+    @order = index_params[:order] || 'desc'
+
+    @search = params[:messages].present? ? search_params[:body] : ""
+
+    @conversations = Conversation.global_search(current_user.id, @search).search(current_user.id, @search)
+    @page = 'Mensajes encontrados'
+
+    @conversations = @conversations.send(@order) if (@order and @conversations)
+
+    @conversations = @conversations.page(params[:page]).per(15)
+
+    render :index
   end
 
   def new
@@ -88,10 +168,9 @@ class MessagesController < ApplicationController
 
     # Cargamos los mensajes
     @messages = @conversation.messages.desc.page(params[:page]).per(10)
-    # @messages = @conversation.messages.desc.decorate
 
     # Marcamos la conversación como leída
-    @conversation.read (@user.id)
+    @conversation.read @user.id
 
     # Damos nombre a la página
     @page = "Mensajes"
@@ -150,13 +229,6 @@ class MessagesController < ApplicationController
     # Define el nombre de la página New
     def set_new_page
       @page = 'Enviar mensaje'
-    end
-
-    ## ACTIONS
-    # Realiza la redirección al presionar el botón de cancelar
-    def redirect_cancel
-      id = create_params[:user_2_id]
-      redirect_to user_path(id) if params[:cancel]
     end
 
     ## STRONGS PARAMETERS

@@ -100,8 +100,24 @@ module ConversationsHelper
 
   # Devuelve la clase active cuando se encuentra en alguna bandeja de conversaciones
   def active_conversation_box box
-    if (params[:messages] && box == 'search') || params[:show] == box || (box == 'inbox' && params[:show] == box && params[:messages].blank?)
-      'active'
+    params[:action] == box ? "active" : ""
+  end
+
+  # Devuelve la url a la que se debe dirigir tanto la búsqueda como el cambio del orden de los
+  def messages_box_path order_params = nil
+    case params[:action]
+    when "index"
+      messages_path order_params
+    when "inbox"
+      inbox_messages_path order_params
+    when "outbox"
+      outbox_messages_path order_params
+    when "memberships"
+      memberships_messages_path order_params
+    when "participants"
+      participants_messages_path order_params
+    when "search"
+      search_messages_path order_params
     end
   end
 end

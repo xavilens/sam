@@ -73,7 +73,6 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :social_networks_set, allow_destroy: true
 
   # CONVERSATIONS RELATED
-  # TODO: Outbox, inbox...
   has_many :conversations, foreign_key: :user_1_id
   has_many :messages, through: :conversations
   has_many :reverse_conversations, foreign_key: :user_2_id, class_name: 'Conversation'
