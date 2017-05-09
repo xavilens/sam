@@ -7,133 +7,45 @@ class MessagesController < ApplicationController
   before_action :set_users_new, only: [:new]
   before_action :set_users_create, only: [:create]
 
+  before_action :set_boxes_variables, only: [:index, :inbox, :outbox, :memberships, :participants, :search]
+
   ######### DECORATORS
   decorates_assigned :conversations, :conversation, :messages, :user, :sender, :recipent
 
   ######### ACTIONS
   def index
-    # Obtenemos la bandeja de correo
-    @show = index_params[:show]
-    @order = index_params[:order] || 'desc'
-
-    if params[:messages]
-      @search = search_params[:body]
-      @show = 'search'
-    end
-
-    # Si hay busqueda cargamos las conversaciones de la búsqueda, si no cargamos dependiendo la bandeja
-    if @search
-      # @conversations = Conversation.my_conversations(current_user.id).joins(:messages).where("messages.body like :text", text: "%#{@search}%").distinct(:id)
-      @conversations = Conversation.inbox(current_user.id).search(@search)
-      @page = 'Mensajes encontrados'
-    else
-      # Dependiendo de la bandeja de correo pasada por parámetros mostramos unos correos u otros
-      if @show.blank? || @show == 'inbox'
-        @conversations = Conversation.inbox(current_user.id)
-        @page = 'Mensajes recibidos'
-      elsif @show == 'outbox'
-        @conversations = Conversation.outbox(current_user.id)
-        @page = 'Mensajes enviados'
-      elsif @show == 'membership'
-        @conversations = Conversation.membership(current_user.id)
-        @page = 'Mensajes de miembros'
-      elsif @show == 'participants'
-        @conversations = Conversation.participants(current_user.id)
-        @page = 'Mensajes de eventos'
-      elsif @show == 'search'
-        @conversations = Conversation.none
-        @page = 'Mensajes encontrados'
-      end
-    end
-
-    @conversations = @conversations.send(@order) if (@order and @conversations)
-
-    @conversations = @conversations.page(params[:page]).per(15)
-    # @conversations = @conversations.page(params[:page]).per(15) if @conversations
-    # @conversations = @conversations.page(params[:page]).per(15).decorate if @conversations
-
+    @conversations = Conversation.inbox(current_user.id).search(@search)
     @page ||= 'Mensajes'
+    set_conversations
   end
 
   def inbox
-    # Obtenemos la bandeja de correo
-    @show = index_params[:show]
-    @order = index_params[:order] || 'desc'
-
-    @search = params[:messages].present? ? search_params[:body] : ""
-
-    @conversations = Conversation.inbox(current_user.id).search(@search)
     @page = 'Mensajes recibidos'
-
-    @conversations = @conversations.send(@order) unless @conversations.blank?
-    @conversations = @conversations.page(params[:page]).per(15)
-
-    render :index
+    index
   end
 
   def outbox
-    # Obtenemos la bandeja de correo
-    @show = index_params[:show]
-    @order = index_params[:order] || 'desc'
-
-    @search = params[:messages].present? ? search_params[:body] : ""
-
     @conversations = Conversation.outbox(current_user.id).search(@search)
     @page = 'Mensajes enviados'
-
-    @conversations = @conversations.send(@order) unless @conversations.blank?
-    @conversations = @conversations.page(params[:page]).per(15)
-
-    render :index
+    set_conversations
   end
 
   def memberships
-    # Obtenemos la bandeja de correo
-    @show = index_params[:show]
-    @order = index_params[:order] || 'desc'
-
-    @search = params[:messages].present? ? search_params[:body] : ""
-
     @conversations = Conversation.membership(current_user.id).search(@search)
     @page = 'Mensajes de miembros'
-
-    @conversations = @conversations.send(@order) unless @conversations.blank?
-    @conversations = @conversations.page(params[:page]).per(15)
-
-    render :index
+    set_conversations
   end
 
   def participants
-    # Obtenemos la bandeja de correo
-    @show = index_params[:show]
-    @order = index_params[:order] || 'desc'
-
-    @search = params[:messages].present? ? search_params[:body] : ""
-
     @conversations = Conversation.participants(current_user.id).search(@search)
     @page = 'Mensajes de eventos'
-
-    @conversations = @conversations.send(@order) unless @conversations.blank?
-    @conversations = @conversations.page(params[:page]).per(15)
-
-    render :index
+    set_conversations
   end
 
   def search
-    # Obtenemos la bandeja de correo
-    @show = index_params[:show]
-    @order = index_params[:order] || 'desc'
-
-    @search = params[:messages].present? ? search_params[:body] : ""
-
-    @conversations = Conversation.global_search(current_user.id, @search).search(current_user.id, @search)
+    @conversations = Conversation.global_search(current_user.id, @search)
     @page = 'Mensajes encontrados'
-
-    @conversations = @conversations.send(@order) if (@order and @conversations)
-
-    @conversations = @conversations.page(params[:page]).per(15)
-
-    render :index
+    set_conversations
   end
 
   def new
@@ -229,6 +141,21 @@ class MessagesController < ApplicationController
     # Define el nombre de la página New
     def set_new_page
       @page = 'Enviar mensaje'
+    end
+
+    # Define las variables necesarias para los buzones de mensajes
+    def set_boxes_variables
+      @show = index_params[:show]
+      @order = index_params[:order] || 'desc'
+      @search = params[:messages].present? ? search_params[:body] : ""
+    end
+
+    # Prepara las conversaciones para ser mostradas y se asegura de renderizar el index
+    def set_conversations
+      @conversations = @conversations.send(@order) unless @conversations.blank?
+      @conversations = @conversations.page(params[:page]).per(15)
+
+      render :index
     end
 
     ## STRONGS PARAMETERS

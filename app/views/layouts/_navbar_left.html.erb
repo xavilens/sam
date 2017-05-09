@@ -1,5 +1,4 @@
-<li class="dropdown <%= active_page 'posts' %>">
-
+<% if user_signed_in? %>
 <!-- CONTENIDOS -->
   <!-- <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
     aria-haspopup="true" aria-expanded="false">
@@ -40,3 +39,4 @@
   </ul>
 </li>
 <!-- END EVENTOS -->
+<% end %>
