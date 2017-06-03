@@ -11,43 +11,33 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @page = 'Regístrate'
     build_resource
     resource.build_address
+    @user = resource
   end
 
-
-  # TODO: CAMBIAR LA CREACION DEL PERFIL Y EL CONJUNTO DE REDES SOCIALES
   def create
-    # Comprobamos qué tipo de perfil tiene el usuario y creamos el perfil al que
-    # lo asociaremos
-    profile_type = params[:user][:profileable_type]
-    if profile_type == 'Musician'
-      profile = Musician.create()
-    elsif profile_type == 'Band'
-      profile = Band.create()
-    end
-
-    # Añadimos a los parametros el id del perfil
-    params[:user][:profileable_id] = profile.id
-    # Añadimos el avatar por defecto si no se ha dado ninguno
-    params[:user][:avatar] = ImageUploader.new.default_url if params[:user][:avatar].blank?
-    # Creamos y añadimos el conjunto de redes sociales
-    social_networks_set = SocialNetworksSet.create
-
     # Creamos el usuario
     build_resource(sign_up_params)
-    resource.create_social_networks_set
 
-    # si se puede guardar creamos una dirección asociada al usuario
-    if resource.valid?
-      resource.save
-      resource.build_address(address_params).save
-    else # Si no, destruimos los registros creados
-      if profile_type == 'Musician'
-        profile = Musician.destroy(profile.id)
-      elsif profile_type == 'Band'
-        profile = Band.destroy(profile.id)
-      end
-      SocialNetworksSet.destroy(resource.social_networks_set)
+    # Añadimos la dirección del usuario
+    resource.build_address(address_params)
+
+    # Añadimos el perfil del usuarios
+    profile_type = sign_up_params[:profileable_type]
+    resource.profileable = if profile_type == 'Musician'
+      Musician.new
+    elsif profile_type == 'Band'
+      Band.new
     end
+
+    # Añadimos las redes sociales del usuario
+    resource.build_social_networks_set
+
+    # Añadimos el avatar por defecto del usuario si no se ha subido otro
+    resource.avatar = ImageUploader.new.default_url if sign_up_params[:avatar].blank?
+
+    # Guardamos el usuario
+    resource.save
+    @user = resource
 
     # Resto de algoritmo de la clase padre
     yield resource if block_given?
@@ -76,8 +66,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   protected
 
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:email, :password, :name,
-      :profileable_type, :profileable_id, :avatar, :social_network_set_id])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:email, :password, :name, :avatar])
   end
 
   def configure_account_update_params

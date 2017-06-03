@@ -13,9 +13,8 @@ class User < ActiveRecord::Base
   validates :email, presence: true, uniqueness: true
   validates :name, presence: true
   validates :role_id, presence: true
-  validates :profileable_id, presence: true
-  validates :profileable_type, presence: true, uniqueness: {scope: :profileable_id}
-  validates :social_networks_set_id, presence: true
+  validates :profileable, presence: true, uniqueness: {scope: :id}
+  validates :social_networks_set, presence: true
 
   ######## SCOPES
   # Devuelve los usuarios con perfil de Grupo (Band)

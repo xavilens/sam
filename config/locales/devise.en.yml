@@ -58,5 +58,5 @@ en:
       not_found: "no se encontró."
       not_locked: "no estaba bloqueado."
       not_saved:
-        one: "1 error impidió que este %{resource} fuese guardado:"
+        one: "un error impidió que este %{resource} fuese guardado:"
         other: "%{count} errores impidieron que este %{resource} fuese guardado:"

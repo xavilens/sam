@@ -28,36 +28,34 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 ## FRONT-END
 # Bootstrap: Frontend framework
 gem 'bootstrap-sass', '3.3.6'
-# Font awesome: fonts de iconos
+# Font Awesome: fonts de iconos
 gem 'font-awesome-rails', '4.7.0.1'
-# Formularios más sencillos
+# Simple Form: Formularios más sencillos
 gem 'simple_form', '3.2.1'
-# Paginacion
+# Kaminari: Paginacion
 gem 'kaminari', '0.16.3'
 # Datepicker con tema de bootstrap
 gem 'bootstrap-datepicker-rails', '1.6.4.1'
-#Datepicker para Fechas, Horas y Ambas
+# Datepicker para Fechas, Horas y Ambas
 gem 'momentjs-rails', '2.17.1'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.14.30'
-# Formateador numérico
+# Autonumeric: Formateador numérico
 gem 'autonumeric-rails', '2.0.0.1'
-# Arregla los bindings de jquery con turbolinks
+# Jquery Turbolinks: Arregla los bindings de jquery con turbolinks
 gem 'jquery-turbolinks', '2.1.0'
 # Cocoon: Nos proporciona una forma sencilla de hacer asociaciones dinámicamente en un formulario
 gem 'cocoon', '1.2.9'
 
-
-# internalizacion
-
 ## BACK-END
-# Generador de usuarios con todas las opciones y vistas más utilizadas
+# Devise: Generador de usuarios con todas las opciones y vistas más utilizadas
 gem 'devise', '4.0.0'
-# gem 'i18n', '0.7.0'
+# Rails-i18n: Internacionalización
 gem 'rails-i18n', '~> 4.0.0'
+# Puma: Servidor Web multihilo y multiproceso
+gem 'puma', '3.7.0'
 
 # Tratar subida de imagenes
 gem 'carrierwave', '0.11.0'
-# gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'
 gem 'mini_magick', '4.5.1'
 # Video-Info: Proporciona información de los videos
 gem 'video_info', '2.7'
@@ -66,17 +64,16 @@ gem 'soundcloud', '0.3.4'
 
 # Draper: Simplifica los decorators
 gem 'draper', '2.1'
-# Interactor: Nos proporciona una interfaz para el uso sencillo de Services Objects
-gem 'interactor', '3.1'
 # Whenever: Permite programar tareas
 gem 'whenever', '0.9.7', require: false
 
+
 ## GEMS PARA CONTEXTOS ESPECÍFICOS
 group :development, :test do
-  # Consola debug
+  # Byebug: Consola debug
   gem 'byebug', '9.0.5'
 
-  # Consola avanzada
+  # PRY: Consola avanzada
   gem 'pry-rails', '0.3.4'
 
   gem 'awesome_print', '1.7.0'
