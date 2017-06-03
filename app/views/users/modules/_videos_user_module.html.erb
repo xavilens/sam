@@ -1,21 +1,32 @@
 
-<% if @user.videos? or is_current_user? %>
 <div class="user-show-container">
   <div class="leftbar-name">
     Vídeos <span class="badge"><%= @user.videos.size %></span>
   </div>
 
   <% if @user.videos? %>
-  <div class="video-container">
-    <%= render 'videos/video_row', video: @user.videos.last%>
-  </div>
+    <div class="video-container">
+      <%= render 'videos/video_row', video: @user.videos.last%>
+    </div>
+  <% else %>
+    <p class="gap-left">No hay ningún vídeo</p>
   <% end %>
 
-  <div class="row">
-    <div class="user-links col-sm-12 text-muted">
-      <%= link_to 'Ver todos', user_videos_path(user_id: @user.id),
-        class: 'btn btn-block btn-sm btn-default gap-top' %>
+  <% if !is_current_user? && @user.videos? %>
+    <div class="row">
+      <div class="user-links col-sm-12 text-muted">
+        <%= link_to 'Ver todos', user_videos_path(user_id: @user),
+          class: 'btn btn-block btn-sm btn-default gap-top ' %>
+      </div>
     </div>
-  </div>
+  <% elsif is_current_user? %>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="btn-group btn-group-sm btn-group-justified" role="group">
+          <%= link_to 'Nuevo vídeo', new_video_path, class: 'btn btn-default', role: 'button' %>
+          <%= link_to 'Ver todos', user_videos_path(user_id: @user.id), class: 'btn btn-default', role: 'button' %>
+        </div>
+      </div>
+    </div>
+  <% end %>
 </div>
-<% end %>

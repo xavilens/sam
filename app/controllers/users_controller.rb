@@ -28,6 +28,8 @@ class UsersController < ApplicationController
     # Redirige a inicio y muestra mensaje de error si no existe el usuario
     redirect_to root_path, alert: "No existe el usuario" if @user.blank?
 
+    @social_networks = user.social_networks
+
     # Definimos el nombre de la página
     @page = @user.name
   end

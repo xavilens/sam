@@ -36,11 +36,20 @@
     <p class="gap-left gap-bottom">No hay ningún evento.</p>
   <% end %>
 
-  <% if is_current_user? || @user.events? %>
+  <% if !is_current_user? && @user.events? %>
     <div class="row">
       <div class="user-links col-sm-12">
         <%= link_to 'Ver todos', user_events_path(user_id: @user.id),
-          class: 'btn btn-block btn-sm btn-default gap-top text-muted' %>
+          class: 'btn btn-block btn-sm btn-default text-muted gap-top' %>
+      </div>
+    </div>
+  <% elsif is_current_user? %>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="btn-group btn-group-sm btn-group-justified" role="group">
+          <%= link_to 'Nuevo evento', new_event_path, class: 'btn btn-default', role: 'button' %>
+          <%= link_to 'Ver todos', user_events_path(user_id: @user.id), class: 'btn btn-default', role: 'button' %>
+        </div>
       </div>
     </div>
   <% end %>

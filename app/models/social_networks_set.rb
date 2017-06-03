@@ -109,7 +109,7 @@ class SocialNetworksSet < ActiveRecord::Base
 
     # Comprueba cada campo para saver si está creado
     SOCIAL_NETWORKS.each do |sn|
-      res = res && ("#{sn}_url".to_sym).blank?
+      res = res && send("#{sn}_url").blank?
     end
 
     return res

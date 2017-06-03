@@ -13,17 +13,19 @@
 <!-- END User Header -->
 
 <!-- User Bio -->
-<% if @user.bio? %>
-  <div class="bio-container">
-    <div class="center-name">Biografía</div>
+<div class="bio-container">
+  <div class="center-name">Biografía</div>
 
-    <div class="bio-text">
-      <div class="user-bio ellipsis">
-        <%= user.bio %>
-      </div>
+  <div class="bio-text">
+    <div class="user-bio">
+    <% if @user.bio? %>
+      <%= user.bio %>
+    <% else %>
+      <p class="gap-left">El usuario no tiene biografía aún.</p>
+    <% end %>
     </div>
   </div>
-<% end %>
+</div>
 <!-- END User Bio -->
 
 <div class="clearfix"></div>
