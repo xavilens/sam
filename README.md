@@ -11,4 +11,4 @@
 1. Configura los datos de acceso a la BDD en la ruta `/config/database.yml`
 2. Instalar las gemas utilizadas con `bundle install`
 3. Crear la base de datos con `rake db:create`
-4. Popular la base de datos con `rake db:reset`
+4. Popular la base de datos con `rake db:seed`
