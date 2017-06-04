@@ -13,7 +13,9 @@ class User < ActiveRecord::Base
   validates :email, presence: true, uniqueness: true
   validates :name, presence: true
   validates :role_id, presence: true
-  validates :profileable, presence: true, uniqueness: {scope: :id}
+  validates :profileable, presence: true
+  validates :address, presence: true
+  validate :non_repeated_profile
   validates :social_networks_set, presence: true
 
   ######## SCOPES
@@ -158,7 +160,7 @@ class User < ActiveRecord::Base
   ## SOCIAL NETWORKS
   # Indica si tiene redes sociales definidas
   def social_networks?
-    !social_networks_set.blank?
+    social_networks_set.any?
   end
 
   # Devuelve todas las redes sociales
@@ -298,10 +300,29 @@ class User < ActiveRecord::Base
     # ref: https://github.com/plataformatec/devise/wiki/How-To:-Add-a-default-role-to-a-User
     def set_default
       self.role_id |= Role.find_by_name('registrado').id if self.role_id.blank?
+      self.social_networks_set = SocialNetworksSet.new
+
+      case profileable_type
+      when 'Band'
+        self.profileable = Band.new
+      when 'Musician'
+        self.profileable = Musician.new
+      else
+        self.errors.add(:profileable_type, "El tipo de perfil escogido no existe")
+      end
     end
 
     # Indica si se puede guardar la image o si se considera vacía
     def image_blank?(att)
       att[:title].blank? || att[:image].blank?
+    end
+
+    # Comprueba que el perfil no esté asociado a otro usuario
+    def non_repeated_profile
+      unless profileable_id.blank?
+        if self != profileable.user
+          errors.add(:profileable_type, "El perfil está asignado al usuario #{profileable.user.id}.")
+        end
+      end
     end
 end

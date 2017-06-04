@@ -1,3 +1,5 @@
+# Obtenido de la guía de DigitalOcean para Ruby, Rails, Capistrano, Nginx, MYSQL y Puma sobre Ubuntu 14.04
+# href: https://www.digitalocean.com/community/tutorials/deploying-a-rails-app-on-ubuntu-14-04-with-capistrano-nginx-and-puma
 # config valid only for current version of Capistrano
 lock "3.8.1"
 

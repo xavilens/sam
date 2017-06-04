@@ -104,12 +104,12 @@ class SocialNetworksSet < ActiveRecord::Base
   end
 
   # Devuelve Cierto si alguna de las redes sociales está definida
-  def blank?
+  def any?
     res = true
 
     # Comprueba cada campo para saver si está creado
     SOCIAL_NETWORKS.each do |sn|
-      res = res && send("#{sn}_url").blank?
+      res = res && send("#{sn}_url").present?
     end
 
     return res

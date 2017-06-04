@@ -29,3 +29,6 @@ keys
 
 # Ignore byebug history
 .byebug_history
+
+# Ignore uploads temp
+public/uploads/tmp

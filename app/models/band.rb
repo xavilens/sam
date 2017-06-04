@@ -59,7 +59,14 @@ class Band < ActiveRecord::Base
 
   # Devuelve un array con los géneros del grupo
   def genres
-    [genre_1.name, genre_2.name, genre_3.name]
+    res = []
+
+    1.upto(3).each do |n|
+      genre = send("genre_#{n}")
+      res << genre if genre.present?
+    end
+
+    res
   end
 
   # Devuelve el estado del grupo

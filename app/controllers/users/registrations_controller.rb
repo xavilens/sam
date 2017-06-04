@@ -20,21 +20,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
     # Añadimos la dirección del usuario
     resource.build_address(address_params)
-
-    # Añadimos el perfil del usuarios
-    profile_type = sign_up_params[:profileable_type]
-    resource.profileable = if profile_type == 'Musician'
-      Musician.new
-    elsif profile_type == 'Band'
-      Band.new
-    end
-
-    # Añadimos las redes sociales del usuario
-    resource.build_social_networks_set
-
-    # Añadimos el avatar por defecto del usuario si no se ha subido otro
-    resource.avatar = ImageUploader.new.default_url if sign_up_params[:avatar].blank?
-
+    
     # Guardamos el usuario
     resource.save
     @user = resource
@@ -66,7 +52,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
   protected
 
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:email, :password, :name, :avatar])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:email, :password, :name, :avatar,
+      address_attributes: [:gaddress, :city, :municipality, :province, :region, :country]])
   end
 
   def configure_account_update_params
