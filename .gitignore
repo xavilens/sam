@@ -26,3 +26,6 @@ keys
 
 # Ignore db migrations
 /db/migrate
+
+# Ignore byebug history
+.byebug_history
