@@ -37,6 +37,8 @@ set :puma_init_active_record, true  # Change to false when not using ActiveRecor
 # set :linked_files, %w{config/database.yml}
 # set :linked_dirs,  %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
+load "config/recipes/rake_server.rb"
+
 namespace :puma do
   desc 'Create Directories for Puma Pids and Socket'
   task :make_dirs do
@@ -73,6 +75,56 @@ namespace :deploy do
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
       invoke 'puma:restart'
+    end
+  end
+
+  # Permite la carga del esquema en el servidor
+  # href: https://gist.github.com/wacaw/657744af41dcf4963646
+  desc "Load the initial schema - it will WIPE your database, use with care"
+  task :db_schema_load do
+    on roles(:db) do
+      puts <<-EOF
+
+      ************************** WARNING ***************************
+      If you type [yes], rake db:schema:load will WIPE your database
+      any other input will cancel the operation.
+      **************************************************************
+
+      EOF
+      ask :answer, "Are you sure you want to WIPE your database?"
+      if fetch(:answer) == 'yes'
+        within release_path do
+          with rails_env: :production do
+            rake 'db:schema:load'
+          end
+        end
+      else
+        puts "Cancelled."
+      end
+    end
+  end
+
+  desc "Reset of the database."
+  task :db_reset do
+    on roles(:db) do
+      puts <<-EOF
+
+      ************************** WARNING ***************************
+      If you type [yes], rake db:reset will WIPE your database
+      any other input will cancel the operation.
+      **************************************************************
+
+      EOF
+      ask :answer, "Are you sure you want to WIPE your database?"
+      if fetch(:answer) == 'yes'
+        within release_path do
+          with rails_env: :production do
+            rake 'db:reset'
+          end
+        end
+      else
+        puts "Cancelled."
+      end
     end
   end
 
