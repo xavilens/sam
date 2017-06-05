@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
   ######### FILTERS
-  before_filter :authenticate_user!, except: [:index, :show]
+  before_filter :authenticate_user!
 
   ######### CALLBACKS
   before_action :is_user_calendar?, only: [:index]

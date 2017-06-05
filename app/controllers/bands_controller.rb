@@ -1,6 +1,6 @@
 class BandsController < ApplicationController
   ######### FILTERS
-  before_filter :authenticate_user!, except: [:index]
+  before_filter :authenticate_user!
 
   ######### DECORATORS
   decorates_assigned :users

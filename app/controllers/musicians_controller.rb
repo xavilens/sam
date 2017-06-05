@@ -1,6 +1,6 @@
 class MusiciansController < ApplicationController
   ######### FILTERS
-  before_filter :authenticate_user!, except: [:index]
+  before_filter :authenticate_user!
 
   ######### CALLBACKS
   before_action :set_current_user, only: [:index, :edit, :update]
