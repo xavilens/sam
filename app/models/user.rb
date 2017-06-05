@@ -160,7 +160,7 @@ class User < ActiveRecord::Base
   ## SOCIAL NETWORKS
   # Indica si tiene redes sociales definidas
   def social_networks?
-    social_networks_set.any?
+    social_networks_set.avaliables?
   end
 
   # Devuelve todas las redes sociales
@@ -296,12 +296,17 @@ class User < ActiveRecord::Base
 
   private
 
-    # Define el rol por defecto del usuario como 'registrado'
+    # Inicializa las relaciones por defecto del usuario
     # ref: https://github.com/plataformatec/devise/wiki/How-To:-Add-a-default-role-to-a-User
     def set_default
+      # Define el rol por defecto del usuario como 'registrado'
       self.role_id |= Role.find_by_name('registrado').id if self.role_id.blank?
+
+      # Asocia un conjunto de redes sociales nuevo para el usuario
       self.social_networks_set = SocialNetworksSet.new
 
+      # Asocia un perfil nuevo según la elección.
+      # Si se modificó el valor del perfil escogido devolvemos un error
       case profileable_type
       when 'Band'
         self.profileable = Band.new
@@ -320,7 +325,10 @@ class User < ActiveRecord::Base
     # Comprueba que el perfil no esté asociado a otro usuario
     def non_repeated_profile
       unless profileable_id.blank?
+        # Buscamos los usuarios que tienen el mismo perfil y lo metemos en un array
         user_array = User.where(profileable_type: profileable_type, profileable_id: profileable_id).to_a
+
+        # Si al borrar nuestro usuario del array sigue quedando más de un usuario es que ya está asociado
         user_array.delete(self)
         if user_array.size > 0
           errors.add(:profileable_type, "El perfil está asignado al usuario #{profileable.user.id}.")
