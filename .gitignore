@@ -23,6 +23,7 @@ keys
 
 # Ignore uploaded images
 /public/images
+!/public/images/default
 
 # Ignore db migrations
 /db/migrate
