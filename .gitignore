@@ -22,7 +22,7 @@ keys
 /public/assets
 
 # Ignore uploaded images
-/public/images
+/public/images/
 !/public/images/default/
 
 # Ignore db migrations
