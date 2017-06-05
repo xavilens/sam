@@ -320,7 +320,9 @@ class User < ActiveRecord::Base
     # Comprueba que el perfil no esté asociado a otro usuario
     def non_repeated_profile
       unless profileable_id.blank?
-        if self != profileable.user
+        user_array = User.where(profileable_type: profileable_type, profileable_id: profileable_id).to_a
+        user_array.delete(self)
+        if user_array.size > 0
           errors.add(:profileable_type, "El perfil está asignado al usuario #{profileable.user.id}.")
         end
       end

@@ -39,7 +39,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    if update_resource(@user, update_params)
+    if @user.update(update_params)
       redirect_to @user, notice: 'Tu cuenta ha sido actualizada correctamente.'
     else
       render action: :edit
