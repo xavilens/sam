@@ -1,6 +1,6 @@
 class ImagesController < ApplicationController
   ######### FILTERS
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, except: [:index, :show]
 
   ######### CALLBACKS
   before_action :set_user, only: [:index, :show]

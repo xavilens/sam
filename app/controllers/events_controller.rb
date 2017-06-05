@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
   ######### FILTERS
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, except: [:index, :show]
 
   ######### CALLBACKS
   before_action :is_user_calendar?, only: [:index]
@@ -14,12 +14,11 @@ class EventsController < ApplicationController
   decorates_assigned :events, :event, :user
 
   ######### ACTIONS
-  # TODO: Calendario general será cuadrícula y al pulsar una cuadrícula aparecerá un modal con los eventos organizados ese día
   def index
-    if @is_user_calendar
-      event_calendar = CreateUserEventCalendar.new(@user, event_search_params, params[:page])
+    event_calendar = if @is_user_calendar
+      CreateUserEventCalendar.new(@user, event_search_params, params[:page])
     else
-      event_calendar = CreateEventCalendar.new(event_search_params, params[:date], params[:page])
+      CreateEventCalendar.new(event_search_params, params[:date], params[:page])
     end
 
     @start_date = event_calendar.start_date

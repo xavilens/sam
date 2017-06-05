@@ -3,7 +3,7 @@ class FollowshipsController < ApplicationController
   respond_to :html, :js
 
   ######### FILTERS
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, except: [:leaders, :followers]
 
   ######### CALLBACKS
   before_action :set_user, only: [:leaders, :followers]

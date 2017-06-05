@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   ######### FILTERS
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, except: [:show, :index]
 
   ######### CALLBACKS
   before_action :set_user, only: [:show]
