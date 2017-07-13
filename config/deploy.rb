@@ -4,7 +4,7 @@
 lock "3.8.1"
 
 # Change these
-server "<%= ENV['SERVER_IP'] %>", port: ENV['SERVER_PORT'], roles: [:web, :app, :db], primary: true
+server "www.samusical.com", port: ENV['SERVER_PORT'], roles: [:web, :app, :db], primary: true
 
 set :repo_url,        'git@github.com:xavilens/sam.git'
 set :application,     'sam'

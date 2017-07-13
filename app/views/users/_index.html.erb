@@ -10,8 +10,12 @@
 <!-- END Total Users -->
 
 <% unless @users.blank?  %>
-  <% users.each do |user| %>
-    <%= render 'users/user_thumbnail', user: user %>
+  <% users.in_groups_of(4).each do |users_row| %>
+    <div class="row">
+      <% users_row.each do |user| %>
+        <%= render 'users/user_thumbnail', user: user if user.present? %>
+      <% end %>
+    </div>
   <% end %>
 <% else %>
   <p class="no-data">Ningún usuario cumple los criterios</p>
