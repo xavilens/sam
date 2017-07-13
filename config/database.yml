@@ -14,7 +14,8 @@ default: &default
   encoding: utf8
   pool: 5
   username: sam
-  password: C0NtR4$3Ñ4!
+  # password: C0NtR4$3Ñ4!
+  password: <%= ENV['PFC_DATABASE_PASSWORD'] %>
   socket: /var/run/mysqld/mysqld.sock
 
 development:
