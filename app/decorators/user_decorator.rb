@@ -19,7 +19,7 @@ class UserDecorator < Draper::Decorator
     genres_size =  genres.size - 1
 
     0.upto(genres_size) do |i|
-      genres_s += "#{genres[i]}"
+      genres_s += "#{genres[i].name}"
 
       if(i != genres_size)
         genres_s += " / "

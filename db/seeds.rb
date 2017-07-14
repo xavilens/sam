@@ -11,7 +11,7 @@ end
   Level.find_or_create_by({name: level})
 end
 
-############################################ EVENT_ESTATUSES ############################################
+############################################ EVENT_STATUSES ############################################
 
 ['Abierto', 'Cerrado', 'Buscando participantes'].each do |evStatus|
   EventStatus.find_or_create_by({name: evStatus})
@@ -50,7 +50,7 @@ end
 end
 
 # Conocimientos instrumentos de percusión
-['Batería', 'Percusión', 'Steeldrum', 'Marimba'].each do |knowledgement|
+['Batería', 'Percusión', 'Steeldrum', 'Marimba', 'Cajón'].each do |knowledgement|
  Instrument.find_or_create_by({name: knowledgement})
 end
 

@@ -8,7 +8,7 @@
       </div>
     </div>
   </div>
-  
+
   <%= render 'layouts/errors', object: @image %>
 
   <!-- Image Form -->
@@ -21,21 +21,20 @@
       boolean: :horizontal_boolean
     } do |f| %>
 
-      <!-- Image -->
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="image-container">
-            <%= image_tag @image.image_url(:gallery), class: 'image' %>
-          </div>
-        </div>
-      </div>
-      <!-- END Image -->
-
       <!-- Image Fields Form -->
       <div class="image-edit-fields">
         <%= render 'image_fields', f: f %>
+
+        <!-- Delete Image Link -->
+        <div class="row">
+          <div class="col-sm-2 text-right">
+            <%= link_to fa_icon('trash')+' Eliminar', image_path(@image), method: :delete, class: 'btn btn-link' %>
+          </div>
+        </div>
+        <!-- END Delete Image Link -->
       </div>
       <!-- END Image Fields Form -->
+
 
       <!-- Image Links -->
       <div class="row image-edit-links">

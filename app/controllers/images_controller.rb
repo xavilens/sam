@@ -5,7 +5,6 @@ class ImagesController < ApplicationController
   ######### CALLBACKS
   before_action :set_user, only: [:index, :show]
   before_action :set_current_user, only: [:new, :create, :edit, :update, :destroy]
-  before_action :author?, only: [:edit, :update, :destroy]
   before_action :set_image, only: [:show, :edit, :update, :destroy]
 
   ######### DECORATORS
@@ -115,20 +114,6 @@ class ImagesController < ApplicationController
     def set_edit
       @page = 'Editar imagen'
       @title = @page
-    end
-
-    # Indica si el usuario actual que intenta modificar la imagen es el autor de esta
-    def author?
-      is_author = case @image.imageable_type
-      when 'User'
-        @image.imageable == @user
-      when 'Event'
-        @image.imageable.creator == @user
-      end
-
-      unless is_author
-        raise ActionController::RoutingError.new
-      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

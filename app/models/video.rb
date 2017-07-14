@@ -44,6 +44,7 @@ class Video < ActiveRecord::Base
     # Define el Track ID del video
     # http://stackoverflow.com/questions/5909121/converting-a-regular-youtube-link-into-an-embedded-video
     def set_video_data
+      debugger
       if url.present?
         set_video_info
 
@@ -55,7 +56,7 @@ class Video < ActiveRecord::Base
         self.duration = video_info.duration
 
         # Si se quiere seleccionar datos desde la api carga el título y la descripción desde ahí
-        if api_data
+        if api_data.present?
           self.title = video_info.title
           self.description = video_info.description
         end

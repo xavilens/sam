@@ -11,4 +11,9 @@ class ImageDecorator < Draper::Decorator
   def show_user
     image_url(:thumb)
   end
+
+  # Devuelve la descripción de la imágen formateada
+  def description
+    (image.description.gsub(/\n/, '<br/>')).html_safe
+  end
 end

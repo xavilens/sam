@@ -93,7 +93,7 @@ class VideosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def video_params
-      api_data_param = params[:api_data].present? ? params[:api_data] : {}
+      api_data_param = params[:api_data].present? ? params[:api_data] : nil
 
       params.require(:video).permit(:url, :in_user_page, :title, :description).merge(api_data: api_data_param)
     end
