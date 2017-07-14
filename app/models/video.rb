@@ -44,7 +44,6 @@ class Video < ActiveRecord::Base
     # Define el Track ID del video
     # http://stackoverflow.com/questions/5909121/converting-a-regular-youtube-link-into-an-embedded-video
     def set_video_data
-      debugger
       if url.present?
         set_video_info
 
