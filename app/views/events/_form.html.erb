@@ -44,10 +44,17 @@
   </div>
 
   <!-- Event Address -->
+  <div class="row gap-bottom form-help-block">
+    <div class="col-sm-10 col-sm-offset-1">
+      <p class="text-muted">Es posible indicar el local, la calle o la localidad donde se celebrará el evento.
+        Sólo comienza a buscarlo en el campo 'Ubicación' y selecciona la opción adecuada.</p>
+    </div>
+  </div>
+
   <div class="row">
-    <%= f.input :autocomplete, label: 'Localidad', name: 'autocomplete',
-      placeholder: 'Busca aquí tu localidad y los campos se rellenarán automáticamente...',
-      as: :fake, wrapper: :field_8 %>
+    <%= f.input :autocomplete, label: 'Ubicación', name: 'autocomplete',
+      placeholder: 'Introduce el negocio, la calle o la localidad dónde se celebrará el evento...',
+      as: :fake, wrapper: :field_9 %>
     <div class="row">
       <%= f.simple_fields_for :address do |ad| %>
       <div class="address-inputs col-sm-offset-2">
@@ -96,7 +103,7 @@
   </div>
 
   <div class="row gap-bottom form-help-block">
-    <div class="col-sm-12 col-sm-offset-1">
+    <div class="col-sm-10 col-sm-offset-1">
       <p class="text-muted">Es posible indicar el número máximo de artistas que podrán participar en el evento,
         así como su precio aproximado.</p>
     </div>
@@ -155,4 +162,5 @@
 
   <%= render "scripts/datepicker" %>
   <%= render "scripts/datetimepicker" %>
+  <%= render "scripts/places_autocomplete" %>
   <%= render "scripts/street_autocomplete", autocomplete_for: :event %>
