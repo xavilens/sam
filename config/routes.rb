@@ -64,8 +64,10 @@ Rails.application.routes.draw do
 
   ## MEMBERS
   resources :members, only: [:create, :edit, :update, :destroy] do
-    post 'send', action: :send_request_message, controller: :members
-    post 'new', action: :new, controller: :member
+    collection do
+      post 'send', action: :send_request_message, controller: :members
+      post 'new', action: :new, controller: :members
+    end
   end
 
   ## EVENTS

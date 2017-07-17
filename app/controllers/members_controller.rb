@@ -1,7 +1,7 @@
 class MembersController < ApplicationController
   ######### FILTERS
   before_filter :authenticate_user!
-  
+
   ######### DECORATORS
   decorates_assigned :member, :member_user, :user
 
