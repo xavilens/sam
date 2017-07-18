@@ -57,7 +57,6 @@ class EventsController < ApplicationController
   end
 
   def create
-    debugger
     @event = Event.new(event_with_images_params)
     @event.creator = current_user
 
@@ -79,7 +78,6 @@ class EventsController < ApplicationController
   end
 
   def update
-    debugger
     respond_to do |format|
       if @event.update(event_update_params)
         format.html { redirect_to user_event_path(user_id: @event.creator_id, id: @event),
