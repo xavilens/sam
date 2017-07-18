@@ -52,7 +52,12 @@ class MessagesController < ApplicationController
     # Definimos los usuarios participantes y creamos la conversacion y un mensaje en él
     to_user = User.find(new_params[:to_user])
 
-    @conversation = current_user.conversations.build(user_2: to_user)
+    @conversation = if params[:subject].present?
+      current_user.conversations.build(user_2: to_user, subject: params[:subject])
+    else
+      current_user.conversations.build(user_2: to_user)
+    end
+
     @conversation.messages.build(author: current_user)
 
     set_new_page

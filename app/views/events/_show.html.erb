@@ -33,8 +33,8 @@
     <%= link_to fa_icon('chevron-left'), prev_event_url,
       class: "list-group-item event-link no-gutter-sm-3 #{prev_event_active}" %>
 
-    <%= link_to fa_icon("envelope")+" Mensaje", user_path(@user),
-      class: 'list-group-item event-link no-gutter-sm-2' %>
+    <%= link_to fa_icon("envelope")+" Mensaje", new_message_path(subject: "Sobre el evento '#{@event.name}'", to_user: @user.id),
+      remote: true, class: 'list-group-item event-link no-gutter-sm-2' %>
 
     <%= link_to fa_icon("calendar")+" Calendario", user_events_path(user_id: @user.id),
       class: 'list-group-item event-link no-gutter-sm-2' %>
