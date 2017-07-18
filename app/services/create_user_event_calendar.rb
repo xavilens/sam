@@ -7,13 +7,14 @@ class CreateUserEventCalendar
     @events = @user.events
 
     # Definimos fechas
-    @start_date = @events.first.date
-    @finish_date = @events.last.date
+    today = Date.today
+    @start_date = @events.present? ? @events.first.date : @user.created_at.to_date
+    @finish_date = @events.present? ? @events.last.date : today
 
     # Creamos el buscador
     @search = EventSearchForm.new(params)
-    @start_date = @search.start_date.present? ? @search.start_date : @events.first.date
-    @finish_date = @search.finish_date.present? ? @search.finish_date : @events.last.date
+    @start_date = @search.start_date.present? ? @search.start_date : @start_date
+    @finish_date = @search.finish_date.present? ? @search.finish_date : @finish_date
 
     # Creamos calendario
     @calendar = EventCalendar.new @start_date, @finish_date, @search, @user
