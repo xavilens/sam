@@ -57,6 +57,7 @@ class EventsController < ApplicationController
   end
 
   def create
+    debugger
     @event = Event.new(event_with_images_params)
     @event.creator = current_user
 
@@ -78,6 +79,7 @@ class EventsController < ApplicationController
   end
 
   def update
+    debugger
     respond_to do |format|
       if @event.update(event_update_params)
         format.html { redirect_to user_event_path(user_id: @event.creator_id, id: @event),
@@ -181,7 +183,7 @@ class EventsController < ApplicationController
       params.require(:event).permit(:name, :description, :date, :time, :event_status_id, :event_type_id,
         :max_participants, :pvp, :creator_id, :_destroy,
         address_attributes: [:street, :gaddress, :city, :region, :country, :municipality, :postal_code, :province],
-        images_attributes: [:image, :title, :desciption])
+        images_attributes: [:image, :title, :description])
     end
 
     # Parámetros de evento permitidos por el controlador
@@ -190,7 +192,7 @@ class EventsController < ApplicationController
         :max_participants, :pvp, :creator_id, :_destroy,
         address_attributes: [:id, :addresseable_type, :addresseable_id, :street, :gaddress, :city, :region,
           :country, :municipality, :postal_code, :province],
-        images_attributes: [:id, :image, :title, :desciption, :_destroy])
+        images_attributes: [:id, :image, :title, :description, :_destroy])
     end
 
     # Parámetros de evento permitidos por el controlador
