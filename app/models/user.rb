@@ -62,22 +62,25 @@ class User < ActiveRecord::Base
 
   # USER RELATED
   belongs_to :role
-  belongs_to :profileable, polymorphic: true
+  belongs_to :profileable, polymorphic: true, dependent: :destroy
   accepts_nested_attributes_for :profileable, allow_destroy: true
 
   # ADDRESS RELATED
-  has_one :address, as: :addresseable
+  has_one :address, as: :addresseable, dependent: :destroy
   accepts_nested_attributes_for :address, allow_destroy: true
 
   # SOCIAL NETWORK RELATED
-  belongs_to :social_networks_set
+  belongs_to :social_networks_set, dependent: :destroy
   accepts_nested_attributes_for :social_networks_set, allow_destroy: true
 
   # CONVERSATIONS RELATED
-  has_many :conversations, foreign_key: :user_1_id
+  has_many :conversations, foreign_key: :user_1_id, dependent: :destroy
   has_many :messages, through: :conversations
-  has_many :reverse_conversations, foreign_key: :user_2_id, class_name: 'Conversation'
+  accepts_nested_attributes_for :conversations, allow_destroy: true
+
+  has_many :reverse_conversations, foreign_key: :user_2_id, class_name: 'Conversation', dependent: :destroy
   has_many :messages_inverse, through: :reverse_conversations
+  accepts_nested_attributes_for :reverse_conversations, allow_destroy: true
 
   # IMAGE RELATED
   has_many :images, as: :imageable, dependent: :destroy
@@ -85,22 +88,23 @@ class User < ActiveRecord::Base
     reject_if: proc { |att| att['title'].blank? || att['image'].blank? }
 
   # EVENTS RELATED
-  # has_many :events, foreign_key: :creator_id, primary_key: :id
-  has_many :created_events, foreign_key: :creator_id, primary_key: :id, class_name: 'Event'
-  has_many :event_participants, foreign_key: :participant_id
+  has_many :created_events, foreign_key: :creator_id, primary_key: :id, class_name: 'Event', dependent: :destroy
+
+  has_many :event_participants, foreign_key: :participant_id, dependent: :destroy
   has_many :participated_events, through: :event_participants, source: :event
 
   # FOLLOWSHIPS RELATED
-  has_many :followships, -> {order(id: :desc)}, foreign_key: 'follower_id'
+  has_many :followships, -> {order(id: :desc)}, foreign_key: 'follower_id', dependent: :destroy
   has_many :leaders, through: :followships
-  has_many :reverse_followships, -> {order(id: :desc)}, foreign_key: :leader_id, class_name: 'Followship'
+
+  has_many :reverse_followships, -> {order(id: :desc)}, foreign_key: :leader_id, class_name: 'Followship', dependent: :destroy
   has_many :followers, through: :reverse_followships
 
   # MEDIA RELATED
-  has_many :songs
+  has_many :songs, dependent: :destroy
   has_many :profile_songs,-> {where(in_user_page: true)}, class_name: 'Song'
 
-  has_many :videos
+  has_many :videos, dependent: :destroy
   has_many :profile_videos,-> {where(in_user_page: true)}, class_name: 'Video'
 
   ######## PAGINATION
@@ -239,6 +243,7 @@ class User < ActiveRecord::Base
 
     # Ordenamos los eventos
     every_events.uniq.sort_by! { |event| event.date }
+    every_events.delete_if { |event| event.date < Date.today }
   end
 
   ## MEDIA

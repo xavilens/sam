@@ -30,9 +30,9 @@
           <% end %>
 
           <%= f.input :password, autocomplete: "off", hint: "Deja vacío el campo si no quieres cambiar la contraseña",
-            required: false, wrapper: :field_6_label_3 %>
+            required: false, label: 'Nueva contraseña', wrapper: :field_6_label_3 %>
           <%= f.input :password_confirmation, required: false,
-            label: 'Confirma tu contraseña', wrapper: :field_6_label_3 %>
+            label: 'Repite la contraseña', wrapper: :field_6_label_3 %>
           <%= f.input :current_password, hint: "Necesitamos tu contraseña actual para realizar cambios", required: true,
             label: 'Contraseña actual', wrapper: :field_6_label_3 %>
         </div>

@@ -6,7 +6,7 @@ class CreateEventCalendar
 
     # Definimos la fecha
     if date.present? || params["start_date(2i)"].present?
-      date = date.present? ? date : "01/#{event_search_params['start_date(2i)'].to_i}/#{event_search_params['start_date(1i)'].to_i}"
+      date = date.present? ? date : "01/#{params['start_date(2i)'].to_i}/#{params['start_date(1i)'].to_i}"
 
       @start_date = Date.parse(date)
       @start_date = @start_date.beginning_of_month

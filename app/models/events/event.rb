@@ -27,11 +27,11 @@ class Event < ActiveRecord::Base
   belongs_to :event_status
   belongs_to :event_type
 
-  has_many :event_participants
+  has_many :event_participants, dependent: :destroy
   accepts_nested_attributes_for :event_participants, allow_destroy: true, reject_if: :all_blank
   has_many :participants, through: :event_participants
 
-  has_one :address, as: :addresseable
+  has_one :address, as: :addresseable, dependent: :destroy
   accepts_nested_attributes_for :address, allow_destroy: true
 
   has_many :images, as: :imageable, dependent: :destroy

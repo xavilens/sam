@@ -20,7 +20,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
     # Añadimos la dirección del usuario
     resource.build_address(address_params)
-    
+
     # Guardamos el usuario
     resource.save
     @user = resource
