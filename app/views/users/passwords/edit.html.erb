@@ -1,23 +1,33 @@
 
-<% page_title 'Editar contraseña' %>
+<% page_title @page %>
 
 <%= render 'layouts/page_header' %>
 
 <%= simple_form_for( resource, as: resource_name, url: password_path(resource_name),
-  html: { method: :put }, wrapper: :horizontal_form ) do |f| %>
+  html: { method: :put, class: 'form-horizontal' }, wrapper: :horizontal_form ) do |f| %>
   <%= f.error_notification %>
 
   <%= f.input :reset_password_token, as: :hidden %>
-  <%= f.full_error :reset_password_token %>
 
   <div class="form-inputs">
-    <%= f.input :password, label: "New password", required: true, autofocus: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length) %>
-    <%= f.input :password_confirmation, label: "Confirm your new password", required: true %>
+    <%= f.full_error :reset_password_token %>
   </div>
 
-  <div class="form-actions">
-    <%= f.button :submit, "Change my password" %>
+  <div class="form-inputs">
+    <%= f.input :password, label: "Nueva contraseña", required: true, autofocus: true,
+      hint: ("#{@minimum_password_length} caracteres o más" if @minimum_password_length),
+      wrapper: :field_3 %>
+    <%= f.input :password_confirmation, label: "Repite la contraseña", required: true,
+      wrapper: :field_3 %>
+  </div>
+
+  <div class="form-actions col-sm-5">
+    <div class="row">
+      <div class="col-sm-12">
+        <%= f.button :submit, "Restablecer contraseña", class: 'btn btn-primary btn-block' %>
+      </div>
+    </div>
+
+    <%= render "users/shared/links" %>
   </div>
 <% end %>
-
-<%= render "users/shared/links" %>
