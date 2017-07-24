@@ -1,9 +1,7 @@
 class CreateEventCalendar
-  attr_accessor :events, :start_date, :finish_date, :calendar, :page, :search
+  attr_accessor :events, :start_date, :finish_date, :calendar, :search
 
-  def initialize (params, date, page)
-    @page = page
-
+  def initialize (params, date)
     # Definimos la fecha
     if date.present? || params["start_date(2i)"].present?
       date = date.present? ? date : "01/#{params['start_date(2i)'].to_i}/#{params['start_date(1i)'].to_i}"
@@ -24,8 +22,5 @@ class CreateEventCalendar
 
     # Creamos calendario
     @calendar = EventCalendar.new @start_date, @finish_date, @search, (@is_user_calendar ? @user : nil)
-
-    # Creamos la paginación
-    @calendar.events = Kaminari.paginate_array(@calendar.events).page(params[:page]).per(1)
   end
 end

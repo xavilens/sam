@@ -42,7 +42,7 @@ class Event < ActiveRecord::Base
   has_many :conversations, through: :conversation_relateds
 
   ######### PAGINATION
-  paginates_per 20
+  paginates_per 15
 
   ######## METHODS
 

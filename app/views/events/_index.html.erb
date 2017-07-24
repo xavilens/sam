@@ -52,6 +52,7 @@
       <% end %>
       <!-- END User Calendar -->
     <% else %>
+
       <!-- General Calendar -->
       <% no_data = false %>
       <tr>
@@ -91,10 +92,13 @@
 <% end %>
 <!-- END No data -->
 
-<div class="pagination-container pull-right">
-  <div class="paginator">
-    <%= paginate @calendar.events %>
+
+<% if @is_user_calendar %>
+  <div class="pagination-container pull-right">
+    <div class="paginator">
+      <%= paginate @calendar.events %>
+    </div>
   </div>
-</div>
+<% end %>
 
 <%= render 'scripts/dotdotdot' %>

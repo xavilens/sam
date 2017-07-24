@@ -1,18 +1,19 @@
 class EventCalendar
-  attr_reader :start_date, :finish_date
+  attr_reader :start_date, :finish_date, :is_user_calendar
   attr_accessor :events, :search, :calendar
 
   def initialize start_date, finish_date, search, user = nil
     # Definimos los atributos
     @search = search
+    @is_user_calendar = user.present?
 
+    # Inicializamos las fechas
     set_dates start_date, finish_date
-
     @search.start_date ||= @start_date
     @search.finish_date ||= @finish_date
 
+    # Definimos los eventos y el calendario
     set_events user
-
     set_calendar
   end
 
@@ -91,7 +92,7 @@ class EventCalendar
     def set_events user
       # Si está definido el usuario obtiene de él los eventos en las fechas dadas,
       # si no los saca de todos los eventos creados
-      if user.present?
+      if is_user_calendar
         @events = search.events(user.created_events)
         @events = @events + search.events(user.participated_events)
         @events = @events + search.events(user.member_events)
@@ -99,6 +100,7 @@ class EventCalendar
         @events = search.events Event
       end
 
+      # Nos quedamos con una unica ocurrencia de cada evento
       @events = @events.uniq
     end
 end

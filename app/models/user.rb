@@ -243,7 +243,6 @@ class User < ActiveRecord::Base
 
     # Ordenamos los eventos
     every_events.uniq.sort_by! { |event| event.date }
-    every_events.delete_if { |event| event.date < Date.today }
   end
 
   ## MEDIA

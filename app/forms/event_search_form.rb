@@ -18,13 +18,12 @@ class EventSearchForm < SearchForm
         public_send("#{field}=",value)
       end
     end
+    dates_from_string_to_date
   end
 
   # Indica si se ha rellenado algún campo de la búsqueda
   def empty?
     empty = name.blank?
-    # empty = empty && start_date.blank?
-    # empty = empty && finish_date.blank?
     empty = empty && type.blank?
     empty = empty && status.blank?
     empty = empty && !(location_type == 'city' && city.present?)
@@ -36,7 +35,6 @@ class EventSearchForm < SearchForm
 
   # Devuelve los eventos encontrados
   def events model
-    # @events ||= find_events model
     find_events model
   end
 
@@ -45,7 +43,7 @@ class EventSearchForm < SearchForm
     # http://railscasts.com/episodes/111-advanced-search-form-revised
     def find_events model
       events = []
-      
+
       if model.present?
         events = model.order(:date)
         events = events.where("name like ?", "%#{name}%") if name.present?
@@ -64,5 +62,10 @@ class EventSearchForm < SearchForm
       end
 
       return events
+    end
+
+    def dates_from_string_to_date
+      @start_date = Date.parse(@start_date) if (@start_date.present? && @start_date.is_a?(String))
+      @finish_date = Date.parse(@finish_date) if (@finish_date.present? && @finish_date.is_a?(String))
     end
 end

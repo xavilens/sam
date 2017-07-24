@@ -85,7 +85,7 @@ class UserDecorator < Draper::Decorator
 
   # Devuelve los N próximos conciertos en los que participa el usuario
   def events_in_show n
-    events.first(n)
+    events.first(n).delete_if { |event| event.date < Date.today }
   end
 
   # Indica si posee imagenes

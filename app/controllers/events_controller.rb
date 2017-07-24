@@ -18,7 +18,7 @@ class EventsController < ApplicationController
     event_calendar = if @is_user_calendar
       CreateUserEventCalendar.new(@user, event_search_params, params[:page])
     else
-      CreateEventCalendar.new(event_search_params, params[:date], params[:page])
+      CreateEventCalendar.new(event_search_params, params[:date])
     end
 
     @start_date = event_calendar.start_date
@@ -26,14 +26,14 @@ class EventsController < ApplicationController
     @calendar = event_calendar.calendar
     @search = event_calendar.search
 
-    if (@is_user_calendar || !first_page && !last_page) && !uniq_page
-      @start_date = @calendar.first_event_date
-      @finish_date = @calendar.last_event_date
-    elsif first_page
-      @finish_date = @calendar.last_event_date
-    elsif last_page
-      @start_date = @calendar.first_event_date
-    end
+    # if (@is_user_calendar || !first_page && !last_page) && !uniq_page
+    #   @start_date = @calendar.first_event_date
+    #   @finish_date = @calendar.last_event_date
+    # elsif first_page
+    #   @finish_date = @calendar.last_event_date
+    # elsif last_page
+    #   @start_date = @calendar.first_event_date
+    # end
 
     # Datos página
     @page = 'Calendario de eventos'
@@ -165,7 +165,7 @@ class EventsController < ApplicationController
 
     # Indica si es la última página
     def uniq_page
-      @calendar.events.num_pages == 1
+      @calendar.is_user_calendar && @calendar.events.num_pages == 1
     end
 
     # Parámetros de evento permitidos por el controlador

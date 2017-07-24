@@ -3,9 +3,6 @@ Rails.application.routes.draw do
   concern :paginatable do
     get '(page/:page)', action: :index, on: :collection, as: ''
   end
-  concern :pageable do
-    get '(page/:page)', on: :collection, as: ''
-  end
 
   ######### ROUTES
   root 'site#index'
@@ -30,9 +27,6 @@ Rails.application.routes.draw do
       get 'delete/:member_id', action: :delete_view, controller: :members, as: :band_delete
       get 'delete/', action: :delete_view, controller: :members
     end
-    # get 'membership/send/:from_user', action: :send_request, controller: :members, as: :send
-    # get 'membership/delete/:member_id', action: :delete_view, controller: :members, as: :band_delete
-    # get 'membership/delete/', action: :delete_view, controller: :members
 
     resources :members, only: [:edit, :index]
 
